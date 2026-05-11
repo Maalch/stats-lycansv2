@@ -1,8 +1,8 @@
 {
   "_meta": {
     "description": "Reference file for Lycans v2 game mechanics: camps, roles, powers, accessories, gadgets, effects, events, and game rules. Extracted from in-game translations and gameLog data.",
-    "version": "0.295",
-    "lastUpdated": "2026-05-05",
+    "version": "0.302",
+    "lastUpdated": "2026-05-11",
     "sourceTranslationsFile": "ExternalData/translations.json",
     "notes": "French names match gameLog.json values. Descriptions are cleaned from in-game markup (<color> tags, {0} placeholders). This file can be manually edited to adjust or enrich descriptions. potionEffects = drinkable effects from potions/scrolls. statusEffects = in-game states applied by role abilities, environmental events, or other mechanics (many overlap with potionEffects but represent the broader set of all possible player states)."
   },
@@ -45,7 +45,7 @@
       "descriptionShort": "Éliminez les Loups",
       "relatedItems": [
         { "type": "villagerPower", "id": "paysan", "label": "Métiers de Villageois" },
-        { "type": "secondaryRole", "id": "hurleur", "label": "Rôles Secondaires" }
+        { "type": "secondaryRole", "id": "brasseur", "label": "Rôles Secondaires" }
       ]
     },
     {
@@ -265,12 +265,12 @@
       "translationKey": "NALES_ROLE_DESCRIPTION_BOMBER"
     },
     {
-      "id": "devin",
-      "name": "Devin",
-      "emoji": "🔮",
-      "description": "Connaît l'état de santé de tout le monde. Pendant les meetings, peut tenter de deviner le métier d'un villageois : si correct, il meurt et la forme de loup est renforcée le jour suivant. Sinon, le Devin est affaibli (faim augmentée).",
-      "descriptionShort": "Connait l'état de santé des joueurs, et peut tuer un villageois s'il devine son métier",
-      "translationKey": "NALES_ROLE_DESCRIPTION_SEER"
+      "id": "hote",
+      "name": "Hôte",
+      "emoji": "🪱",
+      "description": "Place des œufs invisibles qui éclosent en petits parasites visibles et immobiles que les joueurs peuvent détruire. Un parasite s'attache discrètement au premier humain qui s'en approche, permettant de le détecter quand il est proche. Peut faire exploser tous les parasites attachés pour blesser et empoisonner les victimes et les joueurs proches.",
+      "descriptionShort": "Peut placer des parasites qui s'attachent aux joueurs qui marchent dessus",
+      "translationKey": "NALES_ROLE_DESCRIPTION_HOST"
     },
     {
       "id": "braconnier",
@@ -343,7 +343,7 @@
       "id": "survivaliste",
       "name": "Survivaliste",
       "emoji": "🛡️",
-      "description": "Charge son pouvoir en récupérant les indices parfois laissés par les joueurs, puis peut permettre à un joueur d'être sauvé par un autre joueur s'il est attaqué par un loup. Peut l'utiliser sur lui-même avec un temps de préparation.",
+      "description": "Charge son pouvoir en prenant les indices parfois laissés par les joueurs, puis peut permettre à un joueur d'être sauvé par un autre joueur s'il est attaqué par un loup. Peut l'utiliser sur lui-même avec un temps de préparation. Les villageois Élite survivent moins longtemps.",
       "descriptionShort": "Peut permettre à un joueur (ou lui-même) d'être sauvé s'il est attaqué par un loup",
       "translationKey": "NALES_ROLE_DESCRIPTION_SURVIVALIST"
     },
@@ -351,7 +351,7 @@
       "id": "pretre",
       "name": "Prêtre",
       "emoji": "🙏",
-      "description": "Récolte pour obtenir son pouvoir puis peut protéger secrètement sa cible en journée. Cette nuit, la première fois qu'un loup l'attaque, elle sera protégée (mais perdra son objet) et le loup sera repoussé.",
+      "description": "Récolte pour obtenir son pouvoir puis peut protéger secrètement sa cible en journée. Cette nuit, la première fois qu'un loup l'attaque, elle sera protégée et le loup sera repoussé. Moins efficace sur les villageois Élite.",
       "descriptionShort": "Peut protéger un joueur d'une attaque de loup",
       "translationKey": "NALES_ROLE_DESCRIPTION_PRIEST"
     },
@@ -399,7 +399,7 @@
       "id": "ermite",
       "name": "Ermite",
       "emoji": "🏚️",
-      "description": "Des cachettes apparaissent régulièrement. Quand le joueur est à l'intérieur, il est invisible et silencieux pour les loups transformés. Chaque cachette dure un temps limité mais disparaît plus rapidement quand le joueur est dedans. La nuit, peut utiliser sa charge pour ajouter du temps à toutes les cachettes.",
+      "description": "Des cachettes apparaissent régulièrement. Quand le joueur en est proche, elles disparaissent plus rapidement mais il est invisible et silencieux pour les loups transformés. Chaque cachette dure un temps limité. La nuit, peut utiliser sa charge pour ajouter du temps à toutes les cachettes.",
       "descriptionShort": "Fait apparaître des cachettes où il peut se réfugier pour tenter d'échapper aux loups",
       "translationKey": "NALES_ROLE_DESCRIPTION_HERMIT"
     },
@@ -434,7 +434,7 @@
       "id": "guetteur",
       "name": "Guetteur",
       "emoji": "👁️",
-      "description": "Villageois Élite plus difficile à voir pour les loups transformés. Ceux-ci sont plus visibles pour lui et apparaissent sur la minimap quand ils sont proches. Peut augmenter la puissance/portée de ces effets, sa vitesse et la portée de sa voix pendant un temps limité.",
+      "description": "Villageois Élite plus difficile à voir pour les loups transformés. Ceux-ci sont plus visibles pour lui et apparaissent sur la minimap quand ils sont proches. Peut augmenter la puissance/portée de ces effets, sa vitesse et la portée de sa voix pendant un temps limité. Reçoit un radar chaque nuit.",
       "descriptionShort": "Voit mieux les loups et peut aider les autres à leur échapper",
       "translationKey": "NALES_ROLE_DESCRIPTION_SPOTTER"
     },
@@ -442,23 +442,13 @@
       "id": "purificateur",
       "name": "Purificateur",
       "emoji": "🔥",
-      "description": "Villageois Élite qui peut lancer une bouteille incendiaire spéciale (flamme verte) qui brûle les loups transformés mais soigne et accélère les humains. Si un loup transformé le tue, il prend feu. Commence chaque jour avec une bouteille incendiaire.",
+      "description": "Villageois Élite qui peut lancer une bouteille incendiaire spéciale (flamme verte) qui brûle et inflige Confusion aux loups transformés mais soigne et accélère les humains. Si un loup le tue, il prend feu. Commence chaque jour avec une bouteille incendiaire.",
       "descriptionShort": "Reçoit des bouteilles incendiaires et peut lancer des bouteilles incendiaires spéciales",
       "translationKey": "NALES_ROLE_DESCRIPTION_PURIFIER"
     }
   ],
 
   "secondaryRoles": [
-    {
-      "id": "hurleur",
-      "name": "Hurleur",
-      "emoji": "📢",
-      "description": "Pendant son pouvoir, sa voix a plus de portée et ralentit les joueurs proches (humain). En forme de loup, peut étourdir tous les joueurs en forme humaine.",
-      "descriptionShort": "Augmente la portée vocale et étourdit les joueurs proches",
-      "descriptionVillager": "Pendant son pouvoir, sa voix a plus de portée et étourdit les joueurs proches",
-      "descriptionWolf": "En forme de loup, son pouvoir étourdit tous les joueurs",
-      "translationKey": "NALES_ROLE_DESCRIPTION_HOWLER"
-    },
     {
       "id": "brasseur",
       "name": "Brasseur",
@@ -903,7 +893,6 @@
     { "id": "camoufle", "name": "Camouflé", "translationKey": "NALES_EFFECT_CAMOUFLAGE" },
     { "id": "discret", "name": "Discret", "translationKey": "NALES_EFFECT_UNDETECTED" },
     { "id": "affame", "name": "Affamé !", "translationKey": "NALES_EFFECT_STARVATION" },
-    { "id": "hurler", "name": "Hurler", "translationKey": "NALES_EFFECT_SHOUTING" },
     { "id": "aveugle", "name": "Aveuglé", "translationKey": "NALES_EFFECT_BLIND" },
     { "id": "illusion", "name": "Illusion", "translationKey": "NALES_EFFECT_ILLUSION" },
     { "id": "neutralise", "name": "Neutralisé", "translationKey": "NALES_EFFECT_ANTI_MAGIC" },
@@ -937,7 +926,7 @@
     { "id": "ange-gardien", "name": "Ange gardien", "translationKey": "NALES_EFFECT_ANGEL" },
     { "id": "traque", "name": "Traque", "translationKey": "NALES_EFFECT_TRACKING" },
     { "id": "paralyse", "name": "Paralysé", "translationKey": "NALES_EFFECT_PARALYZED" },
-    { "id": "confusion", "name": "Confusion", "translationKey": "NALES_EFFECT_DRUNK" },
+    { "id": "confusion", "name": "Confusion", "translationKey": "NALES_EFFECT_CONFUSED" },
     { "id": "resistance", "name": "Résistance", "translationKey": "NALES_EFFECT_RESISTANCE" },
     { "id": "ressuscite", "name": "Ressuscité", "translationKey": "NALES_EFFECT_RESURRECTED" },
     { "id": "predateur", "name": "Prédateur", "translationKey": "NALES_EFFECT_PREDATOR" },
@@ -947,7 +936,6 @@
     { "id": "sommeil", "name": "Sommeil", "translationKey": "NALES_EFFECT_SLEEPY" },
     { "id": "endormi", "name": "Endormi", "translationKey": "NALES_EFFECT_ASLEEP" },
     { "id": "isolation", "name": "Isolation", "translationKey": "NALES_EFFECT_ISOLATION" },
-    { "id": "protege", "name": "Protégé", "translationKey": "NALES_EFFECT_PROTECTED" },
     { "id": "furtif", "name": "Furtif", "translationKey": "NALES_EFFECT_SNEAKY" },
     { "id": "energie", "name": "Énergie", "translationKey": "NALES_EFFECT_ENERGIZED", "tutorial": "Votre pouvoir se charge plus vite, ou vous régénérez votre santé" },
     { "id": "resilience", "name": "Résilience", "translationKey": "NALES_EFFECT_RESILIENCE" },
@@ -994,7 +982,7 @@
       "id": "brouillard",
       "name": "Brouillard",
       "emoji": "🌫️",
-      "description": "Tous les joueurs sont camouflés en permanence. Les loups sont détectés de moins loin.",
+      "description": "Tous les joueurs reçoivent Camouflage régulièrement. La transformation en loup ne retire pas ce camouflage.",
       "translationKey": "NALES_EVENT_FOG"
     },
     {
@@ -1182,7 +1170,7 @@
       "Sorcier": { "category": "wolfPowers", "id": "sorcier" },
       "Possesseur": { "category": "wolfPowers", "id": "possesseur" },
       "Artificier": { "category": "wolfPowers", "id": "artificier" },
-      "Devin": { "category": "wolfPowers", "id": "devin" },
+      "Hôte": { "category": "wolfPowers", "id": "hote" },
       "Braconnier": { "category": "wolfPowers", "id": "braconnier" },
       "Ritualiste": { "category": "wolfPowers", "id": "ritualiste" },
       "Prédateur": { "category": "wolfPowers", "id": "predateur" },
@@ -1204,7 +1192,6 @@
       "Inconnu": { "_note": "Unknown/unresolved power value in gameLog" }
     },
     "secondaryRoleToId": {
-      "Hurleur": "hurleur",
       "Brasseur": "brasseur",
       "Coureur": "coureur",
       "Infecté": "infecte",
