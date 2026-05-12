@@ -44,7 +44,7 @@
       "description": "Rôle de base du camp des Villageois. Pas de pouvoir spécial, mais peut recevoir un métier (pouvoir de villageois) et un rôle secondaire.",
       "descriptionShort": "Éliminez les Loups",
       "relatedItems": [
-        { "type": "villagerPower", "id": "paysan", "label": "Métiers de Villageois" },
+        { "type": "villagerPower", "id": "ermite", "label": "Métiers de Villageois" },
         { "type": "secondaryRole", "id": "brasseur", "label": "Rôles Secondaires" }
       ]
     },
@@ -233,14 +233,6 @@
       "translationKey": "NALES_ROLE_DESCRIPTION_SABOTEUR"
     },
     {
-      "id": "traqueur",
-      "name": "Traqueur",
-      "emoji": "📡",
-      "description": "En forme de loup, peut placer un Traqueur (temps d'installation, aveugle et sourd pendant). Le Traqueur dure un temps limité, illumine les joueurs en forme humaine proches et permet de les voir à travers les murs.",
-      "descriptionShort": "Peut placer un Traqueur pour voir les joueurs à travers les murs",
-      "translationKey": "NALES_ROLE_DESCRIPTION_TRACKER"
-    },
-    {
       "id": "sorcier",
       "name": "Sorcier",
       "emoji": "🧙",
@@ -252,7 +244,7 @@
       "id": "possesseur",
       "name": "Possesseur",
       "emoji": "👁️",
-      "description": "Peut marquer une cible en restant proche, puis la posséder pour voir à travers ses yeux. Si le Possesseur se transforme en la possédant, il prend sa place mais ne pourra pas se détransformer cette nuit et ne pourra plus la marquer ensuite.",
+      "description": "Peut marquer une cible en restant proche, puis la posséder pour voir à travers ses yeux. Si le Possesseur se transforme en la possédant, il prend sa place mais ne pourra pas se détransformer cette nuit et ne pourra plus la marquer ensuite. Ne peut pas se transformer si la cible est déjà transformée.",
       "descriptionShort": "Peut posséder un autre joueur et se transformer à sa position",
       "translationKey": "NALES_ROLE_DESCRIPTION_POSSESSOR"
     },
@@ -307,14 +299,6 @@
   ],
 
   "villagerPowers": [
-    {
-      "id": "paysan",
-      "name": "Paysan",
-      "emoji": "🌾",
-      "description": "Charge son pouvoir en étant proche d'autres joueurs. Avec au moins 25%, peut l'utiliser pour s'accroupir et devenir invisible pour les loups transformés. Se désactive quand la charge arrive à 0% ou quand le joueur se relève.",
-      "descriptionShort": "Charge son pouvoir en étant proche d'autres joueurs, peut l'utiliser pour se cacher des loups",
-      "translationKey": "NALES_ROLE_DESCRIPTION_PEASANT"
-    },
     {
       "id": "exorciste",
       "name": "Exorciste",
@@ -434,7 +418,7 @@
       "id": "guetteur",
       "name": "Guetteur",
       "emoji": "👁️",
-      "description": "Villageois Élite plus difficile à voir pour les loups transformés. Ceux-ci sont plus visibles pour lui et apparaissent sur la minimap quand ils sont proches. Peut augmenter la puissance/portée de ces effets, sa vitesse et la portée de sa voix pendant un temps limité. Reçoit un radar chaque nuit.",
+      "description": "Villageois Élite plus difficile à voir pour les loups transformés. Ceux-ci sont plus visibles pour lui et apparaissent sur la minimap quand ils sont proches. Peut augmenter la puissance/portée de ces effets, sa vitesse et la portée de sa voix pendant un temps limité. Reçoit un radar chaque nuit s'il n'a pas d'objet.",
       "descriptionShort": "Voit mieux les loups et peut aider les autres à leur échapper",
       "translationKey": "NALES_ROLE_DESCRIPTION_SPOTTER"
     },
@@ -624,7 +608,7 @@
       "id": "imitateur",
       "name": "Imitateur",
       "emoji": "🎭",
-      "description": "Peut choisir un rôle secondaire à utiliser pour la journée. Quand le jour se termine, redevient Imitateur et peut choisir un autre rôle.",
+      "description": "Peut choisir un rôle secondaire à utiliser pour la journée. Quand le jour se termine, redevient Imitateur et peut choisir un autre rôle. S'il choisit Bricoleur et n'a pas d'accessoire, il en reçoit un.",
       "descriptionVillager": "Choisit un nouveau rôle secondaire chaque jour",
       "descriptionWolf": "Choisit un nouveau rôle secondaire chaque jour",
       "translationKey": "NALES_ROLE_DESCRIPTION_IMITATOR"
@@ -853,6 +837,13 @@
       "emoji": "📡",
       "translationKey": "NALES_GADGET_RADAR",
       "description": "Se lance et détecte les humains OU les loups (selon la forme actuelle du lanceur)."
+    },
+    {
+      "id": "potion",
+      "name": "Potion",
+      "emoji": "🧪",
+      "translationKey": "NALES_POTION",
+      "description": "Fiole contenant un effet aléatoire. La couleur correspond à un effet, mais celui-ci est inconnu du joueur (sauf pour l'Alchimiste). L'effet s'applique au buveur. Ne peut pas être utilisée en forme de loup."
     }
   ],
 
@@ -879,7 +870,9 @@
     { "id": "teleportation", "name": "Téléportation", "type": "neutral", "translationKey": "EFFECT_TELEPORTATION", "tutorial": "Vous téléporte à une position aléatoire sur la carte" },
     { "id": "vampire", "name": "Vampire", "type": "neutral", "translationKey": "NALES_EFFECT_VAMPIRE", "tutorial": "Vous permet de mordre un joueur pour lui voler de la vie et la récupérer" },
     { "id": "vision-vraie", "name": "Vision vraie", "type": "positive", "translationKey": "EFFECT_TRUESIGHT", "tutorial": "Vous voyez dans le noir et ignorez les illusions visuelles" },
-    { "id": "blanche", "name": "Blanche", "type": "positive", "translationKey": "EFFECT_BLANCHE", "tutorial": "Potion créée par l'Alchimiste. Applique un effet positif aléatoire parmi les effets possibles, plus court qu'une potion classique.", "source": "alchimiste", "randomEffects": ["Assassin", "Audition+", "Célérité", "Rassasié", "Vision vraie"] }
+    { "id": "blanche", "name": "Blanche", "type": "positive", "translationKey": "EFFECT_BLANCHE", "tutorial": "Potion créée par l'Alchimiste. Applique un effet positif aléatoire parmi les effets possibles, plus court qu'une potion classique.", "source": "alchimiste", "randomEffects": ["Assassin", "Audition+", "Célérité", "Rassasié", "Vision vraie"] },
+    { "id": "camoufle", "name": "Camouflé", "type": "positive", "translationKey": "NALES_EFFECT_CAMOUFLAGE", "tutorial": "Rend le joueur moins visible pour les autres joueurs, en particulier les loups transformés" },
+    { "id": "confusion", "name": "Confusion", "type": "negative", "translationKey": "NALES_EFFECT_CONFUSED", "tutorial": "Perturbe la vision et la perception du joueur" }
   ],
 
   "statusEffects": [
@@ -1014,6 +1007,21 @@
       "translationKey": "NALES_EVENT_PROTECTION"
     }
   ],
+
+  "mayor": {
+    "name": "Maire",
+    "emoji": "👑",
+    "configKey": "NALES_CONFIG_ROLE_CONFIG_ALLOW_MAYOR",
+    "description": "Option activable avant la partie. Un Maire est élu aléatoirement au début de chaque meeting. Les joueurs peuvent changer le Maire si une majorité le décide.",
+    "abilities": [
+      { "name": "Étourdir une cible", "description": "Peut étourdir un joueur pendant quelques secondes" },
+      { "name": "Rendre muet tous sauf la cible", "description": "Coupe la parole de tous les joueurs sauf la cible, lui donnant la parole exclusive" },
+      { "name": "Rendre muet tous sauf soi", "description": "Coupe la parole de tous les joueurs sauf le Maire" },
+      { "name": "Transférer le titre", "description": "Peut désigner un autre joueur comme nouveau Maire" },
+      { "name": "Vote de nouveau Maire", "description": "Peut lancer un vote pour élire un nouveau Maire" },
+      { "name": "Vote de destitution", "description": "Les joueurs peuvent voter pour destituer le Maire" }
+    ]
+  },
 
   "gameRules": [
     {
@@ -1166,7 +1174,7 @@
       "Nécromancien": { "category": "wolfPowers", "id": "necromancien" },
       "Dupeur": { "category": "wolfPowers", "id": "dupeur" },
       "Saboteur": { "category": "wolfPowers", "id": "saboteur" },
-      "Traqueur": { "category": "wolfPowers", "id": "traqueur" },
+      "Traqueur": { "category": "wolfPowers", "id": "traqueur", "legacy": true, "replacedBy": "hote" },
       "Sorcier": { "category": "wolfPowers", "id": "sorcier" },
       "Possesseur": { "category": "wolfPowers", "id": "possesseur" },
       "Artificier": { "category": "wolfPowers", "id": "artificier" },
@@ -1175,7 +1183,7 @@
       "Ritualiste": { "category": "wolfPowers", "id": "ritualiste" },
       "Prédateur": { "category": "wolfPowers", "id": "predateur" },
       "Sournois": { "category": "wolfPowers", "id": "sournois" },
-      "Paysan": { "category": "villagerPowers", "id": "paysan" },
+      "Paysan": { "category": "villagerPowers", "id": "paysan", "legacy": true, "replacedBy": "ermite" },
       "Exorciste": { "category": "villagerPowers", "id": "exorciste" },
       "Vengeur": { "category": "villagerPowers", "id": "vengeur" },
       "Détective": { "category": "villagerPowers", "id": "detective" },
