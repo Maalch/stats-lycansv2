@@ -3,6 +3,7 @@
  */
 
 import { createKillsRanking } from '../helpers.js';
+import { getPlayerId } from '../../../src/utils/datasyncExport.js';
 
 /**
  * Helper function to find top killers based on different criteria
@@ -301,14 +302,132 @@ function findPlayerBadHunterRank(topBadHunters, playerId) {
 }
 
 /**
+ * Compute max kills per game for all players
+ * @param {Array} games - Array of game log entries
+ * @returns {Array} - Sorted array of { playerId, playerName, maxKills, timesAchieved }
+ */
+function computeMaxKillsPerGame(games) {
+  const playerMaxKills = new Map();
+
+  games.forEach(game => {
+    game.PlayerStats.forEach(player => {
+      const pId = getPlayerId(player);
+
+      // Count kills this player made in this game
+      let killsInGame = 0;
+      game.PlayerStats.forEach(victim => {
+        if (victim.KillerName === player.Username && victim.DeathTiming) {
+          killsInGame++;
+        }
+      });
+
+      if (killsInGame > 0) {
+        const existing = playerMaxKills.get(pId);
+        if (!existing) {
+          playerMaxKills.set(pId, { playerId: pId, playerName: player.Username, maxKills: killsInGame, timesAchieved: 1 });
+        } else if (killsInGame > existing.maxKills) {
+          existing.maxKills = killsInGame;
+          existing.timesAchieved = 1;
+        } else if (killsInGame === existing.maxKills) {
+          existing.timesAchieved++;
+        }
+      }
+    });
+  });
+
+  return Array.from(playerMaxKills.values())
+    .sort((a, b) => b.maxKills !== a.maxKills ? b.maxKills - a.maxKills : b.timesAchieved - a.timesAchieved);
+}
+
+/**
+ * Compute max kills per phase for all players
+ * A phase is any game timing (N1, J1, M1, etc.)
+ * @param {Array} games - Array of game log entries
+ * @returns {Array} - Sorted array of { playerId, playerName, maxKills, timesAchieved }
+ */
+function computeMaxKillsPerPhase(games) {
+  const playerMaxKills = new Map();
+
+  games.forEach(game => {
+    // Group kills by killer and phase
+    const killsByPlayerAndPhase = new Map();
+
+    game.PlayerStats.forEach(victim => {
+      if (victim.KillerName && victim.DeathTiming && victim.DeathTiming.match(/^[A-Z]\d+$/)) {
+        const killerName = victim.KillerName;
+        const phase = victim.DeathTiming;
+
+        if (!killsByPlayerAndPhase.has(killerName)) {
+          killsByPlayerAndPhase.set(killerName, new Map());
+        }
+        const playerPhases = killsByPlayerAndPhase.get(killerName);
+        playerPhases.set(phase, (playerPhases.get(phase) || 0) + 1);
+      }
+    });
+
+    // Find max kills per phase for each player in this game
+    killsByPlayerAndPhase.forEach((phases, killerName) => {
+      const maxKillsThisGame = Math.max(...Array.from(phases.values()));
+      const killerPlayer = game.PlayerStats.find(p => p.Username === killerName);
+      if (!killerPlayer) return;
+
+      const pId = getPlayerId(killerPlayer);
+      const existing = playerMaxKills.get(pId);
+      if (!existing) {
+        playerMaxKills.set(pId, { playerId: pId, playerName: killerPlayer.Username, maxKills: maxKillsThisGame, timesAchieved: 1 });
+      } else if (maxKillsThisGame > existing.maxKills) {
+        existing.maxKills = maxKillsThisGame;
+        existing.timesAchieved = 1;
+      } else if (maxKillsThisGame === existing.maxKills) {
+        existing.timesAchieved++;
+      }
+    });
+  });
+
+  return Array.from(playerMaxKills.values())
+    .sort((a, b) => b.maxKills !== a.maxKills ? b.maxKills - a.maxKills : b.timesAchieved - a.timesAchieved);
+}
+
+/**
+ * Find a player's rank in a max-kills list
+ * @param {Array} sortedList - Sorted max kills array
+ * @param {string} playerId - Player ID to find
+ * @returns {Object|null} - { rank, value, timesAchieved } or null
+ */
+function findPlayerMaxKillsRank(sortedList, playerId) {
+  const index = sortedList.findIndex(p => p.playerId === playerId);
+  if (index === -1) return null;
+
+  const playerData = sortedList[index];
+  // Calculate true rank considering ties (tiebreaker: timesAchieved)
+  let rank = 1;
+  for (let i = 0; i < index; i++) {
+    const other = sortedList[i];
+    if (
+      other.maxKills > playerData.maxKills ||
+      (other.maxKills === playerData.maxKills && other.timesAchieved > playerData.timesAchieved)
+    ) {
+      rank++;
+    }
+  }
+
+  return {
+    rank,
+    value: playerData.maxKills,
+    timesAchieved: playerData.timesAchieved
+  };
+}
+
+/**
  * Process kills and deaths Rankings for a specific player
  * @param {Object} deathStats - Death statistics object
  * @param {Object} hunterStats - Hunter statistics object
+ * @param {Array} games - Raw game data array
  * @param {string} playerId - Player ID (Steam ID)
  * @param {string} suffix - Suffix for Ranking titles
  * @returns {Array} - Array of Rankings
  */
-export function processKillsRankings(deathStats, hunterStats, playerId, suffix) {
+export function processKillsRankings(deathStats, hunterStats, games, playerId, suffix) {
   if (!deathStats) return [];
 
   const Rankings = [];
@@ -441,7 +560,47 @@ export function processKillsRankings(deathStats, hunterStats, playerId, suffix) 
     }
   }
 
+  // 8. Max kills per game ranking (record kills in a single game)
+  if (games && games.length > 0) {
+    const maxKillsPerGameList = computeMaxKillsPerGame(games);
+    const maxKillsGameRank = findPlayerMaxKillsRank(maxKillsPerGameList, playerId);
+    if (maxKillsGameRank) {
+      Rankings.push(createKillsRanking(
+        `top-max-kills-game-${suffix ? 'modded' : 'all'}`,
+        `🏆 Top ${maxKillsGameRank.rank} Record Kills/Partie${suffix}`,
+        `${maxKillsGameRank.rank}${maxKillsGameRank.rank === 1 ? 'er' : 'ème'} record de kills en une partie: ${maxKillsGameRank.value} éliminations (atteint ${maxKillsGameRank.timesAchieved} fois)`,
+        'good',
+        maxKillsGameRank.rank,
+        maxKillsGameRank.value,
+        maxKillsPerGameList.length,
+        {
+          tab: 'rankings',
+          subTab: 'killerStats',
+          chartSection: 'max-kills-per-game'
+        }
+      ));
+    }
 
+    // 9. Max kills per phase ranking (record kills in a single phase)
+    const maxKillsPerPhaseList = computeMaxKillsPerPhase(games);
+    const maxKillsPhaseRank = findPlayerMaxKillsRank(maxKillsPerPhaseList, playerId);
+    if (maxKillsPhaseRank) {
+      Rankings.push(createKillsRanking(
+        `top-max-kills-phase-${suffix ? 'modded' : 'all'}`,
+        `⚡ Top ${maxKillsPhaseRank.rank} Record Kills/Phase${suffix}`,
+        `${maxKillsPhaseRank.rank}${maxKillsPhaseRank.rank === 1 ? 'er' : 'ème'} record de kills en une phase: ${maxKillsPhaseRank.value} éliminations (atteint ${maxKillsPhaseRank.timesAchieved} fois)`,
+        'good',
+        maxKillsPhaseRank.rank,
+        maxKillsPhaseRank.value,
+        maxKillsPerPhaseList.length,
+        {
+          tab: 'rankings',
+          subTab: 'killerStats',
+          chartSection: 'max-kills-per-phase'
+        }
+      ));
+    }
+  }
 
   return Rankings;
 }
