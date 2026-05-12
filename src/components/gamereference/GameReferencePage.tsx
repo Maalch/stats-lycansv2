@@ -131,6 +131,18 @@ function PowerCard({ power, variant }: { power: PowerEntry; variant: 'wolf' | 'v
         <h3 className="ref-card__title">{power.name}</h3>
       </div>
       <p className="ref-card__description">{power.description}</p>
+      {power.availableEffects && power.availableEffects.length > 0 && (
+        <div className="ref-card__available-effects">
+          <span className="ref-card__label">Effets disponibles :</span>
+          <div className="ref-card__available-effects-list">
+            {power.availableEffects.map(e => (
+              <span key={e.effect} className="ref-card__effect-chip">
+                {e.effect} <span className="ref-card__effect-duration">{e.duration}s</span>
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -278,7 +278,15 @@
       "emoji": "🕯️",
       "description": "Charge son pouvoir en étant proche d'autres joueurs. Plus il y a de joueurs et plus ils sont proches, plus la charge est rapide. Une fois chargé, peut invoquer un rituel qui permet de choisir un effet négatif à appliquer sur TOUS les joueurs en forme humaine.",
       "descriptionShort": "Charge son pouvoir en étant proche d'autres joueurs, peut l'utiliser pour maudire tout le monde",
-      "translationKey": "NALES_ROLE_DESCRIPTION_RITUALIST"
+      "translationKey": "NALES_ROLE_DESCRIPTION_RITUALIST",
+      "availableEffects": [
+        { "effect": "Muet", "duration": 55 },
+        { "effect": "Sourd", "duration": 20 },
+        { "effect": "Paranoia", "duration": 12 },
+        { "effect": "Flatulences", "duration": 20 },
+        { "effect": "Myope", "duration": 25 },
+        { "effect": "Confusion", "duration": 30 }
+      ]
     },
     {
       "id": "predateur",

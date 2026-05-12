@@ -41,6 +41,11 @@ export interface MainRoleEntry {
   relatedItems?: RelatedItem[];
 }
 
+export interface AvailableEffect {
+  effect: string;
+  duration: number;
+}
+
 export interface PowerEntry {
   id: string;
   name: string;
@@ -49,6 +54,7 @@ export interface PowerEntry {
   descriptionShort?: string;
   translationKey?: string;
   relatedItems?: RelatedItem[];
+  availableEffects?: AvailableEffect[];
 }
 
 export interface SecondaryRoleEntry {
