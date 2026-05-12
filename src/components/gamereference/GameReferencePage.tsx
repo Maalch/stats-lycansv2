@@ -12,6 +12,7 @@ import type {
   StatusEffectEntry,
   EventEntry,
   GameRuleEntry,
+  MayorEntry,
 } from '../../hooks/useGameReference';
 import { CampHubTile } from './CampHubTile';
 import { CampDrillDown } from './CampDrillDown';
@@ -72,6 +73,7 @@ type FilteredReferenceData = {
   statusEffects: StatusEffectEntry[];
   events: EventEntry[];
   gameRules: GameRuleEntry[];
+  mayor: MayorEntry | null;
   counts: CategoryCounts;
   totalMatches: number;
 };
@@ -319,6 +321,38 @@ function GameRuleCard({ rule }: { rule: GameRuleEntry }) {
   );
 }
 
+function MayorCard({ mayor }: { mayor: MayorEntry }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  return (
+    <div
+      className="ref-card ref-card--mayor ref-card--expandable"
+      onClick={() => setIsExpanded(e => !e)}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setIsExpanded(v => !v); } }}
+      aria-expanded={isExpanded}
+    >
+      <div className="ref-card__header">
+        <span className="ref-card__emoji">{mayor.emoji}</span>
+        <h3 className="ref-card__title">{mayor.name}</h3>
+        <span className={`ref-card__expand-icon${isExpanded ? ' ref-card__expand-icon--open' : ''}`}>▼</span>
+      </div>
+      <p className="ref-card__description">{mayor.description}</p>
+      {isExpanded && (
+        <div className="ref-card__expanded-content">
+          <ul className="ref-card__details">
+            {mayor.abilities.map((ability, i) => (
+              <li key={i} className="ref-card__detail-item">
+                <span className="ref-card__label">{ability.name} :</span> {ability.description}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function SectionTitle({ title, count }: { title: string; count: number }) {
   return (
     <h2 className="ref-section__title">
@@ -446,8 +480,14 @@ export function GameReferencePage() {
       matchesSearch(searchTerms, r.name, r.description, r.details.join(' '))
     );
 
+    const mayor = data.mayor && matchesSearch(searchTerms, data.mayor.name, data.mayor.description, data.mayor.abilities.map(a => `${a.name} ${a.description}`).join(' '))
+      ? data.mayor
+      : null;
+
+    const mayorCount = mayor ? 1 : 0;
+
     const counts: CategoryCounts = {
-      gameRules: gameRules.length,
+      gameRules: gameRules.length + mayorCount,
       camps: camps.length + mainRoles.length,
       wolfPowers: wolfPowers.length,
       villagerPowers: villagerPowers.length,
@@ -476,6 +516,7 @@ export function GameReferencePage() {
       statusEffects,
       events,
       gameRules,
+      mayor,
       counts,
       totalMatches,
     };
@@ -542,15 +583,16 @@ export function GameReferencePage() {
     return (
       <div className="ref-overview">
         {/* Game Rules intro section */}
-        {genericRules.length > 0 && (
+        {(genericRules.length > 0 || filteredData.mayor) && (
           <div className="ref-section">
             <h2 className="ref-section__title">
               <span>📜 Règles du Jeu</span>
-              <span className="ref-section__count">{genericRules.length}</span>
+              <span className="ref-section__count">{genericRules.length + (filteredData.mayor ? 1 : 0)}</span>
             </h2>
             <p className="ref-section__subtitle">Mécaniques générales et fonctionnement d'une partie de Lycans.</p>
             <div className="ref-grid">
               {genericRules.map(rule => <GameRuleCard key={rule.id} rule={rule} />)}
+              {filteredData.mayor && <MayorCard key="mayor" mayor={filteredData.mayor} />}
             </div>
           </div>
         )}
@@ -792,12 +834,14 @@ export function GameReferencePage() {
     switch (selectedCategory) {
       case 'gameRules': {
         const filtered = filteredData.gameRules;
+        const totalCount = filtered.length + (filteredData.mayor ? 1 : 0);
         return (
           <div className="ref-section">
-            <SectionTitle title="Règles du Jeu 📜" count={filtered.length} />
+            <SectionTitle title="Règles du Jeu 📜" count={totalCount} />
             <p className="ref-section__subtitle">Mécaniques générales et fonctionnement d'une partie de Lycans.</p>
             <div className="ref-grid">
               {filtered.map(r => <GameRuleCard key={r.id} rule={r} />)}
+              {filteredData.mayor && <MayorCard key="mayor" mayor={filteredData.mayor} />}
             </div>
           </div>
         );

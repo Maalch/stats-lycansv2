@@ -132,6 +132,19 @@ export interface GameRuleEntry {
   campSpecific?: string;
 }
 
+export interface MayorAbility {
+  name: string;
+  description: string;
+}
+
+export interface MayorEntry {
+  name: string;
+  emoji: string;
+  configKey?: string;
+  description: string;
+  abilities: MayorAbility[];
+}
+
 export interface GameReferenceData {
   _meta: GameReferenceMeta;
   camps: CampEntry[];
@@ -147,6 +160,7 @@ export interface GameReferenceData {
   statusEffects: StatusEffectEntry[];
   events: EventEntry[];
   gameRules: GameRuleEntry[];
+  mayor?: MayorEntry;
 }
 
 /**
