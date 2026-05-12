@@ -575,7 +575,7 @@ export function processKillsRankings(deathStats, hunterStats, games, playerId, s
         maxKillsPerGameList.length,
         {
           tab: 'rankings',
-          subTab: 'killerStats',
+          subTab: 'deathStats',
           chartSection: 'max-kills-per-game'
         }
       ));
@@ -595,7 +595,7 @@ export function processKillsRankings(deathStats, hunterStats, games, playerId, s
         maxKillsPerPhaseList.length,
         {
           tab: 'rankings',
-          subTab: 'killerStats',
+          subTab: 'deathStats',
           chartSection: 'max-kills-per-phase'
         }
       ));
