@@ -376,6 +376,10 @@ export function DeathLocationHeatmap() {
         colorMap[deathTypeCode] = lycansColors['Contrebandier'];
       } else if (deathTypeCode === DeathTypeCode.SMUGGLER_LOOT_FAILURE) {
         colorMap[deathTypeCode] = lycansColors['Contrebandier'];
+      } else if (deathTypeCode === DeathTypeCode.MERCENARY_HUNT_KILL) {
+        colorMap[deathTypeCode] = lycansColors['Mercenaire'];
+      } else if (deathTypeCode === DeathTypeCode.MERCENARY_LOOT_FAILURE) {
+        colorMap[deathTypeCode] = lycansColors['Mercenaire'];
       } else if (deathTypeCode === DeathTypeCode.KILLED_VILLAGE_IDIOT) {
         colorMap[deathTypeCode] = lycansColors['Idiot du Village'];
       }

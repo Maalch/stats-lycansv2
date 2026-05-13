@@ -38,6 +38,7 @@ export const DEATH_TYPES = {
   AVENGER: 'AVENGER',                       // Tué par Vengeur
   SEER: 'SEER',                             // Rôle deviné par loup (devin ou boule de crystal)
   SMUGGLER_HUNT_KILL: 'SMUGGLER_HUNT_KILL', // Mort en Contrebandier (chasse ouverte)
+  MERCENARY_HUNT_KILL: 'MERCENARY_HUNT_KILL', // Mort en Mercenaire (chasse ouverte)
 
   // Potions
   HANTED: 'HANTED',                         // Tué par potion hantée (GDOC specific)
@@ -46,8 +47,9 @@ export const DEATH_TYPES = {
   // Lovers
   LOVER_DEATH: 'LOVER_DEATH',               // Amoureux mort
 
-  //SMUGGLER
+  //SMUGGLER & MERCENARY
   SMUGGLER_LOOT_FAILURE: 'SMUGGLER_LOOT_FAILURE', // Mort en Contrebandier (échec de loot)
+  MERCENARY_LOOT_FAILURE: 'MERCENARY_LOOT_FAILURE', // Mort en Mercenaire (échec de loot)
   
   // Environmental
   BOMB: 'BOMB',                             // A explosé
@@ -107,6 +109,11 @@ export const DEATH_TYPE_CATEGORIES = {
     DEATH_TYPES.SMUGGLER_HUNT_KILL,
     DEATH_TYPES.SMUGGLER_LOOT_FAILURE,
   ],
+
+  MERCENARY_DEATHS: [
+    DEATH_TYPES.MERCENARY_HUNT_KILL,
+    DEATH_TYPES.MERCENARY_LOOT_FAILURE,
+  ],
   
   ENVIRONMENTAL: [
     DEATH_TYPES.STARVATION,
@@ -152,6 +159,9 @@ export const KILLER_DEATH_TYPES: readonly DeathType[] = [
   DEATH_TYPES.ASSASSIN,
   DEATH_TYPES.LOVER_DEATH,
   DEATH_TYPES.SMUGGLER_HUNT_KILL,
+  DEATH_TYPES.SMUGGLER_LOOT_FAILURE,
+  DEATH_TYPES.MERCENARY_HUNT_KILL,
+  DEATH_TYPES.MERCENARY_LOOT_FAILURE,
   DEATH_TYPES.BOMB,
   DEATH_TYPES.CRUSHED,
 ] as const;
@@ -186,6 +196,8 @@ export const DEATH_TYPE_LABELS: Record<DeathType, string> = {
   [DEATH_TYPES.SURVIVOR]: 'Survivant',
   [DEATH_TYPES.SMUGGLER_HUNT_KILL]: 'Tué en tant que Contrebandier',
   [DEATH_TYPES.SMUGGLER_LOOT_FAILURE]: 'Mort en Contrebandier (échec de loot)',
+  [DEATH_TYPES.MERCENARY_HUNT_KILL]: 'Tué en tant que Mercenaire',
+  [DEATH_TYPES.MERCENARY_LOOT_FAILURE]: 'Mort en Mercenaire (échec de loot)',
   [DEATH_TYPES.KILLED_VILLAGE_IDIOT]: 'Tué pour avoir tué l\'Idiot du Village',
 };
 

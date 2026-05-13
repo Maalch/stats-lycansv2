@@ -29,6 +29,10 @@ export function getDeathTypeColor(deathType: string, lycansColors: Record<string
     return lycansColors['Contrebandier'];
   } else if (deathType === 'SMUGGLER_LOOT_FAILURE') {
     return lycansColors['Contrebandier'];
+  } else if (deathType === 'MERCENARY_HUNT_KILL') {
+    return lycansColors['Mercenaire'];
+  } else if (deathType === 'MERCENARY_LOOT_FAILURE') {
+    return lycansColors['Mercenaire'];
   } else if (deathType === 'KILLED_VILLAGE_IDIOT') {
     return lycansColors['Idiot du Village'];
   }

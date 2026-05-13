@@ -37,6 +37,8 @@ export const DeathTypeCode = {
   SEER: 'SEER',                             // Rôle deviné par loup
   SMUGGLER_HUNT_KILL: 'SMUGGLER_HUNT_KILL', // Mort en Contrebandier (chasse ouverte)
   SMUGGLER_LOOT_FAILURE: 'SMUGGLER_LOOT_FAILURE', // Mort en Contrebandier (échec de loot)
+  MERCENARY_HUNT_KILL: 'MERCENARY_HUNT_KILL', // Mort en Mercenaire (chasse ouverte)
+  MERCENARY_LOOT_FAILURE: 'MERCENARY_LOOT_FAILURE', // Mort en Mercenaire (échec de loot)
 
   // Potions
   HANTED: 'HANTED',                         // Tué par potion hantée (GDOC specific)
