@@ -95,6 +95,18 @@ function ExpandablePowerCard({ power, variant }: { power: PowerEntry; variant: '
       <p className="ref-card__description">
         {expanded ? power.description : (power.descriptionShort || power.description)}
       </p>
+      {expanded && power.availableEffects && power.availableEffects.length > 0 && (
+        <div className="ref-card__available-effects">
+          <span className="ref-card__label">Effets disponibles :</span>
+          <div className="ref-card__available-effects-list">
+            {power.availableEffects.map(e => (
+              <span key={e.effect} className="ref-card__effect-chip">
+                {e.effect} <span className="ref-card__effect-duration">{e.duration}s</span>
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
       {expanded && power.relatedItems && (
         <div className="ref-card__expanded-content">
           <RelatedItemsChips items={power.relatedItems} />
