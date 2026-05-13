@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.9.1';
+export const APP_VERSION = '1.9.3';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,26 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.9.3',
+    date: '13/05/2026',
+    description: 'Ajout d\'une page "Déplacements" : classement des joueurs par type de déplacement (% temps en course, % temps immobile, répartition moyenne par partie), avec filtre par camp dans',
+    link: {
+      mainTab: 'rankings',
+      subTab: 'movementStats',
+      text: 'Classements / Déplacements'
+    }
+  },
+  {
+    version: 'v1.9.2',
+    date: '13/05/2026',
+    description: 'Ajout d\'un onglet "Influence" : analyse de l\'impact du temps de parole et du timing de vote sur les éliminations (effet 1er votant, relation parole/élimination, influence du plus gros parleur, timing de vote, effet bandwagon) dans',
+    link: {
+      mainTab: 'general',
+      subTab: 'voteInfluence',
+      text: 'Stats Parties / Influence'
+    }
+  },
   {
     version: 'v1.9.1',
     date: '29/04/2026',

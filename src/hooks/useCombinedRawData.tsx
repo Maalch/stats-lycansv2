@@ -68,6 +68,11 @@ export interface PlayerStat {
   SecondsTalkedOutsideMeeting: number;
   SecondsTalkedDuringMeeting: number;
   TotalCollectedLoot?: number;    // Total loot collected during the game (optional for legacy data)
+  SecondsSpentImmobileStanding?: number;  // Time spent standing still while standing up
+  SecondsSpentImmobileCrouched?: number;  // Time spent standing still while crouched
+  SecondsSpentWalkingStanding?: number;   // Time spent walking while standing up
+  SecondsSpentWalkingCrouched?: number;   // Time spent walking while crouched
+  SecondsSpentRunning?: number;           // Time spent running
   Actions?: Action[];             // Array of actions performed by this player during the game (optional for legacy data)
   LegacyActionsIncomplete?: boolean; // Flag to indicate if actions data is incomplete (e.g., for older games without proper tagging, from legacy)
 }

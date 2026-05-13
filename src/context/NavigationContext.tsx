@@ -97,6 +97,12 @@ export interface LootStatsState {
   view?: string; // 'normalized' or 'total'
 }
 
+export interface MovementStatsState {
+  minGames: number;
+  view?: string; // 'running', 'immobile', or 'breakdown'
+  campFilter?: string; // 'all', 'villageois', 'loup', or 'autres'
+}
+
 export interface RoleActionsRankingState {
   minWolfGames: number;
   minHunterGames: number;
@@ -156,6 +162,7 @@ export interface NavigationState {
   rolesStatsState?: RolesStatsState;
   talkingTimeState?: TalkingTimeState;
   lootStatsState?: LootStatsState;
+  movementStatsState?: MovementStatsState;
   deathLocationState?: DeathLocationState;
   roleActionsRankingState?: RoleActionsRankingState;
   monthlyRankingState?: MonthlyRankingState;

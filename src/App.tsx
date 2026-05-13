@@ -19,6 +19,7 @@ const TalkingTimeChart = lazy(() => import('./components/playerstats/TalkingTime
 const LootStatisticsChart = lazy(() => import('./components/playerstats/LootStatisticsChart').then(m => ({ default: m.LootStatisticsChart })));
 const RoleActionsRankingChart = lazy(() => import('./components/playerstats/RoleActionsRankingChart').then(m => ({ default: m.RoleActionsRankingChart })));
 const PotionScrollStatsChart = lazy(() => import('./components/playerstats/PotionScrollStatsChart').then(m => ({ default: m.PotionScrollStatsChart })));
+const MovementStatisticsChart = lazy(() => import('./components/playerstats/MovementStatisticsChart').then(m => ({ default: m.MovementStatisticsChart })));
 const MonthlyRankingChart = lazy(() => import('./components/playerstats/MonthlyRanking/MonthlyRankingChart').then(m => ({ default: m.MonthlyRankingChart })));
 
 // Death statistics components
@@ -37,6 +38,7 @@ const HarvestProgressChart = lazy(() => import('./components/generalstats/Harves
 const GameDurationInsights = lazy(() => import('./components/generalstats/GameDurationInsights').then(m => ({ default: m.GameDurationInsights })));
 const VictoryTypesChart = lazy(() => import('./components/generalstats/VictoryTypesChart').then(m => ({ default: m.VictoryTypesChart })));
 const GlobalVotingStatsChart = lazy(() => import('./components/generalstats/GlobalVotingStatsChart').then(m => ({ default: m.GlobalVotingStatsChart })));
+const VoteInfluenceChart = lazy(() => import('./components/generalstats/VoteInfluenceChart').then(m => ({ default: m.VoteInfluenceChart })));
 const RolesStatsChart = lazy(() => import('./components/generalstats/RolesStatsChart').then(m => ({ default: m.RolesStatsChart })));
 const TeamCompositionChart = lazy(() => import('./components/generalstats/TeamCompositionChart').then(m => ({ default: m.TeamCompositionChart })));
 const GlobalGameHistoryChart = lazy(() => import('./components/generalstats/GlobalGameHistoryChart').then(m => ({ default: m.GlobalGameHistoryChart })));
@@ -190,6 +192,12 @@ const PLAYER_STATS_MENU = [
     description: 'Transformations (Loup) et précision (Chasseur)'
   },
   { 
+    key: 'movementStats', 
+    label: 'Déplacements', 
+    component: MovementStatisticsChart,
+    description: 'Classement par type de déplacement (course, marche, immobile)'
+  },
+  { 
     key: 'colorRanking', 
     label: 'Couleurs', 
     component: PlayerColorRankingChart,
@@ -251,6 +259,12 @@ const GENERAL_STATS_MENU = [
     label: 'Votes', 
     component: GlobalVotingStatsChart,
     description: 'Analyse globale des comportements de vote en réunion'
+  },
+  { 
+    key: 'voteInfluence', 
+    label: 'Influence', 
+    component: VoteInfluenceChart,
+    description: 'Impact de la prise de parole et du timing de vote sur les éliminations'
   },
   { 
     key: 'harvest', 

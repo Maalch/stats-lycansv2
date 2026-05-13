@@ -83,7 +83,7 @@ interface GameVotingAnalysis {
 /**
  * Determines if a player was alive during a specific meeting
  */
-function wasPlayerAliveAtMeeting(player: PlayerStat, meetingNumber: number): boolean {
+export function wasPlayerAliveAtMeeting(player: PlayerStat, meetingNumber: number): boolean {
   // If player never died, they were alive throughout
   if (!player.DeathTiming) return true;
   
@@ -113,14 +113,14 @@ function wasPlayerAliveAtMeeting(player: PlayerStat, meetingNumber: number): boo
 /**
  * Gets all players who were alive during a specific meeting in a game
  */
-function getAlivePlayersAtMeeting(game: GameLogEntry, meetingNumber: number): PlayerStat[] {
+export function getAlivePlayersAtMeeting(game: GameLogEntry, meetingNumber: number): PlayerStat[] {
   return game.PlayerStats.filter(player => wasPlayerAliveAtMeeting(player, meetingNumber));
 }
 
 /**
  * Determines if a vote was successful (led to elimination)
  */
-function wasVoteSuccessful(game: GameLogEntry, meetingNumber: number, targetPlayerId: string): boolean {
+export function wasVoteSuccessful(game: GameLogEntry, meetingNumber: number, targetPlayerId: string): boolean {
   // Find the player who was targeted by their ID
   const target = game.PlayerStats.find(p => getPlayerId(p) === targetPlayerId);
   if (!target) return false;
