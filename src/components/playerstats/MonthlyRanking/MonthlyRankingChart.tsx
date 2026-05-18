@@ -361,7 +361,7 @@ export function MonthlyRankingChart() {
     const gamesFromMonths: GameLogEntry[] = [];
     for (const m of monthsToConsider) gamesFromMonths.push(...m.games);
     const effectiveTotal = gamesFromMonths.length;
-    const minGames = Math.max(1, Math.ceil(currentYearData.totalGames * MIN_PARTICIPATION_RATIO_YEARLY));
+    const minGames = Math.max(1, Math.ceil(effectiveTotal * MIN_PARTICIPATION_RATIO_YEARLY));
 
     const latestMonth = isAnimating && monthsToConsider.length > 0
       ? monthsToConsider[monthsToConsider.length - 1]
