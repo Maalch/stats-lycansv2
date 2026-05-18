@@ -19,8 +19,10 @@ export interface PlayerMovementStats {
   avgWalkingCrouched: number;
   avgRunning: number;
   runningPercentage: number;         // % of total time spent running
-  immobilePercentage: number;        // % of total time spent immobile (standing + crouched)
+  immobilePercentage: number;        // % of total time spent immobile standing only
   walkingPercentage: number;         // % of total time spent walking (standing + crouched)
+  walkingStandingPercentage: number; // % of total time spent walking standing only
+  crouchedPercentage: number;        // % of total time spent crouched (walking + immobile)
 }
 
 export interface MovementStatsData {
@@ -120,8 +122,8 @@ export function computeMovementStats(gameData: GameLogEntry[], campFilter: CampF
     const totalMovementTime = stats.totalImmobileStanding + stats.totalImmobileCrouched +
       stats.totalWalkingStanding + stats.totalWalkingCrouched + stats.totalRunning;
 
-    const immobileTotal = stats.totalImmobileStanding + stats.totalImmobileCrouched;
     const walkingTotal = stats.totalWalkingStanding + stats.totalWalkingCrouched;
+    const crouchedTotal = stats.totalWalkingCrouched + stats.totalImmobileCrouched;
 
     return {
       player: stats.displayName,
@@ -138,8 +140,10 @@ export function computeMovementStats(gameData: GameLogEntry[], campFilter: CampF
       avgWalkingCrouched: stats.gamesPlayed > 0 ? stats.totalWalkingCrouched / stats.gamesPlayed : 0,
       avgRunning: stats.gamesPlayed > 0 ? stats.totalRunning / stats.gamesPlayed : 0,
       runningPercentage: totalMovementTime > 0 ? (stats.totalRunning / totalMovementTime) * 100 : 0,
-      immobilePercentage: totalMovementTime > 0 ? (immobileTotal / totalMovementTime) * 100 : 0,
+      immobilePercentage: totalMovementTime > 0 ? (stats.totalImmobileStanding / totalMovementTime) * 100 : 0,
       walkingPercentage: totalMovementTime > 0 ? (walkingTotal / totalMovementTime) * 100 : 0,
+      walkingStandingPercentage: totalMovementTime > 0 ? (stats.totalWalkingStanding / totalMovementTime) * 100 : 0,
+      crouchedPercentage: totalMovementTime > 0 ? (crouchedTotal / totalMovementTime) * 100 : 0,
     };
   });
 

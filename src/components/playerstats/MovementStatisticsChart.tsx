@@ -14,7 +14,7 @@ type ChartMovementStat = PlayerMovementStats & {
   isHighlightedAddition?: boolean;
 };
 
-type MovementView = 'running' | 'immobile' | 'breakdown';
+type MovementView = 'running' | 'immobile' | 'walking' | 'crouched' | 'breakdown';
 
 const minGamesOptions = MIN_GAMES_OPTIONS.COMPACT;
 
@@ -89,6 +89,48 @@ export function MovementStatisticsChart() {
       }
     }
     return { immobileChartData: finalData, highlightedPlayerAddedImmobile: added };
+  }, [movementData, minGames, settings.highlightedPlayer]);
+
+  // Walking standing % ranking
+  const { walkingChartData, highlightedPlayerAddedWalking } = useMemo(() => {
+    if (!movementData?.playerStats) {
+      return { walkingChartData: [], highlightedPlayerAddedWalking: false };
+    }
+    const eligible = movementData.playerStats.filter(p => p.gamesPlayed >= minGames);
+    const sorted = [...eligible].sort((a, b) => b.walkingStandingPercentage - a.walkingStandingPercentage).slice(0, CHART_LIMITS.TOP_20);
+
+    const highlightedInTop = settings.highlightedPlayer && sorted.some(p => p.player === settings.highlightedPlayer);
+    let finalData: ChartMovementStat[] = [...sorted];
+    let added = false;
+    if (settings.highlightedPlayer && !highlightedInTop) {
+      const hp = movementData.playerStats.find(p => p.player === settings.highlightedPlayer);
+      if (hp) {
+        finalData.push({ ...hp, isHighlightedAddition: true });
+        added = true;
+      }
+    }
+    return { walkingChartData: finalData, highlightedPlayerAddedWalking: added };
+  }, [movementData, minGames, settings.highlightedPlayer]);
+
+  // Crouched % ranking (WalkingCrouched + ImmobileCrouched)
+  const { crouchedChartData, highlightedPlayerAddedCrouched } = useMemo(() => {
+    if (!movementData?.playerStats) {
+      return { crouchedChartData: [], highlightedPlayerAddedCrouched: false };
+    }
+    const eligible = movementData.playerStats.filter(p => p.gamesPlayed >= minGames);
+    const sorted = [...eligible].sort((a, b) => b.crouchedPercentage - a.crouchedPercentage).slice(0, CHART_LIMITS.TOP_20);
+
+    const highlightedInTop = settings.highlightedPlayer && sorted.some(p => p.player === settings.highlightedPlayer);
+    let finalData: ChartMovementStat[] = [...sorted];
+    let added = false;
+    if (settings.highlightedPlayer && !highlightedInTop) {
+      const hp = movementData.playerStats.find(p => p.player === settings.highlightedPlayer);
+      if (hp) {
+        finalData.push({ ...hp, isHighlightedAddition: true });
+        added = true;
+      }
+    }
+    return { crouchedChartData: finalData, highlightedPlayerAddedCrouched: added };
   }, [movementData, minGames, settings.highlightedPlayer]);
 
   // Avg total movement time per game breakdown (stacked bar)
@@ -234,7 +276,9 @@ export function MovementStatisticsChart() {
         style={{ background: 'var(--bg-tertiary)', color: 'var(--text-primary)', border: '1px solid var(--border-color)', borderRadius: '4px', padding: '0.25rem 0.5rem', fontSize: '0.9rem' }}
       >
         <option value="running">% Temps en course</option>
-        <option value="immobile">% Temps immobile</option>
+        <option value="immobile">% Temps immobile (debout)</option>
+        <option value="walking">% Temps de marche (debout)</option>
+        <option value="crouched">% Temps accroupi</option>
         <option value="breakdown">Répartition moyenne</option>
       </select>
 
@@ -303,26 +347,78 @@ export function MovementStatisticsChart() {
 
         {view === 'immobile' && (
           <div className="lycans-graphique-section">
-            <h3>Pourcentage du temps immobile</h3>
+            <h3>Pourcentage du temps immobile (debout)</h3>
             {renderHighlightNote(highlightedPlayerAddedImmobile)}
-            <FullscreenChart title="% Temps Immobile">
+            <FullscreenChart title="% Temps Immobile (debout)">
               <div style={{ height: 400 }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={immobileChartData} margin={{ top: 20, right: 30, left: 20, bottom: 80 }}>
                     <CartesianGrid strokeDasharray="3 3" />
                     {renderXAxis()}
                     <YAxis
-                      label={{ value: '% du temps immobile', angle: 270, position: 'left', offset: 15, style: { textAnchor: 'middle' } }}
+                      label={{ value: '% du temps immobile debout', angle: 270, position: 'left', offset: 15, style: { textAnchor: 'middle' } }}
                       tickFormatter={(v) => `${v}%`}
                     />
-                    {renderTooltip('% immobile', 'immobilePercentage', true)}
-                    {renderBar('immobilePercentage', '% Temps Immobile')}
+                    {renderTooltip('% immobile debout', 'immobilePercentage', true)}
+                    {renderBar('immobilePercentage', '% Temps Immobile (debout)')}
                   </BarChart>
                 </ResponsiveContainer>
               </div>
             </FullscreenChart>
             <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
               Top {immobileChartData.length} des joueurs (sur {eligiblePlayersCount} ayant au moins {minGames} partie{minGames > 1 ? 's' : ''})
+            </p>
+          </div>
+        )}
+
+        {view === 'walking' && (
+          <div className="lycans-graphique-section">
+            <h3>Pourcentage du temps de marche (debout)</h3>
+            {renderHighlightNote(highlightedPlayerAddedWalking)}
+            <FullscreenChart title="% Temps de Marche (debout)">
+              <div style={{ height: 400 }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={walkingChartData} margin={{ top: 20, right: 30, left: 20, bottom: 80 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    {renderXAxis()}
+                    <YAxis
+                      label={{ value: '% du temps en marche debout', angle: 270, position: 'left', offset: 15, style: { textAnchor: 'middle' } }}
+                      tickFormatter={(v) => `${v}%`}
+                    />
+                    {renderTooltip('% marche debout', 'walkingStandingPercentage', true)}
+                    {renderBar('walkingStandingPercentage', '% Temps de Marche (debout)')}
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </FullscreenChart>
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
+              Top {walkingChartData.length} des joueurs (sur {eligiblePlayersCount} ayant au moins {minGames} partie{minGames > 1 ? 's' : ''})
+            </p>
+          </div>
+        )}
+
+        {view === 'crouched' && (
+          <div className="lycans-graphique-section">
+            <h3>Pourcentage du temps accroupi (marche + immobile)</h3>
+            {renderHighlightNote(highlightedPlayerAddedCrouched)}
+            <FullscreenChart title="% Temps Accroupi">
+              <div style={{ height: 400 }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={crouchedChartData} margin={{ top: 20, right: 30, left: 20, bottom: 80 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    {renderXAxis()}
+                    <YAxis
+                      label={{ value: '% du temps accroupi', angle: 270, position: 'left', offset: 15, style: { textAnchor: 'middle' } }}
+                      tickFormatter={(v) => `${v}%`}
+                    />
+                    {renderTooltip('% accroupi', 'crouchedPercentage', true)}
+                    {renderBar('crouchedPercentage', '% Temps Accroupi')}
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </FullscreenChart>
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
+              Top {crouchedChartData.length} des joueurs (sur {eligiblePlayersCount} ayant au moins {minGames} partie{minGames > 1 ? 's' : ''})
             </p>
           </div>
         )}
