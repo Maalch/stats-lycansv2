@@ -13,11 +13,11 @@ export interface PlayerMovementStats {
   totalWalkingCrouched: number;
   totalRunning: number;
   totalMovementTime: number;         // Sum of all movement categories
-  avgImmobileStanding: number;       // Per game
-  avgImmobileCrouched: number;
-  avgWalkingStanding: number;
-  avgWalkingCrouched: number;
-  avgRunning: number;
+  runningPer60Min: number;           // Seconds running per 60 min alive
+  immobileStandingPer60Min: number;  // Seconds immobile standing per 60 min alive
+  immobileCrouchedPer60Min: number;  // Seconds immobile crouched per 60 min alive
+  walkingStandingPer60Min: number;   // Seconds walking standing per 60 min alive
+  walkingCrouchedPer60Min: number;   // Seconds walking crouched per 60 min alive
   runningPercentage: number;         // % of total time spent running
   immobilePercentage: number;        // % of total time spent immobile standing only
   walkingPercentage: number;         // % of total time spent walking (standing + crouched)
@@ -134,11 +134,11 @@ export function computeMovementStats(gameData: GameLogEntry[], campFilter: CampF
       totalWalkingCrouched: stats.totalWalkingCrouched,
       totalRunning: stats.totalRunning,
       totalMovementTime,
-      avgImmobileStanding: stats.gamesPlayed > 0 ? stats.totalImmobileStanding / stats.gamesPlayed : 0,
-      avgImmobileCrouched: stats.gamesPlayed > 0 ? stats.totalImmobileCrouched / stats.gamesPlayed : 0,
-      avgWalkingStanding: stats.gamesPlayed > 0 ? stats.totalWalkingStanding / stats.gamesPlayed : 0,
-      avgWalkingCrouched: stats.gamesPlayed > 0 ? stats.totalWalkingCrouched / stats.gamesPlayed : 0,
-      avgRunning: stats.gamesPlayed > 0 ? stats.totalRunning / stats.gamesPlayed : 0,
+      runningPer60Min: totalMovementTime > 0 ? (stats.totalRunning / totalMovementTime) * 3600 : 0,
+      immobileStandingPer60Min: totalMovementTime > 0 ? (stats.totalImmobileStanding / totalMovementTime) * 3600 : 0,
+      immobileCrouchedPer60Min: totalMovementTime > 0 ? (stats.totalImmobileCrouched / totalMovementTime) * 3600 : 0,
+      walkingStandingPer60Min: totalMovementTime > 0 ? (stats.totalWalkingStanding / totalMovementTime) * 3600 : 0,
+      walkingCrouchedPer60Min: totalMovementTime > 0 ? (stats.totalWalkingCrouched / totalMovementTime) * 3600 : 0,
       runningPercentage: totalMovementTime > 0 ? (stats.totalRunning / totalMovementTime) * 100 : 0,
       immobilePercentage: totalMovementTime > 0 ? (stats.totalImmobileStanding / totalMovementTime) * 100 : 0,
       walkingPercentage: totalMovementTime > 0 ? (walkingTotal / totalMovementTime) * 100 : 0,

@@ -133,15 +133,14 @@ export function MovementStatisticsChart() {
     return { crouchedChartData: finalData, highlightedPlayerAddedCrouched: added };
   }, [movementData, minGames, settings.highlightedPlayer]);
 
-  // Avg total movement time per game breakdown (stacked bar)
+  // Movement time per 60 min alive breakdown (stacked bar)
   const { breakdownChartData, highlightedPlayerAddedBreakdown } = useMemo(() => {
     if (!movementData?.playerStats) {
       return { breakdownChartData: [], highlightedPlayerAddedBreakdown: false };
     }
     const eligible = movementData.playerStats.filter(p => p.gamesPlayed >= minGames);
     const sorted = [...eligible]
-      .sort((a, b) => (b.avgRunning + b.avgWalkingStanding + b.avgWalkingCrouched + b.avgImmobileStanding + b.avgImmobileCrouched)
-        - (a.avgRunning + a.avgWalkingStanding + a.avgWalkingCrouched + a.avgImmobileStanding + a.avgImmobileCrouched))
+      .sort((a, b) => b.runningPer60Min - a.runningPer60Min)
       .slice(0, CHART_LIMITS.TOP_20);
 
     const highlightedInTop = settings.highlightedPlayer && sorted.some(p => p.player === settings.highlightedPlayer);
@@ -237,13 +236,13 @@ export function MovementStatisticsChart() {
                 <strong>{primaryLabel}:</strong> {isPercent ? `${primaryValue.toFixed(1)}%` : formatSecondsToMinutesSeconds(primaryValue)}
               </div>
               <div style={{ marginTop: '4px', paddingTop: '4px', borderTop: '1px solid var(--border-color)' }}>
-                <strong>Moyennes par partie:</strong>
+                <strong>Par 60 min de jeu:</strong>
               </div>
-              <div>🏃 Course: {formatSecondsToMinutesSeconds(d.avgRunning)} ({d.runningPercentage.toFixed(1)}%)</div>
-              <div>🚶 Marche debout: {formatSecondsToMinutesSeconds(d.avgWalkingStanding)}</div>
-              <div>🧎 Marche accroupi: {formatSecondsToMinutesSeconds(d.avgWalkingCrouched)}</div>
-              <div>🧍 Immobile debout: {formatSecondsToMinutesSeconds(d.avgImmobileStanding)}</div>
-              <div>🪑 Immobile accroupi: {formatSecondsToMinutesSeconds(d.avgImmobileCrouched)}</div>
+              <div>🏃 Course: {formatSecondsToMinutesSeconds(d.runningPer60Min)} ({d.runningPercentage.toFixed(1)}%)</div>
+              <div>🚶 Marche debout: {formatSecondsToMinutesSeconds(d.walkingStandingPer60Min)} ({d.walkingStandingPercentage.toFixed(1)}%)</div>
+              <div>🧎 Marche accroupi: {formatSecondsToMinutesSeconds(d.walkingCrouchedPer60Min)}</div>
+              <div>🧍 Immobile debout: {formatSecondsToMinutesSeconds(d.immobileStandingPer60Min)}</div>
+              <div>🪑 Immobile accroupi: {formatSecondsToMinutesSeconds(d.immobileCrouchedPer60Min)}</div>
               {d.isHighlightedAddition && (
                 <div style={{ marginTop: '4px', paddingTop: '4px', borderTop: '1px solid var(--accent-primary)', color: 'var(--accent-primary)', fontStyle: 'italic' }}>
                   🎯 Affiché via sélection personnelle
@@ -279,7 +278,7 @@ export function MovementStatisticsChart() {
         <option value="immobile">% Temps immobile (debout)</option>
         <option value="walking">% Temps de marche (debout)</option>
         <option value="crouched">% Temps accroupi</option>
-        <option value="breakdown">Répartition moyenne</option>
+        <option value="breakdown">Répartition par 60 min</option>
       </select>
 
       <label htmlFor="camp-filter-movement" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginLeft: '1rem' }}>Camp:</label>
@@ -425,35 +424,35 @@ export function MovementStatisticsChart() {
 
         {view === 'breakdown' && (
           <div className="lycans-graphique-section">
-            <h3>Répartition moyenne du temps par partie</h3>
+            <h3>Répartition du temps (par 60 min)</h3>
             {renderHighlightNote(highlightedPlayerAddedBreakdown)}
-            <FullscreenChart title="Répartition Moyenne du Temps">
+            <FullscreenChart title="Répartition du Temps (par 60 min)">
               <div style={{ height: 400 }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={breakdownChartData} margin={{ top: 20, right: 30, left: 20, bottom: 80 }}>
                     <CartesianGrid strokeDasharray="3 3" />
                     {renderXAxis()}
                     <YAxis
-                      label={{ value: 'Secondes par partie', angle: 270, position: 'left', offset: 15, style: { textAnchor: 'middle' } }}
+                      label={{ value: 'Secondes par 60 min', angle: 270, position: 'left', offset: 15, style: { textAnchor: 'middle' } }}
                       tickFormatter={(v) => formatSecondsToMinutesSeconds(v)}
+                      domain={[0, 3600]}
                     />
                     <Tooltip
                       content={({ active, payload }) => {
                         if (active && payload && payload.length > 0) {
                           const d = payload[0].payload as ChartMovementStat;
-                          const totalAvg = d.avgRunning + d.avgWalkingStanding + d.avgWalkingCrouched + d.avgImmobileStanding + d.avgImmobileCrouched;
                           return (
                             <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '4px', padding: '8px', fontSize: '0.85rem' }}>
                               <div style={{ fontWeight: 'bold', marginBottom: '4px' }}>{d.player}</div>
                               <div>Parties: {d.gamesPlayed}</div>
                               <div style={{ marginTop: '4px', paddingTop: '4px', borderTop: '1px solid var(--border-color)' }}>
-                                <strong>Temps moyen total: {formatSecondsToMinutesSeconds(totalAvg)}</strong>
+                                <strong>Répartition sur 60 min de jeu:</strong>
                               </div>
-                              <div style={{ color: '#e74c3c' }}>🏃 Course: {formatSecondsToMinutesSeconds(d.avgRunning)} ({d.runningPercentage.toFixed(1)}%)</div>
-                              <div style={{ color: '#3498db' }}>🚶 Marche debout: {formatSecondsToMinutesSeconds(d.avgWalkingStanding)} ({d.walkingPercentage > 0 ? ((d.avgWalkingStanding / totalAvg) * 100).toFixed(1) : '0'}%)</div>
-                              <div style={{ color: '#2ecc71' }}>🧎 Marche accroupi: {formatSecondsToMinutesSeconds(d.avgWalkingCrouched)}</div>
-                              <div style={{ color: '#f39c12' }}>🧍 Immobile debout: {formatSecondsToMinutesSeconds(d.avgImmobileStanding)}</div>
-                              <div style={{ color: '#9b59b6' }}>🪑 Immobile accroupi: {formatSecondsToMinutesSeconds(d.avgImmobileCrouched)}</div>
+                              <div style={{ color: '#e74c3c' }}>🏃 Course: {formatSecondsToMinutesSeconds(d.runningPer60Min)} ({d.runningPercentage.toFixed(1)}%)</div>
+                              <div style={{ color: '#3498db' }}>🚶 Marche debout: {formatSecondsToMinutesSeconds(d.walkingStandingPer60Min)} ({d.walkingStandingPercentage.toFixed(1)}%)</div>
+                              <div style={{ color: '#2ecc71' }}>🧎 Marche accroupi: {formatSecondsToMinutesSeconds(d.walkingCrouchedPer60Min)}</div>
+                              <div style={{ color: '#f39c12' }}>🧍 Immobile debout: {formatSecondsToMinutesSeconds(d.immobileStandingPer60Min)}</div>
+                              <div style={{ color: '#9b59b6' }}>🪑 Immobile accroupi: {formatSecondsToMinutesSeconds(d.immobileCrouchedPer60Min)}</div>
                               {d.isHighlightedAddition && (
                                 <div style={{ marginTop: '4px', paddingTop: '4px', borderTop: '1px solid var(--accent-primary)', color: 'var(--accent-primary)', fontStyle: 'italic' }}>
                                   🎯 Affiché via sélection personnelle
@@ -465,11 +464,11 @@ export function MovementStatisticsChart() {
                         return null;
                       }}
                     />
-                    <Bar dataKey="avgRunning" stackId="movement" fill="#e74c3c" name="Course" />
-                    <Bar dataKey="avgWalkingStanding" stackId="movement" fill="#3498db" name="Marche debout" />
-                    <Bar dataKey="avgWalkingCrouched" stackId="movement" fill="#2ecc71" name="Marche accroupi" />
-                    <Bar dataKey="avgImmobileStanding" stackId="movement" fill="#f39c12" name="Immobile debout" />
-                    <Bar dataKey="avgImmobileCrouched" stackId="movement" fill="#9b59b6" name="Immobile accroupi" />
+                    <Bar dataKey="runningPer60Min" stackId="movement" fill="#e74c3c" name="Course" />
+                    <Bar dataKey="walkingStandingPer60Min" stackId="movement" fill="#3498db" name="Marche debout" />
+                    <Bar dataKey="walkingCrouchedPer60Min" stackId="movement" fill="#2ecc71" name="Marche accroupi" />
+                    <Bar dataKey="immobileStandingPer60Min" stackId="movement" fill="#f39c12" name="Immobile debout" />
+                    <Bar dataKey="immobileCrouchedPer60Min" stackId="movement" fill="#9b59b6" name="Immobile accroupi" />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
