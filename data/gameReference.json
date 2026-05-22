@@ -316,14 +316,6 @@
       "translationKey": "NALES_ROLE_DESCRIPTION_EXORCIST"
     },
     {
-      "id": "vengeur",
-      "name": "Vengeur",
-      "emoji": "⚔️",
-      "description": "Quand son pouvoir est chargé, peut tuer un joueur en forme humaine ou assommer un loup transformé. Le pouvoir se charge quand un loup transformé est proche, avec un bonus s'il tue quelqu'un.",
-      "descriptionShort": "Peut tuer un joueur en forme humaine ou étourdir un loup, après avoir entendu un loup assez longtemps",
-      "translationKey": "NALES_ROLE_DESCRIPTION_AVENGER"
-    },
-    {
       "id": "detective",
       "name": "Détective",
       "emoji": "🕵️",
@@ -346,14 +338,6 @@
       "description": "Récolte pour obtenir son pouvoir puis peut protéger secrètement sa cible en journée. Cette nuit, la première fois qu'un loup l'attaque, elle sera protégée et le loup sera repoussé. Moins efficace sur les villageois Élite.",
       "descriptionShort": "Peut protéger un joueur d'une attaque de loup",
       "translationKey": "NALES_ROLE_DESCRIPTION_PRIEST"
-    },
-    {
-      "id": "invocateur",
-      "name": "Invocateur",
-      "emoji": "👻",
-      "description": "Charge son pouvoir en étant bas en vie. Avec au moins 50%, la nuit, peut invoquer l'esprit du Villageois mort le plus récemment : il est contrôlé par son joueur et peut attaquer un loup pour le blesser et le ralentir.",
-      "descriptionShort": "Charge son pouvoir en étant bas en vie, puis peut invoquer un esprit vengeur",
-      "translationKey": "NALES_ROLE_DESCRIPTION_SUMMONER"
     },
     {
       "id": "eclaireur",
@@ -485,15 +469,6 @@
       "descriptionVillager": "Peut créer des gadgets et est également plus efficace contre leurs effets",
       "descriptionWolf": "Peut créer des gadgets et est également plus efficace contre leurs effets",
       "translationKey": "NALES_ROLE_DESCRIPTION_ENGINEER"
-    },
-    {
-      "id": "furtif",
-      "name": "Furtif",
-      "emoji": "🥷",
-      "description": "En forme humaine, peut devenir invisible avec des pas silencieux (mais ne peut pas courir). En forme de loup, reste visible mais ne provoque pas l'effet de peur.",
-      "descriptionVillager": "Peut devenir invisible et camoufler ses bruits de pas",
-      "descriptionWolf": "En forme de loup, peut empêcher les joueurs d'entendre la musique de loup",
-      "translationKey": "NALES_ROLE_DESCRIPTION_STEALTHER"
     },
     {
       "id": "politicien",
@@ -1193,11 +1168,11 @@
       "Sournois": { "category": "wolfPowers", "id": "sournois" },
       "Paysan": { "category": "villagerPowers", "id": "paysan", "legacy": true, "replacedBy": "ermite" },
       "Exorciste": { "category": "villagerPowers", "id": "exorciste" },
-      "Vengeur": { "category": "villagerPowers", "id": "vengeur" },
+      "Vengeur": { "category": "villagerPowers", "id": "vengeur", "legacy": true, "replacedBy": "ombre" },
       "Détective": { "category": "villagerPowers", "id": "detective" },
       "Survivaliste": { "category": "villagerPowers", "id": "survivaliste" },
       "Prêtre": { "category": "villagerPowers", "id": "pretre" },
-      "Invocateur": { "category": "villagerPowers", "id": "invocateur" },
+      "Invocateur": { "category": "villagerPowers", "id": "invocateur", "legacy": true, "replacedBy": "magicien" },
       "Éclaireur": { "category": "villagerPowers", "id": "eclaireur" },
       "Magicien": { "category": "villagerPowers", "id": "magicien" },
       "Mystique": { "category": "villagerPowers", "id": "mystique" },
@@ -1213,7 +1188,6 @@
       "Infecté": "infecte",
       "Téléporteur": "teleporteur",
       "Ingénieur": "ingenieur",
-      "Furtif": "furtif",
       "Politicien": "politicien",
       "Métabolique": "metabolique",
       "Illusionniste": "illusionniste",
