@@ -424,7 +424,10 @@ export function GameReferencePage() {
       matchesSearch(searchTerms, c.name, c.description, c.winCondition, c.roles.join(' '))
     );
 
-    const mainRoles = data.mainRoles.filter(r =>
+    const sortByName = <T extends { name: string }>(arr: T[]): T[] =>
+      arr.sort((a, b) => a.name.localeCompare(b.name, 'fr'));
+
+    const mainRoles = sortByName(data.mainRoles.filter(r =>
       matchesSearch(
         searchTerms,
         r.name,
@@ -434,47 +437,47 @@ export function GameReferencePage() {
         r.type,
         r.subRoles?.map(sub => sub.name).join(' ')
       )
-    );
+    ));
 
-    const wolfPowers = data.wolfPowers.filter(p =>
+    const wolfPowers = sortByName(data.wolfPowers.filter(p =>
       matchesSearch(searchTerms, p.name, p.description, p.descriptionShort)
-    );
+    ));
 
-    const villagerPowers = data.villagerPowers.filter(p =>
+    const villagerPowers = sortByName(data.villagerPowers.filter(p =>
       matchesSearch(searchTerms, p.name, p.description, p.descriptionShort)
-    );
+    ));
 
-    const elitePowers = data.elitePowers.filter(p =>
+    const elitePowers = sortByName(data.elitePowers.filter(p =>
       matchesSearch(searchTerms, p.name, p.description, p.descriptionShort)
-    );
+    ));
 
-    const secondaryRoles = data.secondaryRoles.filter(r =>
+    const secondaryRoles = sortByName(data.secondaryRoles.filter(r =>
       matchesSearch(searchTerms, r.name, r.description, r.descriptionShort, r.descriptionVillager, r.descriptionWolf)
-    );
+    ));
 
     const deadRoles = data.deadRoles.filter(r =>
       matchesSearch(searchTerms, r.name, r.description, r.camp)
     );
 
-    const accessories = data.accessories.filter(a =>
+    const accessories = sortByName(data.accessories.filter(a =>
       matchesSearch(searchTerms, a.name, a.description, a.tinkererEffect)
-    );
+    ));
 
-    const gadgets = data.gadgets.filter(g =>
+    const gadgets = sortByName(data.gadgets.filter(g =>
       matchesSearch(searchTerms, g.name, g.description, g.gasTypes?.map(gas => gas.name).join(' '))
-    );
+    ));
 
-    const potionEffects = data.potionEffects.filter(e =>
+    const potionEffects = sortByName(data.potionEffects.filter(e =>
       matchesSearch(searchTerms, e.name, e.type, e.tutorial)
-    );
+    ));
 
     const statusEffects = data.statusEffects.filter(e =>
       matchesSearch(searchTerms, e.name, e.tutorial)
     );
 
-    const events = data.events.filter(e =>
+    const events = sortByName(data.events.filter(e =>
       matchesSearch(searchTerms, e.name, e.description)
-    );
+    ));
 
     const gameRules = (data.gameRules || []).filter(r =>
       matchesSearch(searchTerms, r.name, r.description, r.details.join(' '))
