@@ -98,14 +98,25 @@ export function GameDetailsChart() {
       }
 
       const finalRole = getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []);
+      const initialCamp = getPlayerCampFromRole(playerStat.MainRoleInitial);
       const camp = getPlayerCampFromRole(finalRole);
       const campColor = lycansColorScheme[camp] || 'var(--text-primary)';
       const victoryIcon = playerStat.Victorious ? '✅' : '❌';
+      // For the Vaudou camp, display the finalRole to distinguish Vaudou from Zombie
+      // For the Loup camp, show "Loup (rez)" if the player was rezed into the Loup camp
+      let campDisplay: string;
+      if (camp === 'Vaudou') {
+        campDisplay = finalRole;
+      } else if (camp === 'Loup' && initialCamp !== 'Loup') {
+        campDisplay = 'Loup (rez)';
+      } else {
+        campDisplay = camp;
+      }
 
       return (
         <>
           {victoryIcon}   
-          {' '}<span style={{ color: campColor, fontWeight: 600 }}>{camp}</span>
+          {' '}<span style={{ color: campColor, fontWeight: 600 }}>{campDisplay}</span>
         </>
       );
     }
