@@ -993,8 +993,10 @@ export function computeGameDetailsFromGameLog(
       victoryType: game.LegacyData?.VictoryType || null,
       playerVODs: convertPlayerVODsToEmbedUrls(game.LegacyData?.PlayerVODs),
       gameDuration: calculateGameDuration(game.StartDate, game.EndDate),
+      startDate: game.StartDate,
       playerData : game.PlayerStats,
       clips: game.Clips || [], // Include clips array from GameLogEntry
+      gameEvents: game.GameEvents || [], // Include game events for timeline
     };
   });
 }

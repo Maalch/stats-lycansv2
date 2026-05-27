@@ -876,3 +876,200 @@
   font-style: italic;
   margin: 0;
 }
+
+/* === Game Timeline === */
+
+.lycans-timeline-toggle {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+
+.lycans-timeline-toggle:hover {
+  opacity: 0.8;
+}
+
+.lycans-timeline-toggle-arrow {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.lycans-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.lycans-timeline-journee {
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.lycans-timeline-journee-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 1rem;
+  background: var(--bg-secondary);
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  text-align: left;
+  transition: background 0.15s ease;
+}
+
+.lycans-timeline-journee-header:hover {
+  background: var(--bg-tertiary);
+}
+
+.lycans-timeline-journee-header.expanded {
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.lycans-timeline-journee-arrow {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.lycans-timeline-journee-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.lycans-timeline-phase {
+  border-left: 4px solid var(--border-color);
+}
+
+.lycans-timeline-phase--day {
+  border-left-color: #d4a017;
+}
+
+.lycans-timeline-phase--night {
+  border-left-color: #5b4fa8;
+}
+
+.lycans-timeline-phase--meeting {
+  border-left-color: #2b8a8a;
+}
+
+.lycans-timeline-phase--other {
+  border-left-color: var(--text-secondary);
+}
+
+.lycans-timeline-phase-header {
+  padding: 0.4rem 1rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+}
+
+.lycans-timeline-phase-header--day {
+  background: rgba(212, 160, 23, 0.12);
+  color: #d4a017;
+}
+
+.lycans-timeline-phase-header--night {
+  background: rgba(91, 79, 168, 0.12);
+  color: #8b7fd4;
+}
+
+.lycans-timeline-phase-header--meeting {
+  background: rgba(43, 138, 138, 0.12);
+  color: #2b8a8a;
+}
+
+.lycans-timeline-phase-header--other {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+.lycans-timeline-events {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: var(--bg-tertiary);
+}
+
+.lycans-timeline-event {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.88rem;
+  transition: background 0.15s ease;
+}
+
+.lycans-timeline-event:last-child {
+  border-bottom: none;
+}
+
+.lycans-timeline-event:hover {
+  background: var(--bg-secondary);
+}
+
+.lycans-timeline-event--death {
+  background: rgba(220, 53, 69, 0.06);
+}
+
+.lycans-timeline-event--vote {
+  background: rgba(43, 138, 138, 0.04);
+}
+
+.lycans-timeline-event-time {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  font-family: monospace;
+  min-width: 60px;
+  flex-shrink: 0;
+}
+
+.lycans-timeline-event-emoji {
+  font-size: 1rem;
+  flex-shrink: 0;
+  width: 1.4rem;
+  text-align: center;
+}
+
+.lycans-timeline-event-content {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.lycans-timeline-event-player {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.lycans-timeline-event-desc {
+  color: var(--text-primary);
+}
+
+/* Responsive: stack on small screens */
+@media (max-width: 600px) {
+  .lycans-timeline-event {
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .lycans-timeline-event-time {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .lycans-timeline-event-content {
+    padding-left: 1.9rem;
+  }
+}

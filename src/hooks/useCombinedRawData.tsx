@@ -90,6 +90,13 @@ export interface LegacyData {
 
 }
 
+export interface GameEvent {
+  Date: string;                   // ISO date string when the event occurred
+  Timing: string;                 // Game timing (e.g., "J1", "N1", "M1")
+  Type: string;                   // Event type (e.g., "NewPhase", "NewMayor", "DailyEventStart")
+  Name: string;                   // Event name/value (e.g., phase name, mayor name, event name)
+}
+
 export interface GameLogEntry {
   Id: string;
   DisplayedId: string;    // Global chronological game number (e.g., "123")
@@ -104,6 +111,7 @@ export interface GameLogEntry {
   Clips: Clip[];                 // Array of clips associated with this game
   LegacyData: LegacyData | null;
   PlayerStats: PlayerStat[];
+  GameEvents: GameEvent[];       // Array of game events (phase changes, mayor elections, daily events)
 }
 
 export interface GameLogData {

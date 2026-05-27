@@ -10,6 +10,7 @@ import { ClipViewer } from '../common/ClipViewer';
 import { getClipDisplayName, findRelatedClips, findNextClip } from '../../utils/clipUtils';
 import { useAllClips } from '../../hooks/useClips';
 import { isVillageoisElite, getEffectivePower } from '../../utils/roleUtils';
+import { GameTimeline } from './GameTimeline';
 
 // Interactive Camp Visualization Component
 interface CampVisualizationProps {
@@ -469,6 +470,9 @@ export function GameDetailView({ game }: { game: any }) {
           </div>
         </div>
 
+
+        {/* Game Timeline */}
+        <GameTimeline game={game} />
 
         {/* Video and Clips Toggle Buttons */}
         {(hasAnyVOD || (game.clips && game.clips.length > 0)) && (

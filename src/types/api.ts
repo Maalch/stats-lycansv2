@@ -101,6 +101,26 @@ export function buildPlayersColor(joueursData: JoueursData | null): Record<strin
 
 export const mainCampOrder = ['Villageois', 'Loup', 'Amoureux', 'Idiot du Village', 'Vaudou'];
 
+// Translations for DailyEventStart names (English server names → French display names)
+export const DAILY_EVENT_TRANSLATIONS: Record<string, string> = {
+  'Plague': 'Peste',
+  'Harvest': 'Abondance',
+  'Haste': 'Hâte',
+  'Spellstorm': 'Tempête de sort',
+  'Fog': 'Brouillard',
+  'Eclipse': 'Éclipse',
+  'Protection': 'Protection',
+  'Duplicity': 'Duplicité',
+};
+
+/**
+ * Translate a DailyEventStart event name from its server value to the French display name.
+ * Returns the original name if no translation is found.
+ */
+export function translateDailyEventName(name: string): string {
+  return DAILY_EVENT_TRANSLATIONS[name] ?? name;
+}
+
 // Import centralized constants - export for backward compatibility
 import { MIN_GAMES_OPTIONS } from '../config/chartConstants';
 export const minGamesOptions = MIN_GAMES_OPTIONS.EXTENDED;

@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.9.3';
+export const APP_VERSION = '1.9.4';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,15 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.9.4',
+    date: '27/05/2026',
+    description: 'Ajout d\'une chronologie interactive dans le détail des parties : timeline par journée (Jour, Nuit, Réunion) avec toutes les actions des joueurs (transformations, gadgets, potions, tirs, votes, morts) dans',
+    link: {
+      mainTab: 'gameDetails',
+      text: 'Détails des Parties'
+    }
+  },
   {
     version: 'v1.9.3',
     date: '13/05/2026',
