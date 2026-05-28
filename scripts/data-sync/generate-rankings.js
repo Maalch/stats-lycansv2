@@ -466,6 +466,23 @@ async function main(sourceKey = 'main', forceFullRecalculation = false) {
     const gameLogContent = await fs.readFile(gameLogPath, 'utf-8');
     const gameLogData = JSON.parse(gameLogContent);
 
+    // Load joueurs.json to resolve canonical player names by Steam ID
+    const joueursPath = path.join(dataDir, 'joueurs.json');
+    let canonicalNameMap = new Map(); // steamId → canonical name
+    try {
+      const joueursContent = await fs.readFile(joueursPath, 'utf-8');
+      const joueursData = JSON.parse(joueursContent);
+      for (const player of (joueursData.Players || [])) {
+        const steamId = player.SteamID || player.ID;
+        if (steamId && player.Joueur) {
+          canonicalNameMap.set(String(steamId), player.Joueur);
+        }
+      }
+      console.log(`👤 Loaded ${canonicalNameMap.size} canonical player names from joueurs.json`);
+    } catch (e) {
+      console.log('  ⚠️  Could not load joueurs.json for canonical name resolution:', e.message);
+    }
+
     console.log(`📊 Processing ${gameLogData.TotalRecords} games...`);
 
     let RankingsData;
@@ -494,6 +511,22 @@ async function main(sourceKey = 'main', forceFullRecalculation = false) {
         const result = generateAllPlayerRankingsIncremental(gameLogData, cache);
         RankingsData = result.Rankings;
         updatedCache = result.updatedCache;
+      }
+    }
+
+    // Resolve canonical player names in Rankings using joueurs.json
+    if (canonicalNameMap.size > 0 && RankingsData.Rankings) {
+      let resolved = 0;
+      for (const [playerId, ranking] of Object.entries(RankingsData.Rankings)) {
+        const canonical = canonicalNameMap.get(String(playerId));
+        if (canonical && canonical !== ranking.playerName) {
+          console.log(`  🔄 ${ranking.playerName} → ${canonical} (ID: ${playerId})`);
+          ranking.playerName = canonical;
+          resolved++;
+        }
+      }
+      if (resolved > 0) {
+        console.log(`  ✅ Resolved ${resolved} player name(s) to canonical form`);
       }
     }
 

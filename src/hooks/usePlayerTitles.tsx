@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSettings } from '../context/SettingsContext';
+import { useJoueursData } from './useJoueursData';
 
 export interface TitleCondition {
   stat: string;
@@ -70,6 +71,7 @@ export interface PlayerTitlesResponse {
  */
 export function usePlayerTitles(playerName?: string | null) {
   const { settings } = useSettings();
+  const { joueursData } = useJoueursData();
   const [data, setData] = useState<PlayerTitlesResponse | null>(null);
   const [playerData, setPlayerData] = useState<PlayerTitleData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -105,16 +107,26 @@ export function usePlayerTitles(playerName?: string | null) {
 
         // If a specific player is requested, extract their data
         if (playerName && titlesData.players) {
-          // Find player by name (playerTitles uses playerId as key, so we need to search)
-          const playerEntry = Object.entries(titlesData.players).find(
-            ([_, data]) => data.playerName === playerName
-          );
+          // Find player's Steam ID from joueurs.json, then look up by key
+          const playerInfo = joueursData?.Players?.find(p => p.Joueur === playerName);
+          const steamId = playerInfo?.SteamID;
           
-          if (playerEntry) {
-            setPlayerData(playerEntry[1]);
+          let entry: PlayerTitleData | null = null;
+          
+          if (steamId && titlesData.players[steamId]) {
+            // Primary lookup: by Steam ID (key in playerTitles.json)
+            entry = titlesData.players[steamId];
           } else {
-            setPlayerData(null);
+            // Fallback: search by playerName for backward compatibility
+            const found = Object.entries(titlesData.players).find(
+              ([_, data]) => data.playerName === playerName
+            );
+            if (found) {
+              entry = found[1];
+            }
           }
+          
+          setPlayerData(entry);
         } else {
           setPlayerData(null);
         }
@@ -129,7 +141,7 @@ export function usePlayerTitles(playerName?: string | null) {
     };
 
     loadTitles();
-  }, [settings.dataSource, playerName]);
+  }, [settings.dataSource, playerName, joueursData]);
 
   return {
     data,
