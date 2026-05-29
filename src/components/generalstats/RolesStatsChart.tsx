@@ -19,10 +19,13 @@ interface RoleStats {
   roleBreakdown?: { role: string; count: number }[];
 }
 
+type SecondaryRoleCampFilter = 'all' | 'villageois' | 'loup' | 'autres';
+
 interface RoleData {
   villageoisPowers: RoleStats[];
   loupPowers: RoleStats[];
   secondaryRoles: RoleStats[];
+  secondaryRolesByCamp: Record<'villageois' | 'loup' | 'autres', RoleStats[]>;
   villageoisEliteCombinations: RoleStats[];
 }
 
@@ -36,7 +39,10 @@ function computeAllPlayersRoleStats(gameData: GameLogEntry[]): RoleData | null {
 
   const villageoisPowersMap = new Map<string, { appearances: number; wins: number; winsWithoutRoleChange: number; gamesWithoutRoleChange: number }>();
   const loupPowersMap = new Map<string, { appearances: number; wins: number; winsWithoutRoleChange: number; gamesWithoutRoleChange: number; roleBreakdown: Map<string, number> }>();
-  const secondaryRolesMap = new Map<string, { appearances: number; wins: number; winsWithoutRoleChange: number; gamesWithoutRoleChange: number }>();
+  const secondaryRolesMap = new Map<string, {
+    appearances: number; wins: number; winsWithoutRoleChange: number; gamesWithoutRoleChange: number;
+    byCamp: Record<'villageois' | 'loup' | 'autres', { appearances: number; wins: number; winsWithoutRoleChange: number; gamesWithoutRoleChange: number }>
+  }>();
   const villageoisEliteCombinationsMap = new Map<string, { appearances: number; wins: number; winsWithoutRoleChange: number; gamesWithoutRoleChange: number }>();
 
   gameData.forEach((game) => {
@@ -198,22 +204,27 @@ function computeAllPlayersRoleStats(gameData: GameLogEntry[]): RoleData | null {
 
       // Process Secondary Role (for all camps)
       if (playerStat.SecondaryRole && playerStat.SecondaryRole.trim() !== '' && playerStat.SecondaryRole !== 'Inconnu') {
-        // Skip "Inconnu" secondary role
-        if (false) {
-          return;
-        }
+        const campKey: 'villageois' | 'loup' | 'autres' = playerCamp === 'Villageois' ? 'villageois' : (isWolfFamily ? 'loup' : 'autres');
         const currentStats = secondaryRolesMap.get(playerStat.SecondaryRole) || { 
           appearances: 0, 
           wins: 0, 
           winsWithoutRoleChange: 0, 
-          gamesWithoutRoleChange: 0 
+          gamesWithoutRoleChange: 0,
+          byCamp: {
+            villageois: { appearances: 0, wins: 0, winsWithoutRoleChange: 0, gamesWithoutRoleChange: 0 },
+            loup: { appearances: 0, wins: 0, winsWithoutRoleChange: 0, gamesWithoutRoleChange: 0 },
+            autres: { appearances: 0, wins: 0, winsWithoutRoleChange: 0, gamesWithoutRoleChange: 0 }
+          }
         };
-        secondaryRolesMap.set(playerStat.SecondaryRole, {
-          appearances: currentStats.appearances + 1,
-          wins: currentStats.wins + (playerWon ? 1 : 0),
-          winsWithoutRoleChange: currentStats.winsWithoutRoleChange + (!roleChanged && playerWon ? 1 : 0),
-          gamesWithoutRoleChange: currentStats.gamesWithoutRoleChange + (!roleChanged ? 1 : 0)
-        });
+        currentStats.appearances += 1;
+        currentStats.wins += playerWon ? 1 : 0;
+        currentStats.winsWithoutRoleChange += (!roleChanged && playerWon) ? 1 : 0;
+        currentStats.gamesWithoutRoleChange += !roleChanged ? 1 : 0;
+        currentStats.byCamp[campKey].appearances += 1;
+        currentStats.byCamp[campKey].wins += playerWon ? 1 : 0;
+        currentStats.byCamp[campKey].winsWithoutRoleChange += (!roleChanged && playerWon) ? 1 : 0;
+        currentStats.byCamp[campKey].gamesWithoutRoleChange += !roleChanged ? 1 : 0;
+        secondaryRolesMap.set(playerStat.SecondaryRole, currentStats);
       }
     });
 
@@ -277,20 +288,24 @@ function computeAllPlayersRoleStats(gameData: GameLogEntry[]): RoleData | null {
       .sort((a, b) => b.appearances - a.appearances);
   };
 
-  const mapToArraySecondary = (map: Map<string, { appearances: number; wins: number; winsWithoutRoleChange: number; gamesWithoutRoleChange: number }>): RoleStats[] => {
+  const mapToArraySecondary = (map: typeof secondaryRolesMap, campFilter?: 'villageois' | 'loup' | 'autres'): RoleStats[] => {
     return Array.from(map.entries())
-      .map(([name, stats]) => ({
-        name,
-        appearances: stats.appearances,
-        wins: stats.wins,
-        winsWithoutRoleChange: stats.winsWithoutRoleChange,
-        gamesWithoutRoleChange: stats.gamesWithoutRoleChange,
-        winRate: stats.gamesWithoutRoleChange > 0 ? ((stats.winsWithoutRoleChange / stats.gamesWithoutRoleChange) * 100).toFixed(1) : '0.0',
-        winRateDisplay: Math.max(
-          stats.gamesWithoutRoleChange > 0 ? (stats.winsWithoutRoleChange / stats.gamesWithoutRoleChange) * 100 : 0,
-          1
-        )
-      }))
+      .map(([name, entry]) => {
+        const stats = campFilter ? entry.byCamp[campFilter] : entry;
+        return {
+          name,
+          appearances: stats.appearances,
+          wins: stats.wins,
+          winsWithoutRoleChange: stats.winsWithoutRoleChange,
+          gamesWithoutRoleChange: stats.gamesWithoutRoleChange,
+          winRate: stats.gamesWithoutRoleChange > 0 ? ((stats.winsWithoutRoleChange / stats.gamesWithoutRoleChange) * 100).toFixed(1) : '0.0',
+          winRateDisplay: Math.max(
+            stats.gamesWithoutRoleChange > 0 ? (stats.winsWithoutRoleChange / stats.gamesWithoutRoleChange) * 100 : 0,
+            1
+          )
+        };
+      })
+      .filter(entry => entry.appearances > 0)
       .sort((a, b) => b.appearances - a.appearances);
   };
 
@@ -298,6 +313,11 @@ function computeAllPlayersRoleStats(gameData: GameLogEntry[]): RoleData | null {
     villageoisPowers: mapToArrayVillageois(villageoisPowersMap),
     loupPowers: mapToArrayLoup(loupPowersMap),
     secondaryRoles: mapToArraySecondary(secondaryRolesMap),
+    secondaryRolesByCamp: {
+      villageois: mapToArraySecondary(secondaryRolesMap, 'villageois'),
+      loup: mapToArraySecondary(secondaryRolesMap, 'loup'),
+      autres: mapToArraySecondary(secondaryRolesMap, 'autres')
+    },
     villageoisEliteCombinations: mapToArrayVillageois(villageoisEliteCombinationsMap)
   };
 }
@@ -308,6 +328,9 @@ export function RolesStatsChart() {
   const [chartMode, setChartMode] = useState<'appearances' | 'winRate'>(
     navigationState.rolesStatsState?.chartMode || 'appearances'
   );
+  const [secondaryRoleCampFilter, setSecondaryRoleCampFilter] = useState<SecondaryRoleCampFilter>(
+    (navigationState.rolesStatsState?.secondaryRoleCampFilter as SecondaryRoleCampFilter) || 'all'
+  );
   
   const { data, isLoading, error } = usePlayerStatsBase((gameData) => 
     computeAllPlayersRoleStats(gameData)
@@ -316,21 +339,24 @@ export function RolesStatsChart() {
   // Save state to navigation context when it changes
   useEffect(() => {
     if (!navigationState.rolesStatsState || 
-        navigationState.rolesStatsState.chartMode !== chartMode) {
+        navigationState.rolesStatsState.chartMode !== chartMode ||
+        navigationState.rolesStatsState.secondaryRoleCampFilter !== secondaryRoleCampFilter) {
       updateNavigationState({
         rolesStatsState: {
-          chartMode
+          chartMode,
+          secondaryRoleCampFilter
         }
       });
     }
-  }, [chartMode, navigationState.rolesStatsState, updateNavigationState]);
+  }, [chartMode, secondaryRoleCampFilter, navigationState.rolesStatsState, updateNavigationState]);
 
   // Function to handle chart mode change with persistence
   const handleChartModeChange = (newMode: 'appearances' | 'winRate') => {
     setChartMode(newMode);
     updateNavigationState({
       rolesStatsState: {
-        chartMode: newMode
+        chartMode: newMode,
+        secondaryRoleCampFilter
       }
     });
   };
@@ -344,13 +370,18 @@ export function RolesStatsChart() {
       ? (a: RoleStats, b: RoleStats) => parseFloat(b.winRate) - parseFloat(a.winRate)
       : (a: RoleStats, b: RoleStats) => b.appearances - a.appearances;
 
+    // Pick secondary roles based on camp filter
+    const filteredSecondaryRoles = secondaryRoleCampFilter === 'all'
+      ? data.secondaryRoles
+      : data.secondaryRolesByCamp[secondaryRoleCampFilter];
+
     return {
       villageoisPowers: [...data.villageoisPowers].sort(sortFunction),
       loupPowers: [...data.loupPowers].sort(sortFunction),
-      secondaryRoles: [...data.secondaryRoles].sort(sortFunction),
+      secondaryRoles: [...filteredSecondaryRoles].sort(sortFunction),
       villageoisEliteCombinations: [...data.villageoisEliteCombinations].sort(sortFunction)
     };
-  }, [data, chartMode]);
+  }, [data, chartMode, secondaryRoleCampFilter]);
 
   if (isLoading) {
     return <div className="donnees-attente">Chargement des statistiques des rôles...</div>;
@@ -428,7 +459,8 @@ export function RolesStatsChart() {
     title: string,
     barColor: string,
     onBarClick: (roleName: string) => void,
-    getBarColor?: (roleName: string, index: number) => string
+    getBarColor?: (roleName: string, index: number) => string,
+    headerControls?: React.ReactNode
   ) => {
     const dataKey = chartMode === 'appearances' ? 'appearances' : 'winRateDisplay';
     const yAxisLabel = chartMode === 'appearances' ? 'Nombre d\'apparitions' : 'Taux de victoire (%)';
@@ -437,6 +469,7 @@ export function RolesStatsChart() {
     return (
       <div className="lycans-graphique-section">
         <h3>{title}</h3>
+        {headerControls}
         <FullscreenChart title={(isFullscreen) => isFullscreen ? `${title} (Tous)` : `${title} (Top 15)`}>
           {(isFullscreen) => {
             const MAX_ENTRIES = 15;
@@ -639,7 +672,31 @@ export function RolesStatsChart() {
               selectedSecondaryRole: secondaryRoleName,
               fromComponent: `Statistiques des Rôles - Rôle Secondaire: ${secondaryRoleName}`
             });
-          }
+          },
+          undefined,
+          <div className="lycans-winrate-controls" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+            <label htmlFor="secondary-role-camp-filter" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+              Camp:
+            </label>
+            <select
+              id="secondary-role-camp-filter"
+              value={secondaryRoleCampFilter}
+              onChange={(e) => setSecondaryRoleCampFilter(e.target.value as SecondaryRoleCampFilter)}
+              style={{
+                background: 'var(--bg-tertiary)',
+                color: 'var(--text-primary)',
+                border: '1px solid var(--border-color)',
+                borderRadius: '4px',
+                padding: '0.25rem 0.5rem',
+                fontSize: '0.9rem'
+              }}
+            >
+              <option value="all">Tous les camps</option>
+              <option value="villageois">Camp Villageois</option>
+              <option value="loup">Camp Loup</option>
+              <option value="autres">Autres (Solo)</option>
+            </select>
+          </div>
         )}
 
         <div style={{ 

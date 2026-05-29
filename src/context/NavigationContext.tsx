@@ -83,6 +83,7 @@ export interface PlayerHistoryRolesState {
 
 export interface RolesStatsState {
   chartMode: 'appearances' | 'winRate';
+  secondaryRoleCampFilter?: string;
 }
 
 export interface TalkingTimeState {
