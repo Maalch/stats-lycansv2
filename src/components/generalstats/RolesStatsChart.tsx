@@ -60,7 +60,10 @@ function computeAllPlayersRoleStats(gameData: GameLogEntry[]): RoleData | null {
       
       // Check if the player's role changed during the game
       const finalRole = getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []);
-      const roleChanged = finalRole !== playerStat.MainRoleInitial;
+      let roleChanged = finalRole !== playerStat.MainRoleInitial;
+      // Louveteau transforming into Loup is an inherent game mechanic, not a "real" role change:
+      // all games played as Louveteau should count toward its win rate
+      if (playerStat.MainRoleInitial === 'Louveteau') roleChanged = false;
       
       // Get player's camp - check for wolf family (Loup, Traître, Louveteau)
       const playerCamp = getPlayerCampFromRole(playerStat.MainRoleInitial);
