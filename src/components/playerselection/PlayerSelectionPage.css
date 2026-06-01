@@ -464,6 +464,23 @@
   margin: 0;
 }
 
+.player-highlight {
+  margin-top: 0.75rem;
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  padding: 0.25rem 0.6rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 400;
+  border: 1px solid var(--border-color);
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .highlight-badge {
   background: var(--accent-primary);
   color: white;

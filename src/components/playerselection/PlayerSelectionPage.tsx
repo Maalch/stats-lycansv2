@@ -31,6 +31,7 @@ import { useAllClips } from '../../hooks/useClips';
 import { PlayerTitlesDisplay } from './PlayerTitlesDisplay';
 import { PlayerAchievementsDisplay } from './PlayerAchievementsDisplay';
 import { usePlayerAchievements } from '../../hooks/usePlayerAchievements';
+import { usePlayerHighlight } from '../../hooks/usePlayerHighlight';
 import './PlayerSelectionPage.css';
 import './PlayerTitlesDisplay.css';
 
@@ -56,6 +57,7 @@ export function PlayerSelectionPage() {
   const { data: playerRankings, isLoading: rankingsLoading, error: rankingsError } = usePreCalculatedPlayerRankings(settings.highlightedPlayer);
   const { playerData: playerTitles, isLoading: titlesLoading } = usePlayerTitles(settings.highlightedPlayer);
   const { data: achievementsData, playerData: playerAchievements, achievementsWithProgress, categories: achievementCategories, isLoading: achievementsLoading } = usePlayerAchievements(settings.highlightedPlayer);
+  const { highlight: playerHighlight } = usePlayerHighlight(settings.highlightedPlayer, achievementsData, playerAchievements);
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedClip, setSelectedClip] = useState<Clip | null>(null);
@@ -412,6 +414,11 @@ export function PlayerSelectionPage() {
                     ) : (
                       <div className="player-no-title" style={{ marginTop: '0.5rem', fontSize: '0.85rem', color: 'var(--text-secondary)', fontStyle: 'italic' }}>
                         📜 25 parties moddées minimum pour obtenir un titre
+                      </div>
+                    )}
+                    {playerHighlight && (
+                      <div className="player-highlight" title={playerHighlight.text}>
+                        {playerHighlight.emoji} {playerHighlight.text}
                       </div>
                     )}
                     {(highlightedPlayerStats.twitch || highlightedPlayerStats.youtube || playerClips.length > 0) && (
