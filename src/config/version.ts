@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.9.4';
+export const APP_VERSION = '1.9.5';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,15 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.9.5',
+    date: '02/06/2026',
+    description: 'Ajout d\'une info mise en avant basée sur les dernières parties sur la carte joueur : série en cours, succès récent, classement mensuel, record de kills/loot, tendance de victoire ou première victoire solo — avec navigation directe vers la page correspondante, dans',
+    link: {
+      mainTab: 'playerSelection',
+      text: 'Joueurs'
+    }
+  },
   {
     version: 'v1.9.4',
     date: '27/05/2026',
