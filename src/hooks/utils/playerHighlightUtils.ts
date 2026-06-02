@@ -310,7 +310,7 @@ export function computeRecentLootRecord(
 
   // Only highlight if it's a new all-time record
   if (recentMax >= allTimeMax && allTimeMax > 0) {
-    const text = `Record de loot : ${recentMax} en une partie (Partie #${recentMaxGameId})`;
+    const text = `Record personnel de loot : ${recentMax} en une partie (Partie #${recentMaxGameId})`;
     return [{ text, emoji: '💎', type: 'loot-record', priority: 80 }];
   }
 
