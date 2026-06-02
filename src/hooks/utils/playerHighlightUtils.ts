@@ -9,6 +9,7 @@
 import type { PlayerSeriesData, CampSeries, WinSeries, LossSeries, DeathSeries, SurvivalSeries, DeathT1Series } from '../utils/playerSeries/playerSeriesTypes';
 import type { GameLogData } from '../useCombinedRawData';
 import type { AchievementsData, PlayerAchievements } from '../../types/achievements';
+import { getPlayerMainCampFromRole } from '../../utils/datasyncExport';
 
 const SOLO_ROLES = [
   'Amoureux', 'Idiot du Village', 'Agent', 'Espion', 'Contrebandier',
@@ -191,14 +192,18 @@ export function computeMonthlyRanking(
   if (monthGames.length < 3) return []; // Not enough games this month
 
   // Calculate stats for all players in current month
-  const playerStats = new Map<string, { wins: number; games: number }>();
+  const playerStats = new Map<string, { wins: number; games: number; loupAndSoloGames: number; soloGames: number }>();
 
   for (const game of monthGames) {
     for (const ps of game.PlayerStats) {
       const name = ps.Username;
-      const stats = playerStats.get(name) || { wins: 0, games: 0 };
+      const stats = playerStats.get(name) || { wins: 0, games: 0, loupAndSoloGames: 0, soloGames: 0 };
       stats.games++;
       if (ps.Victorious) stats.wins++;
+      const camp = getPlayerMainCampFromRole(ps.MainRoleInitial, ps.Power ?? undefined);
+      const isSolo = camp !== 'Loup' && camp !== 'Villageois';
+      if (camp === 'Loup' || isSolo) stats.loupAndSoloGames++;
+      if (isSolo) stats.soloGames++;
       playerStats.set(name, stats);
     }
   }
@@ -211,8 +216,13 @@ export function computeMonthlyRanking(
   // Rank eligible players
   const eligible = Array.from(playerStats.entries())
     .filter(([_, s]) => s.games >= minGames)
-    .map(([name, s]) => ({ name, winRate: (s.wins / s.games) * 100, games: s.games }))
-    .sort((a, b) => b.winRate - a.winRate);
+    .map(([name, s]) => ({ name, winRate: (s.wins / s.games) * 100, games: s.games, loupAndSoloGames: s.loupAndSoloGames, soloGames: s.soloGames }))
+    .sort((a, b) =>
+      b.winRate - a.winRate ||
+      b.games - a.games ||
+      b.loupAndSoloGames - a.loupAndSoloGames ||
+      b.soloGames - a.soloGames
+    );
 
   const rank = eligible.findIndex(p => p.name === playerName) + 1;
   if (rank === 0 || rank > 5) return [];

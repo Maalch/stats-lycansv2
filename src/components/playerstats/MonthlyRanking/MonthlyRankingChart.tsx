@@ -6,6 +6,7 @@ import { useJoueursData } from '../../../hooks/useJoueursData';
 import { useThemeAdjustedDynamicPlayersColor } from '../../../types/api';
 import { CHART_LIMITS } from '../../../config/chartConstants';
 import { getPlayerId } from '../../../utils/playerIdentification';
+import { getPlayerMainCampFromRole } from '../../../utils/datasyncExport';
 import { FullscreenChart } from '../../common/FullscreenChart';
 import { MonthlyRankingBarRace, type BarRacePlayer } from './MonthlyRankingBarRace';
 import { MonthlyRankingGameContext } from './MonthlyRankingGameContext';
@@ -54,16 +55,20 @@ function buildBarRacePlayers(
   isAnimating: boolean,
   currentFrameIndex: number,
 ): { barRaceData: BarRacePlayer[]; playerAdded: boolean; avgWinRate: string; newRanks: Map<string, number> } {
-  const playerMap = new Map<string, { displayName: string; gamesPlayed: number; wins: number }>();
+  const playerMap = new Map<string, { displayName: string; gamesPlayed: number; wins: number; loupAndSoloGames: number; soloGames: number }>();
   for (const game of gamesToConsider) {
     for (const ps of game.PlayerStats) {
       const id = getPlayerId(ps);
       if (!playerMap.has(id)) {
-        playerMap.set(id, { displayName: ps.Username, gamesPlayed: 0, wins: 0 });
+        playerMap.set(id, { displayName: ps.Username, gamesPlayed: 0, wins: 0, loupAndSoloGames: 0, soloGames: 0 });
       }
       const entry = playerMap.get(id)!;
       entry.gamesPlayed++;
       if (ps.Victorious) entry.wins++;
+      const camp = getPlayerMainCampFromRole(ps.MainRoleInitial, ps.Power ?? undefined);
+      const isSolo = camp !== 'Loup' && camp !== 'Villageois';
+      if (camp === 'Loup' || isSolo) entry.loupAndSoloGames++;
+      if (isSolo) entry.soloGames++;
     }
   }
 
@@ -72,6 +77,8 @@ function buildBarRacePlayers(
     gamesPlayed: number;
     wins: number;
     winPercent: number;
+    loupAndSoloGames: number;
+    soloGames: number;
     isHighlightedAddition?: boolean;
   }
 
@@ -83,11 +90,18 @@ function buildBarRacePlayers(
         gamesPlayed: stats.gamesPlayed,
         wins: stats.wins,
         winPercent: stats.gamesPlayed > 0 ? (stats.wins / stats.gamesPlayed) * 100 : 0,
+        loupAndSoloGames: stats.loupAndSoloGames,
+        soloGames: stats.soloGames,
       });
     }
   }
 
-  eligiblePlayers.sort((a, b) => b.winPercent - a.winPercent || b.gamesPlayed - a.gamesPlayed);
+  eligiblePlayers.sort((a, b) =>
+    b.winPercent - a.winPercent ||
+    b.gamesPlayed - a.gamesPlayed ||
+    b.loupAndSoloGames - a.loupAndSoloGames ||
+    b.soloGames - a.soloGames
+  );
   const topPlayers = eligiblePlayers.slice(0, CHART_LIMITS.TOP_20);
 
   let totalWinPercent = 0;
@@ -114,6 +128,8 @@ function buildBarRacePlayers(
               gamesPlayed: stats.gamesPlayed,
               wins: stats.wins,
               winPercent: (stats.wins / stats.gamesPlayed) * 100,
+              loupAndSoloGames: stats.loupAndSoloGames,
+              soloGames: stats.soloGames,
               isHighlightedAddition: true,
             });
             playerAdded = true;
@@ -127,7 +143,12 @@ function buildBarRacePlayers(
   finalPlayers.sort((a, b) => {
     if (a.isHighlightedAddition && !b.isHighlightedAddition) return 1;
     if (!a.isHighlightedAddition && b.isHighlightedAddition) return -1;
-    return b.winPercent - a.winPercent || b.gamesPlayed - a.gamesPlayed;
+    return (
+      b.winPercent - a.winPercent ||
+      b.gamesPlayed - a.gamesPlayed ||
+      b.loupAndSoloGames - a.loupAndSoloGames ||
+      b.soloGames - a.soloGames
+    );
   });
 
   const newRanks = new Map<string, number>();
@@ -692,6 +713,9 @@ export function MonthlyRankingChart() {
                 {averageWinRate !== '0' && <> · Moyenne: {averageWinRate}%</>}
               </>
             )}
+          </p>
+          <p style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', textAlign: 'center', fontStyle: 'italic', marginTop: '0.25rem' }}>
+            À égalité de taux de victoire : nombre de parties jouées, puis nombre de parties en camp Loup ou rôle Solo
           </p>
         </div>
       </div>
