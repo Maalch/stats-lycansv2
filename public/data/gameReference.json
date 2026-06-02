@@ -1,8 +1,8 @@
 {
   "_meta": {
     "description": "Reference file for Lycans v2 game mechanics: camps, roles, powers, accessories, gadgets, effects, events, and game rules. Extracted from in-game translations and gameLog data.",
-    "version": "0.302",
-    "lastUpdated": "2026-05-11",
+    "version": "0.309",
+    "lastUpdated": "2026-06-02",
     "sourceTranslationsFile": "ExternalData/translations.json",
     "notes": "French names match gameLog.json values. Descriptions are cleaned from in-game markup (<color> tags, {0} placeholders). This file can be manually edited to adjust or enrich descriptions. potionEffects = drinkable effects from potions/scrolls. statusEffects = in-game states applied by role abilities, environmental events, or other mechanics (many overlap with potionEffects but represent the broader set of all possible player states)."
   },
@@ -260,7 +260,7 @@
       "id": "hote",
       "name": "Hôte",
       "emoji": "🪱",
-      "description": "Place des œufs invisibles qui éclosent en petits parasites visibles et immobiles que les joueurs peuvent détruire. Un parasite s'attache discrètement au premier humain qui s'en approche, permettant de le détecter quand il est proche. Peut faire exploser tous les parasites attachés pour blesser et empoisonner les victimes et les joueurs proches.",
+      "description": "Place des œufs invisibles qui éclosent en petits parasites immobiles que les joueurs peuvent détruire. Les parasites sont très visibles pour l'Hôte et plus visibles pour les loups et les traîtres (camouflés pour les autres rôles). Un parasite s'attache discrètement au premier humain qui s'en approche, permettant de le détecter quand il est proche. Peut faire exploser tous les parasites attachés pour blesser et empoisonner les victimes et les joueurs proches.",
       "descriptionShort": "Peut placer des parasites qui s'attachent aux joueurs qui marchent dessus",
       "translationKey": "NALES_ROLE_DESCRIPTION_HOST"
     },
@@ -285,7 +285,7 @@
         { "effect": "Paranoia", "duration": 12 },
         { "effect": "Flatulences", "duration": 20 },
         { "effect": "Myope", "duration": 25 },
-        { "effect": "Confusion", "duration": 30 }
+        { "effect": "Confusion", "duration": 15 }
       ]
     },
     {
@@ -375,9 +375,17 @@
       "id": "ermite",
       "name": "Ermite",
       "emoji": "🏚️",
-      "description": "Des cachettes apparaissent régulièrement. Quand le joueur en est proche, elles disparaissent plus rapidement mais il est invisible et silencieux pour les loups transformés. Chaque cachette dure un temps limité. La nuit, peut utiliser sa charge pour ajouter du temps à toutes les cachettes.",
+      "description": "Des cachettes apparaissent régulièrement. Quand le joueur en est proche, elles disparaissent plus rapidement mais il est invisible et silencieux pour les loups transformés. Chaque cachette dure un temps limité. La nuit, peut utiliser sa charge pour ajouter du temps à toutes les cachettes. Les cachettes n'ont pas d'effet pendant le jour (sauf s'il y a Éclipse).",
       "descriptionShort": "Fait apparaître des cachettes où il peut se réfugier pour tenter d'échapper aux loups",
       "translationKey": "NALES_ROLE_DESCRIPTION_HERMIT"
+    },
+    {
+      "id": "runiste",
+      "name": "Runiste",
+      "emoji": "🪨",
+      "description": "Peut placer des runes invisibles (gratuit, nombre limité). La rune regardée est indiquée en rouge et détecte les loups proches. Peut utiliser 100% de charge pour activer une rune : elle avertit les loups puis explose et les étourdit, même à travers les murs. La taille et la puissance augmentent avec le nombre de loups transformés.",
+      "descriptionShort": "Peut placer des runes invisibles qui détectent et étourdissent les loups",
+      "translationKey": "NALES_ROLE_DESCRIPTION_RUNEMASTER"
     },
     {
       "id": "avatar",
@@ -698,8 +706,8 @@
       "translationKey": "NALES_ACCESSORY_MAGNIFIER"
     },
     {
-      "id": "boule-de-crystal",
-      "name": "Boule de crystal",
+      "id": "boule-de-cristal",
+      "name": "Boule de cristal",
       "emoji": "🔮",
       "description": "Permet de voir les loups transformés proches à travers les murs et sur la minimap. Si Loup ou Traître : 1 fois par meeting, permet de deviner le pouvoir d'un villageois (non-élite). Si correct, il meurt.",
       "tinkererEffect": "Recevoir Vision vraie.",
@@ -855,7 +863,8 @@
     { "id": "vision-vraie", "name": "Vision vraie", "type": "positive", "translationKey": "EFFECT_TRUESIGHT", "tutorial": "Vous voyez dans le noir et ignorez les illusions visuelles" },
     { "id": "blanche", "name": "Blanche", "type": "positive", "translationKey": "EFFECT_BLANCHE", "tutorial": "Potion créée par l'Alchimiste. Applique un effet positif aléatoire parmi les effets possibles, plus court qu'une potion classique.", "source": "alchimiste", "randomEffects": ["Assassin", "Audition+", "Célérité", "Rassasié", "Vision vraie"] },
     { "id": "camoufle", "name": "Camouflé", "type": "positive", "translationKey": "NALES_EFFECT_CAMOUFLAGE", "tutorial": "Rend le joueur moins visible pour les autres joueurs, en particulier les loups transformés" },
-    { "id": "confusion", "name": "Confusion", "type": "negative", "translationKey": "NALES_EFFECT_CONFUSED", "tutorial": "Perturbe la vision et la perception du joueur" }
+    { "id": "confusion", "name": "Confusion", "type": "negative", "translationKey": "NALES_EFFECT_CONFUSED", "tutorial": "Perturbe la vision et la perception du joueur" },
+    { "id": "immunite", "name": "Immunité", "type": "neutral", "translationKey": "NALES_EFFECT_IMMUNE", "tutorial": "Retire tous les effets (sauf exception) de la cible et empêche ces effets d'être appliqués" }
   ],
 
   "statusEffects": [
@@ -929,7 +938,8 @@
     { "id": "detecte", "name": "Détecté !", "translationKey": "NALES_EFFECT_TRACKED" },
     { "id": "silence", "name": "Silence !", "translationKey": "NALES_EFFECT_KIDNAPPER_SILENCE" },
     { "id": "capture", "name": "Capturé", "translationKey": "NALES_EFFECT_CAPTURED" },
-    { "id": "cache", "name": "Caché", "translationKey": "NALES_EFFECT_HIDDEN" }
+    { "id": "cache", "name": "Caché", "translationKey": "NALES_EFFECT_HIDDEN" },
+    { "id": "immunise", "name": "Immunisé", "translationKey": "NALES_EFFECT_IMMUNE", "tutorial": "Immunisé : retire et empêche la plupart des effets" }
   ],
 
   "events": [
@@ -946,13 +956,6 @@
       "emoji": "⚡",
       "description": "Tous les joueurs se déplacent plus rapidement.",
       "translationKey": "NALES_EVENT_HASTE"
-    },
-    {
-      "id": "duplicite",
-      "name": "Duplicité",
-      "emoji": "🔧",
-      "description": "Les sabotages se font instantanément.",
-      "translationKey": "NALES_EVENT_DUPLICITY"
     },
     {
       "id": "brouillard",
@@ -972,14 +975,14 @@
       "id": "eclipse",
       "name": "Éclipse",
       "emoji": "🌑",
-      "description": "Les loups peuvent se transformer en journée (sauf la première journée) mais sont un peu plus lents. Les humains ne peuvent pas descendre en-dessous de 35% de santé.",
+      "description": "Les loups peuvent se transformer en journée (sauf la première journée) mais sont un peu plus lents. La journée entière est plus courte. Les villageois n'ont plus de seuil de santé minimum mais la nourriture les soigne davantage.",
       "translationKey": "NALES_EVENT_ECLIPSE"
     },
     {
       "id": "peste",
       "name": "Peste",
       "emoji": "☣️",
-      "description": "Les humains régénèrent leur santé mais en perdent rapidement quand ils sont proches les uns des autres.",
+      "description": "Les humains régénèrent leur santé mais en perdent rapidement quand ils sont proches les uns des autres. La distance de distanciation sociale minimum est réduite mais la perte de santé est beaucoup plus forte.",
       "translationKey": "NALES_EVENT_PLAGUE"
     },
     {
@@ -988,6 +991,27 @@
       "emoji": "🛡️",
       "description": "La première fois qu'un joueur doit mourir, il survit et est téléporté.",
       "translationKey": "NALES_EVENT_PROTECTION"
+    },
+    {
+      "id": "competition",
+      "name": "Compétition",
+      "emoji": "🏅",
+      "description": "Les récoltes de chaque joueur pendant le jour (pas la nuit) sont comptabilisées. Au meeting, le meilleur récolteur devient maire et reçoit un bonus de vitesse et de régénération pendant le jour suivant. Le plus mauvais récolteur est lumineux pendant le meeting et reçoit un effet négatif aléatoire pendant toute la prochaine journée.",
+      "translationKey": "NALES_EVENT_TOURNAMENT"
+    },
+    {
+      "id": "pleine-lune",
+      "name": "Pleine lune",
+      "emoji": "🌕",
+      "description": "La nuit est plus courte, mais les loups transformés sont plus rapides et régénèrent leur santé.",
+      "translationKey": "NALES_EVENT_FULLMOON"
+    },
+    {
+      "id": "rage",
+      "name": "Rage",
+      "emoji": "😡",
+      "description": "Le premier loup qui se transforme est plus puissant mais les suivants sont affaiblis. Si aucun loup ne s'est transformé 20 secondes après le début de la nuit, un loup aléatoire se transforme automatiquement.",
+      "translationKey": "NALES_EVENT_RAGE"
     }
   ],
 
@@ -1178,6 +1202,7 @@
       "Mystique": { "category": "villagerPowers", "id": "mystique" },
       "Ombre": { "category": "villagerPowers", "id": "ombre" },
       "Ermite": { "category": "villagerPowers", "id": "ermite" },
+      "Runiste": { "category": "villagerPowers", "id": "runiste" },
       "Avatar": { "category": "villagerPowers", "id": "avatar" },
       "Ange gardien": { "category": "deadRoles", "id": "ange-gardien" },
       "Inconnu": { "_note": "Unknown/unresolved power value in gameLog" }

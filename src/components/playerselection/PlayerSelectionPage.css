@@ -481,6 +481,17 @@
   white-space: nowrap;
 }
 
+.player-highlight.clickable {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.player-highlight.clickable:hover {
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+}
+
 .highlight-badge {
   background: var(--accent-primary);
   color: white;

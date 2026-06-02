@@ -26,6 +26,8 @@ export interface PlayerHighlight {
   emoji: string;
   type: string;
   priority: number;
+  /** Optional navigation target when clicked */
+  navigateTo?: string;
 }
 
 type AnySeriesEntry = CampSeries | WinSeries | LossSeries | DeathSeries | SurvivalSeries | DeathT1Series;
@@ -106,12 +108,12 @@ export function computeCurrentStreaks(
     }
 
     // Priority: personal record streaks are most interesting
-    let priority = 70;
+    let priority = 50;
     if (isPersonalRecord) priority = 95;
     if (rank <= 3 && total > 5) priority = 100;
     if (type.isBad) priority -= 10; // Bad streaks are less fun but still notable
 
-    highlights.push({ text, emoji: '🔥', type: `streak-${type.key}`, priority });
+    highlights.push({ text, emoji: '🔥', type: `streak-${type.key}`, priority, navigateTo: 'series' });
   }
 
   return highlights;
@@ -135,16 +137,32 @@ export function computeRecentAchievements(
         const def = achievementsData.achievementDefinitions.find(d => d.id === achievement.id);
         if (!def) continue;
 
-        const tierLabels: Record<string, string> = { bronze: 'Bronze', argent: 'Argent', or: 'Or', lycans: 'Lycans' };
-        const tierLabel = tierLabels[level.tier] || level.tier;
+        // Tier emoji display: ⭐ for bronze/argent/or, 🐺 for lycans
+        const tierEmojis: Record<string, string> = { bronze: '⭐', argent: '⭐⭐', or: '⭐⭐⭐', lycans: '🐺' };
+        const tierDisplay = tierEmojis[level.tier] || level.tier;
+
+        // Compute ranking: how many players have reached at least this value for this achievement
+        const allPlayerValues: number[] = [];
+        for (const playerData of Object.values(achievementsData.players)) {
+          const playerAch = playerData.achievements.find(a => a.id === achievement.id);
+          if (playerAch && playerAch.currentValue > 0) {
+            allPlayerValues.push(playerAch.currentValue);
+          }
+        }
+        allPlayerValues.sort((a, b) => b - a);
+        const rank = allPlayerValues.findIndex(v => v <= achievement.currentValue) + 1;
+        const total = allPlayerValues.length;
+        const rankLabel = rank === 1 ? '1er' : `${rank}ème`;
+        const rankDisplay = total > 1 ? ` (${rankLabel}/${total})` : '';
+
         const explanationWithValue = def.explanation.replace(/\bX\b/g, String(achievement.currentValue));
-        const text = `Succès débloqué : ${def.name} (${tierLabel} ${level.subLevel}) — ${explanationWithValue}`;
+        const text = `${def.name} ${tierDisplay}${rankDisplay} — ${explanationWithValue}`;
 
         // Higher tiers are more impressive
-        const tierPriority: Record<string, number> = { bronze: 75, argent: 80, or: 88, lycans: 95 };
-        const priority = tierPriority[level.tier] || 75;
+        const tierPriority: Record<string, number> = { bronze: 55, argent: 58, or: 60, lycans: 62 };
+        const priority = tierPriority[level.tier] || 60;
 
-        highlights.push({ text, emoji: '🏆', type: 'achievement', priority });
+        highlights.push({ text, emoji: '🏆', type: 'achievement', priority, navigateTo: 'achievements' });
       }
     }
   }

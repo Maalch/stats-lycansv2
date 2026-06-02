@@ -51,7 +51,7 @@ interface PlayerBasicStats {
 
 export function PlayerSelectionPage() {
   const { settings, updateSettings } = useSettings();
-  const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
+  const { navigateToGameDetails, navigateToTab, navigationState, updateNavigationState } = useNavigation();
   const { data: gameLogData, isLoading, error } = useGameLogData();
   const { joueursData, isLoading: joueursLoading } = useJoueursData();
   const { data: playerRankings, isLoading: rankingsLoading, error: rankingsError } = usePreCalculatedPlayerRankings(settings.highlightedPlayer);
@@ -417,7 +417,20 @@ export function PlayerSelectionPage() {
                       </div>
                     )}
                     {playerHighlight && (
-                      <div className="player-highlight" title={playerHighlight.text}>
+                      <div
+                        className={`player-highlight${playerHighlight.navigateTo ? ' clickable' : ''}`}
+                        title={playerHighlight.text}
+                        onClick={playerHighlight.navigateTo ? () => {
+                          if (playerHighlight.navigateTo === 'series') navigateToTab('rankings', 'series');
+                          else handleViewChange(playerHighlight.navigateTo as 'achievements');
+                        } : undefined}
+                        role={playerHighlight.navigateTo ? 'button' : undefined}
+                        tabIndex={playerHighlight.navigateTo ? 0 : undefined}
+                        onKeyDown={playerHighlight.navigateTo ? (e) => { if (e.key === 'Enter' || e.key === ' ') {
+                          if (playerHighlight.navigateTo === 'series') navigateToTab('rankings', 'series');
+                          else handleViewChange(playerHighlight.navigateTo as 'achievements');
+                        }} : undefined}
+                      >
                         {playerHighlight.emoji} {playerHighlight.text}
                       </div>
                     )}
