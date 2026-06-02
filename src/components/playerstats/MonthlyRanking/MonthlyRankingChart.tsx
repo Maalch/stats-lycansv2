@@ -55,18 +55,22 @@ function buildBarRacePlayers(
   isAnimating: boolean,
   currentFrameIndex: number,
 ): { barRaceData: BarRacePlayer[]; playerAdded: boolean; avgWinRate: string; newRanks: Map<string, number> } {
-  const playerMap = new Map<string, { displayName: string; gamesPlayed: number; wins: number; loupAndSoloGames: number; soloGames: number }>();
+  const playerMap = new Map<string, { displayName: string; gamesPlayed: number; wins: number; loupAndSoloWins: number; soloWins: number; loupAndSoloGames: number; soloGames: number }>();
   for (const game of gamesToConsider) {
     for (const ps of game.PlayerStats) {
       const id = getPlayerId(ps);
       if (!playerMap.has(id)) {
-        playerMap.set(id, { displayName: ps.Username, gamesPlayed: 0, wins: 0, loupAndSoloGames: 0, soloGames: 0 });
+        playerMap.set(id, { displayName: ps.Username, gamesPlayed: 0, wins: 0, loupAndSoloWins: 0, soloWins: 0, loupAndSoloGames: 0, soloGames: 0 });
       }
       const entry = playerMap.get(id)!;
       entry.gamesPlayed++;
-      if (ps.Victorious) entry.wins++;
       const camp = getPlayerMainCampFromRole(ps.MainRoleInitial, ps.Power ?? undefined);
       const isSolo = camp !== 'Loup' && camp !== 'Villageois';
+      if (ps.Victorious) {
+        entry.wins++;
+        if (camp === 'Loup' || isSolo) entry.loupAndSoloWins++;
+        if (isSolo) entry.soloWins++;
+      }
       if (camp === 'Loup' || isSolo) entry.loupAndSoloGames++;
       if (isSolo) entry.soloGames++;
     }
@@ -77,6 +81,8 @@ function buildBarRacePlayers(
     gamesPlayed: number;
     wins: number;
     winPercent: number;
+    loupAndSoloWins: number;
+    soloWins: number;
     loupAndSoloGames: number;
     soloGames: number;
     isHighlightedAddition?: boolean;
@@ -90,6 +96,8 @@ function buildBarRacePlayers(
         gamesPlayed: stats.gamesPlayed,
         wins: stats.wins,
         winPercent: stats.gamesPlayed > 0 ? (stats.wins / stats.gamesPlayed) * 100 : 0,
+        loupAndSoloWins: stats.loupAndSoloWins,
+        soloWins: stats.soloWins,
         loupAndSoloGames: stats.loupAndSoloGames,
         soloGames: stats.soloGames,
       });
@@ -99,6 +107,8 @@ function buildBarRacePlayers(
   eligiblePlayers.sort((a, b) =>
     b.winPercent - a.winPercent ||
     b.gamesPlayed - a.gamesPlayed ||
+    b.loupAndSoloWins - a.loupAndSoloWins ||
+    b.soloWins - a.soloWins ||
     b.loupAndSoloGames - a.loupAndSoloGames ||
     b.soloGames - a.soloGames
   );
@@ -128,6 +138,8 @@ function buildBarRacePlayers(
               gamesPlayed: stats.gamesPlayed,
               wins: stats.wins,
               winPercent: (stats.wins / stats.gamesPlayed) * 100,
+              loupAndSoloWins: stats.loupAndSoloWins,
+              soloWins: stats.soloWins,
               loupAndSoloGames: stats.loupAndSoloGames,
               soloGames: stats.soloGames,
               isHighlightedAddition: true,
@@ -146,11 +158,14 @@ function buildBarRacePlayers(
     return (
       b.winPercent - a.winPercent ||
       b.gamesPlayed - a.gamesPlayed ||
+      b.loupAndSoloWins - a.loupAndSoloWins ||
+      b.soloWins - a.soloWins ||
       b.loupAndSoloGames - a.loupAndSoloGames ||
       b.soloGames - a.soloGames
     );
   });
 
+  let displayRankCounter = 0;
   const newRanks = new Map<string, number>();
   const barRaceData: BarRacePlayer[] = finalPlayers.map((p, index) => {
     newRanks.set(p.name, index);
@@ -158,12 +173,34 @@ function buildBarRacePlayers(
     const isNew = prevRank === null && isAnimating && currentFrameIndex > 1;
     let rankDelta: number | null = null;
     if (prevRank !== null && isAnimating) rankDelta = prevRank - index;
+
+    // Compute Olympic-style display rank (shared for truly tied players)
+    let displayRank: number;
+    if (p.isHighlightedAddition) {
+      displayRank = index;
+    } else if (index === 0) {
+      displayRankCounter = 0;
+      displayRank = 0;
+    } else {
+      const prev = finalPlayers[index - 1];
+      const isTied = !prev.isHighlightedAddition &&
+        p.winPercent === prev.winPercent &&
+        p.gamesPlayed === prev.gamesPlayed &&
+        p.loupAndSoloWins === prev.loupAndSoloWins &&
+        p.soloWins === prev.soloWins &&
+        p.loupAndSoloGames === prev.loupAndSoloGames &&
+        p.soloGames === prev.soloGames;
+      if (!isTied) displayRankCounter = index;
+      displayRank = displayRankCounter;
+    }
+
     return {
       name: p.name,
       winPercent: p.winPercent,
       gamesPlayed: p.gamesPlayed,
       wins: p.wins,
       rank: index,
+      displayRank,
       prevRank,
       rankDelta,
       isNew,
@@ -715,7 +752,7 @@ export function MonthlyRankingChart() {
             )}
           </p>
           <p style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', textAlign: 'center', fontStyle: 'italic', marginTop: '0.25rem' }}>
-            À égalité de taux de victoire : nombre de parties jouées, puis nombre de parties en camp Loup ou rôle Solo
+            À égalité de taux de victoire : nombre de parties jouées, puis victoires en camp Loup/Solo, puis victoires en Solo, puis parties en camp Loup/Solo, puis parties en Solo
           </p>
         </div>
       </div>

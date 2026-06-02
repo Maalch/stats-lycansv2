@@ -192,16 +192,20 @@ export function computeMonthlyRanking(
   if (monthGames.length < 3) return []; // Not enough games this month
 
   // Calculate stats for all players in current month
-  const playerStats = new Map<string, { wins: number; games: number; loupAndSoloGames: number; soloGames: number }>();
+  const playerStats = new Map<string, { wins: number; games: number; loupAndSoloWins: number; soloWins: number; loupAndSoloGames: number; soloGames: number }>();
 
   for (const game of monthGames) {
     for (const ps of game.PlayerStats) {
       const name = ps.Username;
-      const stats = playerStats.get(name) || { wins: 0, games: 0, loupAndSoloGames: 0, soloGames: 0 };
+      const stats = playerStats.get(name) || { wins: 0, games: 0, loupAndSoloWins: 0, soloWins: 0, loupAndSoloGames: 0, soloGames: 0 };
       stats.games++;
-      if (ps.Victorious) stats.wins++;
       const camp = getPlayerMainCampFromRole(ps.MainRoleInitial, ps.Power ?? undefined);
       const isSolo = camp !== 'Loup' && camp !== 'Villageois';
+      if (ps.Victorious) {
+        stats.wins++;
+        if (camp === 'Loup' || isSolo) stats.loupAndSoloWins++;
+        if (isSolo) stats.soloWins++;
+      }
       if (camp === 'Loup' || isSolo) stats.loupAndSoloGames++;
       if (isSolo) stats.soloGames++;
       playerStats.set(name, stats);
@@ -216,10 +220,12 @@ export function computeMonthlyRanking(
   // Rank eligible players
   const eligible = Array.from(playerStats.entries())
     .filter(([_, s]) => s.games >= minGames)
-    .map(([name, s]) => ({ name, winRate: (s.wins / s.games) * 100, games: s.games, loupAndSoloGames: s.loupAndSoloGames, soloGames: s.soloGames }))
+    .map(([name, s]) => ({ name, winRate: (s.wins / s.games) * 100, games: s.games, loupAndSoloWins: s.loupAndSoloWins, soloWins: s.soloWins, loupAndSoloGames: s.loupAndSoloGames, soloGames: s.soloGames }))
     .sort((a, b) =>
       b.winRate - a.winRate ||
       b.games - a.games ||
+      b.loupAndSoloWins - a.loupAndSoloWins ||
+      b.soloWins - a.soloWins ||
       b.loupAndSoloGames - a.loupAndSoloGames ||
       b.soloGames - a.soloGames
     );

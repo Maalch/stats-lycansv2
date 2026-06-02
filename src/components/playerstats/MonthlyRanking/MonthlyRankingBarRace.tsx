@@ -5,7 +5,8 @@ export interface BarRacePlayer {
   winPercent: number;
   gamesPlayed: number;
   wins: number;
-  rank: number;
+  rank: number;               // visual position (0-based) for layout
+  displayRank: number;        // displayed rank (0-based, shared for truly tied players)
   prevRank: number | null;
   rankDelta: number | null;   // positive = moved up, negative = moved down
   isNew: boolean;             // first appearance this animation frame
@@ -133,8 +134,8 @@ export function MonthlyRankingBarRace({
             onClick={() => onPlayerClick(player.name)}
           >
             {/* Rank */}
-            <span className={`bar-race-rank ${getRankClassName(player.rank)}`}>
-              {getRankEmoji(player.rank)}
+            <span className={`bar-race-rank ${getRankClassName(player.displayRank)}`}>
+              {getRankEmoji(player.displayRank)}
             </span>
 
             {/* Player name */}
