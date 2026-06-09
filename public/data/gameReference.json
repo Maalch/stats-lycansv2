@@ -356,14 +356,6 @@
       "translationKey": "NALES_ROLE_DESCRIPTION_MAGICIAN"
     },
     {
-      "id": "mystique",
-      "name": "Mystique",
-      "emoji": "🌀",
-      "description": "Son pouvoir se charge plus vite quand sa santé est basse. La nuit, peut placer un Répulseur invisible : les loups transformés proches ont leur vision troublée et sont immobilisés s'ils restent trop longtemps à proximité. Attention : les loups savent où sont les Répulseurs !",
-      "descriptionShort": "Peut créer des répulseurs qui gênent la vision des loups et peuvent les immobiliser",
-      "translationKey": "NALES_ROLE_DESCRIPTION_MYSTIC"
-    },
-    {
       "id": "ombre",
       "name": "Ombre",
       "emoji": "🌑",
@@ -383,9 +375,17 @@
       "id": "runiste",
       "name": "Runiste",
       "emoji": "🪨",
-      "description": "Peut placer des runes invisibles (gratuit, nombre limité). La rune regardée est indiquée en rouge et détecte les loups proches. Peut utiliser 100% de charge pour activer une rune : elle avertit les loups puis explose et les étourdit, même à travers les murs. La taille et la puissance augmentent avec le nombre de loups transformés.",
-      "descriptionShort": "Peut placer des runes invisibles qui détectent et étourdissent les loups",
+      "description": "Peut gratuitement placer jusqu'à 8 runes invisibles (visibles uniquement par lui, et à travers les murs). La rune regardée est sélectionnée et détecte les loups proches. La nuit, peut dépenser sa charge pour activer la rune sélectionnée à n'importe quelle distance : elle avertit les loups transformés puis explose après un délai, les étourdissant et leur infligeant Confusion. Plus il y a de loups transformés, plus l'explosion est large et puissante.",
+      "descriptionShort": "Peut placer des runes invisibles qui détectent et font exploser les loups",
       "translationKey": "NALES_ROLE_DESCRIPTION_RUNEMASTER"
+    },
+    {
+      "id": "infiltre",
+      "name": "Infiltré",
+      "emoji": "🥸",
+      "description": "Apparaît dans la liste des partenaires des loups (si elle est affichée), se faisant passer pour l'un d'eux. Si un loup l'attaque, il ne meurt pas immédiatement mais reçoit l'effet Sursis : il meurt à la fin du prochain meeting, uniquement si son attaquant est toujours vivant et n'a pas été éliminé au vote. Un seul possible par partie.",
+      "descriptionShort": "Survit temporairement aux attaques de loups, fait croire aux loups qu'il est l'un des leurs",
+      "translationKey": "NALES_ROLE_DESCRIPTION_INFILTRATOR"
     },
     {
       "id": "avatar",
@@ -1199,10 +1199,11 @@
       "Invocateur": { "category": "villagerPowers", "id": "invocateur", "legacy": true, "replacedBy": "magicien" },
       "Éclaireur": { "category": "villagerPowers", "id": "eclaireur" },
       "Magicien": { "category": "villagerPowers", "id": "magicien" },
-      "Mystique": { "category": "villagerPowers", "id": "mystique" },
+      "Mystique": { "category": "villagerPowers", "id": "mystique", "legacy": true, "replacedBy": "runiste" },
       "Ombre": { "category": "villagerPowers", "id": "ombre" },
       "Ermite": { "category": "villagerPowers", "id": "ermite" },
       "Runiste": { "category": "villagerPowers", "id": "runiste" },
+      "Infiltré": { "category": "villagerPowers", "id": "infiltre" },
       "Avatar": { "category": "villagerPowers", "id": "avatar" },
       "Ange gardien": { "category": "deadRoles", "id": "ange-gardien" },
       "Inconnu": { "_note": "Unknown/unresolved power value in gameLog" }
