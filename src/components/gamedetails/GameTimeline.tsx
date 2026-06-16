@@ -7,7 +7,7 @@ import { getDeathTypeLabel } from '../../types/deathTypes';
 // --- Types ---
 
 interface TimelineEvent {
-  date: string;           // ISO date for sorting
+  date: string | null;    // ISO date for sorting (may be null for legacy data)
   timing: string;         // Game timing (J1, N1, M1, etc.)
   category: 'phase' | 'mayor' | 'dailyEvent' | 'sabotage' | 'action' | 'death' | 'vote';
   emoji: string;
@@ -239,8 +239,13 @@ function buildTimeline(gameEvents: GameEvent[], playerData: PlayerStat[]): Phase
     }
   }
 
-  // 5. Sort all events by date
-  allEvents.sort((a, b) => a.date.localeCompare(b.date));
+  // 5. Sort all events by date (null dates go last)
+  allEvents.sort((a, b) => {
+    if (!a.date && !b.date) return 0;
+    if (!a.date) return 1;
+    if (!b.date) return -1;
+    return a.date.localeCompare(b.date);
+  });
 
   // 6. Get phase boundaries from GameEvents
   const phases = gameEvents
@@ -255,6 +260,7 @@ function buildTimeline(gameEvents: GameEvent[], playerData: PlayerStat[]): Phase
     const nextPhase = phases[i + 1];
 
     const phaseEvents = allEvents.filter(event => {
+      if (!event.date) return false;
       if (nextPhase) {
         return event.date >= currentPhase.Date && event.date < nextPhase.Date;
       }
@@ -272,7 +278,7 @@ function buildTimeline(gameEvents: GameEvent[], playerData: PlayerStat[]): Phase
 
   // Events before first phase (rare edge case)
   if (phases.length > 0) {
-    const prePhaseEvents = allEvents.filter(event => event.date < phases[0].Date);
+    const prePhaseEvents = allEvents.filter(event => event.date && event.date < phases[0].Date);
     if (prePhaseEvents.length > 0) {
       groups.unshift({
         phaseName: 'Pré-partie',
@@ -364,7 +370,7 @@ export function GameTimeline({ game }: GameTimelineProps) {
 
                             return (
                               <div key={eventIdx} className={`lycans-timeline-event lycans-timeline-event--${event.category}`}>
-                                <span className="lycans-timeline-event-time">{formatElapsedTime(event.date, startDate)}</span>
+                                <span className="lycans-timeline-event-time">{event.date ? formatElapsedTime(event.date, startDate) : ''}</span>
                                 <span className="lycans-timeline-event-emoji">{event.emoji}</span>
                                 <span className="lycans-timeline-event-content">
                                   {event.playerName && (
