@@ -1058,6 +1058,20 @@
       ]
     },
     {
+      "id": "harvest",
+      "name": "Récolte",
+      "emoji": "🌾",
+      "description": "Les Villageois ont un objectif de Récolte à atteindre pour remporter la partie. Seules les récoltes des Villageois comptent pour la progression vers l'objectif",
+      "details": [
+        "L'objectif est défini avant le début de la partie, généralement entre 2 000 et 4 000 points.",
+        "Les Loups et rôles Solo peuvent ramasser des objets de récolte mais leurs points ne s'accumulent pas.",
+        "En ramassant des objets de récolte, les Loups et rôles Solo privent les Villageois de ces points.",
+        "La progression de la récolte est uniquement affichée au début de chaque conseil — il n'est pas possible de gagner par récolte en plein jour ou en pleine nuit.",
+        "Si l'objectif est atteint, la partie se termine au prochain conseil par une victoire des Villageois.",
+        "Certains objets de récolte restaurent également la santé (nourriture), d'autres n'ont pas d'effet sur la santé mais rapportent généralement plus de points de récolte."
+      ]
+    },
+    {
       "id": "hunger-health",
       "name": "Faim & Santé",
       "emoji": "🍖",
@@ -1097,19 +1111,6 @@
       ]
     },
     {
-      "id": "draft-system",
-      "name": "Système de Draft",
-      "emoji": "🎯",
-      "description": "Option activable avant la partie permettant aux joueurs de choisir leurs préférences de rôle.",
-      "details": [
-        "Chaque joueur choisit parmi les rôles disponibles selon le camp qui lui est attribué.",
-        "Si assigné aux Villageois : choix parmi les rôles Villageois disponibles.",
-        "Si assigné aux Loups : choix parmi les rôles/pouvoirs de Loup disponibles.",
-        "Les rôles solo peuvent aussi être proposés si disponibles.",
-        "Le système permet une répartition plus stratégique mais reste optionnel."
-      ]
-    },
-    {
       "id": "items-overview",
       "name": "Objets & Inventaire",
       "emoji": "🎒",
@@ -1146,6 +1147,19 @@
         "Sabotage de puits (Village) : affecte tous les joueurs la nuit suivante — santé diminue plus vite et léger ralentissement.",
         "Sabotage de portails : empêche les Villageois d'utiliser les portails pour se déplacer rapidement.",
         "Rituels : les Loups peuvent effectuer des rituels à certains emplacements pour obtenir un bonus de vitesse."
+      ]
+    },
+    {
+      "id": "draft-system",
+      "name": "Système de Draft",
+      "emoji": "🎯",
+      "description": "Option activable avant la partie permettant aux joueurs de choisir leurs préférences de rôle.",
+      "details": [
+        "Chaque joueur choisit parmi les rôles disponibles selon le camp qui lui est attribué.",
+        "Si assigné aux Villageois : choix parmi les rôles Villageois disponibles.",
+        "Si assigné aux Loups : choix parmi les rôles/pouvoirs de Loup disponibles.",
+        "Les rôles solo peuvent aussi être proposés si disponibles.",
+        "Le système permet une répartition plus stratégique mais reste optionnel."
       ]
     }
   ],
