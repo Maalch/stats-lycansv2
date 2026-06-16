@@ -36,7 +36,7 @@ export const DEATH_TYPES = {
   // Role-Based Kills
   OTHER_AGENT: 'OTHER_AGENT',               // Tué par l'Agent
   AVENGER: 'AVENGER',                       // Tué par Vengeur
-  SEER: 'SEER',                             // Rôle deviné par loup (devin ou boule de crystal)
+  SEER: 'SEER',                             // Rôle deviné par loup (devin ou boule de cristal)
   SMUGGLER_HUNT_KILL: 'SMUGGLER_HUNT_KILL', // Mort en Contrebandier (chasse ouverte)
   MERCENARY_HUNT_KILL: 'MERCENARY_HUNT_KILL', // Mort en Mercenaire (chasse ouverte)
 

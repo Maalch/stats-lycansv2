@@ -231,7 +231,8 @@ function computeActionMetaStats(gameData: GameLogEntry[]): ActionMetaStatsData {
 
       // Track accessories
       actions.filter((a: Action) => a.ActionType === 'TakeAccessory' && a.ActionName).forEach((action: Action) => {
-        const name = action.ActionName!;
+        // Normalize legacy typo: "Boule de crystal" → "Boule de cristal"
+        const name = action.ActionName === 'Boule de crystal' ? 'Boule de cristal' : action.ActionName!;
         if (!accessoryUsageMap.has(name)) {
           accessoryUsageMap.set(name, { uses: 0, wins: 0, camp: new Map() });
         }
