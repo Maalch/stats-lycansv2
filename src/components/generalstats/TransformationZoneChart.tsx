@@ -59,9 +59,9 @@ const CustomTooltipKills = ({ active, payload, label }: any) => {
       }}
     >
       <div style={{ fontWeight: 'bold', marginBottom: '0.3rem' }}>{label}</div>
-      <div>Kills moyens / partie : <strong>{d.avgKills.toFixed(2)}</strong></div>
+      <div>Kills moyens / timing : <strong>{d.avgKills.toFixed(2)}</strong></div>
       <div>Total kills : <strong>{d.totalKills}</strong></div>
-      <div>Échantillon : <strong>{d.sampleSize}</strong> transform.</div>
+      <div>Transformations : <strong>{d.sampleSize}</strong></div>
     </div>
   );
 };
@@ -210,7 +210,7 @@ export function TransformationZoneChart() {
         <div className="lycans-graphique-section">
           <h3>Kills Moyens par Zone de Transformation</h3>
           <p style={{ textAlign: 'center', color: 'var(--text-secondary)', fontSize: '0.85rem', margin: '0.25rem 0 0.5rem' }}>
-            Kills moyens réalisés dans la partie par un loup selon sa zone de transformation
+            Kills moyens par événement de transformation : seules les morts survenues au même Timing (ex. N3) que la transformation sont comptabilisées
             {sortedByKills.length < sortedByTransforms.length && (
               <span style={{ marginLeft: '0.5rem' }}>(zones avec {'<'} 2 transformations masquées)</span>
             )}
@@ -288,7 +288,7 @@ export function TransformationZoneChart() {
         <div className="lycans-graphique-section">
           <h3>Taux de Victoire Loups par Zone de Transformation</h3>
           <p style={{ textAlign: 'center', color: 'var(--text-secondary)', fontSize: '0.85rem', margin: '0.25rem 0 0.5rem' }}>
-            Taux de victoire du camp Loups, pondéré par les transformations dans chaque zone
+            Taux de victoire du camp Loups par zone de transformation (une valeur par événement de transformation)
             {sortedByWinRate.length < sortedByTransforms.length && (
               <span style={{ marginLeft: '0.5rem' }}>(zones avec {'<'} 2 transformations masquées)</span>
             )}
@@ -376,14 +376,14 @@ export function TransformationZoneChart() {
             carte Village.
           </p>
           <p style={{ marginTop: '0.4rem' }}>
-            <strong>Graphique 2 :</strong> Pour chaque zone, kills moyens réalisés dans la partie
-            par le loup qui s'y est transformé. Un loup qui se transforme plusieurs fois dans la même
-            partie contribue autant de points que de transformations.
+            <strong>Graphique 2 :</strong> Pour chaque zone, moyenne des kills effectués au même
+            Timing que la transformation (ex. : si le loup se transforme en N3 dans cette zone,
+            seules les morts en N3 de ce loup sont comptabilisées). Chaque événement de transformation
+            est un point de donnée indépendant.
           </p>
           <p style={{ marginTop: '0.4rem' }}>
-            <strong>Graphique 3 :</strong> Taux de victoire du camp Loups pondéré par les
-            transformations dans chaque zone. Chaque événement de transformation contribue 1 si le
-            camp Loups a gagné la partie, 0 sinon.
+            <strong>Graphique 3 :</strong> Taux de victoire du camp Loups par zone. Chaque
+            événement de transformation contribue 1 si la partie a été gagnée par les Loups, 0 sinon.
           </p>
           <div
             style={{

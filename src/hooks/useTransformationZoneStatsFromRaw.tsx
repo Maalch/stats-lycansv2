@@ -114,12 +114,24 @@ function computeTransformationZoneStats(
       if (transformActions.length === 0) continue;
 
       // Count kills this player made in this game
-      const playerKills = game.PlayerStats.filter(
-        victim => victim.KillerName?.toLowerCase() === player.Username.toLowerCase()
-      ).length;
+      // Pre-compute kills per timing for this wolf in this game
+      // victim.DeathTiming matches action.Timing (e.g. "N3", "J2")
+      const killsByTiming: Record<string, number> = {};
+      for (const victim of game.PlayerStats) {
+        if (
+          victim.KillerName?.toLowerCase() === player.Username.toLowerCase() &&
+          victim.DeathTiming
+        ) {
+          killsByTiming[victim.DeathTiming] = (killsByTiming[victim.DeathTiming] ?? 0) + 1;
+        }
+      }
 
       const playerWon = player.Victorious ? 1 : 0;
 
+      // Each transform event is an independent data point:
+      // Chart 1 — count of transforms per zone
+      // Charts 2 & 3 — kills during the same Timing attributed to this zone;
+      //                 win/loss of the wolf attributed to this zone
       for (const action of transformActions) {
         const adjusted = adjustCoordinatesForMap(
           action.Position!.x,
@@ -127,8 +139,10 @@ function computeTransformationZoneStats(
           'Village'
         );
         const zone = getVillageZone(adjusted.x, adjusted.z);
+        const killsThisTiming = killsByTiming[action.Timing] ?? 0;
+
         transformCounts[zone]++;
-        killSums[zone] += playerKills;
+        killSums[zone] += killsThisTiming;
         killSampleSizes[zone]++;
         wolfWinCounts[zone] += playerWon;
       }
