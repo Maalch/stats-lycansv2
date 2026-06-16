@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.9.5';
+export const APP_VERSION = '1.9.6';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,16 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.9.6',
+    date: '16/06/2026',
+    description: 'Ajout d\'une page "Boule de Cristal" : classement des Loups par taux de kills via devinette de rôle et des Villageois par taux de morts par devinette du rôle, sur les parties en version 0.284+, dans',
+    link: {
+      mainTab: 'rankings',
+      subTab: 'seerStats',
+      text: 'Classements / Boule de Cristal'
+    }
+  },
   {
     version: 'v1.9.5',
     date: '02/06/2026',
