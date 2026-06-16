@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.9.6';
+export const APP_VERSION = '1.9.7';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,16 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.9.7',
+    date: '16/06/2026',
+    description: 'Ajout d\'une page sur les zones des Transformations : zone de transformation, nombre de kills et taux de victoire du camp Loups pondéré par zone de transformation (Village), dans',
+    link: {
+      mainTab: 'general',
+      subTab: 'transformationZones',
+      text: 'Stats Parties / Transformations'
+    }
+  },
   {
     version: 'v1.9.6',
     date: '16/06/2026',

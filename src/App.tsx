@@ -54,6 +54,7 @@ const BRMiniChart = lazy(() => import('./components/brstats/BRMiniChart').then(m
 
 const DeathLocationHeatmap = lazy(() => import('./components/generalstats/deathStats/DeathLocationHeatmap').then(m => ({ default: m.DeathLocationHeatmap })));
 const WhatIfSimulator = lazy(() => import('./components/generalstats/WhatIfSimulator/WhatIfSimulator').then(m => ({ default: m.WhatIfSimulator })));
+const TransformationZoneChart = lazy(() => import('./components/generalstats/TransformationZoneChart').then(m => ({ default: m.TransformationZoneChart })));
 
 const GameDetailsChart = lazy(() => import('./components/gamedetails/GameDetailsChart').then(m => ({ default: m.GameDetailsChart })));
 
@@ -244,6 +245,12 @@ const GENERAL_STATS_MENU = [
     label: 'Actions', 
     component: ActionMetaStatsChart,
     description: 'Analyse méta des actions (gadgets, potions, transformations)'
+  },
+  {
+    key: 'transformationZones',
+    label: 'Transformations',
+    component: TransformationZoneChart,
+    description: 'Zones de transformation des Loups et efficacité par zone (Village)'
   },
   { 
     key: 'teamComposition',
