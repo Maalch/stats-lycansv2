@@ -723,15 +723,14 @@ export function PlayerAchievementsDisplay({
                       <span className="achievement-row-value" style={{ visibility: hasProgress ? 'visible' : 'hidden' }}>
                         {hasProgress ? currentValue : '0'}
                       </span>
-                      {/* Recent value badge (last N games) */}
-                      {hasProgress && progress && progress.recentValue > 0 && (
-                        <span
-                          className="achievement-row-recent"
-                          title={`+${progress.recentValue} lors des ${allData?.recentGamesCount ?? 15} dernières parties`}
-                        >
-                          +{progress.recentValue}
-                        </span>
-                      )}
+                      {/* Recent value badge (last N games) — always rendered to preserve alignment */}
+                      <span
+                        className="achievement-row-recent"
+                        title={hasProgress && progress && progress.recentValue > 0 ? `+${progress.recentValue} lors des ${allData?.recentGamesCount ?? 15} dernières parties` : ''}
+                        style={{ visibility: hasProgress && progress && progress.recentValue > 0 ? 'visible' : 'hidden' }}
+                      >
+                        +{progress?.recentValue ?? 0}
+                      </span>
                       {/* Always render Top X% slot — ghost for not started */}
                       <span 
                         className={`achievement-row-percent${topPercent && topPercent <= 10 ? ' top-tier' : topPercent && topPercent <= 25 ? ' high-tier' : ''}`}
