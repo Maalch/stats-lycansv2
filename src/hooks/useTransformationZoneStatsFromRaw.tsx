@@ -42,10 +42,12 @@ export interface ZoneTransformStats {
   totalKills: number;
   /** Number of (player × game) transform events in this zone */
   sampleSize: number;
-  /** Win rate of the Loup camp, weighted by transform events in this zone (0–100) */
+  /** Win rate of the Loup camp per game where at least one wolf transformed in this zone (0–100) */
   wolfWinRate: number;
-  /** Number of transform events in this zone where the Loup camp won */
+  /** Number of games where Loups won and at least one wolf transformed in this zone */
   wolfWinCount: number;
+  /** Total games where at least one wolf transformed in this zone (denominator for win rate) */
+  wolfGameCount: number;
 }
 
 export interface TransformationZoneStatsData {
@@ -84,8 +86,15 @@ function computeTransformationZoneStats(
     'Ruines': 0,
     'Reste de la Carte': 0,
   };
-  // For wolf win rate: each transform event contributes 1 win or 0
+  // For wolf win rate: per-game deduplication — each game contributes once per zone
   const wolfWinCounts: Record<VillageZone, number> = {
+    'Village Principal': 0,
+    'Ferme': 0,
+    'Village Pêcheur': 0,
+    'Ruines': 0,
+    'Reste de la Carte': 0,
+  };
+  const wolfGameCounts: Record<VillageZone, number> = {
     'Village Principal': 0,
     'Ferme': 0,
     'Village Pêcheur': 0,
@@ -95,6 +104,10 @@ function computeTransformationZoneStats(
 
   for (const game of gameData) {
     if (game.MapName !== 'Village') continue;
+
+    // Track which zones had a wolf transform this game, and whether wolves won
+    const zonesThisGame = new Set<VillageZone>();
+    let wolvesWon = false;
 
     for (const player of game.PlayerStats) {
       // Only Loup-camp players (Loup, Traître, Louveteau, Amoureux Loup)
@@ -113,6 +126,8 @@ function computeTransformationZoneStats(
       );
       if (transformActions.length === 0) continue;
 
+      if (player.Victorious) wolvesWon = true;
+
       // Count kills this player made in this game
       // Pre-compute kills per timing for this wolf in this game
       // victim.DeathTiming matches action.Timing (e.g. "N3", "J2")
@@ -126,12 +141,7 @@ function computeTransformationZoneStats(
         }
       }
 
-      const playerWon = player.Victorious ? 1 : 0;
-
-      // Each transform event is an independent data point:
-      // Chart 1 — count of transforms per zone
-      // Charts 2 & 3 — kills during the same Timing attributed to this zone;
-      //                 win/loss of the wolf attributed to this zone
+      // Each transform event is an independent data point for charts 1 & 2
       for (const action of transformActions) {
         const adjusted = adjustCoordinatesForMap(
           action.Position!.x,
@@ -144,8 +154,14 @@ function computeTransformationZoneStats(
         transformCounts[zone]++;
         killSums[zone] += killsThisTiming;
         killSampleSizes[zone]++;
-        wolfWinCounts[zone] += playerWon;
+        zonesThisGame.add(zone); // mark zone as used in this game
       }
+    }
+
+    // Per-game win rate: each zone touched in this game contributes exactly once
+    for (const zone of zonesThisGame) {
+      wolfGameCounts[zone]++;
+      if (wolvesWon) wolfWinCounts[zone]++;
     }
   }
 
@@ -166,10 +182,11 @@ function computeTransformationZoneStats(
     totalKills: killSums[zone],
     sampleSize: killSampleSizes[zone],
     wolfWinRate:
-      killSampleSizes[zone] > 0
-        ? (wolfWinCounts[zone] / killSampleSizes[zone]) * 100
+      wolfGameCounts[zone] > 0
+        ? (wolfWinCounts[zone] / wolfGameCounts[zone]) * 100
         : 0,
     wolfWinCount: wolfWinCounts[zone],
+    wolfGameCount: wolfGameCounts[zone],
   }));
 
   return { zoneStats, totalTransformations };

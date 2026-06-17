@@ -82,7 +82,7 @@ const CustomTooltipWinRate = ({ active, payload, label }: any) => {
     >
       <div style={{ fontWeight: 'bold', marginBottom: '0.3rem' }}>{label}</div>
       <div>Taux de victoire Loups : <strong>{d.wolfWinRate.toFixed(1)}%</strong></div>
-      <div>Victoires : <strong>{d.wolfWinCount}</strong> / {d.sampleSize} transform.</div>
+      <div>Victoires : <strong>{d.wolfWinCount}</strong> / {d.wolfGameCount} partie{d.wolfGameCount > 1 ? 's' : ''}.</div>
     </div>
   );
 };
@@ -117,7 +117,7 @@ export function TransformationZoneChart() {
     () =>
       data?.zoneStats
         ? [...data.zoneStats]
-            .filter(z => z.sampleSize >= 2)
+            .filter(z => z.wolfGameCount >= 2)
             .sort((a, b) => b.wolfWinRate - a.wolfWinRate)
         : [],
     [data]
@@ -288,9 +288,9 @@ export function TransformationZoneChart() {
         <div className="lycans-graphique-section">
           <h3>Taux de Victoire Loups par Zone de Transformation</h3>
           <p style={{ textAlign: 'center', color: 'var(--text-secondary)', fontSize: '0.85rem', margin: '0.25rem 0 0.5rem' }}>
-            Taux de victoire du camp Loups par zone de transformation (une valeur par événement de transformation)
+            Taux de victoire du camp Loups par zone de transformation (une partie par zone, indépendamment du nombre de joueurs ou de transformations)
             {sortedByWinRate.length < sortedByTransforms.length && (
-              <span style={{ marginLeft: '0.5rem' }}>(zones avec {'<'} 2 transformations masquées)</span>
+              <span style={{ marginLeft: '0.5rem' }}>(zones avec {'<'} 2 parties masquées)</span>
             )}
           </p>
           {sortedByWinRate.length === 0 ? (
@@ -383,7 +383,9 @@ export function TransformationZoneChart() {
           </p>
           <p style={{ marginTop: '0.4rem' }}>
             <strong>Graphique 3 :</strong> Taux de victoire du camp Loups par zone. Chaque
-            événement de transformation contribue 1 si la partie a été gagnée par les Loups, 0 sinon.
+            partie où au moins un loup s’est transformé dans la zone contribue 1 si les Loups
+            ont gagné, 0 sinon — quelle que soit le nombre de joueurs ou de transformations
+            dans cette zone.
           </p>
           <div
             style={{
