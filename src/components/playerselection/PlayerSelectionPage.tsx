@@ -271,7 +271,7 @@ export function PlayerSelectionPage() {
       {!settings.highlightedPlayer && (
         <div className="search-controls-header">
           <div className="selection-prompt-content">
-            <h2>Sélectionnez un joueur</h2>
+            <h2>{settings.dataSource === 'discord' ? 'Team Discord' : 'Team du Mardi'} - Sélectionnez un joueur</h2>
             <p>Choisissez un joueur pour le mettre en évidence dans tous les graphiques.</p>
           </div>
           
