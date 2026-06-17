@@ -159,9 +159,8 @@ export function computeRecentAchievements(
         const explanationWithValue = def.explanation.replace(/\bX\b/g, String(achievement.currentValue));
         const text = `${def.name} ${tierDisplay}${rankDisplay} — ${explanationWithValue}`;
 
-        // Higher tiers are more impressive
-        const tierPriority: Record<string, number> = { bronze: 55, argent: 58, or: 60, lycans: 62 };
-        const priority = tierPriority[level.tier] || 60;
+        // Priority based on count only — repeated achievements are less noteworthy
+        const priority = achievement.currentValue >= 20 ? 70 : achievement.currentValue >= 5 ? 76 : 78;
 
         highlights.push({ text, emoji: '🏆', type: 'achievement', priority, navigateTo: 'achievements' });
       }
@@ -241,7 +240,7 @@ export function computeMonthlyRanking(
   const ordinals = ['', '1er', '2ème', '3ème', '4ème', '5ème'];
   const text = `${ordinals[rank]} au classement de ${monthLabel} (${playerWinRate.toFixed(0)}% victoires)`;
 
-  const priority = rank === 1 ? 92 : rank <= 3 ? 85 : 78;
+  const priority = rank === 1 ? 92 : rank <= 3 ? 85 : 75;
 
   return [{ text, emoji: '📊', type: 'monthly-ranking', priority, navigateTo: 'monthlyRanking' }];
 }
