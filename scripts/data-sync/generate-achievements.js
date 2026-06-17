@@ -23,6 +23,7 @@ import { DATA_SOURCES } from './shared/data-sources.js';
 
 // Import compute function
 import { computeAllAchievements } from './compute/compute-achievements.js';
+import { RECENT_GAMES_COUNT } from './compute/achievements/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -129,6 +130,7 @@ async function main(sourceKey) {
     teamName: dataSource.name,
     totalPlayers: Object.keys(playerResults).length,
     totalGames: allGames.length,
+    recentGamesCount: RECENT_GAMES_COUNT,
     categories: filteredCategories,
     achievementDefinitions: clientDefinitions,
     players: playerResults,

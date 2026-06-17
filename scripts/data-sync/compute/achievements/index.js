@@ -17,6 +17,9 @@
 
 import { getPlayerId } from './helpers.js';
 
+/** Number of most-recent player games used to compute recentValue per achievement */
+export const RECENT_GAMES_COUNT = 15;
+
 // General evaluators
 import {
   campWins, campLosses, soloWins, soloLosses,
@@ -265,6 +268,10 @@ export function computeAllAchievements(gameData, achievementDefs, joueursData = 
         
         if (value === 0) continue;
         
+        // Compute recent value (last RECENT_GAMES_COUNT BR games for this player)
+        const recentPlayerBRGames = playerBRGames.slice(-RECENT_GAMES_COUNT);
+        const { value: recentValue } = brEvaluator(recentPlayerBRGames, brData, def.evaluatorParams || {});
+        
         // Determine which levels are unlocked
         const unlockedLevels = [];
         let nextLevel = null;
@@ -290,6 +297,7 @@ export function computeAllAchievements(gameData, achievementDefs, joueursData = 
         playerAchievements.push({
           id: def.id,
           currentValue: value,
+          recentValue,
           unlockedLevels,
           nextLevel,
           progress,
@@ -310,6 +318,10 @@ export function computeAllAchievements(gameData, achievementDefs, joueursData = 
       const { value, gameIds } = evaluator(playerGames, gameData, playerId, def.evaluatorParams || {});
       
       if (value === 0) continue; // Skip achievements with no progress
+      
+      // Compute recent value (last RECENT_GAMES_COUNT games this player participated in)
+      const recentPlayerGames = playerGames.slice(-RECENT_GAMES_COUNT);
+      const { value: recentValue } = evaluator(recentPlayerGames, gameData, playerId, def.evaluatorParams || {});
       
       // Determine which levels are unlocked
       const unlockedLevels = [];
@@ -338,6 +350,7 @@ export function computeAllAchievements(gameData, achievementDefs, joueursData = 
       playerAchievements.push({
         id: def.id,
         currentValue: value,
+        recentValue,
         unlockedLevels,
         nextLevel,
         progress,

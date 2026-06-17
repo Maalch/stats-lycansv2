@@ -448,7 +448,7 @@ export function selectHighlight(
   if (candidates.length === 0) return null;
 
   const maxPriority = Math.max(...candidates.map(c => c.priority));
-  const threshold = 15;
+  const threshold = 5;
   const topCandidates = candidates.filter(c => c.priority >= maxPriority - threshold);
 
   if (topCandidates.length === 0) return null;
