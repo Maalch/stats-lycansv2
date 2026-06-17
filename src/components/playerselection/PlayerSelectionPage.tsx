@@ -422,12 +422,14 @@ export function PlayerSelectionPage() {
                         title={playerHighlight.text}
                         onClick={playerHighlight.navigateTo ? () => {
                           if (playerHighlight.navigateTo === 'series') navigateToTab('rankings', 'series');
+                          else if (playerHighlight.navigateTo === 'monthlyRanking') navigateToTab('rankings', 'monthlyRanking');
                           else handleViewChange(playerHighlight.navigateTo as 'achievements');
                         } : undefined}
                         role={playerHighlight.navigateTo ? 'button' : undefined}
                         tabIndex={playerHighlight.navigateTo ? 0 : undefined}
                         onKeyDown={playerHighlight.navigateTo ? (e) => { if (e.key === 'Enter' || e.key === ' ') {
                           if (playerHighlight.navigateTo === 'series') navigateToTab('rankings', 'series');
+                          else if (playerHighlight.navigateTo === 'monthlyRanking') navigateToTab('rankings', 'monthlyRanking');
                           else handleViewChange(playerHighlight.navigateTo as 'achievements');
                         }} : undefined}
                       >

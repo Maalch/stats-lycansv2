@@ -591,16 +591,6 @@ export function MonthlyRankingChart() {
   return (
     <div className="lycans-players-stats">
       <h2>Classement par Période</h2>
-      <p className="lycans-stats-info">
-        Classement des joueurs par taux de victoire
-        <br />
-        <span style={{ fontSize: '0.85rem', fontStyle: 'italic' }}>
-          {rankingPeriod === 'monthly'
-            ? 'Seuls les joueurs ayant participé à au moins 40% des parties du mois sont classés'
-            : "Seuls les joueurs ayant participé à au moins 20% des parties de l'année sont classés"}
-        </span>
-      </p>
-
       <div className="lycans-graphiques-groupe">
         <div className="lycans-graphique-section">
           {/* Period toggle */}

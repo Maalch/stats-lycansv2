@@ -243,7 +243,7 @@ export function computeMonthlyRanking(
 
   const priority = rank === 1 ? 92 : rank <= 3 ? 85 : 78;
 
-  return [{ text, emoji: '📊', type: 'monthly-ranking', priority }];
+  return [{ text, emoji: '📊', type: 'monthly-ranking', priority, navigateTo: 'monthlyRanking' }];
 }
 
 // --- Record kills highlights ---
