@@ -43,6 +43,8 @@ export interface UnlockedLevel {
 export interface PlayerAchievementProgress {
   id: string;
   currentValue: number;
+  /** Count of qualifying events within the last N games (see recentGamesCount in AchievementsData) */
+  recentValue: number;
   unlockedLevels: UnlockedLevel[];
   nextLevel: AchievementLevel | null;
   /** Progress fraction toward next level (0–1, or 1.0 if all unlocked) */
@@ -71,6 +73,8 @@ export interface AchievementsData {
   teamName: string;
   totalPlayers: number;
   totalGames: number;
+  /** Number of most-recent games used to compute recentValue per achievement */
+  recentGamesCount: number;
   categories: Record<string, AchievementCategory>;
   achievementDefinitions: AchievementDefinition[];
   players: Record<string, PlayerAchievements>;

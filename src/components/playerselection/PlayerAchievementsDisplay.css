@@ -362,6 +362,20 @@
   text-align: right;
 }
 
+.achievement-row-recent {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #16a34a;
+  background: rgba(22, 163, 74, 0.12);
+  border: 1px solid rgba(22, 163, 74, 0.3);
+  border-radius: 10px;
+  padding: 0.05rem 0.35rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
 .achievement-row-percent {
   font-size: 0.72rem;
   font-weight: 600;
