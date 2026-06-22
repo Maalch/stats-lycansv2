@@ -270,7 +270,7 @@ export function computeAllAchievements(gameData, achievementDefs, joueursData = 
         
         // Compute recent value (last RECENT_GAMES_COUNT BR games for this player)
         const recentPlayerBRGames = playerBRGames.slice(-RECENT_GAMES_COUNT);
-        const { value: recentValue } = brEvaluator(recentPlayerBRGames, brData, def.evaluatorParams || {});
+        const { value: recentValue, gameIds: recentGameIds } = brEvaluator(recentPlayerBRGames, brData, def.evaluatorParams || {});
         
         // Determine which levels are unlocked
         const unlockedLevels = [];
@@ -298,6 +298,7 @@ export function computeAllAchievements(gameData, achievementDefs, joueursData = 
           id: def.id,
           currentValue: value,
           recentValue,
+          recentGameIds,
           unlockedLevels,
           nextLevel,
           progress,
@@ -321,7 +322,7 @@ export function computeAllAchievements(gameData, achievementDefs, joueursData = 
       
       // Compute recent value (last RECENT_GAMES_COUNT games this player participated in)
       const recentPlayerGames = playerGames.slice(-RECENT_GAMES_COUNT);
-      const { value: recentValue } = evaluator(recentPlayerGames, gameData, playerId, def.evaluatorParams || {});
+      const { value: recentValue, gameIds: recentGameIds } = evaluator(recentPlayerGames, gameData, playerId, def.evaluatorParams || {});
       
       // Determine which levels are unlocked
       const unlockedLevels = [];
@@ -351,6 +352,7 @@ export function computeAllAchievements(gameData, achievementDefs, joueursData = 
         id: def.id,
         currentValue: value,
         recentValue,
+        recentGameIds,
         unlockedLevels,
         nextLevel,
         progress,

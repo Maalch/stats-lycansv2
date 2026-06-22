@@ -45,6 +45,8 @@ export interface PlayerAchievementProgress {
   currentValue: number;
   /** Count of qualifying events within the last N games (see recentGamesCount in AchievementsData) */
   recentValue: number;
+  /** Game IDs that contributed to recentValue (one ID per contributing game, not per event) */
+  recentGameIds?: string[];
   unlockedLevels: UnlockedLevel[];
   nextLevel: AchievementLevel | null;
   /** Progress fraction toward next level (0–1, or 1.0 if all unlocked) */

@@ -1,6 +1,8 @@
 import { useState, useMemo, useEffect, useCallback } from 'react';
 import './PlayerAchievementsDisplay.css';
 import { AchievementStar } from './AchievementStar';
+import { useGameLogData } from '../../hooks/useCombinedRawData';
+import { useNavigation } from '../../context/NavigationContext';
 import type {
   AchievementWithProgress,
   AchievementCategory,
@@ -107,6 +109,18 @@ function buildAchievementRanking(
   }
 
   return rows;
+}
+
+/**
+ * Parse a game ID (e.g. "Ponce-20250501000000-417") into a human-readable label.
+ * Returns "#417 — 01/05/2025" format.
+ */
+function parseGameId(gameId: string): string {
+  const match = gameId.match(/(\d{4})(\d{2})(\d{2})\d{6}-(\d+)$/);
+  if (match) {
+    return `#${match[4]} — ${match[3]}/${match[2]}/${match[1]}`;
+  }
+  return gameId;
 }
 
 interface PlayerAchievementsDisplayProps {
@@ -243,17 +257,37 @@ export function PlayerAchievementsDisplay({
   const [comparePlayerName, setComparePlayerName] = useState<string>('');
   // Track which achievement's ranking is expanded (null = none)
   const [expandedAchievementId, setExpandedAchievementId] = useState<string | null>(null);
+  // Track which achievement's recent-games list is expanded (null = none)
+  const [expandedRecentGameId, setExpandedRecentGameId] = useState<string | null>(null);
 
-  // Reset comparison and expanded ranking when the viewed player changes
+  // Reset comparison and expanded panels when the viewed player changes
   useEffect(() => {
     setComparePlayerName('');
     setExpandedAchievementId(null);
+    setExpandedRecentGameId(null);
   }, [currentPlayerName]);
 
   // Toggle achievement ranking panel
   const handleAchievementClick = useCallback((achievementId: string) => {
     setExpandedAchievementId(prev => prev === achievementId ? null : achievementId);
   }, []);
+
+  // Game log lookup: game.Id → DisplayedId for friendly labels and navigation
+  const { data: gameLogData } = useGameLogData();
+  const { navigateToGameDetails } = useNavigation();
+
+  const gameRefMap = useMemo(() => {
+    const map = new Map<string, string>();
+    gameLogData?.GameStats.forEach(game => map.set(game.Id, game.DisplayedId));
+    return map;
+  }, [gameLogData]);
+
+  const handleGameClick = useCallback((rawId: string) => {
+    const displayedId = gameRefMap.get(rawId);
+    if (displayedId) {
+      navigateToGameDetails({ selectedGame: displayedId, fromComponent: 'Succès' });
+    }
+  }, [gameRefMap, navigateToGameDetails]);
 
   // Pre-compute ranking for the expanded achievement
   const expandedRanking = useMemo((): AchievementRankingRow[] => {
@@ -723,14 +757,16 @@ export function PlayerAchievementsDisplay({
                       <span className="achievement-row-value" style={{ visibility: hasProgress ? 'visible' : 'hidden' }}>
                         {hasProgress ? currentValue : '0'}
                       </span>
-                      {/* Recent value badge (last N games) — always rendered to preserve alignment */}
-                      <span
-                        className="achievement-row-recent"
-                        title={hasProgress && progress && progress.recentValue > 0 ? `+${progress.recentValue} lors des ${allData?.recentGamesCount ?? 15} dernières parties` : ''}
+                      {/* Recent value badge (last N games) — clickable to reveal contributing games */}
+                      <button
+                        type="button"
+                        className={`achievement-row-recent${expandedRecentGameId === achievement.id ? ' open' : ''}`}
+                        title={hasProgress && progress && progress.recentValue > 0 ? `+${progress.recentValue} lors des ${allData?.recentGamesCount ?? 15} dernières parties — Cliquer pour voir les parties` : ''}
                         style={{ visibility: hasProgress && progress && progress.recentValue > 0 ? 'visible' : 'hidden' }}
+                        onClick={(e) => { e.stopPropagation(); setExpandedRecentGameId(prev => prev === achievement.id ? null : achievement.id); }}
                       >
                         +{progress?.recentValue ?? 0}
-                      </span>
+                      </button>
                       {/* Always render Top X% slot — ghost for not started */}
                       <span 
                         className={`achievement-row-percent${topPercent && topPercent <= 10 ? ' top-tier' : topPercent && topPercent <= 25 ? ' high-tier' : ''}`}
@@ -785,6 +821,35 @@ export function PlayerAchievementsDisplay({
                   )}
                 </div>
 
+                {/* Recent games panel — shown when recent badge is clicked */}
+                {expandedRecentGameId === achievement.id && !compareIsActive && progress?.recentGameIds && progress.recentGameIds.length > 0 && (
+                  <div className="achievement-recent-panel">
+                    <div className="achievement-recent-header">
+                      🕐 Contributions lors des {allData?.recentGamesCount ?? 15} dernières parties
+                    </div>
+                    <div className="achievement-recent-list">
+                      {progress.recentGameIds.map(gameId => {
+                        const displayedId = gameRefMap.get(gameId);
+                        const dateMatch = gameId.match(/(\d{4})(\d{2})(\d{2})/);
+                        const dateStr = dateMatch ? `${dateMatch[3]}/${dateMatch[2]}/${dateMatch[1]}` : '';
+                        const label = displayedId
+                          ? (dateStr ? `#${displayedId} — ${dateStr}` : `#${displayedId}`)
+                          : parseGameId(gameId);
+                        return (
+                          <button
+                            key={gameId}
+                            type="button"
+                            className={`achievement-recent-game${displayedId ? ' clickable' : ''}`}
+                            onClick={() => handleGameClick(gameId)}
+                            title={displayedId ? 'Voir les détails de la partie' : undefined}
+                          >
+                            {label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
                 {/* Ranking panel — shown when expanded (only in non-compare mode) */}
                 {isExpanded && !compareIsActive && expandedRanking.length > 0 && (
                   <div className="achievement-ranking-panel">

@@ -374,6 +374,19 @@
   padding: 0.05rem 0.35rem;
   white-space: nowrap;
   flex-shrink: 0;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.achievement-row-recent:hover {
+  background: rgba(22, 163, 74, 0.22);
+  border-color: rgba(22, 163, 74, 0.5);
+}
+
+.achievement-row-recent.open {
+  background: rgba(22, 163, 74, 0.25);
+  border-color: rgba(22, 163, 74, 0.6);
+  outline: none;
 }
 
 .achievement-row-percent {
@@ -933,6 +946,51 @@
 /* ===========================
    ACHIEVEMENT RANKING PANEL
    =========================== */
+
+.achievement-recent-panel {
+  border-bottom: 1px solid var(--border-color);
+  background: rgba(22, 163, 74, 0.05);
+  animation: ranking-slide-down 0.2s ease;
+  padding: 0.5rem 0.85rem 0.6rem;
+}
+
+.achievement-recent-header {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #16a34a;
+  margin-bottom: 0.4rem;
+}
+
+.achievement-recent-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.achievement-recent-game {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.15rem 0.5rem;
+  white-space: nowrap;
+  cursor: default;
+}
+
+.achievement-recent-game.clickable {
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.achievement-recent-game.clickable:hover {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: var(--bg-primary);
+}
 
 .achievement-ranking-panel {
   border-bottom: 1px solid var(--border-color);
