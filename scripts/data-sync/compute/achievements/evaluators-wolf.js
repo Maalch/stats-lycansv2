@@ -226,8 +226,8 @@ export function wolfNecromancerResurrect(playerGames, allGames, playerId, params
 }
 
 /**
- * Count games where player (as Loup Devin) made at least 2 SEER kills in that game.
- * - Loup Devin = isWolfCamp + Power === 'Devin'
+ * Count games where player (as wolf) made at least 2 SEER kills in that game.
+ * - Wolf = isWolfCamp (includes Loup Devin and wolves using boule de cristal)
  * - A SEER kill = victim.DeathType === DeathTypeCode.SEER && killer is this player
  */
 export function wolfSeerDoubleKill(playerGames, allGames, playerId, params) {
@@ -236,7 +236,6 @@ export function wolfSeerDoubleKill(playerGames, allGames, playerId, params) {
 
   for (const { game, playerStat } of playerGames) {
     if (!isWolfCamp(playerStat)) continue;
-    if (playerStat.Power !== 'Devin') continue;
 
     const seerKills = game.PlayerStats.filter(victim =>
       victim.DeathType === DeathTypeCode.SEER &&
@@ -252,8 +251,8 @@ export function wolfSeerDoubleKill(playerGames, allGames, playerId, params) {
 }
 
 /**
- * Count total correct role guesses (SEER kills) as Loup Devin across all games.
- * - Loup Devin = isWolfCamp + Power === 'Devin'
+ * Count total correct role guesses (SEER kills) as wolf across all games.
+ * - Wolf = isWolfCamp (includes Loup Devin and wolves using boule de cristal)
  * - A SEER kill = victim.DeathType === DeathTypeCode.SEER && killer is this player
  * Returns cumulative count, not number of games.
  */
@@ -264,7 +263,6 @@ export function wolfSeerTotalCorrectGuesses(playerGames, allGames, playerId, par
 
   for (const { game, playerStat } of playerGames) {
     if (!isWolfCamp(playerStat)) continue;
-    if (playerStat.Power !== 'Devin') continue;
 
     const seerKills = game.PlayerStats.filter(victim =>
       victim.DeathType === DeathTypeCode.SEER &&
