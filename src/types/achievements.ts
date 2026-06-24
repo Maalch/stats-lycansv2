@@ -28,6 +28,12 @@ export interface AchievementDefinition {
   /** Category key (e.g., 'victories', 'deaths', 'kills', 'roles', 'social', 'maps', 'special') */
   category: string;
   levels: AchievementLevel[];
+  /**
+   * How recentValue is interpreted:
+   * - 'count' (default): number of qualifying events in last N games
+   * - 'max': best single-game value in last N games (badge only shown if it equals the all-time record)
+   */
+  valueType?: 'count' | 'max';
 }
 
 /** An unlocked level for a player's achievement */

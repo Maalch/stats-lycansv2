@@ -1273,6 +1273,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     explanation: 'Récolter plus de X de loots dans une seule partie',
     emoji: '🏆',
     category: 'items',
+    valueType: 'max',
     evaluator: 'maxLootInSingleGame',
     evaluatorParams: {},
     levels: [

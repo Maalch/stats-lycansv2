@@ -729,6 +729,10 @@ export function PlayerAchievementsDisplay({
               }
 
               const isExpanded = expandedAchievementId === achievement.id;
+              // For 'max' type achievements, recentValue is the best single-game value in the
+              // last N games — only show the badge if it equals the all-time record (new record set recently)
+              const showRecentBadge = hasProgress && progress && progress.recentValue > 0 &&
+                (achievement.valueType !== 'max' || progress.recentValue === progress.currentValue);
 
               return (
                 <div key={achievement.id}>
@@ -761,8 +765,8 @@ export function PlayerAchievementsDisplay({
                       <button
                         type="button"
                         className={`achievement-row-recent${expandedRecentGameId === achievement.id ? ' open' : ''}`}
-                        title={hasProgress && progress && progress.recentValue > 0 ? `+${progress.recentValue} lors des ${allData?.recentGamesCount ?? 15} dernières parties — Cliquer pour voir les parties` : ''}
-                        style={{ visibility: hasProgress && progress && progress.recentValue > 0 ? 'visible' : 'hidden' }}
+                        title={showRecentBadge ? `+${progress!.recentValue} lors des ${allData?.recentGamesCount ?? 15} dernières parties — Cliquer pour voir les parties` : ''}
+                        style={{ visibility: showRecentBadge ? 'visible' : 'hidden' }}
                         onClick={(e) => { e.stopPropagation(); setExpandedRecentGameId(prev => prev === achievement.id ? null : achievement.id); }}
                       >
                         +{progress?.recentValue ?? 0}
