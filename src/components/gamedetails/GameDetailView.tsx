@@ -593,6 +593,8 @@ export function GameDetailView({ game }: { game: any }) {
             const related = allClips.find(c => c.ClipId === clipId);
             if (related) setSelectedClip(related);
           }}
+          gameDate={game.startDate}
+          gameId={game.gameId}
         />
       )}
     </div>

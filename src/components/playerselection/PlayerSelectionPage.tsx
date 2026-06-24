@@ -23,11 +23,12 @@ import {
   type GroupByMethod,
   type CampFilterOption
 } from './playerhistory';
-import type { GameLogEntry, Clip } from '../../hooks/useCombinedRawData';
+import type { GameLogEntry } from '../../hooks/useCombinedRawData';
 import { usePlayerClips } from '../../hooks/useClips';
 import { ClipViewer } from '../common/ClipViewer';
 import { findRelatedClips, findNextClip } from '../../utils/clipUtils';
 import { useAllClips } from '../../hooks/useClips';
+import type { ClipWithGameContext } from '../../hooks/useClips';
 import { PlayerTitlesDisplay } from './PlayerTitlesDisplay';
 import { PlayerAchievementsDisplay } from './PlayerAchievementsDisplay';
 import { usePlayerAchievements } from '../../hooks/usePlayerAchievements';
@@ -60,7 +61,7 @@ export function PlayerSelectionPage() {
   const { highlight: playerHighlight } = usePlayerHighlight(settings.highlightedPlayer, achievementsData, playerAchievements);
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedClip, setSelectedClip] = useState<Clip | null>(null);
+  const [selectedClip, setSelectedClip] = useState<ClipWithGameContext | null>(null);
   
   // Get player clips for random clip feature
   const { clips: playerClips } = usePlayerClips(settings.highlightedPlayer);
@@ -911,12 +912,14 @@ export function PlayerSelectionPage() {
           nextClip={findNextClip(selectedClip, allClips)}
           onNextClip={() => {
             const next = findNextClip(selectedClip, allClips);
-            if (next) setSelectedClip(next);
+            if (next) setSelectedClip(next as ClipWithGameContext);
           }}
           onRelatedClip={(clipId) => {
             const related = allClips.find(c => c.ClipId === clipId);
             if (related) setSelectedClip(related);
           }}
+          gameDate={selectedClip.gameDate}
+          gameId={selectedClip.gameId}
         />
       )}
     </div>

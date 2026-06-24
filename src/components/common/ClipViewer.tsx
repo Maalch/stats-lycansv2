@@ -11,6 +11,8 @@ interface ClipViewerProps {
   onRandomClip?: () => void;
   relatedClips?: Clip[];
   nextClip?: Clip | null;
+  gameDate?: string;
+  gameId?: string;
 }
 
 export function ClipViewer({ 
@@ -20,7 +22,9 @@ export function ClipViewer({
   onRelatedClip,
   onRandomClip,
   relatedClips = [],
-  nextClip = null
+  nextClip = null,
+  gameDate,
+  gameId
 }: ClipViewerProps) {
   // Close on Escape key
   useEffect(() => {
@@ -91,6 +95,20 @@ export function ClipViewer({
 
           {/* Metadata Section */}
           <div className="lycans-clip-metadata">
+            {(gameId || gameDate) && (
+              <div className="lycans-clip-info-section">
+                <h3>Partie</h3>
+                <div className="lycans-clip-game-info">
+                  {gameId && <span className="lycans-clip-game-id">#{gameId}</span>}
+                  {gameDate && (
+                    <span className="lycans-clip-game-date">
+                      {new Date(gameDate).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+                    </span>
+                  )}
+                </div>
+              </div>
+            )}
+
             <div className="lycans-clip-info-section">
               <h3>Joueurs</h3>
               <div className="lycans-clip-players">

@@ -200,6 +200,23 @@
   letter-spacing: 0.5px;
 }
 
+.lycans-clip-game-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.lycans-clip-game-id {
+  font-weight: 600;
+  color: var(--accent-primary);
+  font-size: 0.95rem;
+}
+
+.lycans-clip-game-date {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
 .lycans-clip-players {
   display: flex;
   flex-direction: column;

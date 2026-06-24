@@ -3,11 +3,17 @@ import { useFilteredGameLogData } from './useCombinedRawData';
 import type { Clip } from './useCombinedRawData';
 import { filterClipsByPlayer, getRandomClip } from '../utils/clipUtils';
 
+export interface ClipWithGameContext extends Clip {
+  gameId: string;
+  gameDate: string;
+  gameNumber: number;
+}
+
 /**
- * Hook to get all clips across all filtered games
+ * Hook to get all clips across all filtered games, enriched with game context
  */
 export function useAllClips(): {
-  clips: Clip[];
+  clips: ClipWithGameContext[];
   isLoading: boolean;
   error: string | null;
 } {
@@ -16,11 +22,18 @@ export function useAllClips(): {
   const clips = useMemo(() => {
     if (!gameData) return [];
     
-    // Collect all clips from all games
-    const allClips: Clip[] = [];
+    // Collect all clips from all games, attaching game context to each
+    const allClips: ClipWithGameContext[] = [];
     gameData.forEach(game => {
       if (game.Clips && Array.isArray(game.Clips)) {
-        allClips.push(...game.Clips);
+        game.Clips.forEach(clip => {
+          allClips.push({
+            ...clip,
+            gameId: game.DisplayedId || game.Id,
+            gameDate: game.StartDate,
+            gameNumber: parseInt(game.DisplayedId || game.Id, 10)
+          });
+        });
       }
     });
     
@@ -34,7 +47,7 @@ export function useAllClips(): {
  * Hook to get clips for a specific player
  */
 export function usePlayerClips(playerName: string | null): {
-  clips: Clip[];
+  clips: ClipWithGameContext[];
   isLoading: boolean;
   error: string | null;
 } {
@@ -42,7 +55,7 @@ export function usePlayerClips(playerName: string | null): {
 
   const playerClips = useMemo(() => {
     if (!playerName) return [];
-    return filterClipsByPlayer(allClips, playerName);
+    return filterClipsByPlayer(allClips, playerName) as ClipWithGameContext[];
   }, [allClips, playerName]);
 
   return { clips: playerClips, isLoading, error };

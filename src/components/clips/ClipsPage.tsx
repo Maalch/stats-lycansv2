@@ -9,20 +9,13 @@ import {
   getAllClipPlayers,
   parseOtherPlayers
 } from '../../utils/clipUtils';
-import type { Clip } from '../../hooks/useCombinedRawData';
 import { useSettings } from '../../context/SettingsContext';
 import { useNavigation } from '../../context/NavigationContext';
 import { useJoueursData } from '../../hooks/useJoueursData';
 import { useThemeAdjustedDynamicPlayersColor } from '../../types/api';
 import { PAGINATION_DEFAULTS } from '../../config/chartConstants';
+import type { ClipWithGameContext } from '../../hooks/useClips';
 import './ClipsPage.css';
-
-// Enhanced clip type with game context
-interface ClipWithGameContext extends Clip {
-  gameId: string;
-  gameDate: string;
-  gameNumber: number;
-}
 
 type SortField = 'gameNumber' | 'date' | 'name' | 'pov' | 'players';
 type SortDirection = 'asc' | 'desc';
@@ -620,6 +613,8 @@ export function ClipsPage() {
           onNextClip={handleNextClip}
           onRelatedClip={handleRelatedClip}
           onRandomClip={handleRandomClip}
+          gameDate={selectedClip.gameDate}
+          gameId={selectedClip.gameId}
         />
       )}
     </div>
