@@ -53,7 +53,6 @@ const BRKillsStatsChart = lazy(() => import('./components/brstats/BRKillsStatsCh
 const BRMiniChart = lazy(() => import('./components/brstats/BRMiniChart').then(m => ({ default: m.BRMiniChart })));
 
 const DeathLocationHeatmap = lazy(() => import('./components/generalstats/deathStats/DeathLocationHeatmap').then(m => ({ default: m.DeathLocationHeatmap })));
-const WhatIfSimulator = lazy(() => import('./components/generalstats/WhatIfSimulator/WhatIfSimulator').then(m => ({ default: m.WhatIfSimulator })));
 const TransformationZoneChart = lazy(() => import('./components/generalstats/TransformationZoneChart').then(m => ({ default: m.TransformationZoneChart })));
 
 const GameDetailsChart = lazy(() => import('./components/gamedetails/GameDetailsChart').then(m => ({ default: m.GameDetailsChart })));
@@ -257,12 +256,6 @@ const GENERAL_STATS_MENU = [
     label: 'Compositions',
     component: TeamCompositionChart,
     description: 'Analyse des configurations d\'équipe par nombre de joueurs'
-  },
-  { 
-    key: 'whatIf', 
-    label: 'Simulateur', 
-    component: WhatIfSimulator,
-    description: 'Simuler la probabilité de victoire selon la composition d\'équipe'
   },
   { 
     key: 'victoryTypes',
