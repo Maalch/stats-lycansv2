@@ -127,12 +127,7 @@ export const CHANGELOG: ChangelogEntry[] = [
   {
     version: 'v1.8.9',
     date: '08/04/2026',
-    description: 'Ajout d\'un simulateur : prédiction des probabilités de victoire selon la composition d\'équipe (camp, rôles, joueurs) dans',
-    link: {
-      mainTab: 'general',
-      subTab: 'whatIf',
-      text: 'Stats Parties / Simulateur'
-    }
+    description: 'Ajout d\'un simulateur (supprimé depuis, pas assez utile)',
   },
   {
     version: 'v1.8.8',
