@@ -54,6 +54,7 @@ const BRMiniChart = lazy(() => import('./components/brstats/BRMiniChart').then(m
 
 const DeathLocationHeatmap = lazy(() => import('./components/generalstats/deathStats/DeathLocationHeatmap').then(m => ({ default: m.DeathLocationHeatmap })));
 const TransformationZoneChart = lazy(() => import('./components/generalstats/TransformationZoneChart').then(m => ({ default: m.TransformationZoneChart })));
+const EventsStatsChart = lazy(() => import('./components/generalstats/EventsStatsChart').then(m => ({ default: m.EventsStatsChart })));
 
 const GameDetailsChart = lazy(() => import('./components/gamedetails/GameDetailsChart').then(m => ({ default: m.GameDetailsChart })));
 
@@ -246,6 +247,12 @@ const GENERAL_STATS_MENU = [
     description: 'Analyse méta des actions (gadgets, potions, transformations)'
   },
   {
+    key: 'events',
+    label: 'Évènements',
+    component: EventsStatsChart,
+    description: 'Impact des évènements journaliers sur les victoires par camp'
+  },
+  {
     key: 'transformationZones',
     label: 'Transformations',
     component: TransformationZoneChart,
@@ -299,7 +306,6 @@ const GENERAL_STATS_MENU = [
     component: ColorStatisticsChart,
     description: 'Taux de victoire et popularité des couleurs'
   }
-
 ];
 
 const BR_STATS_MENU = [

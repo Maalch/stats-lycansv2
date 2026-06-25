@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.9.7';
+export const APP_VERSION = '1.9.8';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,16 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.9.8',
+    date: '25/06/2026',
+    description: 'Ajout d\'une page "Évènements" : impact des évènements journaliers (Éclipse, Peste, Pleine lune, etc.) sur le taux de victoire par camp, sur les parties en version 0.288+, dans',
+    link: {
+      mainTab: 'general',
+      subTab: 'events',
+      text: 'Stats Parties / Évènements'
+    }
+  },
   {
     version: 'v1.9.7',
     date: '16/06/2026',
