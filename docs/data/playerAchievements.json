@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-06-26T10:27:23.820Z",
+  "generatedAt": "2026-06-26T11:36:55.296Z",
   "teamName": "Main Team",
   "totalPlayers": 93,
   "totalGames": 931,
@@ -479,6 +479,37 @@
           "tier": "lycans",
           "subLevel": 1,
           "threshold": 125
+        }
+      ],
+      "mainTeamOnly": false
+    },
+    {
+      "id": "lost-after-camp-switch",
+      "name": "Bro thinks he's on the team",
+      "description": "On dit pas que c'est vous le problème depuis le début mais... Étrange coïncidence, non?",
+      "explanation": "Perdre X fois en changeant de camp alors que votre ancien camp remporte la victoire",
+      "emoji": "🤡",
+      "category": "victories",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 2
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 5
         }
       ],
       "mainTeamOnly": false
@@ -7609,7 +7640,7 @@
     "17": {
       "playerId": "17",
       "playerName": "Fukano",
-      "totalUnlocked": 101,
+      "totalUnlocked": 102,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -7833,6 +7864,26 @@
             "threshold": 75
           },
           "progress": 0.8
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250128000000-318"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "fall-death",
@@ -13691,7 +13742,7 @@
     "38": {
       "playerId": "38",
       "playerName": "Pelerine",
-      "totalUnlocked": 14,
+      "totalUnlocked": 15,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -13781,6 +13832,28 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Ponce-20250716000000-480"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250716000000-480"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "death-turn1",
@@ -16155,7 +16228,7 @@
     "76561198034021995": {
       "playerId": "76561198034021995",
       "playerName": "Ponce",
-      "totalUnlocked": 264,
+      "totalUnlocked": 267,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -16548,6 +16621,38 @@
             "threshold": 125
           },
           "progress": 0.912
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 3,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251125133535"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20260317124619"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20260519115053"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "last-wolf",
@@ -20585,7 +20690,7 @@
     "76561198045789440": {
       "playerId": "76561198045789440",
       "playerName": "Bytell",
-      "totalUnlocked": 229,
+      "totalUnlocked": 232,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -20906,6 +21011,38 @@
             "threshold": 125
           },
           "progress": 0.832
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 3,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260217114703"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "khalen-20260217135951"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Tsuna-20260407125227"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "last-wolf",
@@ -25605,7 +25742,7 @@
     "76561199060053791": {
       "playerId": "76561199060053791",
       "playerName": "Tsuna",
-      "totalUnlocked": 224,
+      "totalUnlocked": 228,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -25986,6 +26123,40 @@
             "threshold": 100
           },
           "progress": 0.95
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 5,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250930000000-566"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20251023131631"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20260106132431"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20260505132505"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "wolf-sabotages",
@@ -28736,7 +28907,7 @@
     "76561198012951437": {
       "playerId": "76561198012951437",
       "playerName": "Khalen",
-      "totalUnlocked": 242,
+      "totalUnlocked": 244,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -29125,6 +29296,32 @@
             "threshold": 100
           },
           "progress": 0.9
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 2,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251125130713"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Tsuna-20260331120208"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "last-wolf",
@@ -31256,7 +31453,7 @@
     "76561198361954746": {
       "playerId": "76561198361954746",
       "playerName": "Anaee",
-      "totalUnlocked": 197,
+      "totalUnlocked": 199,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -31597,6 +31794,32 @@
             "threshold": 75
           },
           "progress": 0.8533333333333334
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 2,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251023131631"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20251223142339"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "last-wolf",
@@ -33490,7 +33713,7 @@
     "76561198390111869": {
       "playerId": "76561198390111869",
       "playerName": "Kao",
-      "totalUnlocked": 164,
+      "totalUnlocked": 166,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -33788,6 +34011,32 @@
             "threshold": 75
           },
           "progress": 0.7066666666666667
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 2,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260113131329"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20260421115103"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "wolf-sabotages",
@@ -35434,7 +35683,7 @@
     "76561198043736664": {
       "playerId": "76561198043736664",
       "playerName": "Arkantors",
-      "totalUnlocked": 125,
+      "totalUnlocked": 126,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -35673,6 +35922,26 @@
             "threshold": 50
           },
           "progress": 0.82
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250218000000-340"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "last-wolf",
@@ -36976,7 +37245,7 @@
     "76561198109331759": {
       "playerId": "76561198109331759",
       "playerName": "Flonflon",
-      "totalUnlocked": 156,
+      "totalUnlocked": 158,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -37266,6 +37535,32 @@
             "threshold": 50
           },
           "progress": 0.86
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 2,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250716000000-484"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "khalen-20260113141709"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "wolf-sabotages",
@@ -39514,7 +39809,7 @@
     "76561198018650146": {
       "playerId": "76561198018650146",
       "playerName": "TPK",
-      "totalUnlocked": 45,
+      "totalUnlocked": 46,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -39621,6 +39916,28 @@
             "threshold": 10
           },
           "progress": 0.9
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20251209130133"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20251209130133"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "death-turn1",
@@ -42071,7 +42388,7 @@
     "76561198125108195": {
       "playerId": "76561198125108195",
       "playerName": "Monodie",
-      "totalUnlocked": 174,
+      "totalUnlocked": 176,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -42367,6 +42684,32 @@
             "threshold": 50
           },
           "progress": 0.84
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 2,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250716000000-482"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20260210135746"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "last-wolf",
@@ -44045,7 +44388,7 @@
     "76561198140298176": {
       "playerId": "76561198140298176",
       "playerName": "Kyria",
-      "totalUnlocked": 75,
+      "totalUnlocked": 76,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -44210,6 +44553,26 @@
             "threshold": 35
           },
           "progress": 0.6857142857142857
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250930000000-566"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-sabotages",
@@ -45718,7 +46081,7 @@
     "76561198256660482": {
       "playerId": "76561198256660482",
       "playerName": "Baout",
-      "totalUnlocked": 83,
+      "totalUnlocked": 84,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -45944,6 +46307,26 @@
             "threshold": 20
           },
           "progress": 0.8
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250527000000-436"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-sabotages",
@@ -46904,7 +47287,7 @@
     "76561199291323199": {
       "playerId": "76561199291323199",
       "playerName": "Miraaaaaah",
-      "totalUnlocked": 115,
+      "totalUnlocked": 116,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -47165,6 +47548,26 @@
             "threshold": 15
           },
           "progress": 0.9333333333333333
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260113131329"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-sabotages",
@@ -48429,7 +48832,7 @@
     "76561199066999000": {
       "playerId": "76561199066999000",
       "playerName": "Noamouille",
-      "totalUnlocked": 46,
+      "totalUnlocked": 47,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -48543,6 +48946,28 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Tsuna-20260407140306"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260407140306"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "romeo-juliette",
@@ -49266,7 +49691,7 @@
     "76561198095017745": {
       "playerId": "76561198095017745",
       "playerName": "Craco",
-      "totalUnlocked": 97,
+      "totalUnlocked": 100,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -49451,6 +49876,38 @@
             "threshold": 10
           },
           "progress": 0.5
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 3,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250930000000-565"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20251028000000-605"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251125122037"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "romeo-juliette",
@@ -50526,7 +50983,7 @@
     "76561198875528482": {
       "playerId": "76561198875528482",
       "playerName": "ClydeCreator",
-      "totalUnlocked": 156,
+      "totalUnlocked": 160,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -50787,6 +51244,40 @@
             "threshold": 35
           },
           "progress": 0.6571428571428571
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 5,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250923000000-560"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20251118000000-633"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20260217133845"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20260505132505"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "wolf-sabotages",
@@ -54240,7 +54731,7 @@
     "76561198849250630": {
       "playerId": "76561198849250630",
       "playerName": "MathyMoon",
-      "totalUnlocked": 138,
+      "totalUnlocked": 140,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -54514,6 +55005,32 @@
             "threshold": 15
           },
           "progress": 0.9333333333333333
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 2,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250710000000-467"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20250729000000-499"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "wolf-sabotages",
@@ -56820,7 +57337,7 @@
     "76561198076015877": {
       "playerId": "76561198076015877",
       "playerName": "CHLOE",
-      "totalUnlocked": 109,
+      "totalUnlocked": 110,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -57039,6 +57556,26 @@
             "threshold": 15
           },
           "progress": 0.8
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251125122037"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-sabotages",
@@ -61122,7 +61659,7 @@
     "76561198052560531": {
       "playerId": "76561198052560531",
       "playerName": "Tovi",
-      "totalUnlocked": 39,
+      "totalUnlocked": 40,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -61217,6 +61754,26 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250923000000-552"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "starvation",
@@ -61806,7 +62363,7 @@
     "76561198317172114": {
       "playerId": "76561198317172114",
       "playerName": "Kissiffrote",
-      "totalUnlocked": 64,
+      "totalUnlocked": 65,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -61981,6 +62538,26 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260428131149"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-sabotages",
@@ -63407,7 +63984,7 @@
     "76561198076478013": {
       "playerId": "76561198076478013",
       "playerName": "Areliann",
-      "totalUnlocked": 63,
+      "totalUnlocked": 64,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -63549,6 +64126,28 @@
             "threshold": 10
           },
           "progress": 0.6
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Ponce-20260317124619"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260317124619"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "romeo-juliette",
@@ -64946,7 +65545,7 @@
     "76561198160286790": {
       "playerId": "76561198160286790",
       "playerName": "Raumane",
-      "totalUnlocked": 93,
+      "totalUnlocked": 94,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -65150,6 +65749,26 @@
             "threshold": 10
           },
           "progress": 0.9
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251023131631"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "starvation",
@@ -67910,7 +68529,7 @@
     "76561199229494526": {
       "playerId": "76561199229494526",
       "playerName": "Meetozila",
-      "totalUnlocked": 43,
+      "totalUnlocked": 44,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -68047,6 +68666,28 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260623103816"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260623103816"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "death-turn1",
@@ -69598,7 +70239,7 @@
     "76561198245459930": {
       "playerId": "76561198245459930",
       "playerName": "Deujna",
-      "totalUnlocked": 87,
+      "totalUnlocked": 88,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -69782,6 +70423,26 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260217114703"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "starvation",
@@ -70867,7 +71528,7 @@
     "76561199098154286": {
       "playerId": "76561199098154286",
       "playerName": "Grim_the_turtle",
-      "totalUnlocked": 26,
+      "totalUnlocked": 27,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -70906,6 +71567,28 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Ponce-20260203141837"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260203141837"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-sabotages",
@@ -73056,7 +73739,7 @@
     "76561199160636691": {
       "playerId": "76561199160636691",
       "playerName": "Lizzie_Listening",
-      "totalUnlocked": 26,
+      "totalUnlocked": 27,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -73152,6 +73835,28 @@
             "threshold": 4
           },
           "progress": 0.25
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Tsuna-20260616134254"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260616134254"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-sabotages",

@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-06-26T10:27:50.727Z",
+  "generatedAt": "2026-06-26T11:37:20.132Z",
   "teamName": "Discord Team",
   "totalPlayers": 217,
   "totalGames": 631,
@@ -474,6 +474,37 @@
           "tier": "lycans",
           "subLevel": 1,
           "threshold": 125
+        }
+      ],
+      "mainTeamOnly": false
+    },
+    {
+      "id": "lost-after-camp-switch",
+      "name": "Bro thinks he's on the team",
+      "description": "On dit pas que c'est vous le problème depuis le début mais... Étrange coïncidence, non?",
+      "explanation": "Perdre X fois en changeant de camp alors que votre ancien camp remporte la victoire",
+      "emoji": "🤡",
+      "category": "victories",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 2
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 5
         }
       ],
       "mainTeamOnly": false
@@ -2847,7 +2878,7 @@
     "76561198153298747": {
       "playerId": "76561198153298747",
       "playerName": "Timaki",
-      "totalUnlocked": 108,
+      "totalUnlocked": 110,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -3076,6 +3107,32 @@
             "threshold": 35
           },
           "progress": 0.8
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 2,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251121203724"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Nales-20260320210951"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "wolf-sabotages",
@@ -4235,7 +4292,7 @@
     "76561199091851684": {
       "playerId": "76561199091851684",
       "playerName": "YUKARI",
-      "totalUnlocked": 71,
+      "totalUnlocked": 75,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -4435,6 +4492,40 @@
             "threshold": 15
           },
           "progress": 0.7333333333333333
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 5,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251109211547"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Nales-20260102201022"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Nales-20260412191243"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260417200821"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "wolf-sabotages",
@@ -5229,7 +5320,7 @@
     "76561198364697515": {
       "playerId": "76561198364697515",
       "playerName": "Ekaenerys",
-      "totalUnlocked": 114,
+      "totalUnlocked": 118,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -5533,6 +5624,42 @@
             "threshold": 20
           },
           "progress": 0.9
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 5,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260607193347"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251114210345"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Nales-20251226221600"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Nales-20260130203606"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260607193347"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "last-wolf",
@@ -6644,7 +6771,7 @@
     "76561199789359755": {
       "playerId": "76561199789359755",
       "playerName": "Gaëtan R",
-      "totalUnlocked": 111,
+      "totalUnlocked": 112,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -6870,6 +6997,26 @@
             "threshold": 35
           },
           "progress": 0.6571428571428571
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260206212426"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "last-wolf",
@@ -8016,7 +8163,7 @@
     "76561198091833617": {
       "playerId": "76561198091833617",
       "playerName": "Stalbadass",
-      "totalUnlocked": 75,
+      "totalUnlocked": 78,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -8225,6 +8372,38 @@
             "threshold": 10
           },
           "progress": 0.7
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 3,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251114210345"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Nales-20251128213453"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Nales-20251226221600"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "wolf-sabotages",
@@ -9058,7 +9237,7 @@
     "76561198976507974": {
       "playerId": "76561198976507974",
       "playerName": "Enamore",
-      "totalUnlocked": 134,
+      "totalUnlocked": 138,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -9343,6 +9522,40 @@
             "threshold": 35
           },
           "progress": 0.6285714285714286
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 7,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251010194013"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Nales-20251010205739"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Nales-20251019205214"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260118203727"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "wolf-sabotages",
@@ -10635,7 +10848,7 @@
     "76561198085469315": {
       "playerId": "76561198085469315",
       "playerName": "Kid",
-      "totalUnlocked": 124,
+      "totalUnlocked": 127,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -10870,6 +11083,40 @@
             "tier": "argent",
             "subLevel": 2,
             "threshold": 20
+          },
+          "progress": 0.8
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 4,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260529203453"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251031204436"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Nales-20260118203727"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Nales-20260417210325"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 5
           },
           "progress": 0.8
         },
@@ -12097,7 +12344,7 @@
     "76561199476556241": {
       "playerId": "76561199476556241",
       "playerName": "Laulah",
-      "totalUnlocked": 37,
+      "totalUnlocked": 39,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -12198,6 +12445,32 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 2,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251128204134"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Nales-20251128210647"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "wolf-sabotages",
@@ -12756,7 +13029,7 @@
     "76561199819136805": {
       "playerId": "76561199819136805",
       "playerName": "RessaPandaSanTTV",
-      "totalUnlocked": 133,
+      "totalUnlocked": 135,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -13028,6 +13301,32 @@
             "threshold": 35
           },
           "progress": 0.8
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 2,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251119220232"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Nales-20260320201324"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "wolf-sabotages",
@@ -14330,7 +14629,7 @@
     "76561199877422441": {
       "playerId": "76561199877422441",
       "playerName": "mars.healus",
-      "totalUnlocked": 8,
+      "totalUnlocked": 9,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -14375,6 +14674,28 @@
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20251010195811"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251010195811"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
             "threshold": 2
           },
           "progress": 0.5
@@ -14562,7 +14883,7 @@
     "76561198179951231": {
       "playerId": "76561198179951231",
       "playerName": "Staro",
-      "totalUnlocked": 69,
+      "totalUnlocked": 70,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -14760,6 +15081,26 @@
             "tier": "bronze",
             "subLevel": 3,
             "threshold": 10
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260107201223"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
           },
           "progress": 0.5
         },
@@ -16110,7 +16451,7 @@
     "76561198003053453": {
       "playerId": "76561198003053453",
       "playerName": "twitch.tv/Hornicoo",
-      "totalUnlocked": 84,
+      "totalUnlocked": 87,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -16331,6 +16672,40 @@
             "threshold": 20
           },
           "progress": 0.8
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 3,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260624195828"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251017205847"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Nales-20251212214354"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Nales-20260624195828"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "wolf-sabotages",
@@ -17315,7 +17690,7 @@
     "76561198335168181": {
       "playerId": "76561198335168181",
       "playerName": "VVentus02",
-      "totalUnlocked": 93,
+      "totalUnlocked": 96,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -17553,6 +17928,38 @@
             "threshold": 20
           },
           "progress": 0.75
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 4,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251008195227"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Nales-20251012192944"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Nales-20251105213429"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.8
         },
         {
           "id": "wolf-sabotages",
@@ -18617,7 +19024,7 @@
     "76561197973106144": {
       "playerId": "76561197973106144",
       "playerName": "Nales",
-      "totalUnlocked": 191,
+      "totalUnlocked": 192,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -19013,6 +19420,26 @@
             "threshold": 50
           },
           "progress": 0.82
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260607193347"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "last-wolf",
@@ -20847,7 +21274,7 @@
     "76561198095002711": {
       "playerId": "76561198095002711",
       "playerName": "Acuado",
-      "totalUnlocked": 53,
+      "totalUnlocked": 55,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -21023,6 +21450,32 @@
             "threshold": 10
           },
           "progress": 0.8
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 2,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251019191549"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Nales-20260111204533"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "wolf-sabotages",
@@ -21738,7 +22191,7 @@
     "76561198331541403": {
       "playerId": "76561198331541403",
       "playerName": "Dianibal",
-      "totalUnlocked": 28,
+      "totalUnlocked": 29,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -21875,6 +22328,28 @@
             "threshold": 10
           },
           "progress": 0.6
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20251214205913"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251214205913"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "starvation",
@@ -23846,7 +24321,7 @@
     "76561198294973784": {
       "playerId": "76561198294973784",
       "playerName": "Davimithryl",
-      "totalUnlocked": 34,
+      "totalUnlocked": 36,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -23971,6 +24446,34 @@
             "threshold": 4
           },
           "progress": 0.5
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 2,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260426204805"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251123213327"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Nales-20260426204805"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "wolf-sabotages",
@@ -24440,7 +24943,7 @@
     "76561199652206906": {
       "playerId": "76561199652206906",
       "playerName": "Sonnette",
-      "totalUnlocked": 66,
+      "totalUnlocked": 68,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -24611,6 +25114,32 @@
             "threshold": 10
           },
           "progress": 0.5
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 2,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251107203309"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Nales-20251219215238"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "wolf-sabotages",
@@ -25495,7 +26024,7 @@
     "76561199479620936": {
       "playerId": "76561199479620936",
       "playerName": "Edjadadadadada",
-      "totalUnlocked": 42,
+      "totalUnlocked": 43,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -25615,6 +26144,26 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260102201022"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-sabotages",
@@ -26263,7 +26812,7 @@
     "76561197985792258": {
       "playerId": "76561197985792258",
       "playerName": "Azide",
-      "totalUnlocked": 85,
+      "totalUnlocked": 86,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -26454,6 +27003,26 @@
             "threshold": 15
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260506195613"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-sabotages",
@@ -27433,7 +28002,7 @@
     "76561198349608745": {
       "playerId": "76561198349608745",
       "playerName": "Nakilyu",
-      "totalUnlocked": 61,
+      "totalUnlocked": 63,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -27613,6 +28182,32 @@
             "threshold": 5
           },
           "progress": 0.8
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 2,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251107212130"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Nales-20260109223509"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "wolf-sabotages",
@@ -28386,7 +28981,7 @@
     "76561198035634628": {
       "playerId": "76561198035634628",
       "playerName": "Kitsulia",
-      "totalUnlocked": 48,
+      "totalUnlocked": 49,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -28549,6 +29144,26 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251123220005"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-sabotages",
@@ -29199,7 +29814,7 @@
     "76561198362458369": {
       "playerId": "76561198362458369",
       "playerName": "TTanjun",
-      "totalUnlocked": 58,
+      "totalUnlocked": 60,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -29349,6 +29964,32 @@
             "threshold": 5
           },
           "progress": 0.8
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 2,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251026210026"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Nales-20251226203612"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "wolf-sabotages",
@@ -31165,7 +31806,7 @@
     "76561198010158937": {
       "playerId": "76561198010158937",
       "playerName": "Lhuun",
-      "totalUnlocked": 109,
+      "totalUnlocked": 112,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -31414,6 +32055,38 @@
             "threshold": 20
           },
           "progress": 0.8
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 3,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251026212054"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Nales-20251031210739"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Nales-20260227201703"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "wolf-sabotages",
@@ -32586,7 +33259,7 @@
     "76561199099637465": {
       "playerId": "76561199099637465",
       "playerName": "Carococo",
-      "totalUnlocked": 32,
+      "totalUnlocked": 33,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -32724,6 +33397,26 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251012203424"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-sabotages",
@@ -33157,7 +33850,7 @@
     "76561198056449397": {
       "playerId": "76561198056449397",
       "playerName": "Akunoto",
-      "totalUnlocked": 71,
+      "totalUnlocked": 72,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -33361,6 +34054,26 @@
             "threshold": 10
           },
           "progress": 0.6
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251010194013"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-sabotages",
@@ -34312,7 +35025,7 @@
     "76561198069501851": {
       "playerId": "76561198069501851",
       "playerName": "Nocxy",
-      "totalUnlocked": 107,
+      "totalUnlocked": 110,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -34567,6 +35280,38 @@
             "threshold": 20
           },
           "progress": 0.85
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 3,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251010195811"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Nales-20260206222837"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Nales-20260520192918"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "wolf-sabotages",
@@ -35731,7 +36476,7 @@
     "76561198312679537": {
       "playerId": "76561198312679537",
       "playerName": "AshimaOSirena",
-      "totalUnlocked": 51,
+      "totalUnlocked": 52,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -35909,6 +36654,26 @@
             "threshold": 10
           },
           "progress": 0.8
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260508192159"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-sabotages",
@@ -36599,7 +37364,7 @@
     "76561198124278834": {
       "playerId": "76561198124278834",
       "playerName": "Johnny",
-      "totalUnlocked": 84,
+      "totalUnlocked": 88,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -36786,6 +37551,40 @@
             "threshold": 10
           },
           "progress": 0.7
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 5,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251010194013"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Nales-20251026210026"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Nales-20251126202846"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260114203224"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "wolf-sabotages",
@@ -38709,7 +39508,7 @@
     "76561199051656603": {
       "playerId": "76561199051656603",
       "playerName": "Luluxurious",
-      "totalUnlocked": 66,
+      "totalUnlocked": 67,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -38900,6 +39699,26 @@
             "tier": "bronze",
             "subLevel": 3,
             "threshold": 10
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251128220000"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
           },
           "progress": 0.5
         },
@@ -43678,7 +44497,7 @@
     "76561198091290035": {
       "playerId": "76561198091290035",
       "playerName": "Jahad",
-      "totalUnlocked": 18,
+      "totalUnlocked": 19,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -43785,6 +44604,26 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251022191624"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "death-turn1",
@@ -44066,7 +44905,7 @@
     "76561199470453303": {
       "playerId": "76561199470453303",
       "playerName": "Foiegrette",
-      "totalUnlocked": 15,
+      "totalUnlocked": 16,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -44125,6 +44964,28 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20251109211547"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251109211547"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "exploded",
@@ -44397,7 +45258,7 @@
     "76561197992036644": {
       "playerId": "76561197992036644",
       "playerName": "Skyvee",
-      "totalUnlocked": 30,
+      "totalUnlocked": 32,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -44552,6 +45413,32 @@
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 2,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251031210739"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Nales-20251121210018"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
             "subLevel": 1,
             "threshold": 3
           },
@@ -45029,7 +45916,7 @@
     "76561197973702517": {
       "playerId": "76561197973702517",
       "playerName": "Frakkazak",
-      "totalUnlocked": 29,
+      "totalUnlocked": 30,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -45161,6 +46048,26 @@
             "threshold": 10
           },
           "progress": 0.6
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251022191624"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-sabotages",
@@ -45613,7 +46520,7 @@
     "76561198025444898": {
       "playerId": "76561198025444898",
       "playerName": "bellinoob",
-      "totalUnlocked": 59,
+      "totalUnlocked": 62,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -45723,6 +46630,38 @@
             "threshold": 10
           },
           "progress": 0.8
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 3,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251105203550"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Nales-20251107212130"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Nales-20251221201753"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "wolf-sabotages",
@@ -47462,7 +48401,7 @@
     "76561198334833018": {
       "playerId": "76561198334833018",
       "playerName": "Hawk7",
-      "totalUnlocked": 20,
+      "totalUnlocked": 21,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -47540,6 +48479,28 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260426194853"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260426194853"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "starvation",
@@ -48086,7 +49047,7 @@
     "76561198773480058": {
       "playerId": "76561198773480058",
       "playerName": "NYMERIA",
-      "totalUnlocked": 86,
+      "totalUnlocked": 87,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -48302,6 +49263,26 @@
             "threshold": 20
           },
           "progress": 0.8
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260529210254"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-sabotages",
@@ -50403,7 +51384,7 @@
     "76561198085602396": {
       "playerId": "76561198085602396",
       "playerName": "esudrak",
-      "totalUnlocked": 61,
+      "totalUnlocked": 62,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -50558,6 +51539,28 @@
             "threshold": 10
           },
           "progress": 0.7
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260520190938"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260520190938"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-sabotages",
@@ -51687,7 +52690,7 @@
     "76561198779972967": {
       "playerId": "76561198779972967",
       "playerName": "Hero_Brain_2",
-      "totalUnlocked": 36,
+      "totalUnlocked": 37,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -51782,6 +52785,26 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260123211354"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-sabotages",
@@ -52309,7 +53332,7 @@
     "76561198972567044": {
       "playerId": "76561198972567044",
       "playerName": "Lithia",
-      "totalUnlocked": 14,
+      "totalUnlocked": 15,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -52385,6 +53408,28 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20251207221515"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251207221515"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "starvation",
@@ -54197,7 +55242,7 @@
     "76561198374433010": {
       "playerId": "76561198374433010",
       "playerName": "TomChassa",
-      "totalUnlocked": 6,
+      "totalUnlocked": 7,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -54220,6 +55265,28 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20251126205235"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251126205235"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "death-turn1",
@@ -55144,7 +56211,7 @@
     "76561199138503620": {
       "playerId": "76561199138503620",
       "playerName": "Céleste",
-      "totalUnlocked": 5,
+      "totalUnlocked": 6,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -55167,6 +56234,28 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20251130213024"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251130213024"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-kills",
@@ -55417,7 +56506,7 @@
     "76561199241447761": {
       "playerId": "76561199241447761",
       "playerName": "Xynnoh",
-      "totalUnlocked": 29,
+      "totalUnlocked": 31,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -55571,6 +56660,32 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 2,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260107204319"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Nales-20260206212426"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "wolf-sabotages",
@@ -55954,7 +57069,7 @@
     "76561198042690267": {
       "playerId": "76561198042690267",
       "playerName": "Freezyballs",
-      "totalUnlocked": 14,
+      "totalUnlocked": 15,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -56038,6 +57153,28 @@
             "threshold": 4
           },
           "progress": 0.25
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20251217201449"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251217201449"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "death-turn1",
@@ -57288,7 +58425,7 @@
     "76561198377105384": {
       "playerId": "76561198377105384",
       "playerName": "PurpleTsuki",
-      "totalUnlocked": 4,
+      "totalUnlocked": 5,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -57312,6 +58449,28 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20251210214343"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251210214343"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "max-loot-single-game",
@@ -58366,7 +59525,7 @@
     "76561198986509300": {
       "playerId": "76561198986509300",
       "playerName": "Nomwy",
-      "totalUnlocked": 12,
+      "totalUnlocked": 13,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -58401,6 +59560,28 @@
             "threshold": 10
           },
           "progress": 0.7
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20251217214134"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251217214134"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "death-turn1",
@@ -60320,7 +61501,7 @@
     "76561198344918325": {
       "playerId": "76561198344918325",
       "playerName": "Lexi",
-      "totalUnlocked": 21,
+      "totalUnlocked": 22,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -60417,6 +61598,28 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260531201732"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260531201732"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-sabotages",
@@ -61729,7 +62932,7 @@
     "76561198130060817": {
       "playerId": "76561198130060817",
       "playerName": "H-Caw",
-      "totalUnlocked": 28,
+      "totalUnlocked": 29,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -61811,6 +63014,26 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260206222837"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-sabotages",
@@ -63641,7 +64864,7 @@
     "76561198308812449": {
       "playerId": "76561198308812449",
       "playerName": "ReiviloCO33",
-      "totalUnlocked": 41,
+      "totalUnlocked": 43,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -63799,6 +65022,32 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 2,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260206204402"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Nales-20260227201703"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "wolf-sabotages",
@@ -66044,7 +67293,7 @@
     "76561199585357059": {
       "playerId": "76561199585357059",
       "playerName": "Mary",
-      "totalUnlocked": 4,
+      "totalUnlocked": 5,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -66067,6 +67316,28 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260116211442"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260116211442"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "death-turn1",
@@ -68617,7 +69888,7 @@
     "76561199100559486": {
       "playerId": "76561199100559486",
       "playerName": "Lunine",
-      "totalUnlocked": 67,
+      "totalUnlocked": 68,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -68785,6 +70056,28 @@
             "threshold": 15
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260624205814"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260624205814"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-sabotages",
@@ -70919,7 +72212,7 @@
     "76561198203757668": {
       "playerId": "76561198203757668",
       "playerName": "Mordjene",
-      "totalUnlocked": 31,
+      "totalUnlocked": 32,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -71011,6 +72304,26 @@
             "tier": "argent",
             "subLevel": 1,
             "threshold": 4
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260325213937"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
           },
           "progress": 0.5
         },
@@ -72275,7 +73588,7 @@
     "76561198278227503": {
       "playerId": "76561198278227503",
       "playerName": "Arou",
-      "totalUnlocked": 20,
+      "totalUnlocked": 21,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -72362,6 +73675,26 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260315200943"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-sabotages",
@@ -72996,7 +74329,7 @@
     "76561199069155063": {
       "playerId": "76561199069155063",
       "playerName": "vanya",
-      "totalUnlocked": 30,
+      "totalUnlocked": 31,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -73113,6 +74446,28 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260325213937"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260325213937"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-sabotages",
@@ -73863,7 +75218,7 @@
     "76561199099528141": {
       "playerId": "76561199099528141",
       "playerName": "Beldeus",
-      "totalUnlocked": 17,
+      "totalUnlocked": 19,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -73931,6 +75286,34 @@
             "threshold": 4
           },
           "progress": 0.25
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 2,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260531201732"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260220203703"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Nales-20260531201732"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "romeo-juliette",
@@ -74306,7 +75689,7 @@
     "76561198274913184": {
       "playerId": "76561198274913184",
       "playerName": "Snowkami",
-      "totalUnlocked": 16,
+      "totalUnlocked": 17,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -74407,6 +75790,26 @@
             "threshold": 4
           },
           "progress": 0.25
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260220214834"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-sabotages",
@@ -76518,7 +77921,7 @@
     "76561198058982992": {
       "playerId": "76561198058982992",
       "playerName": "MadAly",
-      "totalUnlocked": 25,
+      "totalUnlocked": 27,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -76664,6 +78067,34 @@
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 2,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260329202119"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260325213937"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Nales-20260329202119"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
             "subLevel": 1,
             "threshold": 3
           },
@@ -77935,7 +79366,7 @@
     "76561199084091418": {
       "playerId": "76561199084091418",
       "playerName": "Agliee",
-      "totalUnlocked": 13,
+      "totalUnlocked": 14,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -77980,6 +79411,28 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260412191243"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260412191243"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-eclipse-kills",
@@ -78666,7 +80119,7 @@
     "76561198061674507": {
       "playerId": "76561198061674507",
       "playerName": "Xeijines",
-      "totalUnlocked": 23,
+      "totalUnlocked": 24,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -78772,6 +80225,28 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260412200344"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260412200344"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-sabotages",
@@ -85358,7 +86833,7 @@
     "76561198012466841": {
       "playerId": "76561198012466841",
       "playerName": "Harmore",
-      "totalUnlocked": 19,
+      "totalUnlocked": 20,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -85473,6 +86948,28 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260524195406"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260524195406"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-sabotages",
@@ -86661,8 +88158,30 @@
     "76561199223052519": {
       "playerId": "76561199223052519",
       "playerName": "out of nowhere",
-      "totalUnlocked": 2,
+      "totalUnlocked": 3,
       "achievements": [
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260529200952"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260529200952"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
         {
           "id": "max-loot-single-game",
           "currentValue": 225,
@@ -87374,7 +88893,7 @@
     "76561199562214341": {
       "playerId": "76561199562214341",
       "playerName": "daichi",
-      "totalUnlocked": 5,
+      "totalUnlocked": 6,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -87397,6 +88916,28 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260617204914"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260617204914"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "death-turn1",
@@ -87625,8 +89166,30 @@
     "76561198089275280": {
       "playerId": "76561198089275280",
       "playerName": "Nem&M's",
-      "totalUnlocked": 3,
+      "totalUnlocked": 4,
       "achievements": [
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260605203339"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260605203339"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
         {
           "id": "wolf-sabotages",
           "currentValue": 1,
@@ -89699,7 +91262,7 @@
     "76561199674640218": {
       "playerId": "76561199674640218",
       "playerName": "Bang-Bang",
-      "totalUnlocked": 8,
+      "totalUnlocked": 10,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -89738,6 +91301,35 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 2,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Nales-20260617204914",
+            "Nales-20260624205814"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260617204914"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Nales-20260624205814"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "starvation",
