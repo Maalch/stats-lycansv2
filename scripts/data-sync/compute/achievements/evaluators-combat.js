@@ -353,3 +353,55 @@ export function hunterKillsLastWolf(playerGames, allGames, playerId, params) {
   }
   return { value, gameIds };
 }
+
+/**
+ * Count times the player killed the same victim in two consecutive games within the same session.
+ * A session groups consecutive games with < 6 hours gap between them.
+ * Each unique victim killed in both games of a consecutive pair counts as 1 occurrence.
+ */
+export function consecutiveGameSameVictimKill(playerGames, allGames, playerId, params) {
+  const SESSION_GAP_MS = 6 * 60 * 60 * 1000;
+  const gameIds = [];
+  let value = 0;
+
+  // Sort games chronologically
+  const sortedGames = [...playerGames].sort((a, b) => {
+    const da = new Date(a.game.StartDate || 0).getTime();
+    const db = new Date(b.game.StartDate || 0).getTime();
+    return da - db;
+  });
+
+  for (let i = 1; i < sortedGames.length; i++) {
+    const { game: prevGame } = sortedGames[i - 1];
+    const { game: currGame } = sortedGames[i];
+
+    // Both games must have dates
+    if (!prevGame.StartDate || !prevGame.EndDate || !currGame.StartDate) continue;
+
+    // Both must be in the same session (< 6h gap)
+    const prevEnd = new Date(prevGame.EndDate).getTime();
+    const curStart = new Date(currGame.StartDate).getTime();
+    if (curStart - prevEnd >= SESSION_GAP_MS) continue;
+
+    // Collect victim IDs killed by this player in the previous game
+    const prevVictimIds = new Set();
+    for (const victim of prevGame.PlayerStats) {
+      if (isKilledByPlayer(prevGame, victim, playerId)) {
+        prevVictimIds.add(getPlayerId(victim));
+      }
+    }
+
+    if (prevVictimIds.size === 0) continue;
+
+    // Count victims in the current game who were also killed in the previous game
+    for (const victim of currGame.PlayerStats) {
+      if (!isKilledByPlayer(currGame, victim, playerId)) continue;
+      if (prevVictimIds.has(getPlayerId(victim))) {
+        value++;
+        gameIds.push(currGame.Id);
+      }
+    }
+  }
+
+  return { value, gameIds };
+}

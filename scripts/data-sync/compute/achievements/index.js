@@ -46,7 +46,7 @@ import {
   hunterKillsEnemy, villageoisDoubleAllyKill, hunterKillsAlly,
   hunterMultiKillsInGame, hunterKilledByWolf,
   assassinPotionKills, killerDiedSameDay, sameColorKills,
-  hunterKillsLastWolf, revengeKill,
+  hunterKillsLastWolf, revengeKill, consecutiveGameSameVictimKill,
 } from './evaluators-combat.js';
 
 // Role-specific evaluators
@@ -129,6 +129,7 @@ export const EVALUATORS = {
   sameColorKills,
   hunterKillsLastWolf,
   revengeKill,
+  consecutiveGameSameVictimKill,
 
   // Roles
   agentWinPerfectKill,

@@ -735,6 +735,26 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
   {
+    id: 'consecutive-same-victim-kill',
+    name: "C'est MA proie",
+    description: 'Le sort s\'acharne sur eux... Mais vous aussi',
+    explanation: 'Tuer X fois le même joueur dans deux parties consécutives lors d\'une même session',
+    emoji: '🎯',
+    category: 'kills',
+    evaluator: 'consecutiveGameSameVictimKill',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 5
+      { tier: 'bronze', subLevel: 1, threshold: 5 },
+      // Argent: 10
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      // Or: 15
+      { tier: 'or', subLevel: 1, threshold: 15 },
+      // Lycans: 30
+      { tier: 'lycans', subLevel: 1, threshold: 30 },
+    ],
+  },
+  {
     id: 'hunter-killed-by-wolf',
     name: 'Chasseur·se Chassé·e',
     description: 'J\'ai jamais demandé à avoir un fusil, moi !',
