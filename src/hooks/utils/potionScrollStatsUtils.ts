@@ -9,15 +9,15 @@ const PARCHEMIN_REGEX = /^Parchemin \((.+)\)$/;
 
 const POSITIVE_EFFECTS = new Set([
   'Audition+', 'Invisible', 'Vision vraie', 'Rassasié', 'Célérité',
-  'Midas', 'Assassin', 'Clairvoyance', 'Énergie', 'Blanche'
+  'Midas', 'Assassin', 'Clairvoyance', 'Énergie', 'Blanche', 'Camouflé',
 ]);
 
 const NEUTRAL_EFFECTS = new Set([
-  'Géant', 'Téléportation', 'Vampire', 'Minuscule', 'Hanté', 'Puant', 'Chaos',
+  'Géant', 'Téléportation', 'Vampire', 'Minuscule', 'Hanté', 'Puant', 'Chaos', 'Immunisé',
 ]);
 
 const NEGATIVE_EFFECTS = new Set([
-  'Flatulences', 'Lumineux', 'Paranoia', 'Paranoïa', 'Sourd', 'Myope', 'Muet',
+  'Flatulences', 'Lumineux', 'Paranoia', 'Paranoïa', 'Sourd', 'Myope', 'Muet', 'Confusion',
 ]);
 
 export function getEffectCategory(actionName: string | null): 'positive' | 'neutral' | 'negative' | null {
