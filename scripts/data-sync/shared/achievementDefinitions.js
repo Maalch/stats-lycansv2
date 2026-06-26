@@ -334,6 +334,26 @@ export const ACHIEVEMENT_DEFINITIONS = [
       { tier: 'lycans', subLevel: 1, threshold: 75 },
     ],
   },
+  {
+    id: 'wolf-eclipse-kills',
+    name: "Enfant de l'Éclipse",
+    description: "Pendant que le soleil s'efface, votre soif de sang s'intensifie...",
+    explanation: "Faire X kills en Loup durant un évènement Éclipse",
+    emoji: '🌑',
+    category: 'loups',
+    evaluator: 'wolfEclipseKills',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 5
+      { tier: 'bronze', subLevel: 1, threshold: 5 },
+      // Argent: 10
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      // Or: 15
+      { tier: 'or', subLevel: 1, threshold: 15 },
+      // Lycans: 30
+      { tier: 'lycans', subLevel: 1, threshold: 30 },
+    ],
+  },
 
   // ============================================================================
   // DEATHS

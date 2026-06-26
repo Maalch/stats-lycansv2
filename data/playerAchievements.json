@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-06-26T10:07:35.832Z",
+  "generatedAt": "2026-06-26T10:25:31.212Z",
   "teamName": "Main Team",
   "totalPlayers": 93,
   "totalGames": 931,
@@ -571,6 +571,37 @@
           "tier": "lycans",
           "subLevel": 1,
           "threshold": 75
+        }
+      ],
+      "mainTeamOnly": false
+    },
+    {
+      "id": "wolf-eclipse-kills",
+      "name": "Enfant de l'Éclipse",
+      "description": "Pendant que le soleil s'efface, votre soif de sang s'intensifie...",
+      "explanation": "Faire X kills en Loup durant un évènement Éclipse",
+      "emoji": "🌑",
+      "category": "loups",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 10
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 15
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 30
         }
       ],
       "mainTeamOnly": false
@@ -16597,6 +16628,19 @@
           "progress": 0.8333333333333334
         },
         {
+          "id": "wolf-eclipse-kills",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "starvation",
           "currentValue": 5,
           "recentValue": 0,
@@ -31212,7 +31256,7 @@
     "76561198361954746": {
       "playerId": "76561198361954746",
       "playerName": "Anaee",
-      "totalUnlocked": 196,
+      "totalUnlocked": 197,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -31607,6 +31651,26 @@
             "threshold": 10
           },
           "progress": 0.8
+        },
+        {
+          "id": "wolf-eclipse-kills",
+          "currentValue": 7,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20260505111212"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.7
         },
         {
           "id": "starvation",
@@ -52562,6 +52626,19 @@
           "progress": 0.7333333333333333
         },
         {
+          "id": "wolf-eclipse-kills",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "romeo-juliette",
           "currentValue": 6,
           "recentValue": 1,
@@ -54481,6 +54558,19 @@
             "threshold": 20
           },
           "progress": 0.9
+        },
+        {
+          "id": "wolf-eclipse-kills",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "romeo-juliette",

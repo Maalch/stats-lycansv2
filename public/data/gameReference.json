@@ -383,7 +383,7 @@
       "id": "infiltre",
       "name": "Infiltré",
       "emoji": "🥸",
-      "description": "Apparaît dans la liste des partenaires des loups (si elle est affichée), se faisant passer pour l'un d'eux. Si un loup l'attaque, il ne meurt pas immédiatement mais reçoit l'effet Sursis : il meurt à la fin du prochain meeting, uniquement si son attaquant est toujours vivant et n'a pas été éliminé au vote. Ne peut pas mourir de la boule de cristal. Un seul possible par partie.",
+      "description": "Apparaît dans la liste des partenaires des loups (si elle est affichée), se faisant passer pour l'un d'eux. Si un loup l'attaque, il ne meurt pas immédiatement mais reçoit l'effet Sursis : il meurt à la fin du prochain meeting, uniquement si son attaquant est toujours vivant et n'a pas été éliminé au vote. Un seul possible par partie.",
       "descriptionShort": "Survit temporairement aux attaques de loups, fait croire aux loups qu'il est l'un des leurs",
       "translationKey": "NALES_ROLE_DESCRIPTION_INFILTRATOR"
     },
@@ -864,7 +864,7 @@
     { "id": "blanche", "name": "Blanche", "type": "positive", "translationKey": "EFFECT_BLANCHE", "tutorial": "Potion créée par l'Alchimiste. Applique un effet positif aléatoire parmi les effets possibles, plus court qu'une potion classique.", "source": "alchimiste", "randomEffects": ["Assassin", "Audition+", "Célérité", "Rassasié", "Vision vraie"] },
     { "id": "camoufle", "name": "Camouflé", "type": "positive", "translationKey": "NALES_EFFECT_CAMOUFLAGE", "tutorial": "Rend le joueur moins visible pour les autres joueurs, en particulier les loups transformés" },
     { "id": "confusion", "name": "Confusion", "type": "negative", "translationKey": "NALES_EFFECT_CONFUSED", "tutorial": "Perturbe la vision et la perception du joueur" },
-    { "id": "immunite", "name": "Immunisé", "type": "neutral", "translationKey": "NALES_EFFECT_IMMUNE", "tutorial": "Retire tous les effets (sauf exception) de la cible et empêche ces effets d'être appliqués" }
+    { "id": "immunite", "name": "Immunité", "type": "neutral", "translationKey": "NALES_EFFECT_IMMUNE", "tutorial": "Retire tous les effets (sauf exception) de la cible et empêche ces effets d'être appliqués" }
   ],
 
   "statusEffects": [

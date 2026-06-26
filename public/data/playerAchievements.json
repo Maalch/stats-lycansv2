@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-06-24T09:16:40.698Z",
+  "generatedAt": "2026-06-26T10:25:31.212Z",
   "teamName": "Main Team",
   "totalPlayers": 93,
   "totalGames": 931,
@@ -571,6 +571,37 @@
           "tier": "lycans",
           "subLevel": 1,
           "threshold": 75
+        }
+      ],
+      "mainTeamOnly": false
+    },
+    {
+      "id": "wolf-eclipse-kills",
+      "name": "Enfant de l'Éclipse",
+      "description": "Pendant que le soleil s'efface, votre soif de sang s'intensifie...",
+      "explanation": "Faire X kills en Loup durant un évènement Éclipse",
+      "emoji": "🌑",
+      "category": "loups",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 10
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 15
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 30
         }
       ],
       "mainTeamOnly": false
@@ -1235,6 +1266,37 @@
           "tier": "lycans",
           "subLevel": 1,
           "threshold": 10
+        }
+      ],
+      "mainTeamOnly": false
+    },
+    {
+      "id": "consecutive-same-victim-kill",
+      "name": "C'est MA proie",
+      "description": "Le sort s'acharne sur eux... Mais vous aussi",
+      "explanation": "Tuer X fois le même joueur dans deux parties consécutives lors d'une même session",
+      "emoji": "🎯",
+      "category": "kills",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 10
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 15
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 30
         }
       ],
       "mainTeamOnly": false
@@ -3336,6 +3398,22 @@
           "progress": 0.5333333333333333
         },
         {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 2,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Ponce-20250501000000-419",
+            "Ponce-20250501000000-419"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "amoureux-loup-total-kills",
           "currentValue": 2,
           "recentValue": 2,
@@ -4915,6 +4993,19 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "hunter-killed-by-wolf",
@@ -7518,7 +7609,7 @@
     "17": {
       "playerId": "17",
       "playerName": "Fukano",
-      "totalUnlocked": 99,
+      "totalUnlocked": 101,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -8062,6 +8153,34 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 11,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Ponce-20250923000000-557"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20241231000000-287"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250710000000-468"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 15
+          },
+          "progress": 0.7333333333333333
         },
         {
           "id": "hunter-killed-by-wolf",
@@ -8987,6 +9106,19 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 3,
           "recentValue": 1,
@@ -9421,6 +9553,21 @@
             "threshold": 15
           },
           "progress": 0.6
+        },
+        {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Ponce-20240717000000-187"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "colors-of-lycans",
@@ -10101,6 +10248,21 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 2,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Ponce-20250225000000-352"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "hunter-killed-by-wolf",
@@ -10937,6 +11099,21 @@
           "progress": 0.7333333333333333
         },
         {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Ponce-20231013000000-9"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "revenge-kill",
           "currentValue": 1,
           "recentValue": 1,
@@ -11669,6 +11846,19 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 2,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "hunter-killed-by-wolf",
@@ -14507,6 +14697,22 @@
           "progress": 0.6
         },
         {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 2,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Ponce-20241206000000-254",
+            "Ponce-20241206000000-254"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 1,
           "recentValue": 0,
@@ -15188,6 +15394,21 @@
             "threshold": 15
           },
           "progress": 0.7333333333333333
+        },
+        {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Ponce-20231013000000-3"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "misunderstood",
@@ -15934,7 +16155,7 @@
     "76561198034021995": {
       "playerId": "76561198034021995",
       "playerName": "Ponce",
-      "totalUnlocked": 261,
+      "totalUnlocked": 264,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -16405,6 +16626,19 @@
             "threshold": 30
           },
           "progress": 0.8333333333333334
+        },
+        {
+          "id": "wolf-eclipse-kills",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "starvation",
@@ -16971,6 +17205,38 @@
             "threshold": 10
           },
           "progress": 0.5
+        },
+        {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 23,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20241206000000-251"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20241217000000-281"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20251014110121"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 30
+          },
+          "progress": 0.7666666666666667
         },
         {
           "id": "hunter-killed-by-wolf",
@@ -19490,6 +19756,21 @@
           "progress": 0.375
         },
         {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Ponce-20241206000000-257"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 5,
           "recentValue": 0,
@@ -20304,7 +20585,7 @@
     "76561198045789440": {
       "playerId": "76561198045789440",
       "playerName": "Bytell",
-      "totalUnlocked": 227,
+      "totalUnlocked": 229,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -21278,6 +21559,34 @@
             "threshold": 5
           },
           "progress": 0.8
+        },
+        {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 10,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Tsuna-20260609115711"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250411000000-396"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Tsuna-20260609115711"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 15
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "hunter-killed-by-wolf",
@@ -22720,7 +23029,7 @@
     "76561198372242900": {
       "playerId": "76561198372242900",
       "playerName": "Lutti",
-      "totalUnlocked": 245,
+      "totalUnlocked": 248,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -23727,6 +24036,38 @@
             "threshold": 10
           },
           "progress": 0.5
+        },
+        {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 21,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240507000000-130"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20240924000000-237"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250527000000-442"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 30
+          },
+          "progress": 0.7
         },
         {
           "id": "hunter-killed-by-wolf",
@@ -25264,7 +25605,7 @@
     "76561199060053791": {
       "playerId": "76561199060053791",
       "playerName": "Tsuna",
-      "totalUnlocked": 222,
+      "totalUnlocked": 224,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -26087,6 +26428,32 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 13,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20251009130021"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20251014130154"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 15
+          },
+          "progress": 0.8666666666666667
         },
         {
           "id": "hunter-killed-by-wolf",
@@ -27901,6 +28268,19 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 2,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 12,
           "recentValue": 0,
@@ -28356,7 +28736,7 @@
     "76561198012951437": {
       "playerId": "76561198012951437",
       "playerName": "Khalen",
-      "totalUnlocked": 239,
+      "totalUnlocked": 242,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -29328,6 +29708,38 @@
             "threshold": 10
           },
           "progress": 0.7
+        },
+        {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 25,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240329000000-105"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20240813000000-200"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250805000000-515"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 30
+          },
+          "progress": 0.8333333333333334
         },
         {
           "id": "hunter-killed-by-wolf",
@@ -30844,7 +31256,7 @@
     "76561198361954746": {
       "playerId": "76561198361954746",
       "playerName": "Anaee",
-      "totalUnlocked": 194,
+      "totalUnlocked": 197,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -31239,6 +31651,26 @@
             "threshold": 10
           },
           "progress": 0.8
+        },
+        {
+          "id": "wolf-eclipse-kills",
+          "currentValue": 7,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20260505111212"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.7
         },
         {
           "id": "starvation",
@@ -31696,6 +32128,32 @@
             "tier": "argent",
             "subLevel": 1,
             "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 10,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250311000000-372"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Tsuna-20260526131025"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 15
           },
           "progress": 0.6666666666666666
         },
@@ -33032,7 +33490,7 @@
     "76561198390111869": {
       "playerId": "76561198390111869",
       "playerName": "Kao",
-      "totalUnlocked": 162,
+      "totalUnlocked": 164,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -33840,6 +34298,32 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 11,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250110000000-296"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20260127125055"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 15
+          },
+          "progress": 0.7333333333333333
         },
         {
           "id": "hunter-killed-by-wolf",
@@ -34950,7 +35434,7 @@
     "76561198043736664": {
       "playerId": "76561198043736664",
       "playerName": "Arkantors",
-      "totalUnlocked": 124,
+      "totalUnlocked": 125,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -35616,6 +36100,26 @@
             "threshold": 10
           },
           "progress": 0.5
+        },
+        {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 8,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250501000000-423"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.8
         },
         {
           "id": "hunter-killed-by-wolf",
@@ -36472,7 +36976,7 @@
     "76561198109331759": {
       "playerId": "76561198109331759",
       "playerName": "Flonflon",
-      "totalUnlocked": 155,
+      "totalUnlocked": 156,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -37189,6 +37693,26 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 5,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250911000000-538"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.5
         },
         {
           "id": "hunter-killed-by-wolf",
@@ -38536,6 +39060,21 @@
           "currentValue": 1,
           "recentValue": 0,
           "recentGameIds": [],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Ponce-20250916000000-547"
+          ],
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
@@ -40122,6 +40661,19 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 6,
           "recentValue": 1,
@@ -41026,6 +41578,21 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Tsuna-20260512122153"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 4,
           "recentValue": 0,
@@ -41504,7 +42071,7 @@
     "76561198125108195": {
       "playerId": "76561198125108195",
       "playerName": "Monodie",
-      "totalUnlocked": 172,
+      "totalUnlocked": 174,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -42303,6 +42870,32 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 12,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20251009120237"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "khalen-20260303141937"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 15
+          },
+          "progress": 0.8
         },
         {
           "id": "hunter-killed-by-wolf",
@@ -43913,6 +44506,19 @@
           "progress": 0.4
         },
         {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 14,
           "recentValue": 1,
@@ -45112,7 +45718,7 @@
     "76561198256660482": {
       "playerId": "76561198256660482",
       "playerName": "Baout",
-      "totalUnlocked": 82,
+      "totalUnlocked": 83,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -45598,6 +46204,29 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 5,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Ponce-20260421125433",
+            "Ponce-20260421125433"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20260421125433"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.5
         },
         {
           "id": "hunter-killed-by-wolf",
@@ -46922,6 +47551,19 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "hunter-killed-by-wolf",
@@ -49100,6 +49742,21 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Tsuna-20260616132329"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 4,
           "recentValue": 1,
@@ -50571,6 +51228,19 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 2,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 22,
           "recentValue": 1,
@@ -51630,7 +52300,7 @@
     "76561198250955250": {
       "playerId": "76561198250955250",
       "playerName": "Tone",
-      "totalUnlocked": 158,
+      "totalUnlocked": 159,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -51954,6 +52624,19 @@
             "threshold": 15
           },
           "progress": 0.7333333333333333
+        },
+        {
+          "id": "wolf-eclipse-kills",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "romeo-juliette",
@@ -52320,6 +53003,28 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 5,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Tsuna-20260616112139"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Tsuna-20260616112139"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.5
         },
         {
           "id": "hunter-killed-by-wolf",
@@ -53855,6 +54560,19 @@
           "progress": 0.9
         },
         {
+          "id": "wolf-eclipse-kills",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "romeo-juliette",
           "currentValue": 15,
           "recentValue": 1,
@@ -54254,6 +54972,19 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 4,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.8
         },
         {
           "id": "hunter-killed-by-wolf",
@@ -56718,6 +57449,21 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 2,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Tsuna-20260616114954"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 17,
           "recentValue": 0,
@@ -58187,6 +58933,19 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 2,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 12,
           "recentValue": 0,
@@ -59330,6 +60089,21 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Ponce-20251028000000-600"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "hunter-killed-by-wolf",
@@ -62984,6 +63758,19 @@
           "progress": 0.2
         },
         {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 2,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 1,
           "recentValue": 0,
@@ -64704,6 +65491,19 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 2,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "hunter-killed-by-wolf",
@@ -66711,6 +67511,22 @@
             "threshold": 15
           },
           "progress": 0.7333333333333333
+        },
+        {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 2,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Tsuna-20260512132009",
+            "Tsuna-20260512132009"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "amoureux-loup-total-kills",
@@ -69257,6 +70073,19 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 3,
           "recentValue": 0,
@@ -70177,6 +71006,21 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Ponce-20260203144119"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 2,
           "recentValue": 2,
@@ -70710,6 +71554,21 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260224125732"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 1,
           "recentValue": 1,
@@ -71179,6 +72038,19 @@
             "threshold": 15
           },
           "progress": 0.8
+        },
+        {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "hunter-killed-by-wolf",
@@ -72852,6 +73724,21 @@
             "threshold": 5
           },
           "progress": 0.8
+        },
+        {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260623111650"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "max-loot-single-game",

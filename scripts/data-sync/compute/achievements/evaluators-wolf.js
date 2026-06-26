@@ -5,7 +5,7 @@
  * zombie/vaudou mechanics, necromancer, seer, sabotage.
  */
 
-import { isWolfCamp, getPlayerCampForAchievement, isHunterRole, isAliveAtMeeting, isKilledByPlayer, isActionTargetPlayer } from './helpers.js';
+import { isWolfCamp, getPlayerCampForAchievement, isHunterRole, isAliveAtMeeting, isKilledByPlayer, isActionTargetPlayer, getDeathDay } from './helpers.js';
 import { getPlayerId, getPlayerFinalRole, getPlayerCampFromRole, DeathTypeCode } from './helpers.js';
 
 /**
@@ -526,5 +526,53 @@ export function wolfLossHarvestNoKills(playerGames, allGames, playerId, params) 
       gameIds.push(game.Id);
     }
   }
+  return { value, gameIds };
+}
+
+/**
+ * Count wolf kills made on a day when an Eclipse event is active.
+ * Only kills by wolf-camp players (BY_WOLF death type) are counted,
+ * and only if the victim's death timing falls on the same day as the Eclipse event.
+ */
+export function wolfEclipseKills(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+  const countedGames = new Set();
+
+  for (const { game, playerStat } of playerGames) {
+    // Player must be in wolf camp
+    if (!isWolfCamp(playerStat, true)) continue;
+
+    // Game must have a DailyEventStart Eclipse event
+    if (!game.GameEvents || game.GameEvents.length === 0) continue;
+    const eclipseEvents = game.GameEvents.filter(e => e.Type === 'DailyEventStart' && e.Name === 'Eclipse');
+    if (eclipseEvents.length === 0) continue;
+
+    // Collect the day numbers covered by eclipse events (e.g. "J3" → 3)
+    const eclipseDays = new Set(
+      eclipseEvents.map(e => getDeathDay(e.Timing)).filter(d => d !== null)
+    );
+    if (eclipseDays.size === 0) continue;
+
+    // Count wolf kills whose victim died on an eclipse day
+    let killsInGame = 0;
+    for (const victim of game.PlayerStats) {
+      if (victim.DeathType !== DeathTypeCode.BY_WOLF) continue;
+      if (!isKilledByPlayer(game, victim, playerId)) continue;
+      const victimDay = getDeathDay(victim.DeathTiming);
+      if (victimDay !== null && eclipseDays.has(victimDay)) {
+        killsInGame++;
+      }
+    }
+
+    if (killsInGame > 0) {
+      value += killsInGame;
+      if (!countedGames.has(game.Id)) {
+        gameIds.push(game.Id);
+        countedGames.add(game.Id);
+      }
+    }
+  }
+
   return { value, gameIds };
 }
