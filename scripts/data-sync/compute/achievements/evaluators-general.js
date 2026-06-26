@@ -438,3 +438,40 @@ export function speedRunWins(playerGames, allGames, playerId, params) {
 
   return { value, gameIds };
 }
+
+/**
+ * Count games where the player lost after switching camp, while their original camp won.
+ * Typical scenario: a Villageois turned into a Zombie (Vaudou camp) loses while Villageois wins.
+ */
+export function lostAfterCampSwitch(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+
+  for (const { game, playerStat } of playerGames) {
+    // Player must have lost
+    if (playerStat.Victorious) continue;
+
+    // Player must have had at least one role change
+    if (!playerStat.MainRoleChanges || playerStat.MainRoleChanges.length === 0) continue;
+
+    // Determine initial and final camps
+    const initialCamp = getPlayerCampForAchievement(playerStat, false, { regroupWolfSubRoles: true });
+    const finalCamp   = getPlayerCampForAchievement(playerStat, true,  { regroupWolfSubRoles: true });
+
+    // The camp must have actually changed
+    if (initialCamp === finalCamp) continue;
+
+    // Check if the initial camp won (any player whose final camp equals initialCamp is Victorious)
+    const initialCampWon = game.PlayerStats.some(p => {
+      if (!p.Victorious) return false;
+      return getPlayerCampForAchievement(p, true, { regroupWolfSubRoles: true }) === initialCamp;
+    });
+
+    if (initialCampWon) {
+      value++;
+      gameIds.push(game.Id);
+    }
+  }
+
+  return { value, gameIds };
+}

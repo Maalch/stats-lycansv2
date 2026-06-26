@@ -289,6 +289,26 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
   {
+    id: 'lost-after-camp-switch',
+    name: "Bro thinks he's on the team",
+    description: "On dit pas que c'est vous le problème depuis le début mais... Étrange coïncidence, non?",
+    explanation: "Perdre X fois en changeant de camp alors que votre ancien camp remporte la victoire",
+    emoji: '🤡',
+    category: 'victories',
+    evaluator: 'lostAfterCampSwitch',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 2
+      { tier: 'argent', subLevel: 1, threshold: 2 },
+      // Or: 3
+      { tier: 'or', subLevel: 1, threshold: 3 },
+      // Lycans: 5
+      { tier: 'lycans', subLevel: 1, threshold: 5 },
+    ],
+  },
+  {
     id: 'last-wolf',
     name: 'Dernier·ère Loup·ve',
     description: "Vous n'avez besoin de personne pour gagner… Vous seul·e survivez.",

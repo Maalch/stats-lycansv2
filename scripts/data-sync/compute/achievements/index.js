@@ -27,7 +27,7 @@ import {
   winOnAllMaps, winInColors, winsOnAllMaps,
   winsAgainstOnutrem, winningMonths,
   perfectSessions, topLootVillageoisGames, maxLootInSingleGame, resurrectedCount,
-  speedRunWins,
+  speedRunWins, lostAfterCampSwitch,
 } from './evaluators-general.js';
 
 // Wolf evaluators
@@ -173,6 +173,7 @@ export const EVALUATORS = {
   maxLootInSingleGame,
   resurrectedCount,
   speedRunWins,
+  lostAfterCampSwitch,
 };
 
 export const BR_EVALUATORS = {
