@@ -105,6 +105,8 @@ export interface PotionEffectEntry {
   tutorial?: string;
   source?: string;
   randomEffects?: string[];
+  durationSeconds?: number;
+  durationNote?: string;
 }
 
 export interface StatusEffectEntry {

@@ -244,6 +244,12 @@ function EffectCard({ effect, type }: { effect: PotionEffectEntry | StatusEffect
   const randomEffects = potionEffect?.randomEffects ?? statusEffect?.randomEffects;
   const randomLabel = potionEffect?.randomEffects ? 'Effets possibles :' : 'Actions possibles :';
 
+  const durationLabel = potionEffect?.durationSeconds
+    ? `⏱ ${potionEffect.durationSeconds}s`
+    : potionEffect?.durationNote
+      ? '⏱ Variable'
+      : null;
+
   // Special rendering for effects with random outcomes
   if (randomEffects) {
     return (
@@ -251,9 +257,13 @@ function EffectCard({ effect, type }: { effect: PotionEffectEntry | StatusEffect
         <div className="ref-effect-card__header">
           <span className="ref-effect-card__name">{effect.name}</span>
           {potionType && <span className="ref-effect-card__type">{potionType}</span>}
+          {durationLabel && <span className="ref-effect-card__duration">{durationLabel}</span>}
           {potionEffect?.source && <span className="ref-effect-card__source">🧪 {potionEffect.source}</span>}
         </div>
         {effect.tutorial && <p className="ref-effect-card__description">{effect.tutorial}</p>}
+        {potionEffect?.durationNote && (
+          <p className="ref-effect-card__description ref-effect-card__duration-note">{potionEffect.durationNote}</p>
+        )}
         <div className="ref-effect-card__random-effects">
           <span className="ref-effect-card__random-label">{randomLabel}</span>
           {randomEffects.map(name => (
@@ -269,6 +279,7 @@ function EffectCard({ effect, type }: { effect: PotionEffectEntry | StatusEffect
       <div className="ref-effect-card__header">
         <span className="ref-effect-card__name">{effect.name}</span>
         {potionType && <span className="ref-effect-card__type">{potionType}</span>}
+        {durationLabel && <span className="ref-effect-card__duration">{durationLabel}</span>}
         {potionEffect?.source && <span className="ref-effect-card__source">🧪 {potionEffect.source}</span>}
       </div>
       {effect.tutorial && <p className="ref-effect-card__description">{effect.tutorial}</p>}
