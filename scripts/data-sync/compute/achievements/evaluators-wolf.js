@@ -649,6 +649,51 @@ function getActionsWhileInWolfForm(playerStat, game, filterFn) {
 }
 
 /**
+ * Internal helper: checks whether playerStat is currently in wolf form (Transformed)
+ * at a given point in time. Uses the same window detection logic as
+ * getActionsWhileInWolfForm but returns a boolean.
+ * Caller is responsible for verifying that the game has NewPhase events.
+ *
+ * @param {Object} playerStat - The player stat to check
+ * @param {Object} game       - The full game object (needs GameEvents)
+ * @param {Date}   checkDate  - The Date instance to check against
+ * @returns {boolean} true if playerStat is in wolf form at checkDate
+ */
+function isInWolfFormAt(playerStat, game, checkDate) {
+  const actions = playerStat.Actions || [];
+
+  for (const transform of actions) {
+    if (transform.ActionType !== 'Transform') continue;
+    if (!transform.Date) continue;
+    if (!transform.Timing) continue;
+
+    const transformDate = new Date(transform.Date);
+    let endDate = null;
+
+    const untransform = actions.find(a =>
+      (a.ActionType === 'Untransform' || a.ActionType === 'UntransformInfecté') &&
+      a.Timing === transform.Timing &&
+      a.Date
+    );
+    if (untransform) {
+      endDate = new Date(untransform.Date);
+    } else if (playerStat.DeathTiming === transform.Timing && playerStat.DeathDateIrl) {
+      endDate = new Date(playerStat.DeathDateIrl);
+    } else {
+      const nextPhase = (game.GameEvents || [])
+        .filter(e => e.Type === 'NewPhase' && e.Date && new Date(e.Date) > transformDate)
+        .sort((a, b) => new Date(a.Date) - new Date(b.Date))[0];
+      if (nextPhase) endDate = new Date(nextPhase.Date);
+    }
+
+    if (!endDate) continue;
+    if (checkDate >= transformDate && checkDate < endDate) return true;
+  }
+
+  return false;
+}
+
+/**
  * Count potions drunk while in wolf form (after Transform, before window end).
  * Each DrinkPotion action in a valid wolf-form window counts as +1.
  * Only games with at least one NewPhase event are considered (version >= 0.252).
@@ -685,10 +730,11 @@ export function wolfDrinkPotions(playerGames, allGames, playerId, params) {
 const PARCHEMIN_REGEX = /^Parchemin \(/;
 
 /**
- * Count Parchemin or Livre de sorts uses ON a player while in wolf form.
+ * Count Parchemin or Livre de sorts uses that TARGETED a player who was in wolf
+ * form (Transformed) at the moment of the action. The caster can be any camp.
  * - Parchemin: UseGadget where ActionName matches /^Parchemin \(/
  * - Livre de sorts: UseGadget where ActionName === 'Livre de sorts'
- * - Requires ActionTarget to be non-null (must have been cast on a player)
+ * - Requires ActionTarget to resolve to a player who is currently Transformed
  * Only games with at least one NewPhase event are considered (version >= 0.252).
  */
 export function wolfScrollUses(playerGames, allGames, playerId, params) {
@@ -697,23 +743,36 @@ export function wolfScrollUses(playerGames, allGames, playerId, params) {
   const countedGames = new Set();
 
   for (const { game, playerStat } of playerGames) {
-    if (!isWolfCamp(playerStat)) continue;
-
     // Skip games without NewPhase events (pre-0.252, dates unreliable)
     const hasNewPhase = (game.GameEvents || []).some(e => e.Type === 'NewPhase');
     if (!hasNewPhase) continue;
 
-    const qualifying = getActionsWhileInWolfForm(
-      playerStat, game,
-      a =>
-        a.ActionType === 'UseGadget' &&
-        a.ActionName &&
-        (PARCHEMIN_REGEX.test(a.ActionName) || a.ActionName === 'Livre de sorts') &&
-        a.ActionTarget // Must be cast on a player
-    );
+    const actions = playerStat.Actions || [];
+    let countInGame = 0;
 
-    if (qualifying.length > 0) {
-      value += qualifying.length;
+    for (const action of actions) {
+      if (action.ActionType !== 'UseGadget') continue;
+      if (!action.ActionName) continue;
+      if (!PARCHEMIN_REGEX.test(action.ActionName) && action.ActionName !== 'Livre de sorts') continue;
+      if (!action.ActionTarget) continue;
+      if (!action.Date) continue; // Need date to check wolf form timing
+
+      const actionDate = new Date(action.Date);
+
+      // Find the target player stat in this game
+      const targetStat = game.PlayerStats.find(p =>
+        isActionTargetPlayer(game, action.ActionTarget, getPlayerId(p))
+      );
+      if (!targetStat) continue;
+
+      // Target must be in wolf form (Transformed) at the time of the action
+      if (!isInWolfFormAt(targetStat, game, actionDate)) continue;
+
+      countInGame++;
+    }
+
+    if (countInGame > 0) {
+      value += countInGame;
       if (!countedGames.has(game.Id)) {
         gameIds.push(game.Id);
         countedGames.add(game.Id);
