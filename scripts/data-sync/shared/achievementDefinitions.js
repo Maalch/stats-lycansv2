@@ -374,6 +374,46 @@ export const ACHIEVEMENT_DEFINITIONS = [
       { tier: 'lycans', subLevel: 1, threshold: 30 },
     ],
   },
+  {
+    id: 'remede-de-loup',
+    name: 'Remède de Loup',
+    description: "Même en pleine transformation, vous n'oubliez pas votre potion du soir",
+    explanation: 'Boire X potions en forme de Loup',
+    emoji: '🐺🧪',
+    category: 'loups',
+    evaluator: 'wolfDrinkPotions',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 2
+      { tier: 'argent', subLevel: 1, threshold: 2 },
+      // Or: 3
+      { tier: 'or', subLevel: 1, threshold: 3 },
+      // Lycans: 5
+      { tier: 'lycans', subLevel: 1, threshold: 5 },
+    ],
+  },
+  {
+    id: 'grimoire-du-loup',
+    name: 'Grimoire du Loup',
+    description: "La magie n'a pas de camp… ni d'odeur",
+    explanation: 'Utiliser X fois un Parchemin ou un Livre des sorts sur un joueur en forme de Loup',
+    emoji: '📜🐺',
+    category: 'loups',
+    evaluator: 'wolfScrollUses',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 5
+      { tier: 'or', subLevel: 1, threshold: 5 },
+      // Lycans: 10
+      { tier: 'lycans', subLevel: 1, threshold: 10 },
+    ],
+  },
 
   // ============================================================================
   // DEATHS

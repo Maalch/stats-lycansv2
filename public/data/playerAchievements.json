@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-06-26T11:36:55.296Z",
+  "generatedAt": "2026-06-30T08:08:01.463Z",
   "teamName": "Main Team",
   "totalPlayers": 93,
   "totalGames": 931,
@@ -499,17 +499,17 @@
         {
           "tier": "argent",
           "subLevel": 1,
-          "threshold": 2
+          "threshold": 3
         },
         {
           "tier": "or",
           "subLevel": 1,
-          "threshold": 3
+          "threshold": 5
         },
         {
           "tier": "lycans",
           "subLevel": 1,
-          "threshold": 5
+          "threshold": 10
         }
       ],
       "mainTeamOnly": false
@@ -633,6 +633,68 @@
           "tier": "lycans",
           "subLevel": 1,
           "threshold": 30
+        }
+      ],
+      "mainTeamOnly": false
+    },
+    {
+      "id": "remede-de-loup",
+      "name": "Remède de Loup",
+      "description": "Même en pleine transformation, vous n'oubliez pas votre potion du soir",
+      "explanation": "Boire X potions en forme de Loup",
+      "emoji": "🐺🧪",
+      "category": "loups",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 2
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 5
+        }
+      ],
+      "mainTeamOnly": false
+    },
+    {
+      "id": "grimoire-du-loup",
+      "name": "Grimoire du Loup",
+      "description": "La magie n'a pas de camp… ni d'odeur",
+      "explanation": "Utiliser X fois un Parchemin ou un Livre des sorts sur un joueur en forme de Loup",
+      "emoji": "📜🐺",
+      "category": "loups",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 10
         }
       ],
       "mainTeamOnly": false
@@ -7881,9 +7943,9 @@
           "nextLevel": {
             "tier": "argent",
             "subLevel": 1,
-            "threshold": 2
+            "threshold": 3
           },
-          "progress": 0.5
+          "progress": 0.3333333333333333
         },
         {
           "id": "fall-death",
@@ -13851,9 +13913,9 @@
           "nextLevel": {
             "tier": "argent",
             "subLevel": 1,
-            "threshold": 2
+            "threshold": 3
           },
-          "progress": 0.5
+          "progress": 0.3333333333333333
         },
         {
           "id": "death-turn1",
@@ -16228,7 +16290,7 @@
     "76561198034021995": {
       "playerId": "76561198034021995",
       "playerName": "Ponce",
-      "totalUnlocked": 267,
+      "totalUnlocked": 266,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -16637,18 +16699,12 @@
             {
               "tier": "argent",
               "subLevel": 1,
-              "threshold": 2,
-              "unlockedAtGame": "Ponce-20260317124619"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
               "threshold": 3,
               "unlockedAtGame": "khalen-20260519115053"
             }
           ],
           "nextLevel": {
-            "tier": "lycans",
+            "tier": "or",
             "subLevel": 1,
             "threshold": 5
           },
@@ -20690,7 +20746,7 @@
     "76561198045789440": {
       "playerId": "76561198045789440",
       "playerName": "Bytell",
-      "totalUnlocked": 232,
+      "totalUnlocked": 231,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -21027,18 +21083,12 @@
             {
               "tier": "argent",
               "subLevel": 1,
-              "threshold": 2,
-              "unlockedAtGame": "khalen-20260217135951"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
               "threshold": 3,
               "unlockedAtGame": "Tsuna-20260407125227"
             }
           ],
           "nextLevel": {
-            "tier": "lycans",
+            "tier": "or",
             "subLevel": 1,
             "threshold": 5
           },
@@ -26139,24 +26189,22 @@
             {
               "tier": "argent",
               "subLevel": 1,
-              "threshold": 2,
-              "unlockedAtGame": "Ponce-20251023131631"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
               "threshold": 3,
               "unlockedAtGame": "Ponce-20260106132431"
             },
             {
-              "tier": "lycans",
+              "tier": "or",
               "subLevel": 1,
               "threshold": 5,
               "unlockedAtGame": "khalen-20260505132505"
             }
           ],
-          "nextLevel": null,
-          "progress": 1
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-sabotages",
@@ -26174,6 +26222,28 @@
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "grimoire-du-loup",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Tsuna-20260616134254"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260616134254"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
             "threshold": 3
           },
           "progress": 0.3333333333333333
@@ -29308,16 +29378,10 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20251125130713"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 2,
-              "unlockedAtGame": "Tsuna-20260331120208"
             }
           ],
           "nextLevel": {
-            "tier": "or",
+            "tier": "argent",
             "subLevel": 1,
             "threshold": 3
           },
@@ -29400,6 +29464,26 @@
             "threshold": 30
           },
           "progress": 0.9333333333333333
+        },
+        {
+          "id": "grimoire-du-loup",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260602122421"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "fall-death",
@@ -31453,7 +31537,7 @@
     "76561198361954746": {
       "playerId": "76561198361954746",
       "playerName": "Anaee",
-      "totalUnlocked": 199,
+      "totalUnlocked": 198,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -31806,16 +31890,10 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20251023131631"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 2,
-              "unlockedAtGame": "Ponce-20251223142339"
             }
           ],
           "nextLevel": {
-            "tier": "or",
+            "tier": "argent",
             "subLevel": 1,
             "threshold": 3
           },
@@ -33684,9 +33762,11 @@
         },
         {
           "id": "musical-clips",
-          "currentValue": 5,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 6,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260623114214"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -33706,14 +33786,14 @@
             "subLevel": 1,
             "threshold": 8
           },
-          "progress": 0.625
+          "progress": 0.75
         }
       ]
     },
     "76561198390111869": {
       "playerId": "76561198390111869",
       "playerName": "Kao",
-      "totalUnlocked": 166,
+      "totalUnlocked": 165,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -34023,16 +34103,10 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "khalen-20260113131329"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 2,
-              "unlockedAtGame": "Ponce-20260421115103"
             }
           ],
           "nextLevel": {
-            "tier": "or",
+            "tier": "argent",
             "subLevel": 1,
             "threshold": 3
           },
@@ -35939,9 +36013,9 @@
           "nextLevel": {
             "tier": "argent",
             "subLevel": 1,
-            "threshold": 2
+            "threshold": 3
           },
-          "progress": 0.5
+          "progress": 0.3333333333333333
         },
         {
           "id": "last-wolf",
@@ -37245,7 +37319,7 @@
     "76561198109331759": {
       "playerId": "76561198109331759",
       "playerName": "Flonflon",
-      "totalUnlocked": 158,
+      "totalUnlocked": 157,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -37547,16 +37621,10 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20250716000000-484"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 2,
-              "unlockedAtGame": "khalen-20260113141709"
             }
           ],
           "nextLevel": {
-            "tier": "or",
+            "tier": "argent",
             "subLevel": 1,
             "threshold": 3
           },
@@ -39935,9 +40003,9 @@
           "nextLevel": {
             "tier": "argent",
             "subLevel": 1,
-            "threshold": 2
+            "threshold": 3
           },
-          "progress": 0.5
+          "progress": 0.3333333333333333
         },
         {
           "id": "death-turn1",
@@ -42388,7 +42456,7 @@
     "76561198125108195": {
       "playerId": "76561198125108195",
       "playerName": "Monodie",
-      "totalUnlocked": 176,
+      "totalUnlocked": 175,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -42696,16 +42764,10 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20250716000000-482"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 2,
-              "unlockedAtGame": "Ponce-20260210135746"
             }
           ],
           "nextLevel": {
-            "tier": "or",
+            "tier": "argent",
             "subLevel": 1,
             "threshold": 3
           },
@@ -44570,9 +44632,9 @@
           "nextLevel": {
             "tier": "argent",
             "subLevel": 1,
-            "threshold": 2
+            "threshold": 3
           },
-          "progress": 0.5
+          "progress": 0.3333333333333333
         },
         {
           "id": "wolf-sabotages",
@@ -46324,9 +46386,9 @@
           "nextLevel": {
             "tier": "argent",
             "subLevel": 1,
-            "threshold": 2
+            "threshold": 3
           },
-          "progress": 0.5
+          "progress": 0.3333333333333333
         },
         {
           "id": "wolf-sabotages",
@@ -47565,9 +47627,9 @@
           "nextLevel": {
             "tier": "argent",
             "subLevel": 1,
-            "threshold": 2
+            "threshold": 3
           },
-          "progress": 0.5
+          "progress": 0.3333333333333333
         },
         {
           "id": "wolf-sabotages",
@@ -48965,9 +49027,9 @@
           "nextLevel": {
             "tier": "argent",
             "subLevel": 1,
-            "threshold": 2
+            "threshold": 3
           },
-          "progress": 0.5
+          "progress": 0.3333333333333333
         },
         {
           "id": "romeo-juliette",
@@ -49691,7 +49753,7 @@
     "76561198095017745": {
       "playerId": "76561198095017745",
       "playerName": "Craco",
-      "totalUnlocked": 100,
+      "totalUnlocked": 99,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -49892,18 +49954,12 @@
             {
               "tier": "argent",
               "subLevel": 1,
-              "threshold": 2,
-              "unlockedAtGame": "Ponce-20251028000000-605"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
               "threshold": 3,
               "unlockedAtGame": "Ponce-20251125122037"
             }
           ],
           "nextLevel": {
-            "tier": "lycans",
+            "tier": "or",
             "subLevel": 1,
             "threshold": 5
           },
@@ -51260,24 +51316,22 @@
             {
               "tier": "argent",
               "subLevel": 1,
-              "threshold": 2,
-              "unlockedAtGame": "Ponce-20251118000000-633"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
               "threshold": 3,
               "unlockedAtGame": "khalen-20260217133845"
             },
             {
-              "tier": "lycans",
+              "tier": "or",
               "subLevel": 1,
               "threshold": 5,
               "unlockedAtGame": "khalen-20260505132505"
             }
           ],
-          "nextLevel": null,
-          "progress": 1
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-sabotages",
@@ -51328,6 +51382,26 @@
             "threshold": 30
           },
           "progress": 0.8666666666666667
+        },
+        {
+          "id": "grimoire-du-loup",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260421104330"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "starvation",
@@ -54731,7 +54805,7 @@
     "76561198849250630": {
       "playerId": "76561198849250630",
       "playerName": "MathyMoon",
-      "totalUnlocked": 140,
+      "totalUnlocked": 139,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -55017,16 +55091,10 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20250710000000-467"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 2,
-              "unlockedAtGame": "Ponce-20250729000000-499"
             }
           ],
           "nextLevel": {
-            "tier": "or",
+            "tier": "argent",
             "subLevel": 1,
             "threshold": 3
           },
@@ -57573,9 +57641,9 @@
           "nextLevel": {
             "tier": "argent",
             "subLevel": 1,
-            "threshold": 2
+            "threshold": 3
           },
-          "progress": 0.5
+          "progress": 0.3333333333333333
         },
         {
           "id": "wolf-sabotages",
@@ -58821,7 +58889,7 @@
     "76561198056292624": {
       "playerId": "76561198056292624",
       "playerName": "RomainJacques",
-      "totalUnlocked": 108,
+      "totalUnlocked": 109,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -59091,6 +59159,26 @@
             "threshold": 15
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "grimoire-du-loup",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260421110017"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "starvation",
@@ -61771,9 +61859,9 @@
           "nextLevel": {
             "tier": "argent",
             "subLevel": 1,
-            "threshold": 2
+            "threshold": 3
           },
-          "progress": 0.5
+          "progress": 0.3333333333333333
         },
         {
           "id": "starvation",
@@ -62555,9 +62643,9 @@
           "nextLevel": {
             "tier": "argent",
             "subLevel": 1,
-            "threshold": 2
+            "threshold": 3
           },
-          "progress": 0.5
+          "progress": 0.3333333333333333
         },
         {
           "id": "wolf-sabotages",
@@ -64145,9 +64233,9 @@
           "nextLevel": {
             "tier": "argent",
             "subLevel": 1,
-            "threshold": 2
+            "threshold": 3
           },
-          "progress": 0.5
+          "progress": 0.3333333333333333
         },
         {
           "id": "romeo-juliette",
@@ -65766,9 +65854,9 @@
           "nextLevel": {
             "tier": "argent",
             "subLevel": 1,
-            "threshold": 2
+            "threshold": 3
           },
-          "progress": 0.5
+          "progress": 0.3333333333333333
         },
         {
           "id": "starvation",
@@ -68685,9 +68773,9 @@
           "nextLevel": {
             "tier": "argent",
             "subLevel": 1,
-            "threshold": 2
+            "threshold": 3
           },
-          "progress": 0.5
+          "progress": 0.3333333333333333
         },
         {
           "id": "death-turn1",
@@ -70440,9 +70528,9 @@
           "nextLevel": {
             "tier": "argent",
             "subLevel": 1,
-            "threshold": 2
+            "threshold": 3
           },
-          "progress": 0.5
+          "progress": 0.3333333333333333
         },
         {
           "id": "starvation",
@@ -71586,9 +71674,9 @@
           "nextLevel": {
             "tier": "argent",
             "subLevel": 1,
-            "threshold": 2
+            "threshold": 3
           },
-          "progress": 0.5
+          "progress": 0.3333333333333333
         },
         {
           "id": "wolf-sabotages",
@@ -73854,9 +73942,9 @@
           "nextLevel": {
             "tier": "argent",
             "subLevel": 1,
-            "threshold": 2
+            "threshold": 3
           },
-          "progress": 0.5
+          "progress": 0.3333333333333333
         },
         {
           "id": "wolf-sabotages",
@@ -74509,7 +74597,7 @@
     "76561199156801622": {
       "playerId": "76561199156801622",
       "playerName": "Withrow",
-      "totalUnlocked": 8,
+      "totalUnlocked": 9,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -74780,6 +74868,28 @@
             "threshold": 2
           },
           "progress": 0.5
+        },
+        {
+          "id": "musical-clips",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260623114214"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260623114214"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         }
       ]
     }

@@ -38,6 +38,7 @@ import {
   wolfSabotages, wolfLossHarvestNoKills, wolfSurvivedHunterShot,
   wolfVotesLastVillagerInThree, wolfWinEarlyDeath, wolfAllKillsSolo,
   zombieItemUses, wolfTransformKillNights, wolfEclipseKills,
+  wolfDrinkPotions, wolfScrollUses,
 } from './evaluators-wolf.js';
 
 // Combat evaluators
@@ -117,6 +118,8 @@ export const EVALUATORS = {
   zombieItemUses,
   wolfTransformKillNights,
   wolfEclipseKills,
+  wolfDrinkPotions,
+  wolfScrollUses,
 
   // Combat
   roleDeathByType,

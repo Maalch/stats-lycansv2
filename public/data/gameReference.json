@@ -725,7 +725,7 @@
       "id": "livre-de-sorts",
       "name": "Livre de sorts",
       "emoji": "📕",
-      "description": "Les effets négatifs durent moins longtemps. De plus, permet d'affecter une cible avec un effet aléatoire.",
+      "description": "Permet d'affecter une cible avec un effet aléatoire. Certains effets sont plus courts si appliqués à un Loup ou un Zombie. De plus, les effets négatifs durent moins longtemps sur ce joueur.",
       "tinkererEffect": "Recevoir un effet positif aléatoire.",
       "translationKey": "NALES_ACCESSORY_SPELLBOOK",
       "randomEffects": ["Invisible", "Célérité", "Pétrifié", "Géant", "Flatulences", "Aveuglé", "Illusion", "Endormi", "Bombe !", "Brûlé", "Détecté", "Téléportation", "Résistance", "Confusion", "Clairvoyance", "Régénération", "Rassasié", "Camouflé"]
@@ -834,7 +834,7 @@
       "name": "Potion",
       "emoji": "🧪",
       "translationKey": "NALES_POTION",
-      "description": "Fiole contenant un effet aléatoire. La couleur correspond à un effet, mais celui-ci est inconnu du joueur (sauf pour l'Alchimiste). L'effet s'applique au buveur. Ne peut pas être utilisée en forme de loup."
+      "description": "Fiole contenant un effet aléatoire. La couleur correspond à un effet, mais celui-ci est inconnu du joueur (sauf pour l'Alchimiste). L'effet s'applique au buveur. Certaines potions ont un effet plus court si bues en Loup ou Zombie."
     }
   ],
 
@@ -861,7 +861,7 @@
     { "id": "teleportation", "name": "Téléportation", "type": "neutral", "durationSeconds": 60, "translationKey": "EFFECT_TELEPORTATION", "tutorial": "Vous téléporte à une position aléatoire sur la carte" },
     { "id": "vampire", "name": "Vampire", "type": "neutral", "durationSeconds": 35, "translationKey": "NALES_EFFECT_VAMPIRE", "tutorial": "Vous permet de mordre un joueur pour lui voler de la vie et la récupérer" },
     { "id": "vision-vraie", "name": "Vision vraie", "type": "positive", "durationSeconds": 45, "translationKey": "EFFECT_TRUESIGHT", "tutorial": "Vous voyez dans le noir et ignorez les illusions visuelles" },
-    { "id": "blanche", "name": "Blanche", "type": "positive", "durationNote": "Plus courte que la durée standard de l'effet appliqué", "translationKey": "EFFECT_BLANCHE", "tutorial": "Potion créée par l'Alchimiste. Applique un effet positif aléatoire parmi les effets possibles, plus court qu'une potion classique.", "source": "alchimiste", "randomEffects": ["Assassin", "Audition+", "Célérité", "Rassasié", "Vision vraie"] },
+    { "id": "blanche", "name": "Blanche", "type": "positive", "durationNote": "60% de la durée de la potion de base équivalente", "translationKey": "EFFECT_BLANCHE", "tutorial": "Potion créée par l'Alchimiste. Applique un effet positif aléatoire parmi les effets positifs possibles, plus court qu'une potion classique.", "source": "alchimiste"},
     { "id": "camoufle", "name": "Camouflé", "type": "positive", "durationSeconds": 90, "translationKey": "NALES_EFFECT_CAMOUFLAGE", "tutorial": "Rend le joueur moins visible pour les autres joueurs, en particulier les loups transformés" },
     { "id": "confusion", "name": "Confusion", "type": "negative", "durationSeconds": 30, "translationKey": "NALES_EFFECT_CONFUSED", "tutorial": "Perturbe la vision et la perception du joueur" },
     { "id": "immunite", "name": "Immunité", "type": "neutral", "durationSeconds": 80, "translationKey": "NALES_EFFECT_IMMUNE", "tutorial": "Retire tous les effets (sauf exception) de la cible et empêche ces effets d'être appliqués" }

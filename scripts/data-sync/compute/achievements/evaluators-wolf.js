@@ -576,3 +576,150 @@ export function wolfEclipseKills(playerGames, allGames, playerId, params) {
 
   return { value, gameIds };
 }
+
+// ============================================================================
+// WOLF FORM ITEM EVALUATORS
+// ============================================================================
+
+/**
+ * Internal helper: returns all actions matching filterFn that were performed
+ * while the player was in wolf form (between a Transform and its window end).
+ *
+ * The wolf form window for a given Transform event is determined as:
+ *   1. Untransform (or UntransformInfecté) on the same Timing night → use its Date
+ *   2. Else: player died the same Timing night (DeathTiming match) → use DeathDateIrl
+ *   3. Else: first NewPhase GameEvent with Date strictly after the Transform Date
+ *
+ * Actions with no Date are ignored. Transform events with no Date are skipped.
+ * Caller is responsible for verifying that the game has NewPhase events.
+ *
+ * @param {Object} playerStat - The player's stat object for a game
+ * @param {Object} game       - The full game object (needs GameEvents)
+ * @param {Function} filterFn - Predicate applied to each Action
+ * @returns {Array} qualifying actions performed during wolf form
+ */
+function getActionsWhileInWolfForm(playerStat, game, filterFn) {
+  const actions = playerStat.Actions || [];
+  const result = [];
+
+  for (const transform of actions) {
+    if (transform.ActionType !== 'Transform') continue;
+    if (!transform.Date) continue; // No date → skip this transform window
+    if (!transform.Timing || !transform.Timing.startsWith('N')) continue;
+
+    const nightTiming = transform.Timing;
+    const transformDate = new Date(transform.Date);
+
+    // Determine end of wolf form window
+    let endDate = null;
+
+    // Option 1: Untransform (or UntransformInfecté) the same night, with a date
+    const untransform = actions.find(a =>
+      (a.ActionType === 'Untransform' || a.ActionType === 'UntransformInfecté') &&
+      a.Timing === nightTiming &&
+      a.Date
+    );
+    if (untransform) {
+      endDate = new Date(untransform.Date);
+    } else if (playerStat.DeathTiming === nightTiming && playerStat.DeathDateIrl) {
+      // Option 2: Player died during this same night
+      endDate = new Date(playerStat.DeathDateIrl);
+    } else {
+      // Option 3: First NewPhase GameEvent after the Transform date
+      const nextPhase = (game.GameEvents || [])
+        .filter(e => e.Type === 'NewPhase' && e.Date && new Date(e.Date) > transformDate)
+        .sort((a, b) => new Date(a.Date) - new Date(b.Date))[0];
+      if (nextPhase) endDate = new Date(nextPhase.Date);
+    }
+
+    if (!endDate) continue; // Cannot determine window end — skip
+
+    // Collect qualifying actions within [transformDate, endDate)
+    for (const action of actions) {
+      if (!action.Date) continue; // No date → ignore
+      if (!filterFn(action)) continue;
+      const actionDate = new Date(action.Date);
+      if (actionDate >= transformDate && actionDate < endDate) {
+        result.push(action);
+      }
+    }
+  }
+
+  return result;
+}
+
+/**
+ * Count potions drunk while in wolf form (after Transform, before window end).
+ * Each DrinkPotion action in a valid wolf-form window counts as +1.
+ * Only games with at least one NewPhase event are considered (version >= 0.252).
+ */
+export function wolfDrinkPotions(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+  const countedGames = new Set();
+
+  for (const { game, playerStat } of playerGames) {
+    if (!isWolfCamp(playerStat)) continue;
+
+    // Skip games without NewPhase events (pre-0.252, dates unreliable)
+    const hasNewPhase = (game.GameEvents || []).some(e => e.Type === 'NewPhase');
+    if (!hasNewPhase) continue;
+
+    const qualifying = getActionsWhileInWolfForm(
+      playerStat, game,
+      a => a.ActionType === 'DrinkPotion'
+    );
+
+    if (qualifying.length > 0) {
+      value += qualifying.length;
+      if (!countedGames.has(game.Id)) {
+        gameIds.push(game.Id);
+        countedGames.add(game.Id);
+      }
+    }
+  }
+
+  return { value, gameIds };
+}
+
+const PARCHEMIN_REGEX = /^Parchemin \(/;
+
+/**
+ * Count Parchemin or Livre de sorts uses ON a player while in wolf form.
+ * - Parchemin: UseGadget where ActionName matches /^Parchemin \(/
+ * - Livre de sorts: UseGadget where ActionName === 'Livre de sorts'
+ * - Requires ActionTarget to be non-null (must have been cast on a player)
+ * Only games with at least one NewPhase event are considered (version >= 0.252).
+ */
+export function wolfScrollUses(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+  const countedGames = new Set();
+
+  for (const { game, playerStat } of playerGames) {
+    if (!isWolfCamp(playerStat)) continue;
+
+    // Skip games without NewPhase events (pre-0.252, dates unreliable)
+    const hasNewPhase = (game.GameEvents || []).some(e => e.Type === 'NewPhase');
+    if (!hasNewPhase) continue;
+
+    const qualifying = getActionsWhileInWolfForm(
+      playerStat, game,
+      a =>
+        a.ActionType === 'UseGadget' &&
+        a.ActionName &&
+        (PARCHEMIN_REGEX.test(a.ActionName) || a.ActionName === 'Livre de sorts') &&
+        a.ActionTarget // Must be cast on a player
+    );
+
+    if (qualifying.length > 0) {
+      value += qualifying.length;
+      if (!countedGames.has(game.Id)) {
+        gameIds.push(game.Id);
+        countedGames.add(game.Id);
+      }
+    }
+  }
+
+  return { value, gameIds };
+}
