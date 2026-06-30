@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-06-28T07:14:48.589Z",
+  "generatedAt": "2026-06-30T08:17:41.743Z",
   "teamName": "Main Team",
   "totalPlayers": 93,
   "totalGames": 931,
@@ -633,6 +633,68 @@
           "tier": "lycans",
           "subLevel": 1,
           "threshold": 30
+        }
+      ],
+      "mainTeamOnly": false
+    },
+    {
+      "id": "remede-de-loup",
+      "name": "Remède de Loup",
+      "description": "Même en pleine transformation, vous n'oubliez pas votre potion du soir",
+      "explanation": "Boire X potions en forme de Loup",
+      "emoji": "🐺🧪",
+      "category": "loups",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 2
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 5
+        }
+      ],
+      "mainTeamOnly": false
+    },
+    {
+      "id": "grimoire-du-loup",
+      "name": "Grimoire du Loup",
+      "description": "La magie n'a pas de camp… ni d'odeur",
+      "explanation": "Utiliser X fois un Parchemin ou un Livre des sorts sur un joueur en forme de Loup",
+      "emoji": "📜🐺",
+      "category": "loups",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 10
         }
       ],
       "mainTeamOnly": false
@@ -25730,7 +25792,7 @@
     "76561199060053791": {
       "playerId": "76561199060053791",
       "playerName": "Tsuna",
-      "totalUnlocked": 227,
+      "totalUnlocked": 228,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -26160,6 +26222,28 @@
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "grimoire-du-loup",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Tsuna-20260616134254"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260616134254"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
             "threshold": 3
           },
           "progress": 0.3333333333333333
@@ -28893,7 +28977,7 @@
     "76561198012951437": {
       "playerId": "76561198012951437",
       "playerName": "Khalen",
-      "totalUnlocked": 243,
+      "totalUnlocked": 244,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -29380,6 +29464,26 @@
             "threshold": 30
           },
           "progress": 0.9333333333333333
+        },
+        {
+          "id": "grimoire-du-loup",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260602122421"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "fall-death",
@@ -33658,9 +33762,11 @@
         },
         {
           "id": "musical-clips",
-          "currentValue": 5,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 6,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260623114214"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -33680,7 +33786,7 @@
             "subLevel": 1,
             "threshold": 8
           },
-          "progress": 0.625
+          "progress": 0.75
         }
       ]
     },
@@ -50933,7 +51039,7 @@
     "76561198875528482": {
       "playerId": "76561198875528482",
       "playerName": "ClydeCreator",
-      "totalUnlocked": 159,
+      "totalUnlocked": 160,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -51276,6 +51382,26 @@
             "threshold": 30
           },
           "progress": 0.8666666666666667
+        },
+        {
+          "id": "grimoire-du-loup",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260421104330"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "starvation",
@@ -58763,7 +58889,7 @@
     "76561198056292624": {
       "playerId": "76561198056292624",
       "playerName": "RomainJacques",
-      "totalUnlocked": 108,
+      "totalUnlocked": 109,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -59033,6 +59159,26 @@
             "threshold": 15
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "grimoire-du-loup",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260421110017"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "starvation",
@@ -74451,7 +74597,7 @@
     "76561199156801622": {
       "playerId": "76561199156801622",
       "playerName": "Withrow",
-      "totalUnlocked": 8,
+      "totalUnlocked": 9,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -74722,6 +74868,28 @@
             "threshold": 2
           },
           "progress": 0.5
+        },
+        {
+          "id": "musical-clips",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260623114214"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260623114214"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         }
       ]
     }
