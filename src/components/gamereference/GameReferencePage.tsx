@@ -274,8 +274,10 @@ function EffectCard({ effect, type }: { effect: PotionEffectEntry | StatusEffect
     );
   }
 
+  const isBlanche = effect.id === 'blanche';
+
   return (
-    <div className={`ref-effect-card ${typeClass}`}>
+    <div className={`ref-effect-card ${typeClass}${isBlanche ? ' ref-effect-card--blanche' : ''}`}>
       <div className="ref-effect-card__header">
         <span className="ref-effect-card__name">{effect.name}</span>
         {potionType && <span className="ref-effect-card__type">{potionType}</span>}
@@ -283,6 +285,9 @@ function EffectCard({ effect, type }: { effect: PotionEffectEntry | StatusEffect
         {potionEffect?.source && <span className="ref-effect-card__source">🧪 {potionEffect.source}</span>}
       </div>
       {effect.tutorial && <p className="ref-effect-card__description">{effect.tutorial}</p>}
+      {potionEffect?.durationNote && (
+        <p className="ref-effect-card__description ref-effect-card__duration-note">{potionEffect.durationNote}</p>
+      )}
     </div>
   );
 }
