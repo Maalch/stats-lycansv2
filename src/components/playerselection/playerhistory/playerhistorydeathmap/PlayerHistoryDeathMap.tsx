@@ -61,11 +61,16 @@ function getVillageZone(adjustedX: number, adjustedZ: number): VillageZone {
 }
 
 /**
- * Normalize death types by merging SURVIVALIST_NOT_SAVED into BY_WOLF
+ * Normalize death types by merging SURVIVALIST_NOT_SAVED into BY_WOLF.
+ * Returns null for death types that should be excluded from the map (e.g. CULTIST_FAILED
+ * which always has invalid coordinates 999,999,999).
  */
 function normalizeDeathType(deathType: DeathType | null): DeathType | null {
   if (deathType === 'SURVIVALIST_NOT_SAVED') {
     return 'BY_WOLF';
+  }
+  if (deathType === 'CULTIST_FAILED') {
+    return null;
   }
   return deathType;
 }
@@ -216,7 +221,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
       
       if (viewMode === 'deaths') {
         // Show where the player died
-        if (playerStat.DeathPosition) {
+        if (playerStat.DeathPosition && playerStat.DeathType !== 'CULTIST_FAILED') {
           const camp = getPlayerCampFromRole(playerStat.MainRoleInitial, {
             regroupLovers: true,
             regroupVillagers: true,
@@ -245,7 +250,8 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
         // Show where the player killed others
         game.PlayerStats.forEach(victim => {
           if (victim.KillerName?.toLowerCase() === selectedPlayerName.toLowerCase() 
-              && victim.DeathPosition) {
+              && victim.DeathPosition
+              && victim.DeathType !== 'CULTIST_FAILED') {
             const victimCamp = getPlayerCampFromRole(victim.MainRoleInitial, {
               regroupLovers: true,
               regroupVillagers: true,
