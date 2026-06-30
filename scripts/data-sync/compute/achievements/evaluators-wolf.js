@@ -374,6 +374,9 @@ export function wolfVotesLastVillagerInThree(playerGames, allGames, playerId, pa
     if (!endTiming || !/^M\d+$/.test(endTiming)) continue;
     const lastMeetingDay = parseInt(endTiming.slice(1));
 
+    // Player must be alive at that final meeting
+    if (!isAliveAtMeeting(playerStat, lastMeetingDay)) continue;
+
     // Exactly 3 players alive at that meeting
     const aliveCount = game.PlayerStats.filter(p => isAliveAtMeeting(p, lastMeetingDay)).length;
     if (aliveCount !== 3) continue;
