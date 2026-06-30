@@ -395,8 +395,8 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
   {
-    id: 'grimoire-du-loup',
-    name: 'Grimoire du Loup',
+    id: 'alakazam',
+    name: 'Alakazam !',
     description: "La magie n'a pas de camp… ni d'odeur",
     explanation: 'Utiliser X fois un Parchemin ou un Livre des sorts sur un joueur en forme de Loup',
     emoji: '📜🐺',
