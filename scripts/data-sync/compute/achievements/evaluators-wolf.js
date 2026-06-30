@@ -586,8 +586,8 @@ export function wolfEclipseKills(playerGames, allGames, playerId, params) {
  * while the player was in wolf form (between a Transform and its window end).
  *
  * The wolf form window for a given Transform event is determined as:
- *   1. Untransform (or UntransformInfecté) on the same Timing night → use its Date
- *   2. Else: player died the same Timing night (DeathTiming match) → use DeathDateIrl
+ *   1. Untransform (or UntransformInfecté) on the same Timing → use its Date
+ *   2. Else: player died the same Timing (DeathTiming match) → use DeathDateIrl
  *   3. Else: first NewPhase GameEvent with Date strictly after the Transform Date
  *
  * Actions with no Date are ignored. Transform events with no Date are skipped.
@@ -605,24 +605,24 @@ function getActionsWhileInWolfForm(playerStat, game, filterFn) {
   for (const transform of actions) {
     if (transform.ActionType !== 'Transform') continue;
     if (!transform.Date) continue; // No date → skip this transform window
-    if (!transform.Timing || !transform.Timing.startsWith('N')) continue;
+    if (!transform.Timing) continue;
 
-    const nightTiming = transform.Timing;
+    const transformTiming = transform.Timing;
     const transformDate = new Date(transform.Date);
 
     // Determine end of wolf form window
     let endDate = null;
 
-    // Option 1: Untransform (or UntransformInfecté) the same night, with a date
+    // Option 1: Untransform (or UntransformInfecté) the same timing, with a date
     const untransform = actions.find(a =>
       (a.ActionType === 'Untransform' || a.ActionType === 'UntransformInfecté') &&
-      a.Timing === nightTiming &&
+      a.Timing === transformTiming &&
       a.Date
     );
     if (untransform) {
       endDate = new Date(untransform.Date);
-    } else if (playerStat.DeathTiming === nightTiming && playerStat.DeathDateIrl) {
-      // Option 2: Player died during this same night
+    } else if (playerStat.DeathTiming === transformTiming && playerStat.DeathDateIrl) {
+      // Option 2: Player died during this same timing
       endDate = new Date(playerStat.DeathDateIrl);
     } else {
       // Option 3: First NewPhase GameEvent after the Transform date
