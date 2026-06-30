@@ -111,6 +111,9 @@ export const DAILY_EVENT_TRANSLATIONS: Record<string, string> = {
   'Eclipse': 'Éclipse',
   'Protection': 'Protection',
   'Duplicity': 'Duplicité',
+  'Tournament': 'Compétition',
+  'FullMoon': 'Pleine Lune',
+  'Rage': 'Rage',
 };
 
 /**

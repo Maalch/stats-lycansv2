@@ -39,6 +39,7 @@ export const DeathTypeCode = {
   SMUGGLER_LOOT_FAILURE: 'SMUGGLER_LOOT_FAILURE', // Mort en Contrebandier (échec de loot)
   MERCENARY_HUNT_KILL: 'MERCENARY_HUNT_KILL', // Mort en Mercenaire (chasse ouverte)
   MERCENARY_LOOT_FAILURE: 'MERCENARY_LOOT_FAILURE', // Mort en Mercenaire (échec de loot)
+  CULTIST_FAILED: 'CULTIST_FAILED',         // Mort en Cultiste (échec de capture)
 
   // Potions
   HANTED: 'HANTED',                         // Tué par potion hantée (GDOC specific)

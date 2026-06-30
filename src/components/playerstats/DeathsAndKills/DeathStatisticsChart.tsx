@@ -135,6 +135,8 @@ export function DeathStatisticsChart() {
         colorMap[deathTypeCode] = lycansColors['Mercenaire']; 
       } else if (deathTypeCode === DeathTypeCode.KILLED_VILLAGE_IDIOT) {
         colorMap[deathTypeCode] = lycansColors['Idiot du Village'];
+      } else if (deathTypeCode === DeathTypeCode.CULTIST_FAILED) {
+        colorMap[deathTypeCode] = lycansColors['Cultiste'];
       }
     });
     

@@ -35,6 +35,8 @@ export function getDeathTypeColor(deathType: string, lycansColors: Record<string
     return lycansColors['Mercenaire'];
   } else if (deathType === 'KILLED_VILLAGE_IDIOT') {
     return lycansColors['Idiot du Village'];
+  } else if (deathType === 'CULTIST_FAILED') {
+    return lycansColors['Cultiste'];
   }
   return 'var(--accent-primary-text)';
 }

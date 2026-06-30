@@ -47,9 +47,10 @@ export const DEATH_TYPES = {
   // Lovers
   LOVER_DEATH: 'LOVER_DEATH',               // Amoureux mort
 
-  //SMUGGLER & MERCENARY
+  //SMUGGLER, MERCENARY and CULTIST failure
   SMUGGLER_LOOT_FAILURE: 'SMUGGLER_LOOT_FAILURE', // Mort en Contrebandier (échec de loot)
   MERCENARY_LOOT_FAILURE: 'MERCENARY_LOOT_FAILURE', // Mort en Mercenaire (échec de loot)
+  CULTIST_FAILED: 'CULTIST_FAILED',         // Mort en Cultiste (échec de capture)
   
   // Environmental
   BOMB: 'BOMB',                             // A explosé
@@ -136,6 +137,9 @@ export const SYSTEM_DEATH_TYPES: readonly DeathType[] = [
   DEATH_TYPES.BY_AVATAR_CHAIN,
   DEATH_TYPES.SMUGGLER_LOOT_FAILURE,
   DEATH_TYPES.KILLED_VILLAGE_IDIOT,
+  DEATH_TYPES.MERCENARY_LOOT_FAILURE,
+  DEATH_TYPES.SMUGGLER_LOOT_FAILURE,
+  DEATH_TYPES.CULTIST_FAILED,
   DEATH_TYPES.UNKNOWN,
 ] as const;
 
@@ -159,9 +163,7 @@ export const KILLER_DEATH_TYPES: readonly DeathType[] = [
   DEATH_TYPES.ASSASSIN,
   DEATH_TYPES.LOVER_DEATH,
   DEATH_TYPES.SMUGGLER_HUNT_KILL,
-  DEATH_TYPES.SMUGGLER_LOOT_FAILURE,
   DEATH_TYPES.MERCENARY_HUNT_KILL,
-  DEATH_TYPES.MERCENARY_LOOT_FAILURE,
   DEATH_TYPES.BOMB,
   DEATH_TYPES.CRUSHED,
 ] as const;
@@ -199,6 +201,7 @@ export const DEATH_TYPE_LABELS: Record<DeathType, string> = {
   [DEATH_TYPES.MERCENARY_HUNT_KILL]: 'Tué en tant que Mercenaire',
   [DEATH_TYPES.MERCENARY_LOOT_FAILURE]: 'Mort en Mercenaire (échec de loot)',
   [DEATH_TYPES.KILLED_VILLAGE_IDIOT]: 'Tué pour avoir tué l\'Idiot du Village',
+  [DEATH_TYPES.CULTIST_FAILED]: 'Mort en Cultiste (échec de capture)',
 };
 
 /**
