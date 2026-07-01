@@ -1,9 +1,9 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-06-30T08:08:01.463Z",
+  "generatedAt": "2026-06-30T14:15:59.286Z",
   "teamName": "Main Team",
-  "totalPlayers": 93,
-  "totalGames": 931,
+  "totalPlayers": 94,
+  "totalGames": 938,
   "recentGamesCount": 15,
   "categories": {
     "victories": {
@@ -669,8 +669,8 @@
       "mainTeamOnly": false
     },
     {
-      "id": "grimoire-du-loup",
-      "name": "Grimoire du Loup",
+      "id": "alakazam",
+      "name": "Alakazam !",
       "description": "La magie n'a pas de camp… ni d'odeur",
       "explanation": "Utiliser X fois un Parchemin ou un Livre des sorts sur un joueur en forme de Loup",
       "emoji": "📜🐺",
@@ -16290,17 +16290,17 @@
     "76561198034021995": {
       "playerId": "76561198034021995",
       "playerName": "Ponce",
-      "totalUnlocked": 266,
+      "totalUnlocked": 270,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 347,
+          "currentValue": 350,
           "recentValue": 4,
           "recentGameIds": [
-            "Tsuna-20260616134254",
-            "khalen-20260623103816",
-            "khalen-20260623111650",
-            "khalen-20260623132527"
+            "khalen-20260623132527",
+            "khalen-20260630120224",
+            "khalen-20260630125934",
+            "khalen-20260630133050"
           ],
           "unlockedLevels": [
             {
@@ -16440,9 +16440,11 @@
         },
         {
           "id": "victories-solo",
-          "currentValue": 12,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 13,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630114009"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -16492,7 +16494,7 @@
             "subLevel": 2,
             "threshold": 15
           },
-          "progress": 0.8
+          "progress": 0.8666666666666667
         },
         {
           "id": "vegan-wolf",
@@ -16571,28 +16573,6 @@
             "threshold": 8
           },
           "progress": 0.625
-        },
-        {
-          "id": "wolf-menage-a-trois",
-          "currentValue": 2,
-          "recentValue": 1,
-          "recentGameIds": [
-            "khalen-20260623124122"
-          ],
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Ponce-20251230131314"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 3
-          },
-          "progress": 0.6666666666666666
         },
         {
           "id": "wolf-all-kills-solo",
@@ -16802,6 +16782,38 @@
           "progress": 0.2
         },
         {
+          "id": "alakazam",
+          "currentValue": 6,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260310125513"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Tsuna-20260512122153"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Tsuna-20260602141214"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.6
+        },
+        {
           "id": "starvation",
           "currentValue": 5,
           "recentValue": 0,
@@ -16836,10 +16848,8 @@
         {
           "id": "romeo-juliette",
           "currentValue": 14,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260616132329"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -17059,8 +17069,14 @@
         {
           "id": "deaths-all-zones",
           "currentValue": 11,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260623124122",
+            "khalen-20260630125934",
+            "khalen-20260623130321",
+            "khalen-20260623120329",
+            "khalen-20260630123444"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -17867,9 +17883,11 @@
         },
         {
           "id": "solo-master",
-          "currentValue": 8,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 9,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630114009"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -17888,22 +17906,25 @@
               "subLevel": 1,
               "threshold": 6,
               "unlockedAtGame": "Ponce-20251125130713"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 9,
+              "unlockedAtGame": "khalen-20260630114009"
             }
           ],
-          "nextLevel": {
-            "tier": "lycans",
-            "subLevel": 1,
-            "threshold": 9
-          },
-          "progress": 0.8888888888888888
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "villageois-top-loot",
-          "currentValue": 17,
-          "recentValue": 2,
+          "currentValue": 18,
+          "recentValue": 3,
           "recentGameIds": [
             "khalen-20260623122225",
-            "khalen-20260623132527"
+            "khalen-20260623132527",
+            "khalen-20260630113309"
           ],
           "unlockedLevels": [
             {
@@ -17930,14 +17951,14 @@
             "subLevel": 1,
             "threshold": 30
           },
-          "progress": 0.5666666666666667
+          "progress": 0.6
         },
         {
           "id": "max-loot-single-game",
           "currentValue": 630,
-          "recentValue": 630,
+          "recentValue": 595,
           "recentGameIds": [
-            "Tsuna-20260616134254"
+            "khalen-20260623132527"
           ],
           "unlockedLevels": [
             {
@@ -18002,12 +18023,13 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 130,
-          "recentValue": 3,
+          "currentValue": 133,
+          "recentValue": 4,
           "recentGameIds": [
-            "Tsuna-20260616114954",
-            "Tsuna-20260616124735",
-            "khalen-20260623120329"
+            "khalen-20260623120329",
+            "khalen-20260630113309",
+            "khalen-20260630120224",
+            "khalen-20260630125934"
           ],
           "unlockedLevels": [
             {
@@ -18077,10 +18099,8 @@
         {
           "id": "bavard",
           "currentValue": 2,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260616121956"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -18222,11 +18242,11 @@
         },
         {
           "id": "meneur",
-          "currentValue": 34,
-          "recentValue": 3,
+          "currentValue": 35,
+          "recentValue": 2,
           "recentGameIds": [
-            "Tsuna-20260616134254",
-            "khalen-20260623141315"
+            "khalen-20260623141315",
+            "khalen-20260630114009"
           ],
           "unlockedLevels": [
             {
@@ -18276,24 +18296,26 @@
               "subLevel": 2,
               "threshold": 30,
               "unlockedAtGame": "Tsuna-20260616134254"
+            },
+            {
+              "tier": "or",
+              "subLevel": 3,
+              "threshold": 35,
+              "unlockedAtGame": "khalen-20260630114009"
             }
           ],
           "nextLevel": {
-            "tier": "or",
-            "subLevel": 3,
-            "threshold": 35
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 40
           },
-          "progress": 0.9714285714285714
+          "progress": 0.875
         },
         {
           "id": "democrat",
           "currentValue": 17,
-          "recentValue": 3,
-          "recentGameIds": [
-            "Tsuna-20260616114954",
-            "Tsuna-20260616134254",
-            "khalen-20260623111650"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -18346,7 +18368,7 @@
           "currentValue": 11,
           "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260616134254"
+            "khalen-20260623124122"
           ],
           "unlockedLevels": [
             {
@@ -18538,10 +18560,8 @@
         {
           "id": "collectionneur",
           "currentValue": 5,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260616114954"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -19017,10 +19037,8 @@
         {
           "id": "musical-clips",
           "currentValue": 13,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260616121956"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -20324,7 +20342,7 @@
     "76561198038616962": {
       "playerId": "76561198038616962",
       "playerName": "DFG",
-      "totalUnlocked": 18,
+      "totalUnlocked": 19,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -20420,6 +20438,28 @@
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "alakazam",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Tsuna-20260602124225"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260602124225"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
             "threshold": 3
           },
           "progress": 0.3333333333333333
@@ -20746,19 +20786,20 @@
     "76561198045789440": {
       "playerId": "76561198045789440",
       "playerName": "Bytell",
-      "totalUnlocked": 231,
+      "totalUnlocked": 232,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 279,
-          "recentValue": 6,
+          "currentValue": 283,
+          "recentValue": 7,
           "recentGameIds": [
-            "Tsuna-20260602113700",
-            "Tsuna-20260602115645",
-            "Tsuna-20260602130701",
             "Tsuna-20260609105701",
             "Tsuna-20260609122659",
-            "Tsuna-20260609131854"
+            "Tsuna-20260609131854",
+            "khalen-20260630120224",
+            "khalen-20260630123444",
+            "khalen-20260630125934",
+            "khalen-20260630133050"
           ],
           "unlockedLevels": [
             {
@@ -20821,7 +20862,7 @@
             "subLevel": 1,
             "threshold": 300
           },
-          "progress": 0.93
+          "progress": 0.9433333333333334
         },
         {
           "id": "victories-loup",
@@ -20960,9 +21001,8 @@
         {
           "id": "wolf-survived-hunter-shot",
           "currentValue": 3,
-          "recentValue": 2,
+          "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260602133012",
             "Tsuna-20260609112720"
           ],
           "unlockedLevels": [
@@ -21117,10 +21157,8 @@
         {
           "id": "wolf-sabotages",
           "currentValue": 27,
-          "recentValue": 11,
+          "recentValue": 6,
           "recentGameIds": [
-            "Tsuna-20260602122421",
-            "Tsuna-20260602133012",
             "Tsuna-20260609112720",
             "Tsuna-20260609115711",
             "Tsuna-20260609125546"
@@ -21256,9 +21294,11 @@
         },
         {
           "id": "death-turn1",
-          "currentValue": 110,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 111,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630114009"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -21320,7 +21360,7 @@
             "subLevel": 1,
             "threshold": 125
           },
-          "progress": 0.88
+          "progress": 0.888
         },
         {
           "id": "voted-as-villager",
@@ -21537,10 +21577,8 @@
         {
           "id": "wolf-kills",
           "currentValue": 284,
-          "recentValue": 17,
+          "recentValue": 14,
           "recentGameIds": [
-            "Tsuna-20260602122421",
-            "Tsuna-20260602133012",
             "Tsuna-20260602141214",
             "Tsuna-20260609112720",
             "Tsuna-20260609115711",
@@ -22282,10 +22320,8 @@
         {
           "id": "villageois-top-loot",
           "currentValue": 11,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260602135143"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -22375,13 +22411,15 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 118,
-          "recentValue": 4,
+          "currentValue": 122,
+          "recentValue": 6,
           "recentGameIds": [
-            "Tsuna-20260602113700",
-            "Tsuna-20260602115645",
             "Tsuna-20260609122659",
-            "Tsuna-20260609131854"
+            "Tsuna-20260609131854",
+            "khalen-20260630105851",
+            "khalen-20260630113309",
+            "khalen-20260630114009",
+            "khalen-20260630123444"
           ],
           "unlockedLevels": [
             {
@@ -22548,13 +22586,13 @@
         },
         {
           "id": "meneur",
-          "currentValue": 30,
+          "currentValue": 32,
           "recentValue": 4,
           "recentGameIds": [
-            "Tsuna-20260602113700",
-            "Tsuna-20260602135143",
             "Tsuna-20260609105701",
-            "Tsuna-20260609125546"
+            "Tsuna-20260609125546",
+            "khalen-20260630120224",
+            "khalen-20260630125934"
           ],
           "unlockedLevels": [
             {
@@ -22611,13 +22649,16 @@
             "subLevel": 3,
             "threshold": 35
           },
-          "progress": 0.8571428571428571
+          "progress": 0.9142857142857143
         },
         {
           "id": "democrat",
-          "currentValue": 8,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 10,
+          "recentValue": 2,
+          "recentGameIds": [
+            "khalen-20260630120224",
+            "khalen-20260630125934"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -22637,14 +22678,14 @@
             "subLevel": 1,
             "threshold": 15
           },
-          "progress": 0.5333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "colors-of-lycans",
           "currentValue": 12,
           "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260602113700"
+            "Tsuna-20260609105701"
           ],
           "unlockedLevels": [
             {
@@ -22714,8 +22755,10 @@
         {
           "id": "winning-months",
           "currentValue": 12,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630133050"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -22809,9 +22852,11 @@
         },
         {
           "id": "juste-un-dernier-verre",
-          "currentValue": 4,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 5,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630120224"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -22831,7 +22876,29 @@
             "subLevel": 1,
             "threshold": 8
           },
-          "progress": 0.5
+          "progress": 0.625
+        },
+        {
+          "id": "collectionneur",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630120224"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260630120224"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "br-victories",
@@ -25792,16 +25859,15 @@
     "76561199060053791": {
       "playerId": "76561199060053791",
       "playerName": "Tsuna",
-      "totalUnlocked": 228,
+      "totalUnlocked": 230,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 309,
-          "recentValue": 3,
+          "currentValue": 311,
+          "recentValue": 2,
           "recentGameIds": [
-            "Tsuna-20260616132329",
-            "khalen-20260623103816",
-            "khalen-20260623111650"
+            "khalen-20260630123444",
+            "khalen-20260630133050"
           ],
           "unlockedLevels": [
             {
@@ -25933,10 +25999,8 @@
         {
           "id": "victories-solo",
           "currentValue": 17,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260616121956"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -26068,7 +26132,7 @@
         },
         {
           "id": "wolf-menage-a-trois",
-          "currentValue": 2,
+          "currentValue": 1,
           "recentValue": 0,
           "recentGameIds": [],
           "unlockedLevels": [
@@ -26076,7 +26140,7 @@
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
-              "unlockedAtGame": "Ponce-20240507000000-135"
+              "unlockedAtGame": "Ponce-20251230131314"
             }
           ],
           "nextLevel": {
@@ -26084,7 +26148,7 @@
             "subLevel": 1,
             "threshold": 3
           },
-          "progress": 0.6666666666666666
+          "progress": 0.3333333333333333
         },
         {
           "id": "wolf-all-kills-solo",
@@ -26227,18 +26291,16 @@
           "progress": 0.3333333333333333
         },
         {
-          "id": "grimoire-du-loup",
+          "id": "alakazam",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260616134254"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
-              "unlockedAtGame": "Tsuna-20260616134254"
+              "unlockedAtGame": "khalen-20260505122147"
             }
           ],
           "nextLevel": {
@@ -26308,11 +26370,11 @@
         },
         {
           "id": "death-turn1",
-          "currentValue": 123,
+          "currentValue": 124,
           "recentValue": 2,
           "recentGameIds": [
-            "Tsuna-20260616114954",
-            "khalen-20260623141315"
+            "khalen-20260623141315",
+            "khalen-20260630113309"
           ],
           "unlockedLevels": [
             {
@@ -26375,7 +26437,7 @@
             "subLevel": 1,
             "threshold": 125
           },
-          "progress": 0.984
+          "progress": 0.99
         },
         {
           "id": "voted-as-villager",
@@ -26437,9 +26499,11 @@
         },
         {
           "id": "avenger-death",
-          "currentValue": 22,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 23,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630125934"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -26483,7 +26547,7 @@
             "subLevel": 1,
             "threshold": 25
           },
-          "progress": 0.88
+          "progress": 0.92
         },
         {
           "id": "deaths-all-zones",
@@ -26534,9 +26598,8 @@
         {
           "id": "wolf-kills",
           "currentValue": 312,
-          "recentValue": 5,
+          "recentValue": 3,
           "recentGameIds": [
-            "Tsuna-20260616134254",
             "khalen-20260623120329"
           ],
           "unlockedLevels": [
@@ -26626,9 +26689,11 @@
         },
         {
           "id": "hunter-kill-villager",
-          "currentValue": 3,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 4,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630105851"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -26648,7 +26713,7 @@
             "subLevel": 1,
             "threshold": 8
           },
-          "progress": 0.375
+          "progress": 0.5
         },
         {
           "id": "hunter-kills-last-wolf",
@@ -26698,9 +26763,12 @@
         },
         {
           "id": "hunter-killed-by-wolf",
-          "currentValue": 29,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 31,
+          "recentValue": 2,
+          "recentGameIds": [
+            "khalen-20260630105851",
+            "khalen-20260630113309"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -26719,14 +26787,16 @@
               "subLevel": 1,
               "threshold": 15,
               "unlockedAtGame": "Ponce-20241205000000-243"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 30,
+              "unlockedAtGame": "khalen-20260630105851"
             }
           ],
-          "nextLevel": {
-            "tier": "lycans",
-            "subLevel": 1,
-            "threshold": 30
-          },
-          "progress": 0.9666666666666667
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "assassin-potion-kill-enemy",
@@ -27135,10 +27205,8 @@
         {
           "id": "solo-master",
           "currentValue": 8,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260616121956"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -27168,11 +27236,11 @@
         },
         {
           "id": "villageois-top-loot",
-          "currentValue": 30,
+          "currentValue": 31,
           "recentValue": 2,
           "recentGameIds": [
-            "Tsuna-20260616132329",
-            "khalen-20260623124122"
+            "khalen-20260623124122",
+            "khalen-20260630133050"
           ],
           "unlockedLevels": [
             {
@@ -27206,9 +27274,9 @@
         {
           "id": "max-loot-single-game",
           "currentValue": 755,
-          "recentValue": 390,
+          "recentValue": 445,
           "recentGameIds": [
-            "khalen-20260623111650"
+            "khalen-20260630133050"
           ],
           "unlockedLevels": [
             {
@@ -27234,10 +27302,8 @@
         {
           "id": "wolf-transform-kill-nights",
           "currentValue": 5,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260616134254"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -27255,10 +27321,10 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 127,
+          "currentValue": 128,
           "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260616114954"
+            "khalen-20260630123444"
           ],
           "unlockedLevels": [
             {
@@ -27328,10 +27394,8 @@
         {
           "id": "bavard",
           "currentValue": 3,
-          "recentValue": 1,
-          "recentGameIds": [
-            "khalen-20260623103816"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -27447,9 +27511,11 @@
         },
         {
           "id": "meneur",
-          "currentValue": 42,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 43,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630133050"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -27509,7 +27575,7 @@
               "tier": "lycans",
               "subLevel": 1,
               "threshold": 40,
-              "unlockedAtGame": "Tsuna-20260602115645"
+              "unlockedAtGame": "khalen-20260630133050"
             }
           ],
           "nextLevel": null,
@@ -27517,11 +27583,10 @@
         },
         {
           "id": "democrat",
-          "currentValue": 24,
-          "recentValue": 2,
+          "currentValue": 25,
+          "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260616132329",
-            "khalen-20260623111650"
+            "khalen-20260630133050"
           ],
           "unlockedLevels": [
             {
@@ -27541,14 +27606,16 @@
               "subLevel": 1,
               "threshold": 15,
               "unlockedAtGame": "khalen-20260217114703"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 25,
+              "unlockedAtGame": "khalen-20260630133050"
             }
           ],
-          "nextLevel": {
-            "tier": "lycans",
-            "subLevel": 1,
-            "threshold": 25
-          },
-          "progress": 0.96
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "stubborn",
@@ -27575,7 +27642,7 @@
           "currentValue": 10,
           "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260616121956"
+            "khalen-20260630123444"
           ],
           "unlockedLevels": [
             {
@@ -28977,17 +29044,17 @@
     "76561198012951437": {
       "playerId": "76561198012951437",
       "playerName": "Khalen",
-      "totalUnlocked": 244,
+      "totalUnlocked": 246,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 265,
+          "currentValue": 268,
           "recentValue": 4,
           "recentGameIds": [
-            "Tsuna-20260616132329",
-            "Tsuna-20260616134254",
-            "khalen-20260623103816",
-            "khalen-20260623132527"
+            "khalen-20260623132527",
+            "khalen-20260630120224",
+            "khalen-20260630123444",
+            "khalen-20260630125934"
           ],
           "unlockedLevels": [
             {
@@ -29050,14 +29117,15 @@
             "subLevel": 1,
             "threshold": 300
           },
-          "progress": 0.8833333333333333
+          "progress": 0.8933333333333333
         },
         {
           "id": "victories-loup",
-          "currentValue": 61,
-          "recentValue": 1,
+          "currentValue": 62,
+          "recentValue": 2,
           "recentGameIds": [
-            "khalen-20260623135742"
+            "khalen-20260623135742",
+            "khalen-20260630105851"
           ],
           "unlockedLevels": [
             {
@@ -29120,14 +29188,13 @@
             "subLevel": 1,
             "threshold": 70
           },
-          "progress": 0.8714285714285714
+          "progress": 0.8857142857142857
         },
         {
           "id": "victories-solo",
           "currentValue": 16,
-          "recentValue": 2,
+          "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260616114954",
             "khalen-20260623120329"
           ],
           "unlockedLevels": [
@@ -29466,8 +29533,8 @@
           "progress": 0.9333333333333333
         },
         {
-          "id": "grimoire-du-loup",
-          "currentValue": 1,
+          "id": "alakazam",
+          "currentValue": 3,
           "recentValue": 0,
           "recentGameIds": [],
           "unlockedLevels": [
@@ -29475,15 +29542,21 @@
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
-              "unlockedAtGame": "Tsuna-20260602122421"
+              "unlockedAtGame": "Tsuna-20260407140306"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Tsuna-20260616134254"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "or",
             "subLevel": 1,
-            "threshold": 3
+            "threshold": 5
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6
         },
         {
           "id": "fall-death",
@@ -29625,9 +29698,11 @@
         },
         {
           "id": "voted-as-villager",
-          "currentValue": 6,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 7,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630114009"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -29647,7 +29722,7 @@
             "subLevel": 1,
             "threshold": 8
           },
-          "progress": 0.75
+          "progress": 0.875
         },
         {
           "id": "crushed",
@@ -29793,11 +29868,12 @@
         },
         {
           "id": "wolf-kills",
-          "currentValue": 408,
-          "recentValue": 3,
+          "currentValue": 412,
+          "recentValue": 7,
           "recentGameIds": [
             "khalen-20260623114214",
-            "khalen-20260623135742"
+            "khalen-20260623135742",
+            "khalen-20260630105851"
           ],
           "unlockedLevels": [
             {
@@ -29846,19 +29922,19 @@
               "tier": "or",
               "subLevel": 2,
               "threshold": 150,
-              "unlockedAtGame": "khalen-20260623135742"
+              "unlockedAtGame": "khalen-20260630105851"
             },
             {
               "tier": "or",
               "subLevel": 3,
               "threshold": 200,
-              "unlockedAtGame": "khalen-20260623135742"
+              "unlockedAtGame": "khalen-20260630105851"
             },
             {
               "tier": "lycans",
               "subLevel": 1,
               "threshold": 300,
-              "unlockedAtGame": "khalen-20260623135742"
+              "unlockedAtGame": "khalen-20260630105851"
             }
           ],
           "nextLevel": null,
@@ -29866,9 +29942,11 @@
         },
         {
           "id": "hunter-kill-enemy",
-          "currentValue": 21,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 22,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630125934"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -29894,13 +29972,15 @@
             "subLevel": 1,
             "threshold": 30
           },
-          "progress": 0.7
+          "progress": 0.7333333333333333
         },
         {
           "id": "hunter-kill-villager",
-          "currentValue": 7,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 8,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630125934"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -29913,14 +29993,20 @@
               "subLevel": 1,
               "threshold": 3,
               "unlockedAtGame": "Ponce-20250128000000-324"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 8,
+              "unlockedAtGame": "khalen-20260630125934"
             }
           ],
           "nextLevel": {
-            "tier": "or",
+            "tier": "lycans",
             "subLevel": 1,
-            "threshold": 8
+            "threshold": 15
           },
-          "progress": 0.875
+          "progress": 0.5333333333333333
         },
         {
           "id": "hunter-double-kill",
@@ -30317,10 +30403,8 @@
         {
           "id": "agent-wins",
           "currentValue": 2,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260616114954"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -30487,9 +30571,8 @@
         {
           "id": "solo-master",
           "currentValue": 7,
-          "recentValue": 2,
+          "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260616114954",
             "khalen-20260623120329"
           ],
           "unlockedLevels": [
@@ -30521,14 +30604,15 @@
         },
         {
           "id": "villageois-top-loot",
-          "currentValue": 73,
-          "recentValue": 5,
+          "currentValue": 77,
+          "recentValue": 6,
           "recentGameIds": [
-            "Tsuna-20260616121956",
-            "Tsuna-20260616134254",
-            "khalen-20260623103816",
             "khalen-20260623130321",
-            "khalen-20260623141315"
+            "khalen-20260623141315",
+            "khalen-20260630114009",
+            "khalen-20260630120224",
+            "khalen-20260630123444",
+            "khalen-20260630125934"
           ],
           "unlockedLevels": [
             {
@@ -30562,9 +30646,9 @@
         {
           "id": "max-loot-single-game",
           "currentValue": 1230,
-          "recentValue": 880,
+          "recentValue": 725,
           "recentGameIds": [
-            "Tsuna-20260616134254"
+            "khalen-20260630125934"
           ],
           "unlockedLevels": [
             {
@@ -30629,12 +30713,12 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 126,
+          "currentValue": 128,
           "recentValue": 3,
           "recentGameIds": [
-            "Tsuna-20260616121956",
-            "Tsuna-20260616132329",
-            "khalen-20260623132527"
+            "khalen-20260623132527",
+            "khalen-20260630114009",
+            "khalen-20260630123444"
           ],
           "unlockedLevels": [
             {
@@ -30761,9 +30845,11 @@
         },
         {
           "id": "false-guilty",
-          "currentValue": 1,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 2,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630114009"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -30777,7 +30863,7 @@
             "subLevel": 1,
             "threshold": 3
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "only-passer",
@@ -30821,12 +30907,11 @@
         },
         {
           "id": "meneur",
-          "currentValue": 70,
-          "recentValue": 4,
+          "currentValue": 71,
+          "recentValue": 3,
           "recentGameIds": [
-            "Tsuna-20260616121956",
-            "khalen-20260623103816",
-            "khalen-20260623130321"
+            "khalen-20260623130321",
+            "khalen-20260630120224"
           ],
           "unlockedLevels": [
             {
@@ -30895,10 +30980,10 @@
         },
         {
           "id": "democrat",
-          "currentValue": 25,
+          "currentValue": 26,
           "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260616132329"
+            "khalen-20260630120224"
           ],
           "unlockedLevels": [
             {
@@ -30954,7 +31039,7 @@
           "currentValue": 10,
           "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260616114954"
+            "khalen-20260623120329"
           ],
           "unlockedLevels": [
             {
@@ -31140,10 +31225,8 @@
         {
           "id": "collectionneur",
           "currentValue": 11,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260616134254"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -31537,17 +31620,18 @@
     "76561198361954746": {
       "playerId": "76561198361954746",
       "playerName": "Anaee",
-      "totalUnlocked": 198,
+      "totalUnlocked": 200,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 222,
-          "recentValue": 4,
+          "currentValue": 224,
+          "recentValue": 5,
           "recentGameIds": [
-            "Tsuna-20260616132329",
             "khalen-20260623103816",
             "khalen-20260623111650",
-            "khalen-20260623132527"
+            "khalen-20260623132527",
+            "khalen-20260630120224",
+            "khalen-20260630133050"
           ],
           "unlockedLevels": [
             {
@@ -31610,14 +31694,13 @@
             "subLevel": 1,
             "threshold": 300
           },
-          "progress": 0.74
+          "progress": 0.7466666666666667
         },
         {
           "id": "victories-loup",
           "currentValue": 32,
-          "recentValue": 2,
+          "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260616110510",
             "khalen-20260623124122"
           ],
           "unlockedLevels": [
@@ -31782,28 +31865,6 @@
           "progress": 0.75
         },
         {
-          "id": "wolf-menage-a-trois",
-          "currentValue": 2,
-          "recentValue": 1,
-          "recentGameIds": [
-            "khalen-20260623124122"
-          ],
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Ponce-20240206000000-63"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 3
-          },
-          "progress": 0.6666666666666666
-        },
-        {
           "id": "wolf-all-kills-solo",
           "currentValue": 2,
           "recentValue": 0,
@@ -31921,10 +31982,10 @@
         },
         {
           "id": "wolf-sabotages",
-          "currentValue": 8,
+          "currentValue": 9,
           "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260616110510"
+            "khalen-20260630125934"
           ],
           "unlockedLevels": [
             {
@@ -31951,7 +32012,7 @@
             "subLevel": 1,
             "threshold": 10
           },
-          "progress": 0.8
+          "progress": 0.9
         },
         {
           "id": "wolf-eclipse-kills",
@@ -31972,6 +32033,40 @@
             "threshold": 10
           },
           "progress": 0.7
+        },
+        {
+          "id": "alakazam",
+          "currentValue": 5,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260623111650"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260217141704"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20260317112918"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20260623111650"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.5
         },
         {
           "id": "starvation",
@@ -32021,10 +32116,11 @@
         },
         {
           "id": "death-turn1",
-          "currentValue": 87,
-          "recentValue": 1,
+          "currentValue": 88,
+          "recentValue": 2,
           "recentGameIds": [
-            "khalen-20260623130321"
+            "khalen-20260623130321",
+            "khalen-20260630133050"
           ],
           "unlockedLevels": [
             {
@@ -32081,15 +32177,13 @@
             "subLevel": 3,
             "threshold": 100
           },
-          "progress": 0.87
+          "progress": 0.88
         },
         {
           "id": "voted-as-villager",
           "currentValue": 12,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260616121956"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -32160,10 +32254,8 @@
         {
           "id": "avenger-death",
           "currentValue": 14,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260616112139"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -32271,11 +32363,12 @@
         },
         {
           "id": "wolf-kills",
-          "currentValue": 215,
-          "recentValue": 5,
+          "currentValue": 221,
+          "recentValue": 10,
           "recentGameIds": [
-            "Tsuna-20260616110510",
-            "khalen-20260623124122"
+            "khalen-20260623124122",
+            "khalen-20260630123444",
+            "khalen-20260630125934"
           ],
           "unlockedLevels": [
             {
@@ -32318,19 +32411,19 @@
               "tier": "or",
               "subLevel": 1,
               "threshold": 100,
-              "unlockedAtGame": "khalen-20260623124122"
+              "unlockedAtGame": "khalen-20260630125934"
             },
             {
               "tier": "or",
               "subLevel": 2,
               "threshold": 150,
-              "unlockedAtGame": "khalen-20260623124122"
+              "unlockedAtGame": "khalen-20260630125934"
             },
             {
               "tier": "or",
               "subLevel": 3,
               "threshold": 200,
-              "unlockedAtGame": "khalen-20260623124122"
+              "unlockedAtGame": "khalen-20260630125934"
             }
           ],
           "nextLevel": {
@@ -32338,7 +32431,7 @@
             "subLevel": 1,
             "threshold": 300
           },
-          "progress": 0.7166666666666667
+          "progress": 0.7366666666666667
         },
         {
           "id": "hunter-kill-enemy",
@@ -32917,9 +33010,9 @@
         {
           "id": "max-loot-single-game",
           "currentValue": 590,
-          "recentValue": 280,
+          "recentValue": 265,
           "recentGameIds": [
-            "Tsuna-20260616114954"
+            "khalen-20260623132527"
           ],
           "unlockedLevels": [
             {
@@ -32938,9 +33031,11 @@
         },
         {
           "id": "wolf-transform-kill-nights",
-          "currentValue": 5,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 6,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630125934"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -32954,7 +33049,7 @@
             "subLevel": 1,
             "threshold": 8
           },
-          "progress": 0.625
+          "progress": 0.75
         },
         {
           "id": "spider-man-pointing",
@@ -33058,10 +33153,8 @@
         {
           "id": "false-guilty",
           "currentValue": 3,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260616121956"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -33125,9 +33218,8 @@
         {
           "id": "meneur",
           "currentValue": 25,
-          "recentValue": 4,
+          "recentValue": 3,
           "recentGameIds": [
-            "Tsuna-20260616114954",
             "khalen-20260623132527"
           ],
           "unlockedLevels": [
@@ -33184,10 +33276,8 @@
         {
           "id": "democrat",
           "currentValue": 22,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260616132329"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -33218,10 +33308,9 @@
         {
           "id": "colors-of-lycans",
           "currentValue": 11,
-          "recentValue": 2,
+          "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260616110510",
-            "Tsuna-20260616132329"
+            "khalen-20260623103816"
           ],
           "unlockedLevels": [
             {
@@ -33793,15 +33882,16 @@
     "76561198390111869": {
       "playerId": "76561198390111869",
       "playerName": "Kao",
-      "totalUnlocked": 165,
+      "totalUnlocked": 166,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 163,
-          "recentValue": 2,
+          "currentValue": 166,
+          "recentValue": 3,
           "recentGameIds": [
-            "Tsuna-20260609105701",
-            "Tsuna-20260609112720"
+            "khalen-20260630120224",
+            "khalen-20260630123444",
+            "khalen-20260630133050"
           ],
           "unlockedLevels": [
             {
@@ -33858,14 +33948,15 @@
             "subLevel": 3,
             "threshold": 200
           },
-          "progress": 0.815
+          "progress": 0.83
         },
         {
           "id": "victories-loup",
-          "currentValue": 27,
-          "recentValue": 1,
+          "currentValue": 28,
+          "recentValue": 2,
           "recentGameIds": [
-            "Tsuna-20260616112139"
+            "Tsuna-20260616112139",
+            "khalen-20260630105851"
           ],
           "unlockedLevels": [
             {
@@ -33910,7 +34001,7 @@
             "subLevel": 1,
             "threshold": 30
           },
-          "progress": 0.9
+          "progress": 0.9333333333333333
         },
         {
           "id": "victories-solo",
@@ -34157,6 +34248,26 @@
           "progress": 0.85
         },
         {
+          "id": "alakazam",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260602133012"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "starvation",
           "currentValue": 4,
           "recentValue": 0,
@@ -34197,11 +34308,11 @@
         },
         {
           "id": "death-turn1",
-          "currentValue": 73,
+          "currentValue": 74,
           "recentValue": 2,
           "recentGameIds": [
-            "Tsuna-20260602135143",
-            "Tsuna-20260616114954"
+            "Tsuna-20260616114954",
+            "khalen-20260630133050"
           ],
           "unlockedLevels": [
             {
@@ -34252,7 +34363,7 @@
             "subLevel": 2,
             "threshold": 75
           },
-          "progress": 0.9733333333333334
+          "progress": 0.9866666666666667
         },
         {
           "id": "voted-as-villager",
@@ -34381,14 +34492,8 @@
         {
           "id": "deaths-all-zones",
           "currentValue": 4,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260602130701",
-            "Tsuna-20260602135143",
-            "Tsuna-20260609102830",
-            "Tsuna-20260609112720",
-            "Tsuna-20260602133012"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -34466,13 +34571,14 @@
         },
         {
           "id": "wolf-kills",
-          "currentValue": 214,
-          "recentValue": 13,
+          "currentValue": 218,
+          "recentValue": 15,
           "recentGameIds": [
-            "Tsuna-20260602130701",
             "Tsuna-20260609122659",
             "Tsuna-20260616112139",
-            "Tsuna-20260616121956"
+            "Tsuna-20260616121956",
+            "khalen-20260630105851",
+            "khalen-20260630125934"
           ],
           "unlockedLevels": [
             {
@@ -34515,19 +34621,19 @@
               "tier": "or",
               "subLevel": 1,
               "threshold": 100,
-              "unlockedAtGame": "Tsuna-20260616121956"
+              "unlockedAtGame": "khalen-20260630125934"
             },
             {
               "tier": "or",
               "subLevel": 2,
               "threshold": 150,
-              "unlockedAtGame": "Tsuna-20260616121956"
+              "unlockedAtGame": "khalen-20260630125934"
             },
             {
               "tier": "or",
               "subLevel": 3,
               "threshold": 200,
-              "unlockedAtGame": "Tsuna-20260616121956"
+              "unlockedAtGame": "khalen-20260630125934"
             }
           ],
           "nextLevel": {
@@ -34535,7 +34641,7 @@
             "subLevel": 1,
             "threshold": 300
           },
-          "progress": 0.7133333333333334
+          "progress": 0.7266666666666667
         },
         {
           "id": "hunter-kill-enemy",
@@ -34709,10 +34815,8 @@
         {
           "id": "assassin-potion-kill-ally",
           "currentValue": 4,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260609105701"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -34803,9 +34907,8 @@
         {
           "id": "revenge-kill",
           "currentValue": 13,
-          "recentValue": 2,
+          "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260609105701",
             "Tsuna-20260616121956"
           ],
           "unlockedLevels": [
@@ -34970,9 +35073,9 @@
         {
           "id": "max-loot-single-game",
           "currentValue": 880,
-          "recentValue": 285,
+          "recentValue": 415,
           "recentGameIds": [
-            "Tsuna-20260609105701"
+            "khalen-20260630123444"
           ],
           "unlockedLevels": [
             {
@@ -35024,9 +35127,8 @@
         {
           "id": "wolf-transform-kill-nights",
           "currentValue": 21,
-          "recentValue": 4,
+          "recentValue": 3,
           "recentGameIds": [
-            "Tsuna-20260602130701",
             "Tsuna-20260609122659",
             "Tsuna-20260616112139"
           ],
@@ -35059,12 +35161,11 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 81,
-          "recentValue": 3,
+          "currentValue": 82,
+          "recentValue": 2,
           "recentGameIds": [
-            "Tsuna-20260602141214",
-            "Tsuna-20260609112720",
-            "Tsuna-20260616101710"
+            "Tsuna-20260616101710",
+            "khalen-20260630114009"
           ],
           "unlockedLevels": [
             {
@@ -35127,7 +35228,7 @@
             "subLevel": 1,
             "threshold": 100
           },
-          "progress": 0.81
+          "progress": 0.82
         },
         {
           "id": "misunderstood",
@@ -35274,7 +35375,7 @@
           "currentValue": 9,
           "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260609105701"
+            "Tsuna-20260616112139"
           ],
           "unlockedLevels": [
             {
@@ -35414,10 +35515,8 @@
         {
           "id": "juste-un-dernier-verre",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260609105701"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -35436,10 +35535,8 @@
         {
           "id": "collectionneur",
           "currentValue": 2,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260609105701"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -37319,17 +37416,18 @@
     "76561198109331759": {
       "playerId": "76561198109331759",
       "playerName": "Flonflon",
-      "totalUnlocked": 157,
+      "totalUnlocked": 159,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 123,
-          "recentValue": 4,
+          "currentValue": 125,
+          "recentValue": 5,
           "recentGameIds": [
-            "Tsuna-20260512130737",
             "Tsuna-20260602111559",
             "Tsuna-20260602115645",
-            "Tsuna-20260602122421"
+            "Tsuna-20260602122421",
+            "khalen-20260630120224",
+            "khalen-20260630123444"
           ],
           "unlockedLevels": [
             {
@@ -37380,15 +37478,13 @@
             "subLevel": 2,
             "threshold": 150
           },
-          "progress": 0.82
+          "progress": 0.8333333333333334
         },
         {
           "id": "victories-loup",
           "currentValue": 22,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260512123951"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -37681,6 +37777,28 @@
           "progress": 0.7333333333333333
         },
         {
+          "id": "alakazam",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630114009"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260630114009"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "romeo-juliette",
           "currentValue": 11,
           "recentValue": 0,
@@ -37708,11 +37826,10 @@
         },
         {
           "id": "death-turn1",
-          "currentValue": 83,
-          "recentValue": 2,
+          "currentValue": 84,
+          "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260512130737",
-            "Tsuna-20260512133651"
+            "khalen-20260630113309"
           ],
           "unlockedLevels": [
             {
@@ -37769,7 +37886,7 @@
             "subLevel": 3,
             "threshold": 100
           },
-          "progress": 0.83
+          "progress": 0.84
         },
         {
           "id": "voted-as-villager",
@@ -37895,7 +38012,7 @@
         },
         {
           "id": "deaths-all-zones",
-          "currentValue": 9,
+          "currentValue": 10,
           "recentValue": 0,
           "recentGameIds": [],
           "unlockedLevels": [
@@ -37910,14 +38027,20 @@
               "subLevel": 1,
               "threshold": 5,
               "unlockedAtGame": "Ponce-20251014121305"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "khalen-20251209142007"
             }
           ],
           "nextLevel": {
-            "tier": "or",
+            "tier": "lycans",
             "subLevel": 1,
-            "threshold": 10
+            "threshold": 20
           },
-          "progress": 0.9
+          "progress": 0.5
         },
         {
           "id": "zombie-kills",
@@ -37942,10 +38065,8 @@
         {
           "id": "wolf-kills",
           "currentValue": 133,
-          "recentValue": 3,
-          "recentGameIds": [
-            "Tsuna-20260512123951"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -38466,10 +38587,11 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 76,
-          "recentValue": 1,
+          "currentValue": 78,
+          "recentValue": 2,
           "recentGameIds": [
-            "Tsuna-20260512130737"
+            "khalen-20260630105851",
+            "khalen-20260630113309"
           ],
           "unlockedLevels": [
             {
@@ -38532,7 +38654,7 @@
             "subLevel": 1,
             "threshold": 100
           },
-          "progress": 0.76
+          "progress": 0.78
         },
         {
           "id": "misunderstood",
@@ -38636,12 +38758,13 @@
         },
         {
           "id": "meneur",
-          "currentValue": 16,
-          "recentValue": 3,
+          "currentValue": 17,
+          "recentValue": 4,
           "recentGameIds": [
             "Tsuna-20260602111559",
             "Tsuna-20260602115645",
-            "Tsuna-20260602122421"
+            "Tsuna-20260602122421",
+            "khalen-20260630105851"
           ],
           "unlockedLevels": [
             {
@@ -38680,7 +38803,7 @@
             "subLevel": 3,
             "threshold": 20
           },
-          "progress": 0.8
+          "progress": 0.85
         },
         {
           "id": "democrat",
@@ -38735,7 +38858,7 @@
           "currentValue": 9,
           "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260512123951"
+            "Tsuna-20260602111559"
           ],
           "unlockedLevels": [
             {
@@ -38894,9 +39017,11 @@
         },
         {
           "id": "collectionneur",
-          "currentValue": 1,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 2,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630105851"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -38910,7 +39035,7 @@
             "subLevel": 1,
             "threshold": 3
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "br-victories",
@@ -42456,7 +42581,7 @@
     "76561198125108195": {
       "playerId": "76561198125108195",
       "playerName": "Monodie",
-      "totalUnlocked": 175,
+      "totalUnlocked": 176,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -42818,6 +42943,26 @@
             "threshold": 5
           },
           "progress": 0.8
+        },
+        {
+          "id": "alakazam",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260224122446"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "fall-death",
@@ -49757,12 +49902,12 @@
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 55,
+          "currentValue": 56,
           "recentValue": 3,
           "recentGameIds": [
-            "Tsuna-20260609112720",
             "Tsuna-20260609131854",
-            "Tsuna-20260616134254"
+            "Tsuna-20260616134254",
+            "khalen-20260630125934"
           ],
           "unlockedLevels": [
             {
@@ -49801,7 +49946,7 @@
             "subLevel": 3,
             "threshold": 70
           },
-          "progress": 0.7857142857142857
+          "progress": 0.8
         },
         {
           "id": "victories-loup",
@@ -50063,9 +50208,11 @@
         },
         {
           "id": "avenger-death",
-          "currentValue": 6,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 7,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630125934"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -50091,7 +50238,7 @@
             "subLevel": 1,
             "threshold": 8
           },
-          "progress": 0.75
+          "progress": 0.875
         },
         {
           "id": "deaths-all-zones",
@@ -50188,9 +50335,8 @@
         {
           "id": "wolf-kills",
           "currentValue": 68,
-          "recentValue": 4,
+          "recentValue": 2,
           "recentGameIds": [
-            "Tsuna-20260609105701",
             "Tsuna-20260616114954"
           ],
           "unlockedLevels": [
@@ -50706,7 +50852,7 @@
           "currentValue": 6,
           "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260609112720"
+            "Tsuna-20260609131854"
           ],
           "unlockedLevels": [
             {
@@ -51039,7 +51185,7 @@
     "76561198875528482": {
       "playerId": "76561198875528482",
       "playerName": "ClydeCreator",
-      "totalUnlocked": 160,
+      "totalUnlocked": 161,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -51384,24 +51530,33 @@
           "progress": 0.8666666666666667
         },
         {
-          "id": "grimoire-du-loup",
-          "currentValue": 1,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "id": "alakazam",
+          "currentValue": 3,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Tsuna-20260512130737",
+            "khalen-20260519103141"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
-              "unlockedAtGame": "Ponce-20260421104330"
+              "unlockedAtGame": "Ponce-20260317133700"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20260519103141"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "or",
             "subLevel": 1,
-            "threshold": 3
+            "threshold": 5
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6
         },
         {
           "id": "starvation",
@@ -52865,17 +53020,18 @@
     "76561198250955250": {
       "playerId": "76561198250955250",
       "playerName": "Tone",
-      "totalUnlocked": 159,
+      "totalUnlocked": 160,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 87,
-          "recentValue": 4,
+          "currentValue": 90,
+          "recentValue": 5,
           "recentGameIds": [
-            "Tsuna-20260616132329",
-            "Tsuna-20260616134254",
             "khalen-20260623103816",
-            "khalen-20260623111650"
+            "khalen-20260623111650",
+            "khalen-20260630120224",
+            "khalen-20260630123444",
+            "khalen-20260630125934"
           ],
           "unlockedLevels": [
             {
@@ -52920,17 +53076,13 @@
             "subLevel": 1,
             "threshold": 100
           },
-          "progress": 0.87
+          "progress": 0.9
         },
         {
           "id": "victories-loup",
           "currentValue": 26,
-          "recentValue": 3,
-          "recentGameIds": [
-            "Tsuna-20260616110510",
-            "Tsuna-20260616112139",
-            "Tsuna-20260616124735"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -53031,10 +53183,8 @@
         {
           "id": "vegan-wolf",
           "currentValue": 6,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260616112139"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -53204,6 +53354,26 @@
           "progress": 0.2
         },
         {
+          "id": "alakazam",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260609102830"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "romeo-juliette",
           "currentValue": 6,
           "recentValue": 1,
@@ -53228,10 +53398,8 @@
         {
           "id": "death-turn1",
           "currentValue": 45,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260616121956"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -53345,10 +53513,11 @@
         },
         {
           "id": "avenger-death",
-          "currentValue": 12,
-          "recentValue": 1,
+          "currentValue": 13,
+          "recentValue": 2,
           "recentGameIds": [
-            "khalen-20260623130321"
+            "khalen-20260623130321",
+            "khalen-20260630105851"
           ],
           "unlockedLevels": [
             {
@@ -53387,7 +53556,7 @@
             "subLevel": 3,
             "threshold": 20
           },
-          "progress": 0.6
+          "progress": 0.65
         },
         {
           "id": "deaths-all-zones",
@@ -53459,11 +53628,10 @@
         },
         {
           "id": "wolf-kills",
-          "currentValue": 145,
-          "recentValue": 6,
+          "currentValue": 148,
+          "recentValue": 3,
           "recentGameIds": [
-            "Tsuna-20260616110510",
-            "Tsuna-20260616124735"
+            "khalen-20260630133050"
           ],
           "unlockedLevels": [
             {
@@ -53500,13 +53668,13 @@
               "tier": "argent",
               "subLevel": 3,
               "threshold": 70,
-              "unlockedAtGame": "Tsuna-20260616124735"
+              "unlockedAtGame": "khalen-20260630133050"
             },
             {
               "tier": "or",
               "subLevel": 1,
               "threshold": 100,
-              "unlockedAtGame": "Tsuna-20260616124735"
+              "unlockedAtGame": "khalen-20260630133050"
             }
           ],
           "nextLevel": {
@@ -53514,7 +53682,7 @@
             "subLevel": 2,
             "threshold": 150
           },
-          "progress": 0.9666666666666667
+          "progress": 0.9866666666666667
         },
         {
           "id": "hunter-kill-enemy",
@@ -53572,10 +53740,8 @@
         {
           "id": "consecutive-same-victim-kill",
           "currentValue": 5,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260616112139"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -53710,10 +53876,8 @@
         {
           "id": "same-color-kills",
           "currentValue": 33,
-          "recentValue": 2,
-          "recentGameIds": [
-            "Tsuna-20260616110510"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -53892,10 +54056,8 @@
         {
           "id": "loup-devin-double-seer",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260616112139"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -53914,10 +54076,8 @@
         {
           "id": "loup-devin-ultimate",
           "currentValue": 3,
-          "recentValue": 2,
-          "recentGameIds": [
-            "Tsuna-20260616112139"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -54066,10 +54226,8 @@
         {
           "id": "spider-man-pointing",
           "currentValue": 73,
-          "recentValue": 3,
+          "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260616114954",
-            "Tsuna-20260616132329",
             "khalen-20260623114214"
           ],
           "unlockedLevels": [
@@ -54137,9 +54295,11 @@
         },
         {
           "id": "bavard",
-          "currentValue": 1,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 2,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630113309"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -54153,7 +54313,7 @@
             "subLevel": 1,
             "threshold": 3
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "misunderstood",
@@ -54223,12 +54383,13 @@
         },
         {
           "id": "meneur",
-          "currentValue": 40,
+          "currentValue": 43,
           "recentValue": 4,
           "recentGameIds": [
-            "Tsuna-20260616112139",
-            "Tsuna-20260616132329",
-            "khalen-20260623111650"
+            "khalen-20260623111650",
+            "khalen-20260630113309",
+            "khalen-20260630114009",
+            "khalen-20260630120224"
           ],
           "unlockedLevels": [
             {
@@ -54289,7 +54450,7 @@
               "tier": "lycans",
               "subLevel": 1,
               "threshold": 40,
-              "unlockedAtGame": "khalen-20260623111650"
+              "unlockedAtGame": "khalen-20260630120224"
             }
           ],
           "nextLevel": null,
@@ -54298,9 +54459,8 @@
         {
           "id": "democrat",
           "currentValue": 15,
-          "recentValue": 2,
+          "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260616132329",
             "khalen-20260623111650"
           ],
           "unlockedLevels": [
@@ -54355,7 +54515,7 @@
           "currentValue": 3,
           "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260616110510"
+            "khalen-20260623103816"
           ],
           "unlockedLevels": [
             {
@@ -54387,10 +54547,8 @@
         {
           "id": "winning-months",
           "currentValue": 2,
-          "recentValue": 1,
-          "recentGameIds": [
-            "khalen-20260623132527"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -54474,10 +54632,12 @@
         },
         {
           "id": "collectionneur",
-          "currentValue": 5,
-          "recentValue": 1,
+          "currentValue": 7,
+          "recentValue": 3,
           "recentGameIds": [
-            "khalen-20260623103816"
+            "khalen-20260623103816",
+            "khalen-20260630120224",
+            "khalen-20260630123444"
           ],
           "unlockedLevels": [
             {
@@ -54498,7 +54658,7 @@
             "subLevel": 1,
             "threshold": 8
           },
-          "progress": 0.625
+          "progress": 0.875
         },
         {
           "id": "br-victories",
@@ -54805,15 +54965,15 @@
     "76561198849250630": {
       "playerId": "76561198849250630",
       "playerName": "MathyMoon",
-      "totalUnlocked": 139,
+      "totalUnlocked": 141,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 105,
+          "currentValue": 106,
           "recentValue": 2,
           "recentGameIds": [
-            "Tsuna-20260616132329",
-            "khalen-20260623103816"
+            "khalen-20260623103816",
+            "khalen-20260630133050"
           ],
           "unlockedLevels": [
             {
@@ -54864,13 +55024,15 @@
             "subLevel": 2,
             "threshold": 150
           },
-          "progress": 0.7
+          "progress": 0.7066666666666667
         },
         {
           "id": "victories-loup",
-          "currentValue": 16,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 17,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630105851"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -54902,7 +55064,7 @@
             "subLevel": 2,
             "threshold": 20
           },
-          "progress": 0.8
+          "progress": 0.85
         },
         {
           "id": "victories-solo",
@@ -55004,9 +55166,11 @@
         },
         {
           "id": "wolf-loss-harvest-no-kills",
-          "currentValue": 4,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 5,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630123444"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -55026,7 +55190,7 @@
             "subLevel": 1,
             "threshold": 8
           },
-          "progress": 0.5
+          "progress": 0.625
         },
         {
           "id": "wolf-win-early-death",
@@ -55102,9 +55266,11 @@
         },
         {
           "id": "wolf-sabotages",
-          "currentValue": 18,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 19,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630105851"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -55128,13 +55294,13 @@
               "tier": "argent",
               "subLevel": 1,
               "threshold": 10,
-              "unlockedAtGame": "khalen-20260519110016"
+              "unlockedAtGame": "khalen-20260630105851"
             },
             {
               "tier": "argent",
               "subLevel": 2,
               "threshold": 15,
-              "unlockedAtGame": "khalen-20260519110016"
+              "unlockedAtGame": "khalen-20260630105851"
             }
           ],
           "nextLevel": {
@@ -55142,7 +55308,7 @@
             "subLevel": 3,
             "threshold": 20
           },
-          "progress": 0.9
+          "progress": 0.95
         },
         {
           "id": "wolf-eclipse-kills",
@@ -55156,6 +55322,26 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "alakazam",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260407120643"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "romeo-juliette",
@@ -55194,9 +55380,8 @@
         {
           "id": "death-turn1",
           "currentValue": 46,
-          "recentValue": 2,
+          "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260616121956",
             "khalen-20260623120329"
           ],
           "unlockedLevels": [
@@ -55414,9 +55599,11 @@
         },
         {
           "id": "wolf-kills",
-          "currentValue": 74,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 76,
+          "recentValue": 2,
+          "recentGameIds": [
+            "khalen-20260630105851"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -55446,13 +55633,13 @@
               "tier": "argent",
               "subLevel": 2,
               "threshold": 50,
-              "unlockedAtGame": "Tsuna-20260609125546"
+              "unlockedAtGame": "khalen-20260630105851"
             },
             {
               "tier": "argent",
               "subLevel": 3,
               "threshold": 70,
-              "unlockedAtGame": "Tsuna-20260609125546"
+              "unlockedAtGame": "khalen-20260630105851"
             }
           ],
           "nextLevel": {
@@ -55460,7 +55647,7 @@
             "subLevel": 1,
             "threshold": 100
           },
-          "progress": 0.74
+          "progress": 0.76
         },
         {
           "id": "hunter-kill-enemy",
@@ -55729,9 +55916,11 @@
         },
         {
           "id": "same-color-kills",
-          "currentValue": 6,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 7,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630105851"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -55745,7 +55934,7 @@
             "subLevel": 1,
             "threshold": 8
           },
-          "progress": 0.75
+          "progress": 0.875
         },
         {
           "id": "revenge-kill",
@@ -55954,9 +56143,9 @@
         {
           "id": "max-loot-single-game",
           "currentValue": 530,
-          "recentValue": 425,
+          "recentValue": 395,
           "recentGameIds": [
-            "Tsuna-20260616124735"
+            "khalen-20260623103816"
           ],
           "unlockedLevels": [
             {
@@ -55995,11 +56184,12 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 103,
-          "recentValue": 2,
+          "currentValue": 104,
+          "recentValue": 3,
           "recentGameIds": [
             "khalen-20260623103816",
-            "khalen-20260623120329"
+            "khalen-20260623120329",
+            "khalen-20260630114009"
           ],
           "unlockedLevels": [
             {
@@ -56157,10 +56347,8 @@
         {
           "id": "lone-non-voter",
           "currentValue": 4,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260616114954"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -56184,10 +56372,10 @@
         },
         {
           "id": "meneur",
-          "currentValue": 11,
+          "currentValue": 12,
           "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260616124735"
+            "khalen-20260630133050"
           ],
           "unlockedLevels": [
             {
@@ -56220,14 +56408,14 @@
             "subLevel": 2,
             "threshold": 15
           },
-          "progress": 0.7333333333333333
+          "progress": 0.8
         },
         {
           "id": "democrat",
-          "currentValue": 7,
+          "currentValue": 8,
           "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260616124735"
+            "khalen-20260630133050"
           ],
           "unlockedLevels": [
             {
@@ -56235,14 +56423,20 @@
               "subLevel": 1,
               "threshold": 3,
               "unlockedAtGame": "Ponce-20260203121805"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 8,
+              "unlockedAtGame": "khalen-20260630133050"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "or",
             "subLevel": 1,
-            "threshold": 8
+            "threshold": 15
           },
-          "progress": 0.875
+          "progress": 0.5333333333333333
         },
         {
           "id": "stubborn",
@@ -56269,7 +56463,7 @@
           "currentValue": 3,
           "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260616132329"
+            "khalen-20260623103816"
           ],
           "unlockedLevels": [
             {
@@ -57405,13 +57599,15 @@
     "76561198076015877": {
       "playerId": "76561198076015877",
       "playerName": "CHLOE",
-      "totalUnlocked": 110,
+      "totalUnlocked": 111,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 85,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 86,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630120224"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -57455,7 +57651,7 @@
             "subLevel": 1,
             "threshold": 100
           },
-          "progress": 0.85
+          "progress": 0.86
         },
         {
           "id": "victories-loup",
@@ -57668,6 +57864,26 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "alakazam",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260505103834"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "starvation",
           "currentValue": 2,
           "recentValue": 0,
@@ -57690,9 +57906,8 @@
         {
           "id": "romeo-juliette",
           "currentValue": 6,
-          "recentValue": 2,
+          "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260602104926",
             "Tsuna-20260616112139"
           ],
           "unlockedLevels": [
@@ -57712,11 +57927,13 @@
         },
         {
           "id": "death-turn1",
-          "currentValue": 72,
-          "recentValue": 2,
+          "currentValue": 74,
+          "recentValue": 4,
           "recentGameIds": [
             "Tsuna-20260616121956",
-            "Tsuna-20260616124735"
+            "Tsuna-20260616124735",
+            "khalen-20260630113309",
+            "khalen-20260630114009"
           ],
           "unlockedLevels": [
             {
@@ -57767,7 +57984,7 @@
             "subLevel": 2,
             "threshold": 75
           },
-          "progress": 0.96
+          "progress": 0.9866666666666667
         },
         {
           "id": "voted-as-villager",
@@ -57883,9 +58100,15 @@
         },
         {
           "id": "deaths-all-zones",
-          "currentValue": 15,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 16,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Tsuna-20260602122421",
+            "Tsuna-20260616112139",
+            "Tsuna-20260616124735",
+            "khalen-20260630120224",
+            "Tsuna-20260616121956"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -57911,7 +58134,7 @@
             "subLevel": 1,
             "threshold": 20
           },
-          "progress": 0.75
+          "progress": 0.8
         },
         {
           "id": "zombie-kills",
@@ -58348,10 +58571,12 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 71,
-          "recentValue": 1,
+          "currentValue": 73,
+          "recentValue": 3,
           "recentGameIds": [
-            "Tsuna-20260616124735"
+            "Tsuna-20260616124735",
+            "khalen-20260630105851",
+            "khalen-20260630120224"
           ],
           "unlockedLevels": [
             {
@@ -58414,7 +58639,7 @@
             "subLevel": 1,
             "threshold": 100
           },
-          "progress": 0.71
+          "progress": 0.73
         },
         {
           "id": "misunderstood",
@@ -58459,9 +58684,8 @@
         {
           "id": "meneur",
           "currentValue": 37,
-          "recentValue": 2,
+          "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260602111559",
             "Tsuna-20260616101710"
           ],
           "unlockedLevels": [
@@ -58889,7 +59113,7 @@
     "76561198056292624": {
       "playerId": "76561198056292624",
       "playerName": "RomainJacques",
-      "totalUnlocked": 109,
+      "totalUnlocked": 108,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -59074,26 +59298,6 @@
           "progress": 0.5
         },
         {
-          "id": "wolf-menage-a-trois",
-          "currentValue": 1,
-          "recentValue": 0,
-          "recentGameIds": [],
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Ponce-20251230131314"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 3
-          },
-          "progress": 0.3333333333333333
-        },
-        {
           "id": "speed-run",
           "currentValue": 9,
           "recentValue": 0,
@@ -59161,16 +59365,18 @@
           "progress": 0.6666666666666666
         },
         {
-          "id": "grimoire-du-loup",
-          "currentValue": 1,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "id": "alakazam",
+          "currentValue": 2,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Tsuna-20260616114954"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
-              "unlockedAtGame": "Ponce-20260421110017"
+              "unlockedAtGame": "Tsuna-20260616114954"
             }
           ],
           "nextLevel": {
@@ -59178,7 +59384,7 @@
             "subLevel": 1,
             "threshold": 3
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "starvation",
@@ -61747,7 +61953,7 @@
     "76561198052560531": {
       "playerId": "76561198052560531",
       "playerName": "Tovi",
-      "totalUnlocked": 40,
+      "totalUnlocked": 39,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -61807,28 +62013,6 @@
             "threshold": 5
           },
           "progress": 0.2
-        },
-        {
-          "id": "wolf-menage-a-trois",
-          "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "khalen-20260623130321"
-          ],
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "khalen-20260623130321"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 3
-          },
-          "progress": 0.3333333333333333
         },
         {
           "id": "speed-run",
@@ -62451,17 +62635,19 @@
     "76561198317172114": {
       "playerId": "76561198317172114",
       "playerName": "Kissiffrote",
-      "totalUnlocked": 65,
+      "totalUnlocked": 66,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 33,
-          "recentValue": 4,
+          "currentValue": 35,
+          "recentValue": 6,
           "recentGameIds": [
             "Tsuna-20260616134254",
             "khalen-20260623103816",
             "khalen-20260623111650",
-            "khalen-20260623132527"
+            "khalen-20260623132527",
+            "khalen-20260630125934",
+            "khalen-20260630133050"
           ],
           "unlockedLevels": [
             {
@@ -62494,7 +62680,7 @@
             "subLevel": 2,
             "threshold": 50
           },
-          "progress": 0.66
+          "progress": 0.7
         },
         {
           "id": "victories-loup",
@@ -62674,6 +62860,26 @@
           "progress": 0.8
         },
         {
+          "id": "alakazam",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260526134253"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "starvation",
           "currentValue": 1,
           "recentValue": 0,
@@ -62715,13 +62921,13 @@
         },
         {
           "id": "death-turn1",
-          "currentValue": 29,
+          "currentValue": 30,
           "recentValue": 4,
           "recentGameIds": [
-            "Tsuna-20260616114954",
             "Tsuna-20260616124735",
             "khalen-20260623124122",
-            "khalen-20260623141315"
+            "khalen-20260623141315",
+            "khalen-20260630133050"
           ],
           "unlockedLevels": [
             {
@@ -62760,7 +62966,7 @@
             "subLevel": 3,
             "threshold": 35
           },
-          "progress": 0.8285714285714286
+          "progress": 0.8571428571428571
         },
         {
           "id": "voted-as-villager",
@@ -62906,9 +63112,8 @@
         {
           "id": "hunter-killed-by-wolf",
           "currentValue": 5,
-          "recentValue": 3,
+          "recentValue": 2,
           "recentGameIds": [
-            "Tsuna-20260616114954",
             "khalen-20260623111650",
             "khalen-20260623135742"
           ],
@@ -63146,14 +63351,15 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 38,
-          "recentValue": 5,
+          "currentValue": 39,
+          "recentValue": 6,
           "recentGameIds": [
             "Tsuna-20260616124735",
             "khalen-20260623103816",
             "khalen-20260623114214",
             "khalen-20260623120329",
-            "khalen-20260623122225"
+            "khalen-20260623122225",
+            "khalen-20260630125934"
           ],
           "unlockedLevels": [
             {
@@ -63192,7 +63398,7 @@
             "subLevel": 3,
             "threshold": 40
           },
-          "progress": 0.95
+          "progress": 0.975
         },
         {
           "id": "misunderstood",
@@ -65633,19 +65839,18 @@
     "76561198160286790": {
       "playerId": "76561198160286790",
       "playerName": "Raumane",
-      "totalUnlocked": 94,
+      "totalUnlocked": 96,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 56,
-          "recentValue": 6,
+          "currentValue": 59,
+          "recentValue": 5,
           "recentGameIds": [
-            "Tsuna-20260609105701",
-            "Tsuna-20260609112720",
-            "Tsuna-20260609125546",
-            "Tsuna-20260609131854",
             "Tsuna-20260616132329",
-            "Tsuna-20260616134254"
+            "Tsuna-20260616134254",
+            "khalen-20260630120224",
+            "khalen-20260630123444",
+            "khalen-20260630125934"
           ],
           "unlockedLevels": [
             {
@@ -65684,7 +65889,7 @@
             "subLevel": 3,
             "threshold": 70
           },
-          "progress": 0.8
+          "progress": 0.8428571428571429
         },
         {
           "id": "victories-loup",
@@ -65859,6 +66064,26 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "alakazam",
+          "currentValue": 2,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260407123301"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "starvation",
           "currentValue": 1,
           "recentValue": 0,
@@ -65900,13 +66125,12 @@
         },
         {
           "id": "death-turn1",
-          "currentValue": 31,
-          "recentValue": 4,
+          "currentValue": 32,
+          "recentValue": 3,
           "recentGameIds": [
-            "Tsuna-20260609122659",
-            "Tsuna-20260609131854",
             "Tsuna-20260616112139",
-            "Tsuna-20260616121956"
+            "Tsuna-20260616121956",
+            "khalen-20260630113309"
           ],
           "unlockedLevels": [
             {
@@ -65945,7 +66169,7 @@
             "subLevel": 3,
             "threshold": 35
           },
-          "progress": 0.8857142857142857
+          "progress": 0.9142857142857143
         },
         {
           "id": "voted-as-villager",
@@ -66018,10 +66242,8 @@
         {
           "id": "avenger-death",
           "currentValue": 9,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260609131854"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -66135,11 +66357,12 @@
         },
         {
           "id": "wolf-kills",
-          "currentValue": 87,
-          "recentValue": 6,
+          "currentValue": 89,
+          "recentValue": 8,
           "recentGameIds": [
             "Tsuna-20260616114954",
-            "Tsuna-20260616124735"
+            "Tsuna-20260616124735",
+            "khalen-20260630114009"
           ],
           "unlockedLevels": [
             {
@@ -66170,13 +66393,13 @@
               "tier": "argent",
               "subLevel": 2,
               "threshold": 50,
-              "unlockedAtGame": "Tsuna-20260616124735"
+              "unlockedAtGame": "khalen-20260630114009"
             },
             {
               "tier": "argent",
               "subLevel": 3,
               "threshold": 70,
-              "unlockedAtGame": "Tsuna-20260616124735"
+              "unlockedAtGame": "khalen-20260630114009"
             }
           ],
           "nextLevel": {
@@ -66184,7 +66407,7 @@
             "subLevel": 1,
             "threshold": 100
           },
-          "progress": 0.87
+          "progress": 0.89
         },
         {
           "id": "hunter-kill-enemy",
@@ -66466,9 +66689,9 @@
         {
           "id": "max-loot-single-game",
           "currentValue": 400,
-          "recentValue": 180,
+          "recentValue": 265,
           "recentGameIds": [
-            "Tsuna-20260609112720"
+            "khalen-20260630105851"
           ],
           "unlockedLevels": [
             {
@@ -66507,13 +66730,13 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 48,
+          "currentValue": 50,
           "recentValue": 4,
           "recentGameIds": [
-            "Tsuna-20260609112720",
-            "Tsuna-20260609115711",
             "Tsuna-20260616104439",
-            "Tsuna-20260616121956"
+            "Tsuna-20260616121956",
+            "khalen-20260630105851",
+            "khalen-20260630123444"
           ],
           "unlockedLevels": [
             {
@@ -66551,14 +66774,20 @@
               "subLevel": 3,
               "threshold": 40,
               "unlockedAtGame": "Tsuna-20260526111103"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 50,
+              "unlockedAtGame": "khalen-20260630123444"
             }
           ],
           "nextLevel": {
             "tier": "or",
-            "subLevel": 1,
-            "threshold": 50
+            "subLevel": 2,
+            "threshold": 60
           },
-          "progress": 0.96
+          "progress": 0.8333333333333334
         },
         {
           "id": "bavard",
@@ -66663,7 +66892,7 @@
           "currentValue": 4,
           "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260609105701"
+            "Tsuna-20260616124735"
           ],
           "unlockedLevels": [
             {
@@ -67014,10 +67243,8 @@
         {
           "id": "musical-clips",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260609112720"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -68010,20 +68237,20 @@
     "76561197961659274": {
       "playerId": "76561197961659274",
       "playerName": "MoMaN",
-      "totalUnlocked": 29,
+      "totalUnlocked": 37,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 15,
+          "currentValue": 18,
           "recentValue": 7,
           "recentGameIds": [
-            "Tsuna-20260407125227",
-            "Tsuna-20260407134922",
-            "Tsuna-20260407141806",
             "Tsuna-20260512111620",
             "Tsuna-20260512115000",
             "Tsuna-20260512122153",
-            "Tsuna-20260512133651"
+            "Tsuna-20260512133651",
+            "khalen-20260630123444",
+            "khalen-20260630125934",
+            "khalen-20260630133050"
           ],
           "unlockedLevels": [
             {
@@ -68050,7 +68277,7 @@
             "subLevel": 1,
             "threshold": 30
           },
-          "progress": 0.5
+          "progress": 0.6
         },
         {
           "id": "victories-loup",
@@ -68077,10 +68304,8 @@
         {
           "id": "victories-solo",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260407123301"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -68099,9 +68324,8 @@
         {
           "id": "wolf-survived-hunter-shot",
           "currentValue": 2,
-          "recentValue": 2,
+          "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260407131940",
             "Tsuna-20260512130737"
           ],
           "unlockedLevels": [
@@ -68121,26 +68345,31 @@
         },
         {
           "id": "death-turn1",
-          "currentValue": 2,
+          "currentValue": 3,
           "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260407125227"
+            "khalen-20260630114009"
           ],
-          "unlockedLevels": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20260630114009"
+            }
+          ],
           "nextLevel": {
             "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 3
+            "subLevel": 2,
+            "threshold": 5
           },
-          "progress": 0.6666666666666666
+          "progress": 0.6
         },
         {
           "id": "voted-as-villager",
           "currentValue": 2,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260407140306"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -68179,8 +68408,14 @@
         {
           "id": "deaths-all-zones",
           "currentValue": 1,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "recentValue": 1,
+          "recentGameIds": [
+            "Tsuna-20260512130737",
+            "Tsuna-20260512115000",
+            "khalen-20260630114009",
+            "Tsuna-20260512123951",
+            "Tsuna-20260512105357"
+          ],
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
@@ -68191,12 +68426,12 @@
         },
         {
           "id": "wolf-kills",
-          "currentValue": 11,
-          "recentValue": 11,
+          "currentValue": 17,
+          "recentValue": 12,
           "recentGameIds": [
-            "Tsuna-20260407131940",
             "Tsuna-20260512130737",
-            "Tsuna-20260512132009"
+            "Tsuna-20260512132009",
+            "khalen-20260630113309"
           ],
           "unlockedLevels": [
             {
@@ -68209,15 +68444,43 @@
               "tier": "bronze",
               "subLevel": 2,
               "threshold": 5,
-              "unlockedAtGame": "Tsuna-20260512132009"
+              "unlockedAtGame": "khalen-20260630113309"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 15,
+              "unlockedAtGame": "khalen-20260630113309"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 3,
-            "threshold": 15
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 30
           },
-          "progress": 0.7333333333333333
+          "progress": 0.5666666666666667
+        },
+        {
+          "id": "hunter-kill-villager",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630114009"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260630114009"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "consecutive-same-victim-kill",
@@ -68236,12 +68499,25 @@
           "progress": 0.4
         },
         {
-          "id": "amoureux-loup-total-kills",
+          "id": "hunter-killed-by-wolf",
           "currentValue": 1,
           "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260512102739"
+            "khalen-20260630114009"
           ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -68260,10 +68536,8 @@
         {
           "id": "solo-master",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260407123301"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -68281,10 +68555,10 @@
         },
         {
           "id": "max-loot-single-game",
-          "currentValue": 280,
-          "recentValue": 180,
+          "currentValue": 385,
+          "recentValue": 385,
           "recentGameIds": [
-            "Tsuna-20260407134922"
+            "khalen-20260630125934"
           ],
           "unlockedLevels": [],
           "nextLevel": {
@@ -68292,7 +68566,7 @@
             "subLevel": 1,
             "threshold": 400
           },
-          "progress": 0.7
+          "progress": 0.9625
         },
         {
           "id": "wolf-transform-kill-nights",
@@ -68311,11 +68585,12 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 7,
-          "recentValue": 2,
+          "currentValue": 10,
+          "recentValue": 3,
           "recentGameIds": [
-            "Tsuna-20260407125227",
-            "Tsuna-20260407141806"
+            "khalen-20260630105851",
+            "khalen-20260630123444",
+            "khalen-20260630133050"
           ],
           "unlockedLevels": [
             {
@@ -68329,22 +68604,26 @@
               "subLevel": 2,
               "threshold": 5,
               "unlockedAtGame": "Tsuna-20260407110650"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "khalen-20260630133050"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 3,
-            "threshold": 10
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 20
           },
-          "progress": 0.7
+          "progress": 0.5
         },
         {
           "id": "misunderstood",
           "currentValue": 2,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260407140306"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -68362,12 +68641,13 @@
         },
         {
           "id": "meneur",
-          "currentValue": 8,
-          "recentValue": 4,
+          "currentValue": 11,
+          "recentValue": 6,
           "recentGameIds": [
-            "Tsuna-20260407141806",
             "Tsuna-20260512122153",
-            "Tsuna-20260512133651"
+            "Tsuna-20260512133651",
+            "khalen-20260630125934",
+            "khalen-20260630133050"
           ],
           "unlockedLevels": [
             {
@@ -68387,21 +68667,29 @@
               "subLevel": 3,
               "threshold": 5,
               "unlockedAtGame": "Tsuna-20260407141806"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "khalen-20260630133050"
             }
           ],
           "nextLevel": {
             "tier": "argent",
-            "subLevel": 1,
-            "threshold": 10
+            "subLevel": 2,
+            "threshold": 15
           },
-          "progress": 0.8
+          "progress": 0.7333333333333333
         },
         {
           "id": "democrat",
-          "currentValue": 6,
-          "recentValue": 1,
+          "currentValue": 8,
+          "recentValue": 3,
           "recentGameIds": [
-            "Tsuna-20260512122153"
+            "Tsuna-20260512122153",
+            "khalen-20260630125934",
+            "khalen-20260630133050"
           ],
           "unlockedLevels": [
             {
@@ -68409,21 +68697,28 @@
               "subLevel": 1,
               "threshold": 3,
               "unlockedAtGame": "Ponce-20251023142100"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 8,
+              "unlockedAtGame": "khalen-20260630133050"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "or",
             "subLevel": 1,
-            "threshold": 8
+            "threshold": 15
           },
-          "progress": 0.75
+          "progress": 0.5333333333333333
         },
         {
           "id": "colors-of-lycans",
-          "currentValue": 2,
-          "recentValue": 1,
+          "currentValue": 3,
+          "recentValue": 2,
           "recentGameIds": [
-            "Tsuna-20260407123301"
+            "Tsuna-20260512111620",
+            "khalen-20260630123444"
           ],
           "unlockedLevels": [
             {
@@ -68437,21 +68732,26 @@
               "subLevel": 2,
               "threshold": 2,
               "unlockedAtGame": "Ponce-20251023131631"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20260630123444"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 3,
-            "threshold": 3
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 4
           },
-          "progress": 0.6666666666666666
+          "progress": 0.75
         },
         {
           "id": "winning-months",
           "currentValue": 3,
-          "recentValue": 2,
+          "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260407141806",
             "Tsuna-20260512133651"
           ],
           "unlockedLevels": [
@@ -68494,6 +68794,28 @@
             "threshold": 2
           },
           "progress": 0.5
+        },
+        {
+          "id": "collectionneur",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630133050"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260630133050"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "br-victories",
@@ -68617,19 +68939,18 @@
     "76561199229494526": {
       "playerId": "76561199229494526",
       "playerName": "Meetozila",
-      "totalUnlocked": 44,
+      "totalUnlocked": 45,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 17,
-          "recentValue": 6,
+          "currentValue": 18,
+          "recentValue": 5,
           "recentGameIds": [
-            "Tsuna-20260609125546",
-            "Tsuna-20260609131854",
             "Tsuna-20260616132329",
             "Tsuna-20260616134254",
             "khalen-20260623111650",
-            "khalen-20260623132527"
+            "khalen-20260623132527",
+            "khalen-20260630125934"
           ],
           "unlockedLevels": [
             {
@@ -68656,7 +68977,7 @@
             "subLevel": 1,
             "threshold": 30
           },
-          "progress": 0.5666666666666667
+          "progress": 0.6
         },
         {
           "id": "victories-loup",
@@ -68778,6 +69099,28 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "wolf-sabotages",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630133050"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260630133050"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "death-turn1",
           "currentValue": 12,
           "recentValue": 3,
@@ -68835,9 +69178,11 @@
         },
         {
           "id": "avenger-death",
-          "currentValue": 1,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 2,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630125934"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -68851,7 +69196,7 @@
             "subLevel": 2,
             "threshold": 3
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "deaths-all-zones",
@@ -68875,10 +69220,11 @@
         },
         {
           "id": "wolf-kills",
-          "currentValue": 8,
-          "recentValue": 2,
+          "currentValue": 10,
+          "recentValue": 4,
           "recentGameIds": [
-            "khalen-20260623130321"
+            "khalen-20260623130321",
+            "khalen-20260630133050"
           ],
           "unlockedLevels": [
             {
@@ -68899,7 +69245,7 @@
             "subLevel": 3,
             "threshold": 15
           },
-          "progress": 0.5333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "hunter-killed-by-wolf",
@@ -69025,9 +69371,9 @@
         {
           "id": "max-loot-single-game",
           "currentValue": 280,
-          "recentValue": 230,
+          "recentValue": 210,
           "recentGameIds": [
-            "Tsuna-20260609125546"
+            "khalen-20260623111650"
           ],
           "unlockedLevels": [],
           "nextLevel": {
@@ -69088,12 +69434,13 @@
         },
         {
           "id": "meneur",
-          "currentValue": 8,
-          "recentValue": 3,
+          "currentValue": 9,
+          "recentValue": 4,
           "recentGameIds": [
             "Tsuna-20260616124735",
             "khalen-20260623114214",
-            "khalen-20260623130321"
+            "khalen-20260623130321",
+            "khalen-20260630133050"
           ],
           "unlockedLevels": [
             {
@@ -69120,7 +69467,7 @@
             "subLevel": 1,
             "threshold": 10
           },
-          "progress": 0.8
+          "progress": 0.9
         },
         {
           "id": "democrat",
@@ -69142,10 +69489,10 @@
           "currentValue": 6,
           "recentValue": 4,
           "recentGameIds": [
-            "Tsuna-20260609125546",
             "Tsuna-20260616132329",
             "Tsuna-20260616134254",
-            "khalen-20260623111650"
+            "khalen-20260623111650",
+            "khalen-20260630125934"
           ],
           "unlockedLevels": [
             {
@@ -70327,15 +70674,13 @@
     "76561198245459930": {
       "playerId": "76561198245459930",
       "playerName": "Deujna",
-      "totalUnlocked": 88,
+      "totalUnlocked": 90,
       "achievements": [
         {
           "id": "victories-villageois",
           "currentValue": 57,
-          "recentValue": 8,
+          "recentValue": 6,
           "recentGameIds": [
-            "Tsuna-20260602111559",
-            "Tsuna-20260602113700",
             "Tsuna-20260602115645",
             "Tsuna-20260602122421",
             "Tsuna-20260609112720",
@@ -70533,12 +70878,32 @@
           "progress": 0.3333333333333333
         },
         {
-          "id": "starvation",
-          "currentValue": 1,
+          "id": "alakazam",
+          "currentValue": 2,
           "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260602104926"
+            "khalen-20260630113309"
           ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260421123244"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "starvation",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -70556,9 +70921,11 @@
         },
         {
           "id": "death-turn1",
-          "currentValue": 22,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 23,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630113309"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -70596,7 +70963,7 @@
             "subLevel": 3,
             "threshold": 35
           },
-          "progress": 0.6285714285714286
+          "progress": 0.6571428571428571
         },
         {
           "id": "voted-as-villager",
@@ -70699,8 +71066,14 @@
         {
           "id": "deaths-all-zones",
           "currentValue": 9,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "recentValue": 1,
+          "recentGameIds": [
+            "Tsuna-20260609102830",
+            "khalen-20260630113309",
+            "Tsuna-20260609115711",
+            "Tsuna-20260609125546",
+            "Tsuna-20260602124225"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -70744,10 +71117,13 @@
         },
         {
           "id": "wolf-kills",
-          "currentValue": 51,
-          "recentValue": 2,
+          "currentValue": 60,
+          "recentValue": 11,
           "recentGameIds": [
-            "Tsuna-20260609105701"
+            "Tsuna-20260609105701",
+            "khalen-20260630114009",
+            "khalen-20260630120224",
+            "khalen-20260630123444"
           ],
           "unlockedLevels": [
             {
@@ -70772,13 +71148,13 @@
               "tier": "argent",
               "subLevel": 1,
               "threshold": 30,
-              "unlockedAtGame": "Tsuna-20260609105701"
+              "unlockedAtGame": "khalen-20260630123444"
             },
             {
               "tier": "argent",
               "subLevel": 2,
               "threshold": 50,
-              "unlockedAtGame": "Tsuna-20260609105701"
+              "unlockedAtGame": "khalen-20260630123444"
             }
           ],
           "nextLevel": {
@@ -70786,7 +71162,7 @@
             "subLevel": 3,
             "threshold": 70
           },
-          "progress": 0.7285714285714285
+          "progress": 0.8571428571428571
         },
         {
           "id": "hunter-kill-enemy",
@@ -70823,16 +71199,20 @@
         },
         {
           "id": "consecutive-same-victim-kill",
-          "currentValue": 1,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 4,
+          "recentValue": 3,
+          "recentGameIds": [
+            "khalen-20260630120224",
+            "khalen-20260630120224",
+            "khalen-20260630123444"
+          ],
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.2
+          "progress": 0.8
         },
         {
           "id": "hunter-killed-by-wolf",
@@ -70964,11 +71344,12 @@
         },
         {
           "id": "revenge-kill",
-          "currentValue": 5,
-          "recentValue": 2,
+          "currentValue": 6,
+          "recentValue": 3,
           "recentGameIds": [
             "Tsuna-20260609105701",
-            "Tsuna-20260609131854"
+            "Tsuna-20260609131854",
+            "khalen-20260630114009"
           ],
           "unlockedLevels": [
             {
@@ -70983,7 +71364,7 @@
             "subLevel": 1,
             "threshold": 10
           },
-          "progress": 0.5
+          "progress": 0.6
         },
         {
           "id": "agent-wins",
@@ -71159,10 +71540,11 @@
         },
         {
           "id": "villageois-top-loot",
-          "currentValue": 6,
-          "recentValue": 1,
+          "currentValue": 7,
+          "recentValue": 2,
           "recentGameIds": [
-            "Tsuna-20260609122659"
+            "Tsuna-20260609122659",
+            "khalen-20260630105851"
           ],
           "unlockedLevels": [
             {
@@ -71177,7 +71559,7 @@
             "subLevel": 1,
             "threshold": 10
           },
-          "progress": 0.6
+          "progress": 0.7
         },
         {
           "id": "max-loot-single-game",
@@ -71216,15 +71598,13 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 55,
-          "recentValue": 6,
+          "currentValue": 56,
+          "recentValue": 4,
           "recentGameIds": [
-            "Tsuna-20260526131025",
-            "Tsuna-20260602102208",
-            "Tsuna-20260602113700",
             "Tsuna-20260602115645",
             "Tsuna-20260602124225",
-            "Tsuna-20260609125546"
+            "Tsuna-20260609125546",
+            "khalen-20260630113309"
           ],
           "unlockedLevels": [
             {
@@ -71275,7 +71655,7 @@
             "subLevel": 2,
             "threshold": 60
           },
-          "progress": 0.9166666666666666
+          "progress": 0.9333333333333333
         },
         {
           "id": "misunderstood",
@@ -71358,13 +71738,15 @@
         },
         {
           "id": "meneur",
-          "currentValue": 31,
-          "recentValue": 4,
+          "currentValue": 33,
+          "recentValue": 6,
           "recentGameIds": [
             "Tsuna-20260602115645",
             "Tsuna-20260609102830",
             "Tsuna-20260609122659",
-            "Tsuna-20260609131854"
+            "Tsuna-20260609131854",
+            "khalen-20260630105851",
+            "khalen-20260630120224"
           ],
           "unlockedLevels": [
             {
@@ -71421,7 +71803,7 @@
             "subLevel": 3,
             "threshold": 35
           },
-          "progress": 0.8857142857142857
+          "progress": 0.9428571428571428
         },
         {
           "id": "democrat",
@@ -71456,7 +71838,7 @@
           "currentValue": 2,
           "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260602111559"
+            "Tsuna-20260602115645"
           ],
           "unlockedLevels": [
             {
@@ -71481,11 +71863,9 @@
         },
         {
           "id": "winning-months",
-          "currentValue": 2,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260609131854"
-          ],
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -71499,7 +71879,7 @@
             "subLevel": 1,
             "threshold": 3
           },
-          "progress": 0.6666666666666666
+          "progress": 0.3333333333333333
         },
         {
           "id": "calife-a-la-place-du-calife",
@@ -71546,6 +71926,28 @@
             "threshold": 8
           },
           "progress": 0.625
+        },
+        {
+          "id": "collectionneur",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630105851"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260630105851"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "br-participations",
@@ -72509,20 +72911,17 @@
     "76561198158936831": {
       "playerId": "76561198158936831",
       "playerName": "Vicky_spleen",
-      "totalUnlocked": 35,
+      "totalUnlocked": 40,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 16,
-          "recentValue": 7,
+          "currentValue": 18,
+          "recentValue": 4,
           "recentGameIds": [
-            "Tsuna-20260609105701",
-            "Tsuna-20260609112720",
-            "Tsuna-20260609122659",
-            "Tsuna-20260609125546",
-            "Tsuna-20260609131854",
             "Tsuna-20260616132329",
-            "Tsuna-20260616134254"
+            "Tsuna-20260616134254",
+            "khalen-20260630123444",
+            "khalen-20260630133050"
           ],
           "unlockedLevels": [
             {
@@ -72549,7 +72948,7 @@
             "subLevel": 1,
             "threshold": 30
           },
-          "progress": 0.5333333333333333
+          "progress": 0.6
         },
         {
           "id": "victories-loup",
@@ -72582,23 +72981,31 @@
         },
         {
           "id": "victories-solo",
-          "currentValue": 1,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 2,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630113309"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "khalen-20260519122417"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "khalen-20260630113309"
             }
           ],
           "nextLevel": {
             "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 2
+            "subLevel": 3,
+            "threshold": 3
           },
-          "progress": 0.5
+          "progress": 0.6666666666666666
         },
         {
           "id": "vegan-wolf",
@@ -72642,16 +73049,18 @@
         },
         {
           "id": "speed-run",
-          "currentValue": 1,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 2,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630113309"
+          ],
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 3
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "wolf-sabotages",
@@ -72677,6 +73086,32 @@
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 3,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
+          "id": "alakazam",
+          "currentValue": 3,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260526134253"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Tsuna-20260609125546"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
             "threshold": 5
           },
           "progress": 0.6
@@ -72738,9 +73173,11 @@
         },
         {
           "id": "avenger-death",
-          "currentValue": 3,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 4,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630114009"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -72760,19 +73197,13 @@
             "subLevel": 3,
             "threshold": 5
           },
-          "progress": 0.6
+          "progress": 0.8
         },
         {
           "id": "deaths-all-zones",
           "currentValue": 2,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260609115711",
-            "Tsuna-20260609105701",
-            "Tsuna-20260609122659",
-            "Tsuna-20260616104439",
-            "Tsuna-20260616112139"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
@@ -72783,11 +73214,11 @@
         },
         {
           "id": "wolf-kills",
-          "currentValue": 12,
-          "recentValue": 3,
+          "currentValue": 14,
+          "recentValue": 4,
           "recentGameIds": [
-            "Tsuna-20260616101710",
-            "Tsuna-20260616124735"
+            "Tsuna-20260616124735",
+            "khalen-20260630120224"
           ],
           "unlockedLevels": [
             {
@@ -72808,7 +73239,7 @@
             "subLevel": 3,
             "threshold": 15
           },
-          "progress": 0.8
+          "progress": 0.9333333333333333
         },
         {
           "id": "consecutive-same-victim-kill",
@@ -72857,6 +73288,28 @@
           "progress": 0.625
         },
         {
+          "id": "idiot-du-village-wins",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630113309"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260630113309"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "espion-wins",
           "currentValue": 1,
           "recentValue": 0,
@@ -72878,9 +73331,11 @@
         },
         {
           "id": "solo-master",
-          "currentValue": 1,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 2,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630113309"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -72894,7 +73349,7 @@
             "subLevel": 1,
             "threshold": 3
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "max-loot-single-game",
@@ -72914,10 +73369,8 @@
         {
           "id": "wolf-transform-kill-nights",
           "currentValue": 3,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260616101710"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -72935,10 +73388,11 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 19,
-          "recentValue": 1,
+          "currentValue": 21,
+          "recentValue": 2,
           "recentGameIds": [
-            "Tsuna-20260609131854"
+            "khalen-20260630114009",
+            "khalen-20260630123444"
           ],
           "unlockedLevels": [
             {
@@ -72958,14 +73412,20 @@
               "subLevel": 3,
               "threshold": 10,
               "unlockedAtGame": "khalen-20260519130342"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 20,
+              "unlockedAtGame": "khalen-20260630114009"
             }
           ],
           "nextLevel": {
             "tier": "argent",
-            "subLevel": 1,
-            "threshold": 20
+            "subLevel": 2,
+            "threshold": 30
           },
-          "progress": 0.95
+          "progress": 0.7
         },
         {
           "id": "bavard",
@@ -73009,10 +73469,10 @@
         },
         {
           "id": "democrat",
-          "currentValue": 1,
+          "currentValue": 2,
           "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260609125546"
+            "khalen-20260630133050"
           ],
           "unlockedLevels": [],
           "nextLevel": {
@@ -73020,14 +73480,14 @@
             "subLevel": 1,
             "threshold": 3
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "colors-of-lycans",
           "currentValue": 2,
           "recentValue": 1,
           "recentGameIds": [
-            "Tsuna-20260609105701"
+            "Tsuna-20260616104439"
           ],
           "unlockedLevels": [
             {
@@ -73053,16 +73513,14 @@
         {
           "id": "winning-months",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Tsuna-20260616134254"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
-              "unlockedAtGame": "Tsuna-20260616134254"
+              "unlockedAtGame": "khalen-20260630133050"
             }
           ],
           "nextLevel": {
@@ -74890,6 +75348,156 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        }
+      ]
+    },
+    "76561199001131054": {
+      "playerId": "76561199001131054",
+      "playerName": "Mlle Sunny",
+      "totalUnlocked": 5,
+      "achievements": [
+        {
+          "id": "victories-villageois",
+          "currentValue": 3,
+          "recentValue": 3,
+          "recentGameIds": [
+            "khalen-20260630123444",
+            "khalen-20260630125934",
+            "khalen-20260630133050"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260630123444"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
+          "id": "death-turn1",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630113309"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "wolf-kills",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630120224"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260630120224"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 390,
+          "recentValue": 390,
+          "recentGameIds": [
+            "khalen-20260630123444"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.975
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 2,
+          "recentValue": 2,
+          "recentGameIds": [
+            "khalen-20260630105851",
+            "khalen-20260630133050"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260630105851"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
+          "id": "democrat",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260630133050"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "colors-of-lycans",
+          "currentValue": 2,
+          "recentValue": 2,
+          "recentGameIds": [
+            "khalen-20260630123444",
+            "khalen-20260630133050"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260630123444"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "khalen-20260630133050"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         }
       ]
     }

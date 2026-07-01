@@ -53,7 +53,7 @@ const BRKillsStatsChart = lazy(() => import('./components/brstats/BRKillsStatsCh
 const BRMiniChart = lazy(() => import('./components/brstats/BRMiniChart').then(m => ({ default: m.BRMiniChart })));
 
 const DeathLocationHeatmap = lazy(() => import('./components/generalstats/deathStats/DeathLocationHeatmap').then(m => ({ default: m.DeathLocationHeatmap })));
-const TransformationZoneChart = lazy(() => import('./components/generalstats/TransformationZoneChart').then(m => ({ default: m.TransformationZoneChart })));
+const TransformationZoneChart = lazy(() => import('./components/generalstats/TransformationsChart').then(m => ({ default: m.TransformationZoneChart })));
 const EventsStatsChart = lazy(() => import('./components/generalstats/EventsStatsChart').then(m => ({ default: m.EventsStatsChart })));
 
 const GameDetailsChart = lazy(() => import('./components/gamedetails/GameDetailsChart').then(m => ({ default: m.GameDetailsChart })));
