@@ -1,12 +1,15 @@
 import { useMemo } from 'react';
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Rectangle } from 'recharts';
 import { useCombinedFilteredRawData } from '../../../hooks/useCombinedRawData';
+import type { PlayerStat } from '../../../hooks/useCombinedRawData';
 import { useJoueursData } from '../../../hooks/useJoueursData';
 import { useThemeAdjustedLycansColorScheme, useThemeAdjustedDynamicPlayersColor } from '../../../types/api';
 import { FullscreenChart } from '../../common/FullscreenChart';
 import { CHART_LIMITS } from '../../../config/chartConstants';
 import { calculateNightsAsWolf, isWolfRole } from '../../../utils/wolfTransformUtils';
 import { compareVersion } from '../../../hooks/utils/dataUtils';
+import { getPlayerCampFromRole } from '../../../utils/datasyncExport';
+import { DEATH_TYPES } from '../../../types/deathTypes';
 
 interface PlayerHistoryRoleActionsProps {
   selectedPlayerName: string;
@@ -16,6 +19,10 @@ interface RoleActionStatistics {
   hunterTargets: { target: string; count: number }[];
   hunterMissedShots: number;
   hunterTotalShots: number;
+  villageoisKilled: number;
+  wolfKilledAsHuman: number;
+  wolfKilledAsWolf: number;
+  soloRoleKilled: number;
   transformCount: number;
   untransformCount: number;
   transformationsPerGame: number;
@@ -27,6 +34,35 @@ interface RoleActionStatistics {
   sabotageGamesAsWolf: number;
   sabotagePerWolfGame: number;
   sabotageByLocation: { name: string; count: number }[];
+}
+
+/**
+ * Determines a player's effective main role at a specific point in real-life time,
+ * accounting for mid-game role changes (e.g. Villageois -> Traître).
+ */
+function getPlayerRoleAtDate(player: PlayerStat, targetDate: string | null): string {
+  let currentRole = player.MainRoleInitial;
+  const changes = player.MainRoleChanges;
+
+  if (!targetDate || !changes || changes.length === 0) {
+    return currentRole;
+  }
+
+  const targetTime = new Date(targetDate).getTime();
+  const sortedChanges = [...changes].sort(
+    (a, b) => new Date(a.RoleChangeDateIrl).getTime() - new Date(b.RoleChangeDateIrl).getTime()
+  );
+
+  for (const change of sortedChanges) {
+    const changeTime = new Date(change.RoleChangeDateIrl).getTime();
+    if (changeTime <= targetTime) {
+      currentRole = change.NewMainRole;
+    } else {
+      break;
+    }
+  }
+
+  return currentRole;
 }
 
 export function PlayerHistoryRoleActions({ selectedPlayerName }: PlayerHistoryRoleActionsProps) {
@@ -42,6 +78,10 @@ export function PlayerHistoryRoleActions({ selectedPlayerName }: PlayerHistoryRo
         hunterTargets: [],
         hunterMissedShots: 0,
         hunterTotalShots: 0,
+        villageoisKilled: 0,
+        wolfKilledAsHuman: 0,
+        wolfKilledAsWolf: 0,
+        soloRoleKilled: 0,
         transformCount: 0,
         untransformCount: 0,
         transformationsPerGame: 0,
@@ -65,6 +105,10 @@ export function PlayerHistoryRoleActions({ selectedPlayerName }: PlayerHistoryRo
     let totalNightsAsWolf = 0;
     let sabotageCount = 0;
     let sabotageGamesAsWolf = 0;
+    let villageoisKilled = 0;
+    let wolfKilledAsHuman = 0;
+    let wolfKilledAsWolf = 0;
+    let soloRoleKilled = 0;
     const sabotageByLocationMap: Record<string, number> = {};
 
     // Process each game
@@ -112,6 +156,38 @@ export function PlayerHistoryRoleActions({ selectedPlayerName }: PlayerHistoryRo
           // Track hunter targets (successful shots)
           if (action.ActionTarget) {
             hunterTargetsMap[action.ActionTarget] = (hunterTargetsMap[action.ActionTarget] || 0) + 1;
+
+            // Identify the victim to classify the kill by camp/death form.
+            // Only count kills confirmed by the victim's own death record
+            // (KillerName matches this player and DeathType is a hunter bullet).
+            const victim = game.PlayerStats.find(p => p.Username === action.ActionTarget);
+            if (
+              victim &&
+              victim.KillerName?.toLowerCase() === selectedPlayerName.toLowerCase() &&
+              (victim.DeathType === DEATH_TYPES.BULLET_HUMAN || victim.DeathType === DEATH_TYPES.BULLET_WOLF)
+            ) {
+              // Resolve the victim's role at the exact moment they were hit,
+              // in case they changed camp during the game (e.g. became a Traître).
+              const victimRoleAtDeath = getPlayerRoleAtDate(victim, victim.DeathDateIrl);
+              const victimPowerAtDeath = victimRoleAtDeath === 'Villageois Élite' ? victim.Power : null;
+              const victimCamp = getPlayerCampFromRole(
+                victimRoleAtDeath,
+                { regroupLovers: true, regroupVillagers: true, regroupWolfSubRoles: true },
+                victimPowerAtDeath
+              );
+
+              if (victimCamp === 'Villageois' && victim.DeathType === DEATH_TYPES.BULLET_HUMAN) {
+                villageoisKilled++;
+              } else if (victimCamp === 'Loup') {
+                if (victim.DeathType === DEATH_TYPES.BULLET_HUMAN) {
+                  wolfKilledAsHuman++;
+                } else {
+                  wolfKilledAsWolf++;
+                }
+              } else if (victim.DeathType === DEATH_TYPES.BULLET_HUMAN) {
+                soloRoleKilled++;
+              }
+            }
           }
         } else if (action.ActionType === 'Transform') {
           transformCount++;
@@ -178,6 +254,10 @@ export function PlayerHistoryRoleActions({ selectedPlayerName }: PlayerHistoryRo
       hunterTargets,
       hunterMissedShots,
       hunterTotalShots,
+      villageoisKilled,
+      wolfKilledAsHuman,
+      wolfKilledAsWolf,
+      soloRoleKilled,
       transformCount,
       untransformCount,
       transformationsPerGame,
@@ -211,37 +291,55 @@ export function PlayerHistoryRoleActions({ selectedPlayerName }: PlayerHistoryRo
 
       {/* Hunter Targets Bar Chart */}
       {roleActionStatistics.hunterTotalShots > 0 && (
-        <div className="lycans-graphique-section">
+        <div className="lycans-graphique-section" style={{ flex: '1 1 100%' }}>
           <h3>Statistiques du Chasseur</h3>
           
           {/* Hunter Accuracy Summary */}
           <div className="lycans-resume-conteneur" style={{ marginBottom: '20px' }}>
 
-            
             <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
-              <h3>✅ Tirs réussis</h3>
-              <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem', color: lycansColors['Chasseur'] || 'var(--chart-color-2)' }}>
-                {roleActionStatistics.hunterTotalShots - roleActionStatistics.hunterMissedShots}
+              <h3>🎯 Précision des tirs</h3>
+              <div style={{ textAlign: 'center' }}>
+                <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem', color: lycansColors['Chasseur'] || 'var(--chart-color-2)' }}>
+                  {roleActionStatistics.hunterTotalShots - roleActionStatistics.hunterMissedShots}/{roleActionStatistics.hunterTotalShots} ({roleActionStatistics.hunterTotalShots > 0
+                    ? ((roleActionStatistics.hunterTotalShots - roleActionStatistics.hunterMissedShots) / roleActionStatistics.hunterTotalShots * 100).toFixed(1)
+                    : '0'}%)
+                </div>
               </div>
-              <p>cibles touchées</p>
             </div>
-            
+
             <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
-              <h3>❌ Tirs manqués</h3>
-              <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem', color: 'var(--text-secondary)' }}>
-                {roleActionStatistics.hunterMissedShots}
+              <h3>🧑‍🌾 Villageois tué</h3>
+              <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem', color: lycansColors['Villageois'] || 'var(--chart-color-2)' }}>
+                {roleActionStatistics.villageoisKilled}
               </div>
-              <p>tirs sans cible</p>
+              <p>tué en tant que Villageois</p>
             </div>
-            
+
             <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
-              <h3>📊 Précision</h3>
-              <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem', color: lycansColors['Chasseur'] || 'var(--chart-color-2)' }}>
-                {roleActionStatistics.hunterTotalShots > 0 
-                  ? ((roleActionStatistics.hunterTotalShots - roleActionStatistics.hunterMissedShots) / roleActionStatistics.hunterTotalShots * 100).toFixed(1)
-                  : '0'}%
+              <h3>🐺 Loup tué</h3>
+              <div style={{ display: 'flex', justifyContent: 'space-around', gap: '8px' }}>
+                <div>
+                  <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem', color: lycansColors['Loup'] || 'var(--wolf-color)' }}>
+                    {roleActionStatistics.wolfKilledAsHuman}
+                  </div>
+                  <p>en forme humaine</p>
+                </div>
+                <div>
+                  <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem', color: lycansColors['Loup'] || 'var(--wolf-color)' }}>
+                    {roleActionStatistics.wolfKilledAsWolf}
+                  </div>
+                  <p>en forme de loup</p>
+                </div>
               </div>
-              <p>taux de réussite</p>
+            </div>
+
+            <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
+              <h3>🃏 Solo tué</h3>
+              <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem', color: 'var(--accent-primary-text)' }}>
+                {roleActionStatistics.soloRoleKilled}
+              </div>
+              <p>Rôle solo tué</p>
             </div>
           </div>
           
@@ -345,14 +443,6 @@ export function PlayerHistoryRoleActions({ selectedPlayerName }: PlayerHistoryRo
                 })()}
               </div>
               <p>détransformations / transformations</p>
-            </div>
-            
-            <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
-              <h3>🌙 Nuits totales</h3>
-              <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem', color: 'var(--accent-primary-text)' }}>
-                {roleActionStatistics.totalNightsAsWolf}
-              </div>
-              <p>nuits vécues en loup (opportunités)</p>
             </div>
             
             <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
