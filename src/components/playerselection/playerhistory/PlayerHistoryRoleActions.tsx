@@ -156,38 +156,6 @@ export function PlayerHistoryRoleActions({ selectedPlayerName }: PlayerHistoryRo
           // Track hunter targets (successful shots)
           if (action.ActionTarget) {
             hunterTargetsMap[action.ActionTarget] = (hunterTargetsMap[action.ActionTarget] || 0) + 1;
-
-            // Identify the victim to classify the kill by camp/death form.
-            // Only count kills confirmed by the victim's own death record
-            // (KillerName matches this player and DeathType is a hunter bullet).
-            const victim = game.PlayerStats.find(p => p.Username === action.ActionTarget);
-            if (
-              victim &&
-              victim.KillerName?.toLowerCase() === selectedPlayerName.toLowerCase() &&
-              (victim.DeathType === DEATH_TYPES.BULLET_HUMAN || victim.DeathType === DEATH_TYPES.BULLET_WOLF)
-            ) {
-              // Resolve the victim's role at the exact moment they were hit,
-              // in case they changed camp during the game (e.g. became a Traître).
-              const victimRoleAtDeath = getPlayerRoleAtDate(victim, victim.DeathDateIrl);
-              const victimPowerAtDeath = victimRoleAtDeath === 'Villageois Élite' ? victim.Power : null;
-              const victimCamp = getPlayerCampFromRole(
-                victimRoleAtDeath,
-                { regroupLovers: true, regroupVillagers: true, regroupWolfSubRoles: true },
-                victimPowerAtDeath
-              );
-
-              if (victimCamp === 'Villageois' && victim.DeathType === DEATH_TYPES.BULLET_HUMAN) {
-                villageoisKilled++;
-              } else if (victimCamp === 'Loup') {
-                if (victim.DeathType === DEATH_TYPES.BULLET_HUMAN) {
-                  wolfKilledAsHuman++;
-                } else {
-                  wolfKilledAsWolf++;
-                }
-              } else if (victim.DeathType === DEATH_TYPES.BULLET_HUMAN) {
-                soloRoleKilled++;
-              }
-            }
           }
         } else if (action.ActionType === 'Transform') {
           transformCount++;
@@ -200,6 +168,39 @@ export function PlayerHistoryRoleActions({ selectedPlayerName }: PlayerHistoryRo
           gameHasTrackedActions = true;
           if (action.ActionName) {
             sabotageByLocationMap[action.ActionName] = (sabotageByLocationMap[action.ActionName] || 0) + 1;
+          }
+        }
+      });
+
+      // Classify kills made by this player as Hunter, based on each victim's own death
+      // record (KillerName + DeathType). This mirrors the approach used in the general
+      // Hunter Rankings (computeHunterStatistics) and does not depend on the Actions log,
+      // so older games without detailed action tracking are still counted.
+      game.PlayerStats.forEach(victim => {
+        if (
+          victim.KillerName?.toLowerCase() === selectedPlayerName.toLowerCase() &&
+          (victim.DeathType === DEATH_TYPES.BULLET_HUMAN || victim.DeathType === DEATH_TYPES.BULLET_WOLF)
+        ) {
+          // Resolve the victim's role at the exact moment they were hit,
+          // in case they changed camp during the game (e.g. became a Traître).
+          const victimRoleAtDeath = getPlayerRoleAtDate(victim, victim.DeathDateIrl);
+          const victimPowerAtDeath = victimRoleAtDeath === 'Villageois Élite' ? victim.Power : null;
+          const victimCamp = getPlayerCampFromRole(
+            victimRoleAtDeath,
+            { regroupLovers: true, regroupVillagers: true, regroupWolfSubRoles: true },
+            victimPowerAtDeath
+          );
+
+          if (victimCamp === 'Villageois' && victim.DeathType === DEATH_TYPES.BULLET_HUMAN) {
+            villageoisKilled++;
+          } else if (victimCamp === 'Loup') {
+            if (victim.DeathType === DEATH_TYPES.BULLET_HUMAN) {
+              wolfKilledAsHuman++;
+            } else {
+              wolfKilledAsWolf++;
+            }
+          } else if (victim.DeathType === DEATH_TYPES.BULLET_HUMAN) {
+            soloRoleKilled++;
           }
         }
       });
@@ -273,7 +274,12 @@ export function PlayerHistoryRoleActions({ selectedPlayerName }: PlayerHistoryRo
   }, [filteredGameData, selectedPlayerName]);
 
   // Check if we have any data to display
-  const hasData = roleActionStatistics.hunterTotalShots > 0 || roleActionStatistics.transformCount > 0 || roleActionStatistics.untransformCount > 0 || roleActionStatistics.sabotageCount > 0;
+  const hasHunterKillsData = roleActionStatistics.hunterTotalShots > 0 ||
+    roleActionStatistics.villageoisKilled > 0 ||
+    roleActionStatistics.wolfKilledAsHuman > 0 ||
+    roleActionStatistics.wolfKilledAsWolf > 0 ||
+    roleActionStatistics.soloRoleKilled > 0;
+  const hasData = hasHunterKillsData || roleActionStatistics.transformCount > 0 || roleActionStatistics.untransformCount > 0 || roleActionStatistics.sabotageCount > 0;
 
   if (!hasData) {
     return (
@@ -290,23 +296,25 @@ export function PlayerHistoryRoleActions({ selectedPlayerName }: PlayerHistoryRo
     <div className="lycans-graphiques-groupe">
 
       {/* Hunter Targets Bar Chart */}
-      {roleActionStatistics.hunterTotalShots > 0 && (
+      {hasHunterKillsData && (
         <div className="lycans-graphique-section" style={{ flex: '1 1 100%' }}>
           <h3>Statistiques du Chasseur</h3>
           
           {/* Hunter Accuracy Summary */}
           <div className="lycans-resume-conteneur" style={{ marginBottom: '20px' }}>
 
-            <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
-              <h3>🎯 Précision des tirs</h3>
-              <div style={{ textAlign: 'center' }}>
-                <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem', color: lycansColors['Chasseur'] || 'var(--chart-color-2)' }}>
-                  {roleActionStatistics.hunterTotalShots - roleActionStatistics.hunterMissedShots}/{roleActionStatistics.hunterTotalShots} ({roleActionStatistics.hunterTotalShots > 0
-                    ? ((roleActionStatistics.hunterTotalShots - roleActionStatistics.hunterMissedShots) / roleActionStatistics.hunterTotalShots * 100).toFixed(1)
-                    : '0'}%)
+            {roleActionStatistics.hunterTotalShots > 0 && (
+              <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
+                <h3>🎯 Précision des tirs</h3>
+                <div style={{ textAlign: 'center' }}>
+                  <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem', color: lycansColors['Chasseur'] || 'var(--chart-color-2)' }}>
+                    {roleActionStatistics.hunterTotalShots - roleActionStatistics.hunterMissedShots}/{roleActionStatistics.hunterTotalShots} ({roleActionStatistics.hunterTotalShots > 0
+                      ? ((roleActionStatistics.hunterTotalShots - roleActionStatistics.hunterMissedShots) / roleActionStatistics.hunterTotalShots * 100).toFixed(1)
+                      : '0'}%)
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
             <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
               <h3>🧑‍🌾 Villageois tué</h3>
