@@ -17,6 +17,7 @@ export const DeathTypeCode = {
   
   // Wolf Kills
   BY_WOLF: 'BY_WOLF',                       // Tué par Loup
+  MOLE: 'MOLE',                             // Tué par Loup (joueur infiltré)
   SURVIVALIST_NOT_SAVED: 'SURVIVALIST_NOT_SAVED', // Tué par Loup (Survivaliste non sauvé)
   
   // Other Creature Kills
@@ -57,6 +58,23 @@ export const DeathTypeCode = {
   // Unknown/Special
   UNKNOWN: 'UNKNOWN',                       // Inconnu / Unrecognized death type
   SURVIVOR: 'SURVIVOR',                     // Not dead / Survived the game (used for filtering)
+};
+
+/**
+ * Death type categories for grouping (mirrors DEATH_TYPE_CATEGORIES in deathTypes.ts)
+ * @type {Record<string, string[]>}
+ */
+export const DeathTypeCategoryCode = {
+  VOTING: ['VOTED'],
+  WOLF_KILLS: ['BY_WOLF', 'MOLE'],
+  CREATURE_KILLS: ['BY_ZOMBIE', 'BY_BEAST'],
+  HUNTER_KILLS: ['BULLET', 'BULLET_HUMAN', 'BULLET_WOLF'],
+  ROLE_KILLS: ['OTHER_AGENT', 'AVENGER', 'SEER', 'KILLED_VILLAGE_IDIOT'],
+  POTIONS: ['HANTED', 'ASSASSIN'],
+  LOVER_DEATHS: ['LOVER_DEATH'],
+  SMUGGLER_DEATHS: ['SMUGGLER_HUNT_KILL', 'SMUGGLER_LOOT_FAILURE'],
+  MERCENARY_DEATHS: ['MERCENARY_HUNT_KILL', 'MERCENARY_LOOT_FAILURE'],
+  ENVIRONMENTAL: ['STARVATION', 'STARVATION_AS_BEAST', 'BOMB', 'CRUSHED', 'FALL', 'BY_AVATAR_CHAIN'],
 };
 
 /**

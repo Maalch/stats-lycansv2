@@ -149,6 +149,7 @@ export function getKillDescription(deathTypeCode: DeathType): string {
       return 'Mort aux votes';
     case DEATH_TYPES.BY_WOLF:
     case DEATH_TYPES.SURVIVALIST_NOT_SAVED:
+    case DEATH_TYPES.MOLE:
       return 'Kill en Loup';
     case DEATH_TYPES.BY_ZOMBIE:
       return 'Kill en Zombie';

@@ -6,7 +6,7 @@
  */
 
 import { isHunterRole, isWolfCamp, getPlayerCampForAchievement, getDeathDay, isKilledByPlayer, getPlayerId, getKillerPlayerId } from './helpers.js';
-import { DeathTypeCode } from './helpers.js';
+import { DeathTypeCode, DeathTypeCategoryCode } from './helpers.js';
 
 /**
  * Count deaths as a specific camp role by a specific death type
@@ -38,9 +38,7 @@ export function hunterKillsEnemy(playerGames, allGames, playerId, params) {
     if (!isHunterRole(playerStat)) continue;
     
     for (const victim of game.PlayerStats) {
-      const isHunterKill = victim.DeathType === DeathTypeCode.BULLET ||
-                           victim.DeathType === DeathTypeCode.BULLET_HUMAN ||
-                           victim.DeathType === DeathTypeCode.BULLET_WOLF;
+      const isHunterKill = DeathTypeCategoryCode.HUNTER_KILLS.includes(victim.DeathType);
       if (!isHunterKill) continue;
       if (!isKilledByPlayer(game, victim, playerId)) continue;
       
@@ -96,9 +94,7 @@ export function hunterKillsAlly(playerGames, allGames, playerId, params) {
     if (!isHunterRole(playerStat)) continue;
     
     for (const victim of game.PlayerStats) {
-      const isHunterKill = victim.DeathType === DeathTypeCode.BULLET ||
-                           victim.DeathType === DeathTypeCode.BULLET_HUMAN ||
-                           victim.DeathType === DeathTypeCode.BULLET_WOLF;
+      const isHunterKill = DeathTypeCategoryCode.HUNTER_KILLS.includes(victim.DeathType);
       if (!isHunterKill) continue;
       if (!isKilledByPlayer(game, victim, playerId)) continue;
       
@@ -129,9 +125,7 @@ export function hunterMultiKillsInGame(playerGames, allGames, playerId, params) 
     const hunterCamp = getPlayerCampForAchievement(playerStat, false, { regroupWolfSubRoles: true });
     
     for (const victim of game.PlayerStats) {
-      const isHunterKill = victim.DeathType === DeathTypeCode.BULLET ||
-                           victim.DeathType === DeathTypeCode.BULLET_HUMAN ||
-                           victim.DeathType === DeathTypeCode.BULLET_WOLF;
+      const isHunterKill = DeathTypeCategoryCode.HUNTER_KILLS.includes(victim.DeathType);
       if (!isHunterKill) continue;
       if (!isKilledByPlayer(game, victim, playerId)) continue;
       
@@ -157,7 +151,7 @@ export function hunterKilledByWolf(playerGames, allGames, playerId, params) {
   let value = 0;
   for (const { game, playerStat } of playerGames) {
     if (!isHunterRole(playerStat)) continue;
-    if (playerStat.DeathType !== DeathTypeCode.BY_WOLF) continue;
+    if (!DeathTypeCategoryCode.WOLF_KILLS.includes(playerStat.DeathType)) continue;
     value++;
     gameIds.push(game.Id);
   }
@@ -324,9 +318,7 @@ export function hunterKillsLastWolf(playerGames, allGames, playerId, params) {
     // Find wolves killed by this player's bullet at the exact game-end timing
     let bulletEndedGame = false;
     for (const victim of game.PlayerStats) {
-      const isBulletKill = victim.DeathType === DeathTypeCode.BULLET ||
-                           victim.DeathType === DeathTypeCode.BULLET_HUMAN ||
-                           victim.DeathType === DeathTypeCode.BULLET_WOLF;
+      const isBulletKill = DeathTypeCategoryCode.HUNTER_KILLS.includes(victim.DeathType);
       if (!isBulletKill) continue;
       if (!isKilledByPlayer(game, victim, playerId)) continue;
       if (!isWolfCamp(victim)) continue;

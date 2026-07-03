@@ -354,7 +354,7 @@ export function DeathLocationHeatmap() {
     const colorMap: Record<DeathTypeCodeType, string> = {} as Record<DeathTypeCodeType, string>;
     
     availableDeathTypes.forEach(deathTypeCode => {
-      if (deathTypeCode === DeathTypeCode.BY_WOLF) {
+      if (deathTypeCode === DeathTypeCode.BY_WOLF || deathTypeCode === DeathTypeCode.MOLE) {
         colorMap[deathTypeCode] = lycansColors['Loup'];
       } else if (deathTypeCode === DeathTypeCode.VOTED) {
         colorMap[deathTypeCode] = 'var(--chart-color-1)';
