@@ -118,8 +118,8 @@ export interface ActionMetaStatsData {
 }
 
 function computeActionMetaStats(gameData: GameLogEntry[]): ActionMetaStatsData {
-  // Filter for modded games only (actions are only in modded games)
-  const moddedGames = gameData.filter(g => g.Modded);
+  // Filter for modded games with version >= 0.217 only (actions are reliable from this version)
+  const moddedGames = gameData.filter(g => g.Modded && parseFloat(g.Version || '0') >= 0.217);
 
   // Track all gadgets, potions, accessories, and parchemins
   const gadgetUsageMap = new Map<string, { uses: number; wins: number; camp: Map<string, { uses: number; wins: number }> }>();

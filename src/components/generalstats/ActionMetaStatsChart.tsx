@@ -825,6 +825,10 @@ export function ActionMetaStatsChart() {
           {selectedView === 'hunter' && renderHunterView()}
         </div>
       </div>
+
+      <div style={{ marginTop: '2rem', padding: '0.75rem 1rem', borderTop: '1px solid var(--border-color)', fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
+        📋 Données limitées aux parties moddées à partir de la version <strong>0.217</strong>.
+      </div>
     </div>
   );
 }
