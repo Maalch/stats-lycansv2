@@ -1,9 +1,9 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-06-30T14:16:25.075Z",
+  "generatedAt": "2026-07-05T07:01:35.021Z",
   "teamName": "Discord Team",
-  "totalPlayers": 219,
-  "totalGames": 643,
+  "totalPlayers": 228,
+  "totalGames": 654,
   "recentGamesCount": 15,
   "categories": {
     "victories": {
@@ -2940,20 +2940,19 @@
     "76561198153298747": {
       "playerId": "76561198153298747",
       "playerName": "Timaki",
-      "totalUnlocked": 114,
+      "totalUnlocked": 117,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 113,
-          "recentValue": 7,
+          "currentValue": 114,
+          "recentValue": 6,
           "recentGameIds": [
-            "Nales-20260619201608",
-            "Nales-20260626191104",
             "Nales-20260626203610",
             "Nales-20260626205957",
             "Nales-20260628192619",
             "Nales-20260628195306",
-            "Nales-20260628203455"
+            "Nales-20260628203455",
+            "Nales-20260701200020"
           ],
           "unlockedLevels": [
             {
@@ -3004,7 +3003,7 @@
             "subLevel": 2,
             "threshold": 150
           },
-          "progress": 0.7533333333333333
+          "progress": 0.76
         },
         {
           "id": "victories-loup",
@@ -3047,10 +3046,8 @@
         {
           "id": "victories-solo",
           "currentValue": 3,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260619204826"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -3172,23 +3169,31 @@
         },
         {
           "id": "lost-after-camp-switch",
-          "currentValue": 2,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 3,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260701202132"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Nales-20251121203724"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Nales-20260701202132"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "or",
             "subLevel": 1,
-            "threshold": 3
+            "threshold": 5
           },
-          "progress": 0.6666666666666666
+          "progress": 0.6
         },
         {
           "id": "wolf-sabotages",
@@ -3320,11 +3325,12 @@
         },
         {
           "id": "death-turn1",
-          "currentValue": 17,
-          "recentValue": 2,
+          "currentValue": 18,
+          "recentValue": 3,
           "recentGameIds": [
             "Nales-20260626203610",
-            "Nales-20260628205130"
+            "Nales-20260628205130",
+            "Nales-20260701202132"
           ],
           "unlockedLevels": [
             {
@@ -3357,7 +3363,7 @@
             "subLevel": 2,
             "threshold": 20
           },
-          "progress": 0.85
+          "progress": 0.9
         },
         {
           "id": "voted-as-villager",
@@ -3441,9 +3447,15 @@
         },
         {
           "id": "deaths-all-zones",
-          "currentValue": 10,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 11,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260626203610",
+            "Nales-20260701202132",
+            "Nales-20260701204623",
+            "Nales-20260628192619",
+            "Nales-20260626195634"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -3469,7 +3481,7 @@
             "subLevel": 1,
             "threshold": 20
           },
-          "progress": 0.5
+          "progress": 0.55
         },
         {
           "id": "idiot-survived-with-votes",
@@ -3525,10 +3537,10 @@
         },
         {
           "id": "wolf-kills",
-          "currentValue": 105,
-          "recentValue": 2,
+          "currentValue": 106,
+          "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260619200442"
+            "Nales-20260701202132"
           ],
           "unlockedLevels": [
             {
@@ -3559,19 +3571,19 @@
               "tier": "argent",
               "subLevel": 2,
               "threshold": 50,
-              "unlockedAtGame": "Nales-20260619200442"
+              "unlockedAtGame": "Nales-20260701202132"
             },
             {
               "tier": "argent",
               "subLevel": 3,
               "threshold": 70,
-              "unlockedAtGame": "Nales-20260619200442"
+              "unlockedAtGame": "Nales-20260701202132"
             },
             {
               "tier": "or",
               "subLevel": 1,
               "threshold": 100,
-              "unlockedAtGame": "Nales-20260619200442"
+              "unlockedAtGame": "Nales-20260701202132"
             }
           ],
           "nextLevel": {
@@ -3579,7 +3591,7 @@
             "subLevel": 2,
             "threshold": 150
           },
-          "progress": 0.7
+          "progress": 0.7066666666666667
         },
         {
           "id": "hunter-kill-enemy",
@@ -3795,10 +3807,8 @@
         {
           "id": "scientifique-wins",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260619204826"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -3883,10 +3893,8 @@
         {
           "id": "solo-master",
           "currentValue": 3,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260619204826"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -3910,11 +3918,11 @@
         },
         {
           "id": "villageois-top-loot",
-          "currentValue": 15,
+          "currentValue": 16,
           "recentValue": 2,
           "recentGameIds": [
-            "Nales-20260619201608",
-            "Nales-20260626205957"
+            "Nales-20260626205957",
+            "Nales-20260701190728"
           ],
           "unlockedLevels": [
             {
@@ -3941,14 +3949,14 @@
             "subLevel": 1,
             "threshold": 30
           },
-          "progress": 0.5
+          "progress": 0.5333333333333333
         },
         {
           "id": "max-loot-single-game",
           "currentValue": 600,
-          "recentValue": 600,
+          "recentValue": 570,
           "recentGameIds": [
-            "Nales-20260619201608"
+            "Nales-20260701190728"
           ],
           "unlockedLevels": [
             {
@@ -3986,13 +3994,13 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 62,
+          "currentValue": 63,
           "recentValue": 4,
           "recentGameIds": [
-            "Nales-20260619201608",
             "Nales-20260626203610",
             "Nales-20260626205957",
-            "Nales-20260628203455"
+            "Nales-20260628203455",
+            "Nales-20260701204623"
           ],
           "unlockedLevels": [
             {
@@ -4049,7 +4057,7 @@
             "subLevel": 3,
             "threshold": 70
           },
-          "progress": 0.8857142857142857
+          "progress": 0.9
         },
         {
           "id": "misunderstood",
@@ -4126,13 +4134,14 @@
         },
         {
           "id": "meneur",
-          "currentValue": 101,
-          "recentValue": 5,
+          "currentValue": 104,
+          "recentValue": 7,
           "recentGameIds": [
-            "Nales-20260626191104",
             "Nales-20260626195634",
             "Nales-20260626201209",
-            "Nales-20260626205957"
+            "Nales-20260626205957",
+            "Nales-20260701190728",
+            "Nales-20260701200020"
           ],
           "unlockedLevels": [
             {
@@ -4202,10 +4211,8 @@
         {
           "id": "democrat",
           "currentValue": 22,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260619201608"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -4264,7 +4271,7 @@
           "currentValue": 1,
           "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260619201608"
+            "Nales-20260626203610"
           ],
           "unlockedLevels": [
             {
@@ -4284,10 +4291,8 @@
         {
           "id": "winning-months",
           "currentValue": 2,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260628205130"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -4305,10 +4310,11 @@
         },
         {
           "id": "resurrected",
-          "currentValue": 7,
-          "recentValue": 1,
+          "currentValue": 8,
+          "recentValue": 2,
           "recentGameIds": [
-            "Nales-20260628190821"
+            "Nales-20260628190821",
+            "Nales-20260701202132"
           ],
           "unlockedLevels": [
             {
@@ -4322,14 +4328,20 @@
               "subLevel": 1,
               "threshold": 3,
               "unlockedAtGame": "Nales-20260204200903"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 8,
+              "unlockedAtGame": "Nales-20260701202132"
             }
           ],
           "nextLevel": {
-            "tier": "or",
+            "tier": "lycans",
             "subLevel": 1,
-            "threshold": 8
+            "threshold": 15
           },
-          "progress": 0.875
+          "progress": 0.5333333333333333
         },
         {
           "id": "juste-un-dernier-verre",
@@ -4353,10 +4365,11 @@
         },
         {
           "id": "collectionneur",
-          "currentValue": 7,
-          "recentValue": 1,
+          "currentValue": 8,
+          "recentValue": 2,
           "recentGameIds": [
-            "Nales-20260626201209"
+            "Nales-20260626201209",
+            "Nales-20260701194039"
           ],
           "unlockedLevels": [
             {
@@ -4370,14 +4383,20 @@
               "subLevel": 1,
               "threshold": 3,
               "unlockedAtGame": "Nales-20260503201903"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 8,
+              "unlockedAtGame": "Nales-20260701194039"
             }
           ],
           "nextLevel": {
-            "tier": "or",
+            "tier": "lycans",
             "subLevel": 1,
-            "threshold": 8
+            "threshold": 15
           },
-          "progress": 0.875
+          "progress": 0.5333333333333333
         }
       ]
     },
@@ -5445,14 +5464,13 @@
     "76561198364697515": {
       "playerId": "76561198364697515",
       "playerName": "Ekaenerys",
-      "totalUnlocked": 123,
+      "totalUnlocked": 125,
       "achievements": [
         {
           "id": "victories-villageois",
           "currentValue": 91,
-          "recentValue": 3,
+          "recentValue": 2,
           "recentGameIds": [
-            "Nales-20260607202436",
             "Nales-20260628192619",
             "Nales-20260628195306"
           ],
@@ -5503,10 +5521,11 @@
         },
         {
           "id": "victories-loup",
-          "currentValue": 20,
-          "recentValue": 1,
+          "currentValue": 21,
+          "recentValue": 2,
           "recentGameIds": [
-            "Nales-20260628201158"
+            "Nales-20260628201158",
+            "Nales-20260701190728"
           ],
           "unlockedLevels": [
             {
@@ -5545,7 +5564,7 @@
             "subLevel": 3,
             "threshold": 25
           },
-          "progress": 0.8
+          "progress": 0.84
         },
         {
           "id": "victories-solo",
@@ -5625,10 +5644,11 @@
         },
         {
           "id": "wolf-survived-hunter-shot",
-          "currentValue": 4,
-          "recentValue": 1,
+          "currentValue": 5,
+          "recentValue": 2,
           "recentGameIds": [
-            "Nales-20260617195726"
+            "Nales-20260617195726",
+            "Nales-20260701200020"
           ],
           "unlockedLevels": [
             {
@@ -5649,7 +5669,7 @@
             "subLevel": 1,
             "threshold": 8
           },
-          "progress": 0.5
+          "progress": 0.625
         },
         {
           "id": "wolf-loss-harvest-no-kills",
@@ -6143,12 +6163,14 @@
         },
         {
           "id": "wolf-kills",
-          "currentValue": 96,
-          "recentValue": 5,
+          "currentValue": 101,
+          "recentValue": 8,
           "recentGameIds": [
-            "Nales-20260607200106",
             "Nales-20260617195726",
-            "Nales-20260628201158"
+            "Nales-20260628201158",
+            "Nales-20260701190728",
+            "Nales-20260701200020",
+            "Nales-20260701202132"
           ],
           "unlockedLevels": [
             {
@@ -6179,21 +6201,27 @@
               "tier": "argent",
               "subLevel": 2,
               "threshold": 50,
-              "unlockedAtGame": "Nales-20260628201158"
+              "unlockedAtGame": "Nales-20260701202132"
             },
             {
               "tier": "argent",
               "subLevel": 3,
               "threshold": 70,
-              "unlockedAtGame": "Nales-20260628201158"
+              "unlockedAtGame": "Nales-20260701202132"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 100,
+              "unlockedAtGame": "Nales-20260701202132"
             }
           ],
           "nextLevel": {
             "tier": "or",
-            "subLevel": 1,
-            "threshold": 100
+            "subLevel": 2,
+            "threshold": 150
           },
-          "progress": 0.96
+          "progress": 0.6733333333333333
         },
         {
           "id": "hunter-kill-enemy",
@@ -6488,9 +6516,11 @@
         },
         {
           "id": "villageois-top-loot",
-          "currentValue": 14,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 15,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260701204623"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -6503,21 +6533,27 @@
               "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Nales-20260506195613"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "Nales-20260701204623"
             }
           ],
           "nextLevel": {
-            "tier": "or",
+            "tier": "lycans",
             "subLevel": 1,
-            "threshold": 15
+            "threshold": 30
           },
-          "progress": 0.9333333333333333
+          "progress": 0.5
         },
         {
           "id": "max-loot-single-game",
           "currentValue": 535,
-          "recentValue": 335,
+          "recentValue": 440,
           "recentGameIds": [
-            "Nales-20260607202436"
+            "Nales-20260701204623"
           ],
           "unlockedLevels": [
             {
@@ -6760,10 +6796,8 @@
         {
           "id": "democrat",
           "currentValue": 8,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260607202436"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -6790,7 +6824,7 @@
           "currentValue": 6,
           "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260607202436"
+            "Nales-20260628192619"
           ],
           "unlockedLevels": [
             {
@@ -9452,19 +9486,19 @@
     "76561198976507974": {
       "playerId": "76561198976507974",
       "playerName": "Enamore",
-      "totalUnlocked": 144,
+      "totalUnlocked": 146,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 127,
+          "currentValue": 129,
           "recentValue": 6,
           "recentGameIds": [
-            "Nales-20260624205814",
-            "Nales-20260626191104",
             "Nales-20260626203610",
             "Nales-20260626205957",
             "Nales-20260628195306",
-            "Nales-20260628203455"
+            "Nales-20260628203455",
+            "Nales-20260701200020",
+            "Nales-20260701202132"
           ],
           "unlockedLevels": [
             {
@@ -9515,7 +9549,7 @@
             "subLevel": 2,
             "threshold": 150
           },
-          "progress": 0.8466666666666667
+          "progress": 0.86
         },
         {
           "id": "victories-loup",
@@ -9820,9 +9854,11 @@
         },
         {
           "id": "alakazam",
-          "currentValue": 6,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 8,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Nales-20260701190728"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -9848,15 +9884,13 @@
             "subLevel": 1,
             "threshold": 10
           },
-          "progress": 0.6
+          "progress": 0.8
         },
         {
           "id": "starvation",
           "currentValue": 10,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260626193654"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -9908,11 +9942,12 @@
         },
         {
           "id": "death-turn1",
-          "currentValue": 41,
-          "recentValue": 2,
+          "currentValue": 42,
+          "recentValue": 3,
           "recentGameIds": [
             "Nales-20260626195634",
-            "Nales-20260626205957"
+            "Nales-20260626205957",
+            "Nales-20260701202132"
           ],
           "unlockedLevels": [
             {
@@ -9957,7 +9992,7 @@
             "subLevel": 1,
             "threshold": 50
           },
-          "progress": 0.82
+          "progress": 0.84
         },
         {
           "id": "voted-as-villager",
@@ -10147,8 +10182,8 @@
         },
         {
           "id": "wolf-kills",
-          "currentValue": 100,
-          "recentValue": 3,
+          "currentValue": 101,
+          "recentValue": 4,
           "recentGameIds": [
             "Nales-20260628205130"
           ],
@@ -10201,7 +10236,7 @@
             "subLevel": 2,
             "threshold": 150
           },
-          "progress": 0.6666666666666666
+          "progress": 0.6733333333333333
         },
         {
           "id": "hunter-kill-enemy",
@@ -10643,9 +10678,9 @@
         {
           "id": "max-loot-single-game",
           "currentValue": 665,
-          "recentValue": 275,
+          "recentValue": 295,
           "recentGameIds": [
-            "Nales-20260626203610"
+            "Nales-20260701190728"
           ],
           "unlockedLevels": [
             {
@@ -10683,10 +10718,12 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 68,
-          "recentValue": 1,
+          "currentValue": 70,
+          "recentValue": 3,
           "recentGameIds": [
-            "Nales-20260628203455"
+            "Nales-20260628203455",
+            "Nales-20260701200020",
+            "Nales-20260701202132"
           ],
           "unlockedLevels": [
             {
@@ -10736,14 +10773,20 @@
               "subLevel": 2,
               "threshold": 60,
               "unlockedAtGame": "Nales-20260614193606"
+            },
+            {
+              "tier": "or",
+              "subLevel": 3,
+              "threshold": 70,
+              "unlockedAtGame": "Nales-20260701202132"
             }
           ],
           "nextLevel": {
-            "tier": "or",
-            "subLevel": 3,
-            "threshold": 70
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 100
           },
-          "progress": 0.9714285714285714
+          "progress": 0.7
         },
         {
           "id": "bavard",
@@ -10845,10 +10888,12 @@
         },
         {
           "id": "meneur",
-          "currentValue": 33,
-          "recentValue": 1,
+          "currentValue": 35,
+          "recentValue": 3,
           "recentGameIds": [
-            "Nales-20260628201158"
+            "Nales-20260628201158",
+            "Nales-20260701190728",
+            "Nales-20260701204623"
           ],
           "unlockedLevels": [
             {
@@ -10898,14 +10943,20 @@
               "subLevel": 2,
               "threshold": 30,
               "unlockedAtGame": "Nales-20260614202834"
+            },
+            {
+              "tier": "or",
+              "subLevel": 3,
+              "threshold": 35,
+              "unlockedAtGame": "Nales-20260701204623"
             }
           ],
           "nextLevel": {
-            "tier": "or",
-            "subLevel": 3,
-            "threshold": 35
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 40
           },
-          "progress": 0.9428571428571428
+          "progress": 0.875
         },
         {
           "id": "democrat",
@@ -10954,8 +11005,8 @@
           "currentValue": 11,
           "recentValue": 2,
           "recentGameIds": [
-            "Nales-20260624205814",
-            "Nales-20260626191104"
+            "Nales-20260626203610",
+            "Nales-20260628190821"
           ],
           "unlockedLevels": [
             {
@@ -13327,21 +13378,20 @@
     "76561199819136805": {
       "playerId": "76561199819136805",
       "playerName": "RessaPandaSanTTV",
-      "totalUnlocked": 139,
+      "totalUnlocked": 141,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 102,
-          "recentValue": 8,
+          "currentValue": 107,
+          "recentValue": 7,
           "recentGameIds": [
-            "Nales-20260619200442",
-            "Nales-20260619201608",
-            "Nales-20260624195828",
-            "Nales-20260624202638",
-            "Nales-20260624205814",
-            "Nales-20260628192619",
             "Nales-20260628195306",
-            "Nales-20260628203455"
+            "Nales-20260628203455",
+            "Nales-20260701202132",
+            "Nales-20260703194346",
+            "Nales-20260703195732",
+            "Nales-20260703202954",
+            "Nales-20260703204516"
           ],
           "unlockedLevels": [
             {
@@ -13392,14 +13442,15 @@
             "subLevel": 2,
             "threshold": 150
           },
-          "progress": 0.68
+          "progress": 0.7133333333333334
         },
         {
           "id": "victories-loup",
-          "currentValue": 19,
-          "recentValue": 1,
+          "currentValue": 20,
+          "recentValue": 2,
           "recentGameIds": [
-            "Nales-20260628201158"
+            "Nales-20260628201158",
+            "Nales-20260701204623"
           ],
           "unlockedLevels": [
             {
@@ -13425,14 +13476,20 @@
               "subLevel": 1,
               "threshold": 15,
               "unlockedAtGame": "Nales-20260419205800"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 20,
+              "unlockedAtGame": "Nales-20260701204623"
             }
           ],
           "nextLevel": {
             "tier": "argent",
-            "subLevel": 2,
-            "threshold": 20
+            "subLevel": 3,
+            "threshold": 25
           },
-          "progress": 0.95
+          "progress": 0.8
         },
         {
           "id": "victories-solo",
@@ -13558,11 +13615,10 @@
         },
         {
           "id": "speed-run",
-          "currentValue": 28,
-          "recentValue": 2,
+          "currentValue": 29,
+          "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260619200442",
-            "Nales-20260624202638"
+            "Nales-20260703194346"
           ],
           "unlockedLevels": [
             {
@@ -13601,7 +13657,7 @@
             "subLevel": 3,
             "threshold": 35
           },
-          "progress": 0.8
+          "progress": 0.8285714285714286
         },
         {
           "id": "lost-after-camp-switch",
@@ -13695,10 +13751,11 @@
         },
         {
           "id": "alakazam",
-          "currentValue": 8,
-          "recentValue": 2,
+          "currentValue": 9,
+          "recentValue": 3,
           "recentGameIds": [
-            "Nales-20260628203455"
+            "Nales-20260628203455",
+            "Nales-20260703202954"
           ],
           "unlockedLevels": [
             {
@@ -13725,14 +13782,14 @@
             "subLevel": 1,
             "threshold": 10
           },
-          "progress": 0.8
+          "progress": 0.9
         },
         {
           "id": "starvation",
-          "currentValue": 3,
+          "currentValue": 4,
           "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260628192619"
+            "Nales-20260701190728"
           ],
           "unlockedLevels": [
             {
@@ -13753,7 +13810,7 @@
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.6
+          "progress": 0.8
         },
         {
           "id": "death-turn1",
@@ -13848,10 +13905,8 @@
         {
           "id": "avenger-death",
           "currentValue": 9,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260624193838"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -13907,11 +13962,12 @@
         },
         {
           "id": "wolf-kills",
-          "currentValue": 112,
-          "recentValue": 8,
+          "currentValue": 120,
+          "recentValue": 14,
           "recentGameIds": [
-            "Nales-20260628190821",
-            "Nales-20260628201158"
+            "Nales-20260628201158",
+            "Nales-20260701204623",
+            "Nales-20260703201610"
           ],
           "unlockedLevels": [
             {
@@ -13942,19 +13998,19 @@
               "tier": "argent",
               "subLevel": 2,
               "threshold": 50,
-              "unlockedAtGame": "Nales-20260628201158"
+              "unlockedAtGame": "Nales-20260703201610"
             },
             {
               "tier": "argent",
               "subLevel": 3,
               "threshold": 70,
-              "unlockedAtGame": "Nales-20260628201158"
+              "unlockedAtGame": "Nales-20260703201610"
             },
             {
               "tier": "or",
               "subLevel": 1,
               "threshold": 100,
-              "unlockedAtGame": "Nales-20260628201158"
+              "unlockedAtGame": "Nales-20260703201610"
             }
           ],
           "nextLevel": {
@@ -13962,17 +14018,13 @@
             "subLevel": 2,
             "threshold": 150
           },
-          "progress": 0.7466666666666667
+          "progress": 0.8
         },
         {
           "id": "hunter-kill-enemy",
           "currentValue": 14,
-          "recentValue": 3,
-          "recentGameIds": [
-            "Nales-20260624205814",
-            "Nales-20260624205814",
-            "Nales-20260628192619"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -14017,10 +14069,8 @@
         {
           "id": "hunter-double-kill",
           "currentValue": 4,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260624205814"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -14045,10 +14095,8 @@
         {
           "id": "hunter-kills-last-wolf",
           "currentValue": 5,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260624205814"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -14105,11 +14153,8 @@
         {
           "id": "assassin-potion-kill-enemy",
           "currentValue": 11,
-          "recentValue": 2,
-          "recentGameIds": [
-            "Nales-20260624195828",
-            "Nales-20260628190821"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -14160,10 +14205,8 @@
         {
           "id": "same-color-kills",
           "currentValue": 9,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260624205814"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -14187,9 +14230,11 @@
         },
         {
           "id": "revenge-kill",
-          "currentValue": 5,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 6,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703201610"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -14203,7 +14248,7 @@
             "subLevel": 1,
             "threshold": 10
           },
-          "progress": 0.5
+          "progress": 0.6
         },
         {
           "id": "scientifique-wins",
@@ -14345,9 +14390,11 @@
         },
         {
           "id": "loup-devin-ultimate",
-          "currentValue": 11,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 12,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260701204623"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -14373,7 +14420,7 @@
             "subLevel": 1,
             "threshold": 15
           },
-          "progress": 0.7333333333333333
+          "progress": 0.8
         },
         {
           "id": "solo-master",
@@ -14409,13 +14456,14 @@
         },
         {
           "id": "villageois-top-loot",
-          "currentValue": 18,
-          "recentValue": 4,
+          "currentValue": 22,
+          "recentValue": 5,
           "recentGameIds": [
-            "Nales-20260624195828",
-            "Nales-20260624203735",
-            "Nales-20260624205814",
-            "Nales-20260628195306"
+            "Nales-20260628195306",
+            "Nales-20260703192135",
+            "Nales-20260703194346",
+            "Nales-20260703202954",
+            "Nales-20260703204516"
           ],
           "unlockedLevels": [
             {
@@ -14442,14 +14490,14 @@
             "subLevel": 1,
             "threshold": 30
           },
-          "progress": 0.6
+          "progress": 0.7333333333333333
         },
         {
           "id": "max-loot-single-game",
           "currentValue": 615,
-          "recentValue": 440,
+          "recentValue": 310,
           "recentGameIds": [
-            "Nales-20260619201608"
+            "Nales-20260628205130"
           ],
           "unlockedLevels": [
             {
@@ -14494,10 +14542,11 @@
         },
         {
           "id": "wolf-transform-kill-nights",
-          "currentValue": 18,
-          "recentValue": 1,
+          "currentValue": 19,
+          "recentValue": 2,
           "recentGameIds": [
-            "Nales-20260628201158"
+            "Nales-20260628201158",
+            "Nales-20260703201610"
           ],
           "unlockedLevels": [
             {
@@ -14516,7 +14565,7 @@
               "tier": "or",
               "subLevel": 1,
               "threshold": 15,
-              "unlockedAtGame": "Nales-20260628201158"
+              "unlockedAtGame": "Nales-20260703201610"
             }
           ],
           "nextLevel": {
@@ -14524,13 +14573,16 @@
             "subLevel": 1,
             "threshold": 25
           },
-          "progress": 0.72
+          "progress": 0.76
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 58,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 60,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Nales-20260703192135",
+            "Nales-20260703194346"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -14573,14 +14625,20 @@
               "subLevel": 1,
               "threshold": 50,
               "unlockedAtGame": "Nales-20260513204317"
+            },
+            {
+              "tier": "or",
+              "subLevel": 2,
+              "threshold": 60,
+              "unlockedAtGame": "Nales-20260703194346"
             }
           ],
           "nextLevel": {
             "tier": "or",
-            "subLevel": 2,
-            "threshold": 60
+            "subLevel": 3,
+            "threshold": 70
           },
-          "progress": 0.9666666666666667
+          "progress": 0.8571428571428571
         },
         {
           "id": "bavard",
@@ -14670,11 +14728,15 @@
         },
         {
           "id": "meneur",
-          "currentValue": 81,
-          "recentValue": 4,
+          "currentValue": 91,
+          "recentValue": 10,
           "recentGameIds": [
-            "Nales-20260624195828",
-            "Nales-20260624202638"
+            "Nales-20260701200020",
+            "Nales-20260701202132",
+            "Nales-20260703192135",
+            "Nales-20260703194346",
+            "Nales-20260703202954",
+            "Nales-20260703204516"
           ],
           "unlockedLevels": [
             {
@@ -14743,11 +14805,11 @@
         },
         {
           "id": "democrat",
-          "currentValue": 20,
+          "currentValue": 22,
           "recentValue": 2,
           "recentGameIds": [
-            "Nales-20260619201608",
-            "Nales-20260624195828"
+            "Nales-20260701202132",
+            "Nales-20260703204516"
           ],
           "unlockedLevels": [
             {
@@ -14774,7 +14836,7 @@
             "subLevel": 1,
             "threshold": 25
           },
-          "progress": 0.8
+          "progress": 0.88
         },
         {
           "id": "stubborn",
@@ -14801,7 +14863,7 @@
           "currentValue": 3,
           "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260619200442"
+            "Nales-20260628195306"
           ],
           "unlockedLevels": [
             {
@@ -14832,10 +14894,11 @@
         },
         {
           "id": "winning-months",
-          "currentValue": 3,
-          "recentValue": 1,
+          "currentValue": 4,
+          "recentValue": 2,
           "recentGameIds": [
-            "Nales-20260628205130"
+            "Nales-20260628205130",
+            "Nales-20260703204516"
           ],
           "unlockedLevels": [
             {
@@ -14856,7 +14919,7 @@
             "subLevel": 1,
             "threshold": 8
           },
-          "progress": 0.375
+          "progress": 0.5
         },
         {
           "id": "resurrected",
@@ -14886,11 +14949,10 @@
         },
         {
           "id": "juste-un-dernier-verre",
-          "currentValue": 8,
-          "recentValue": 2,
+          "currentValue": 9,
+          "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260624193838",
-            "Nales-20260624203735"
+            "Nales-20260701202132"
           ],
           "unlockedLevels": [
             {
@@ -14917,16 +14979,14 @@
             "subLevel": 1,
             "threshold": 15
           },
-          "progress": 0.5333333333333333
+          "progress": 0.6
         },
         {
           "id": "collectionneur",
-          "currentValue": 17,
-          "recentValue": 3,
+          "currentValue": 18,
+          "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260619204826",
-            "Nales-20260624191650",
-            "Nales-20260624193838"
+            "Nales-20260701202132"
           ],
           "unlockedLevels": [
             {
@@ -15216,7 +15276,7 @@
     "76561198179951231": {
       "playerId": "76561198179951231",
       "playerName": "Staro",
-      "totalUnlocked": 72,
+      "totalUnlocked": 75,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -15289,10 +15349,11 @@
         },
         {
           "id": "victories-solo",
-          "currentValue": 4,
-          "recentValue": 1,
+          "currentValue": 5,
+          "recentValue": 2,
           "recentGameIds": [
-            "Nales-20260626201209"
+            "Nales-20260626201209",
+            "Nales-20260701194039"
           ],
           "unlockedLevels": [
             {
@@ -15312,14 +15373,20 @@
               "subLevel": 3,
               "threshold": 3,
               "unlockedAtGame": "Nales-20260617191048"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260701194039"
             }
           ],
           "nextLevel": {
             "tier": "argent",
-            "subLevel": 1,
-            "threshold": 5
+            "subLevel": 2,
+            "threshold": 7
           },
-          "progress": 0.8
+          "progress": 0.7142857142857143
         },
         {
           "id": "vegan-wolf",
@@ -15580,25 +15647,35 @@
         },
         {
           "id": "romeo-juliette",
-          "currentValue": 2,
-          "recentValue": 2,
+          "currentValue": 3,
+          "recentValue": 3,
           "recentGameIds": [
             "Nales-20260626191104",
-            "Nales-20260626205957"
+            "Nales-20260626205957",
+            "Nales-20260701202132"
           ],
-          "unlockedLevels": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Nales-20260701202132"
+            }
+          ],
           "nextLevel": {
-            "tier": "bronze",
+            "tier": "argent",
             "subLevel": 1,
-            "threshold": 3
+            "threshold": 8
           },
-          "progress": 0.6666666666666666
+          "progress": 0.375
         },
         {
           "id": "death-turn1",
-          "currentValue": 9,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 10,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260701190728"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -15611,14 +15688,20 @@
               "subLevel": 2,
               "threshold": 5,
               "unlockedAtGame": "Nales-20260107211520"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "Nales-20260701190728"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 3,
-            "threshold": 10
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 15
           },
-          "progress": 0.9
+          "progress": 0.6666666666666666
         },
         {
           "id": "voted-as-villager",
@@ -15928,9 +16011,10 @@
         {
           "id": "solo-master",
           "currentValue": 4,
-          "recentValue": 1,
+          "recentValue": 2,
           "recentGameIds": [
-            "Nales-20260626201209"
+            "Nales-20260626201209",
+            "Nales-20260701194039"
           ],
           "unlockedLevels": [
             {
@@ -16033,10 +16117,10 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 30,
+          "currentValue": 31,
           "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260617195726"
+            "Nales-20260701190728"
           ],
           "unlockedLevels": [
             {
@@ -16075,7 +16159,7 @@
             "subLevel": 3,
             "threshold": 40
           },
-          "progress": 0.75
+          "progress": 0.775
         },
         {
           "id": "only-passer",
@@ -19428,17 +19512,19 @@
     "76561197973106144": {
       "playerId": "76561197973106144",
       "playerName": "Nales",
-      "totalUnlocked": 201,
+      "totalUnlocked": 202,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 230,
-          "recentValue": 4,
+          "currentValue": 235,
+          "recentValue": 6,
           "recentGameIds": [
-            "Nales-20260624202638",
-            "Nales-20260626203610",
-            "Nales-20260628192619",
-            "Nales-20260628195306"
+            "Nales-20260628195306",
+            "Nales-20260701200020",
+            "Nales-20260701202132",
+            "Nales-20260703194346",
+            "Nales-20260703195732",
+            "Nales-20260703201610"
           ],
           "unlockedLevels": [
             {
@@ -19501,15 +19587,13 @@
             "subLevel": 1,
             "threshold": 300
           },
-          "progress": 0.7666666666666667
+          "progress": 0.7833333333333333
         },
         {
           "id": "victories-loup",
           "currentValue": 48,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260626195634"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -19569,9 +19653,11 @@
         },
         {
           "id": "victories-solo",
-          "currentValue": 24,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 25,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703192135"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -19626,14 +19712,16 @@
               "subLevel": 3,
               "threshold": 18,
               "unlockedAtGame": "Nales-20260417203659"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 25,
+              "unlockedAtGame": "Nales-20260703192135"
             }
           ],
-          "nextLevel": {
-            "tier": "lycans",
-            "subLevel": 1,
-            "threshold": 25
-          },
-          "progress": 0.96
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "vegan-wolf",
@@ -19773,10 +19861,11 @@
         },
         {
           "id": "speed-run",
-          "currentValue": 41,
-          "recentValue": 1,
+          "currentValue": 43,
+          "recentValue": 2,
           "recentGameIds": [
-            "Nales-20260624202638"
+            "Nales-20260703194346",
+            "Nales-20260703201610"
           ],
           "unlockedLevels": [
             {
@@ -19821,7 +19910,7 @@
             "subLevel": 1,
             "threshold": 50
           },
-          "progress": 0.82
+          "progress": 0.86
         },
         {
           "id": "lost-after-camp-switch",
@@ -19866,10 +19955,8 @@
         {
           "id": "wolf-sabotages",
           "currentValue": 30,
-          "recentValue": 3,
-          "recentGameIds": [
-            "Nales-20260626205957"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -19922,6 +20009,21 @@
           "progress": 0.75
         },
         {
+          "id": "wolf-eclipse-kills",
+          "currentValue": 3,
+          "recentValue": 3,
+          "recentGameIds": [
+            "Nales-20260703204516"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
           "id": "remede-de-loup",
           "currentValue": 2,
           "recentValue": 0,
@@ -19949,11 +20051,11 @@
         },
         {
           "id": "alakazam",
-          "currentValue": 16,
+          "currentValue": 17,
           "recentValue": 2,
           "recentGameIds": [
-            "Nales-20260628190821",
-            "Nales-20260628205130"
+            "Nales-20260628205130",
+            "Nales-20260701202132"
           ],
           "unlockedLevels": [
             {
@@ -19987,10 +20089,8 @@
         {
           "id": "starvation",
           "currentValue": 8,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260626205957"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -20048,9 +20148,11 @@
         },
         {
           "id": "death-turn1",
-          "currentValue": 31,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 32,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260701200020"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -20088,7 +20190,7 @@
             "subLevel": 3,
             "threshold": 35
           },
-          "progress": 0.8857142857142857
+          "progress": 0.9142857142857143
         },
         {
           "id": "voted-as-villager",
@@ -20292,11 +20394,11 @@
         },
         {
           "id": "wolf-kills",
-          "currentValue": 351,
-          "recentValue": 4,
+          "currentValue": 359,
+          "recentValue": 8,
           "recentGameIds": [
-            "Nales-20260624205814",
-            "Nales-20260626195634"
+            "Nales-20260703202954",
+            "Nales-20260703204516"
           ],
           "unlockedLevels": [
             {
@@ -20339,25 +20441,25 @@
               "tier": "or",
               "subLevel": 1,
               "threshold": 100,
-              "unlockedAtGame": "Nales-20260626195634"
+              "unlockedAtGame": "Nales-20260703204516"
             },
             {
               "tier": "or",
               "subLevel": 2,
               "threshold": 150,
-              "unlockedAtGame": "Nales-20260626195634"
+              "unlockedAtGame": "Nales-20260703204516"
             },
             {
               "tier": "or",
               "subLevel": 3,
               "threshold": 200,
-              "unlockedAtGame": "Nales-20260626195634"
+              "unlockedAtGame": "Nales-20260703204516"
             },
             {
               "tier": "lycans",
               "subLevel": 1,
               "threshold": 300,
-              "unlockedAtGame": "Nales-20260626195634"
+              "unlockedAtGame": "Nales-20260703204516"
             }
           ],
           "nextLevel": null,
@@ -20366,10 +20468,8 @@
         {
           "id": "hunter-kill-enemy",
           "currentValue": 13,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260626201209"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -20394,10 +20494,8 @@
         {
           "id": "hunter-kill-villager",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260626201209"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -20461,9 +20559,11 @@
         },
         {
           "id": "consecutive-same-victim-kill",
-          "currentValue": 15,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 16,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703204516"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -20489,7 +20589,7 @@
             "subLevel": 1,
             "threshold": 30
           },
-          "progress": 0.5
+          "progress": 0.5333333333333333
         },
         {
           "id": "hunter-killed-by-wolf",
@@ -20642,10 +20742,8 @@
         {
           "id": "same-color-kills",
           "currentValue": 19,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260626195634"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -20845,9 +20943,11 @@
         },
         {
           "id": "la-bete-wins",
-          "currentValue": 5,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 6,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703192135"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -20964,10 +21064,8 @@
         {
           "id": "loup-devin-ultimate",
           "currentValue": 4,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260626205957"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -20992,8 +21090,10 @@
         {
           "id": "solo-master",
           "currentValue": 10,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703192135"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -21025,12 +21125,13 @@
         },
         {
           "id": "villageois-top-loot",
-          "currentValue": 128,
-          "recentValue": 3,
+          "currentValue": 131,
+          "recentValue": 4,
           "recentGameIds": [
-            "Nales-20260626201209",
-            "Nales-20260626203610",
-            "Nales-20260628205130"
+            "Nales-20260628205130",
+            "Nales-20260701202132",
+            "Nales-20260703195732",
+            "Nales-20260703201610"
           ],
           "unlockedLevels": [
             {
@@ -21064,9 +21165,9 @@
         {
           "id": "max-loot-single-game",
           "currentValue": 840,
-          "recentValue": 510,
+          "recentValue": 420,
           "recentGameIds": [
-            "Nales-20260626203610"
+            "Nales-20260628205130"
           ],
           "unlockedLevels": [
             {
@@ -21092,10 +21193,8 @@
         {
           "id": "wolf-transform-kill-nights",
           "currentValue": 11,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260624205814"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -21119,11 +21218,12 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 129,
-          "recentValue": 2,
+          "currentValue": 131,
+          "recentValue": 3,
           "recentGameIds": [
-            "Nales-20260626193654",
-            "Nales-20260628195306"
+            "Nales-20260628195306",
+            "Nales-20260701194039",
+            "Nales-20260701204623"
           ],
           "unlockedLevels": [
             {
@@ -21297,10 +21397,8 @@
         {
           "id": "meneur",
           "currentValue": 40,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260626193654"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -21403,7 +21501,7 @@
           "currentValue": 1,
           "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260624202638"
+            "Nales-20260628195306"
           ],
           "unlockedLevels": [
             {
@@ -21422,9 +21520,11 @@
         },
         {
           "id": "winning-months",
-          "currentValue": 3,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 4,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703204516"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -21444,7 +21544,7 @@
             "subLevel": 1,
             "threshold": 8
           },
-          "progress": 0.375
+          "progress": 0.5
         },
         {
           "id": "perfect-sessions",
@@ -21501,10 +21601,8 @@
         {
           "id": "juste-un-dernier-verre",
           "currentValue": 5,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260626203610"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -21529,9 +21627,8 @@
         {
           "id": "collectionneur",
           "currentValue": 30,
-          "recentValue": 2,
+          "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260626203610",
             "Nales-20260628205130"
           ],
           "unlockedLevels": [
@@ -32435,18 +32532,18 @@
     "76561198010158937": {
       "playerId": "76561198010158937",
       "playerName": "Lhuun",
-      "totalUnlocked": 119,
+      "totalUnlocked": 120,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 91,
+          "currentValue": 93,
           "recentValue": 5,
           "recentGameIds": [
-            "Nales-20260621192138",
-            "Nales-20260621193831",
             "Nales-20260624205814",
             "Nales-20260628192619",
-            "Nales-20260628203455"
+            "Nales-20260628203455",
+            "Nales-20260701200020",
+            "Nales-20260701202132"
           ],
           "unlockedLevels": [
             {
@@ -32491,7 +32588,7 @@
             "subLevel": 1,
             "threshold": 100
           },
-          "progress": 0.91
+          "progress": 0.93
         },
         {
           "id": "victories-loup",
@@ -32766,13 +32863,12 @@
         },
         {
           "id": "alakazam",
-          "currentValue": 11,
+          "currentValue": 13,
           "recentValue": 5,
           "recentGameIds": [
-            "Nales-20260621190725",
-            "Nales-20260621192138",
             "Nales-20260621201606",
-            "Nales-20260624203735"
+            "Nales-20260624203735",
+            "Nales-20260701202132"
           ],
           "unlockedLevels": [
             {
@@ -32797,7 +32893,7 @@
               "tier": "lycans",
               "subLevel": 1,
               "threshold": 10,
-              "unlockedAtGame": "Nales-20260624203735"
+              "unlockedAtGame": "Nales-20260701202132"
             }
           ],
           "nextLevel": null,
@@ -32845,11 +32941,8 @@
         {
           "id": "death-turn1",
           "currentValue": 18,
-          "recentValue": 2,
-          "recentGameIds": [
-            "Nales-20260621190725",
-            "Nales-20260621195653"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -33178,9 +33271,11 @@
         },
         {
           "id": "hunter-killed-by-wolf",
-          "currentValue": 6,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 7,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260701202132"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -33194,7 +33289,7 @@
             "subLevel": 1,
             "threshold": 10
           },
-          "progress": 0.6
+          "progress": 0.7
         },
         {
           "id": "assassin-potion-kill-enemy",
@@ -33291,10 +33386,8 @@
         {
           "id": "revenge-kill",
           "currentValue": 3,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260621201606"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -33468,11 +33561,12 @@
         },
         {
           "id": "villageois-top-loot",
-          "currentValue": 14,
-          "recentValue": 2,
+          "currentValue": 15,
+          "recentValue": 3,
           "recentGameIds": [
             "Nales-20260628201158",
-            "Nales-20260628203455"
+            "Nales-20260628203455",
+            "Nales-20260701194039"
           ],
           "unlockedLevels": [
             {
@@ -33486,21 +33580,27 @@
               "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Nales-20260408194045"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "Nales-20260701194039"
             }
           ],
           "nextLevel": {
-            "tier": "or",
+            "tier": "lycans",
             "subLevel": 1,
-            "threshold": 15
+            "threshold": 30
           },
-          "progress": 0.9333333333333333
+          "progress": 0.5
         },
         {
           "id": "max-loot-single-game",
           "currentValue": 790,
-          "recentValue": 350,
+          "recentValue": 355,
           "recentGameIds": [
-            "Nales-20260628201158"
+            "Nales-20260701194039"
           ],
           "unlockedLevels": [
             {
@@ -33547,12 +33647,12 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 35,
+          "currentValue": 36,
           "recentValue": 3,
           "recentGameIds": [
-            "Nales-20260621195653",
             "Nales-20260624203735",
-            "Nales-20260628203455"
+            "Nales-20260628203455",
+            "Nales-20260701200020"
           ],
           "unlockedLevels": [
             {
@@ -33591,7 +33691,7 @@
             "subLevel": 3,
             "threshold": 40
           },
-          "progress": 0.875
+          "progress": 0.9
         },
         {
           "id": "bavard",
@@ -33707,9 +33807,8 @@
         {
           "id": "meneur",
           "currentValue": 29,
-          "recentValue": 5,
+          "recentValue": 3,
           "recentGameIds": [
-            "Nales-20260621193831",
             "Nales-20260621201606",
             "Nales-20260628201158",
             "Nales-20260628203455"
@@ -33767,12 +33866,13 @@
         },
         {
           "id": "democrat",
-          "currentValue": 16,
-          "recentValue": 3,
+          "currentValue": 17,
+          "recentValue": 4,
           "recentGameIds": [
             "Nales-20260628192619",
             "Nales-20260628201158",
-            "Nales-20260628203455"
+            "Nales-20260628203455",
+            "Nales-20260701204623"
           ],
           "unlockedLevels": [
             {
@@ -33799,14 +33899,14 @@
             "subLevel": 1,
             "threshold": 25
           },
-          "progress": 0.64
+          "progress": 0.68
         },
         {
           "id": "colors-of-lycans",
           "currentValue": 1,
           "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260621192138"
+            "Nales-20260621201606"
           ],
           "unlockedLevels": [
             {
@@ -35753,17 +35853,19 @@
     "76561198069501851": {
       "playerId": "76561198069501851",
       "playerName": "Nocxy",
-      "totalUnlocked": 112,
+      "totalUnlocked": 115,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 68,
-          "recentValue": 4,
+          "currentValue": 70,
+          "recentValue": 6,
           "recentGameIds": [
             "Nales-20260607193347",
             "Nales-20260607202436",
             "Nales-20260621193831",
-            "Nales-20260621210137"
+            "Nales-20260621210137",
+            "Nales-20260701200020",
+            "Nales-20260701202132"
           ],
           "unlockedLevels": [
             {
@@ -35795,21 +35897,26 @@
               "subLevel": 2,
               "threshold": 50,
               "unlockedAtGame": "Nales-20260503190938"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 70,
+              "unlockedAtGame": "Nales-20260701202132"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
-            "subLevel": 3,
-            "threshold": 70
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 100
           },
-          "progress": 0.9714285714285714
+          "progress": 0.7
         },
         {
           "id": "victories-loup",
           "currentValue": 22,
-          "recentValue": 2,
+          "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260529195353",
             "Nales-20260621201606"
           ],
           "unlockedLevels": [
@@ -36177,10 +36284,10 @@
         },
         {
           "id": "death-turn1",
-          "currentValue": 13,
+          "currentValue": 14,
           "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260529203453"
+            "Nales-20260701204623"
           ],
           "unlockedLevels": [
             {
@@ -36207,7 +36314,7 @@
             "subLevel": 1,
             "threshold": 15
           },
-          "progress": 0.8666666666666667
+          "progress": 0.9333333333333333
         },
         {
           "id": "voted-as-villager",
@@ -36376,9 +36483,8 @@
         {
           "id": "wolf-kills",
           "currentValue": 93,
-          "recentValue": 9,
+          "recentValue": 6,
           "recentGameIds": [
-            "Nales-20260529195353",
             "Nales-20260621190725",
             "Nales-20260621192138"
           ],
@@ -36510,10 +36616,10 @@
         },
         {
           "id": "hunter-killed-by-wolf",
-          "currentValue": 7,
+          "currentValue": 8,
           "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260607191147"
+            "Nales-20260701204623"
           ],
           "unlockedLevels": [
             {
@@ -36528,7 +36634,7 @@
             "subLevel": 1,
             "threshold": 10
           },
-          "progress": 0.7
+          "progress": 0.8
         },
         {
           "id": "assassin-potion-kill-enemy",
@@ -36759,10 +36865,8 @@
         {
           "id": "loup-necromancien-resurrect",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260529195353"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -36863,9 +36967,9 @@
         {
           "id": "max-loot-single-game",
           "currentValue": 615,
-          "recentValue": 535,
+          "recentValue": 540,
           "recentGameIds": [
-            "Nales-20260621195653"
+            "Nales-20260701190728"
           ],
           "unlockedLevels": [
             {
@@ -36910,12 +37014,14 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 36,
-          "recentValue": 3,
+          "currentValue": 38,
+          "recentValue": 5,
           "recentGameIds": [
             "Nales-20260621193831",
             "Nales-20260621195653",
-            "Nales-20260621210137"
+            "Nales-20260621210137",
+            "Nales-20260701200020",
+            "Nales-20260701202132"
           ],
           "unlockedLevels": [
             {
@@ -36954,7 +37060,7 @@
             "subLevel": 3,
             "threshold": 40
           },
-          "progress": 0.9
+          "progress": 0.95
         },
         {
           "id": "bavard",
@@ -37024,9 +37130,11 @@
         },
         {
           "id": "meneur",
-          "currentValue": 7,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 8,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260701194039"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -37052,27 +37160,36 @@
             "subLevel": 1,
             "threshold": 10
           },
-          "progress": 0.7
+          "progress": 0.8
         },
         {
           "id": "democrat",
-          "currentValue": 2,
-          "recentValue": 0,
-          "recentGameIds": [],
-          "unlockedLevels": [],
+          "currentValue": 3,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260701202132"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Nales-20260701202132"
+            }
+          ],
           "nextLevel": {
-            "tier": "bronze",
+            "tier": "argent",
             "subLevel": 1,
-            "threshold": 3
+            "threshold": 8
           },
-          "progress": 0.6666666666666666
+          "progress": 0.375
         },
         {
           "id": "colors-of-lycans",
           "currentValue": 1,
           "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260529195353"
+            "Nales-20260607193347"
           ],
           "unlockedLevels": [
             {
@@ -37165,10 +37282,11 @@
         },
         {
           "id": "juste-un-dernier-verre",
-          "currentValue": 8,
-          "recentValue": 1,
+          "currentValue": 9,
+          "recentValue": 2,
           "recentGameIds": [
-            "Nales-20260607200106"
+            "Nales-20260607200106",
+            "Nales-20260701194039"
           ],
           "unlockedLevels": [
             {
@@ -37195,14 +37313,15 @@
             "subLevel": 1,
             "threshold": 15
           },
-          "progress": 0.5333333333333333
+          "progress": 0.6
         },
         {
           "id": "collectionneur",
-          "currentValue": 7,
-          "recentValue": 1,
+          "currentValue": 8,
+          "recentValue": 2,
           "recentGameIds": [
-            "Nales-20260607193347"
+            "Nales-20260607193347",
+            "Nales-20260701194039"
           ],
           "unlockedLevels": [
             {
@@ -37216,14 +37335,20 @@
               "subLevel": 1,
               "threshold": 3,
               "unlockedAtGame": "Nales-20260403192957"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 8,
+              "unlockedAtGame": "Nales-20260701194039"
             }
           ],
           "nextLevel": {
-            "tier": "or",
+            "tier": "lycans",
             "subLevel": 1,
-            "threshold": 8
+            "threshold": 15
           },
-          "progress": 0.875
+          "progress": 0.5333333333333333
         }
       ]
     },
@@ -38118,18 +38243,18 @@
     "76561198124278834": {
       "playerId": "76561198124278834",
       "playerName": "Johnny",
-      "totalUnlocked": 88,
+      "totalUnlocked": 89,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 53,
+          "currentValue": 54,
           "recentValue": 5,
           "recentGameIds": [
-            "Nales-20260621210137",
             "Nales-20260624195828",
             "Nales-20260624202638",
             "Nales-20260626203610",
-            "Nales-20260626205957"
+            "Nales-20260626205957",
+            "Nales-20260701200020"
           ],
           "unlockedLevels": [
             {
@@ -38168,14 +38293,16 @@
             "subLevel": 3,
             "threshold": 70
           },
-          "progress": 0.7571428571428571
+          "progress": 0.7714285714285715
         },
         {
           "id": "victories-loup",
-          "currentValue": 12,
-          "recentValue": 1,
+          "currentValue": 14,
+          "recentValue": 3,
           "recentGameIds": [
-            "Nales-20260624203735"
+            "Nales-20260624203735",
+            "Nales-20260701190728",
+            "Nales-20260701204623"
           ],
           "unlockedLevels": [
             {
@@ -38202,7 +38329,7 @@
             "subLevel": 1,
             "threshold": 15
           },
-          "progress": 0.8
+          "progress": 0.9333333333333333
         },
         {
           "id": "victories-solo",
@@ -38232,9 +38359,11 @@
         },
         {
           "id": "vegan-wolf",
-          "currentValue": 3,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 4,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260701204623"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -38254,7 +38383,29 @@
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.6
+          "progress": 0.8
+        },
+        {
+          "id": "wolf-survived-hunter-shot",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260701202132"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260701202132"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 4
+          },
+          "progress": 0.25
         },
         {
           "id": "wolf-all-kills-solo",
@@ -38341,10 +38492,13 @@
         },
         {
           "id": "wolf-sabotages",
-          "currentValue": 81,
-          "recentValue": 3,
+          "currentValue": 105,
+          "recentValue": 27,
           "recentGameIds": [
-            "Nales-20260624203735"
+            "Nales-20260624203735",
+            "Nales-20260701190728",
+            "Nales-20260701202132",
+            "Nales-20260701204623"
           ],
           "unlockedLevels": [
             {
@@ -38381,31 +38535,31 @@
               "tier": "argent",
               "subLevel": 3,
               "threshold": 20,
-              "unlockedAtGame": "Nales-20260624203735"
+              "unlockedAtGame": "Nales-20260701202132"
             },
             {
               "tier": "or",
               "subLevel": 1,
               "threshold": 30,
-              "unlockedAtGame": "Nales-20260624203735"
+              "unlockedAtGame": "Nales-20260701204623"
             },
             {
               "tier": "or",
               "subLevel": 2,
               "threshold": 40,
-              "unlockedAtGame": "Nales-20260624203735"
+              "unlockedAtGame": "Nales-20260701204623"
             },
             {
               "tier": "or",
               "subLevel": 3,
               "threshold": 50,
-              "unlockedAtGame": "Nales-20260624203735"
+              "unlockedAtGame": "Nales-20260701204623"
             },
             {
               "tier": "lycans",
               "subLevel": 1,
               "threshold": 75,
-              "unlockedAtGame": "Nales-20260624203735"
+              "unlockedAtGame": "Nales-20260701204623"
             }
           ],
           "nextLevel": null,
@@ -38560,10 +38714,8 @@
         {
           "id": "avenger-death",
           "currentValue": 5,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260624193838"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -38633,10 +38785,12 @@
         },
         {
           "id": "wolf-kills",
-          "currentValue": 58,
-          "recentValue": 4,
+          "currentValue": 66,
+          "recentValue": 12,
           "recentGameIds": [
-            "Nales-20260624203735"
+            "Nales-20260624203735",
+            "Nales-20260701190728",
+            "Nales-20260701202132"
           ],
           "unlockedLevels": [
             {
@@ -38661,13 +38815,13 @@
               "tier": "argent",
               "subLevel": 1,
               "threshold": 30,
-              "unlockedAtGame": "Nales-20260624203735"
+              "unlockedAtGame": "Nales-20260701202132"
             },
             {
               "tier": "argent",
               "subLevel": 2,
               "threshold": 50,
-              "unlockedAtGame": "Nales-20260624203735"
+              "unlockedAtGame": "Nales-20260701202132"
             }
           ],
           "nextLevel": {
@@ -38675,7 +38829,7 @@
             "subLevel": 3,
             "threshold": 70
           },
-          "progress": 0.8285714285714286
+          "progress": 0.9428571428571428
         },
         {
           "id": "hunter-kill-enemy",
@@ -38813,10 +38967,8 @@
         {
           "id": "amoureux-loup-total-kills",
           "currentValue": 16,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260624193838"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -39017,11 +39169,11 @@
         },
         {
           "id": "villageois-top-loot",
-          "currentValue": 6,
+          "currentValue": 7,
           "recentValue": 2,
           "recentGameIds": [
-            "Nales-20260621203920",
-            "Nales-20260624202638"
+            "Nales-20260624202638",
+            "Nales-20260701200020"
           ],
           "unlockedLevels": [
             {
@@ -39036,14 +39188,14 @@
             "subLevel": 1,
             "threshold": 10
           },
-          "progress": 0.6
+          "progress": 0.7
         },
         {
           "id": "max-loot-single-game",
           "currentValue": 705,
-          "recentValue": 415,
+          "recentValue": 310,
           "recentGameIds": [
-            "Nales-20260621203920"
+            "Nales-20260624195828"
           ],
           "unlockedLevels": [
             {
@@ -39081,11 +39233,13 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 25,
-          "recentValue": 2,
+          "currentValue": 27,
+          "recentValue": 4,
           "recentGameIds": [
             "Nales-20260626201209",
-            "Nales-20260626205957"
+            "Nales-20260626205957",
+            "Nales-20260701194039",
+            "Nales-20260701200020"
           ],
           "unlockedLevels": [
             {
@@ -39118,7 +39272,7 @@
             "subLevel": 2,
             "threshold": 30
           },
-          "progress": 0.8333333333333334
+          "progress": 0.9
         },
         {
           "id": "lone-non-voter",
@@ -39143,9 +39297,8 @@
         {
           "id": "meneur",
           "currentValue": 15,
-          "recentValue": 2,
+          "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260621203920",
             "Nales-20260626203610"
           ],
           "unlockedLevels": [
@@ -39214,7 +39367,7 @@
           "currentValue": 1,
           "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260621210137"
+            "Nales-20260624195828"
           ],
           "unlockedLevels": [
             {
@@ -39233,9 +39386,11 @@
         },
         {
           "id": "winning-months",
-          "currentValue": 1,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 2,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260701204623"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -39249,14 +39404,13 @@
             "subLevel": 1,
             "threshold": 3
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "resurrected",
           "currentValue": 9,
-          "recentValue": 2,
+          "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260621195653",
             "Nales-20260626191104"
           ],
           "unlockedLevels": [
@@ -41377,17 +41531,18 @@
     "76561198015221454": {
       "playerId": "76561198015221454",
       "playerName": "Yoshikuri",
-      "totalUnlocked": 81,
+      "totalUnlocked": 83,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 30,
-          "recentValue": 4,
+          "currentValue": 35,
+          "recentValue": 5,
           "recentGameIds": [
-            "Nales-20260617204914",
-            "Nales-20260619191102",
-            "Nales-20260619192307",
-            "Nales-20260619201608"
+            "Nales-20260701200020",
+            "Nales-20260703194346",
+            "Nales-20260703195732",
+            "Nales-20260703202954",
+            "Nales-20260703204516"
           ],
           "unlockedLevels": [
             {
@@ -41420,14 +41575,13 @@
             "subLevel": 2,
             "threshold": 50
           },
-          "progress": 0.6
+          "progress": 0.7
         },
         {
           "id": "victories-loup",
           "currentValue": 16,
-          "recentValue": 2,
+          "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260617203223",
             "Nales-20260628201158"
           ],
           "unlockedLevels": [
@@ -41571,10 +41725,10 @@
         },
         {
           "id": "speed-run",
-          "currentValue": 8,
+          "currentValue": 9,
           "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260619191102"
+            "Nales-20260703194346"
           ],
           "unlockedLevels": [
             {
@@ -41595,18 +41749,17 @@
             "subLevel": 3,
             "threshold": 10
           },
-          "progress": 0.8
+          "progress": 0.9
         },
         {
           "id": "wolf-sabotages",
-          "currentValue": 67,
-          "recentValue": 15,
+          "currentValue": 70,
+          "recentValue": 9,
           "recentGameIds": [
-            "Nales-20260619194031",
-            "Nales-20260619200442",
             "Nales-20260628192619",
             "Nales-20260628195306",
-            "Nales-20260628203455"
+            "Nales-20260628203455",
+            "Nales-20260701194039"
           ],
           "unlockedLevels": [
             {
@@ -41649,19 +41802,19 @@
               "tier": "or",
               "subLevel": 1,
               "threshold": 30,
-              "unlockedAtGame": "Nales-20260628203455"
+              "unlockedAtGame": "Nales-20260701194039"
             },
             {
               "tier": "or",
               "subLevel": 2,
               "threshold": 40,
-              "unlockedAtGame": "Nales-20260628203455"
+              "unlockedAtGame": "Nales-20260701194039"
             },
             {
               "tier": "or",
               "subLevel": 3,
               "threshold": 50,
-              "unlockedAtGame": "Nales-20260628203455"
+              "unlockedAtGame": "Nales-20260701194039"
             }
           ],
           "nextLevel": {
@@ -41669,14 +41822,13 @@
             "subLevel": 1,
             "threshold": 75
           },
-          "progress": 0.8933333333333333
+          "progress": 0.9333333333333333
         },
         {
           "id": "alakazam",
           "currentValue": 8,
-          "recentValue": 2,
+          "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260617204914",
             "Nales-20260628205130"
           ],
           "unlockedLevels": [
@@ -41708,9 +41860,11 @@
         },
         {
           "id": "starvation",
-          "currentValue": 7,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 8,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260701190728"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -41736,7 +41890,7 @@
             "subLevel": 1,
             "threshold": 10
           },
-          "progress": 0.7
+          "progress": 0.8
         },
         {
           "id": "romeo-juliette",
@@ -41754,10 +41908,8 @@
         {
           "id": "death-turn1",
           "currentValue": 18,
-          "recentValue": 3,
+          "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260617203223",
-            "Nales-20260619204826",
             "Nales-20260628192619"
           ],
           "unlockedLevels": [
@@ -41894,14 +42046,13 @@
         },
         {
           "id": "wolf-kills",
-          "currentValue": 63,
-          "recentValue": 13,
+          "currentValue": 64,
+          "recentValue": 7,
           "recentGameIds": [
-            "Nales-20260617203223",
-            "Nales-20260619194031",
             "Nales-20260628195306",
             "Nales-20260628201158",
-            "Nales-20260628203455"
+            "Nales-20260628203455",
+            "Nales-20260701194039"
           ],
           "unlockedLevels": [
             {
@@ -41926,13 +42077,13 @@
               "tier": "argent",
               "subLevel": 1,
               "threshold": 30,
-              "unlockedAtGame": "Nales-20260628203455"
+              "unlockedAtGame": "Nales-20260701194039"
             },
             {
               "tier": "argent",
               "subLevel": 2,
               "threshold": 50,
-              "unlockedAtGame": "Nales-20260628203455"
+              "unlockedAtGame": "Nales-20260701194039"
             }
           ],
           "nextLevel": {
@@ -41940,7 +42091,44 @@
             "subLevel": 3,
             "threshold": 70
           },
-          "progress": 0.9
+          "progress": 0.9142857142857143
+        },
+        {
+          "id": "hunter-kill-enemy",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260701200020"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "hunter-kills-last-wolf",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260701200020"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260701200020"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "consecutive-same-victim-kill",
@@ -42025,9 +42213,12 @@
         },
         {
           "id": "same-color-kills",
-          "currentValue": 4,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 6,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Nales-20260701194039",
+            "Nales-20260701200020"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -42041,7 +42232,7 @@
             "subLevel": 1,
             "threshold": 8
           },
-          "progress": 0.5
+          "progress": 0.75
         },
         {
           "id": "revenge-kill",
@@ -42099,9 +42290,8 @@
         {
           "id": "villageois-top-loot",
           "currentValue": 11,
-          "recentValue": 2,
+          "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260619192307",
             "Nales-20260628190821"
           ],
           "unlockedLevels": [
@@ -42162,14 +42352,12 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 30,
-          "recentValue": 5,
+          "currentValue": 32,
+          "recentValue": 3,
           "recentGameIds": [
-            "Nales-20260619191102",
-            "Nales-20260619192307",
-            "Nales-20260619201608",
-            "Nales-20260619204826",
-            "Nales-20260628190821"
+            "Nales-20260628190821",
+            "Nales-20260701190728",
+            "Nales-20260703195732"
           ],
           "unlockedLevels": [
             {
@@ -42208,7 +42396,7 @@
             "subLevel": 3,
             "threshold": 40
           },
-          "progress": 0.75
+          "progress": 0.8
         },
         {
           "id": "misunderstood",
@@ -42232,10 +42420,11 @@
         },
         {
           "id": "meneur",
-          "currentValue": 12,
-          "recentValue": 2,
+          "currentValue": 13,
+          "recentValue": 3,
           "recentGameIds": [
-            "Nales-20260628190821"
+            "Nales-20260628190821",
+            "Nales-20260703195732"
           ],
           "unlockedLevels": [
             {
@@ -42268,7 +42457,7 @@
             "subLevel": 2,
             "threshold": 15
           },
-          "progress": 0.8
+          "progress": 0.8666666666666667
         },
         {
           "id": "democrat",
@@ -42298,7 +42487,7 @@
           "currentValue": 3,
           "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260617203223"
+            "Nales-20260628201158"
           ],
           "unlockedLevels": [
             {
@@ -42328,6 +42517,28 @@
           "progress": 0.75
         },
         {
+          "id": "winning-months",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703204516"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260703204516"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "perfect-sessions",
           "currentValue": 1,
           "recentValue": 0,
@@ -42349,11 +42560,11 @@
         },
         {
           "id": "resurrected",
-          "currentValue": 10,
+          "currentValue": 11,
           "recentValue": 2,
           "recentGameIds": [
-            "Nales-20260617203223",
-            "Nales-20260628201158"
+            "Nales-20260628201158",
+            "Nales-20260701194039"
           ],
           "unlockedLevels": [
             {
@@ -42380,15 +42591,13 @@
             "subLevel": 1,
             "threshold": 15
           },
-          "progress": 0.6666666666666666
+          "progress": 0.7333333333333333
         },
         {
           "id": "juste-un-dernier-verre",
           "currentValue": 5,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260619195135"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -42412,11 +42621,11 @@
         },
         {
           "id": "collectionneur",
-          "currentValue": 15,
+          "currentValue": 16,
           "recentValue": 2,
           "recentGameIds": [
-            "Nales-20260619200442",
-            "Nales-20260628190821"
+            "Nales-20260628190821",
+            "Nales-20260701200020"
           ],
           "unlockedLevels": [
             {
@@ -70916,17 +71125,17 @@
     "76561199100559486": {
       "playerId": "76561199100559486",
       "playerName": "Lunine",
-      "totalUnlocked": 74,
+      "totalUnlocked": 76,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 52,
+          "currentValue": 54,
           "recentValue": 4,
           "recentGameIds": [
-            "Nales-20260619200442",
-            "Nales-20260624195828",
             "Nales-20260624202638",
-            "Nales-20260628195306"
+            "Nales-20260628195306",
+            "Nales-20260703202954",
+            "Nales-20260703204516"
           ],
           "unlockedLevels": [
             {
@@ -70965,7 +71174,7 @@
             "subLevel": 3,
             "threshold": 70
           },
-          "progress": 0.7428571428571429
+          "progress": 0.7714285714285715
         },
         {
           "id": "victories-loup",
@@ -71056,9 +71265,8 @@
         {
           "id": "speed-run",
           "currentValue": 10,
-          "recentValue": 2,
+          "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260619200442",
             "Nales-20260624202638"
           ],
           "unlockedLevels": [
@@ -71113,9 +71321,8 @@
         {
           "id": "wolf-sabotages",
           "currentValue": 51,
-          "recentValue": 12,
+          "recentValue": 6,
           "recentGameIds": [
-            "Nales-20260619201608",
             "Nales-20260624203735"
           ],
           "unlockedLevels": [
@@ -71219,9 +71426,8 @@
         {
           "id": "death-turn1",
           "currentValue": 14,
-          "recentValue": 2,
+          "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260619204826",
             "Nales-20260624205814"
           ],
           "unlockedLevels": [
@@ -71425,11 +71631,14 @@
         },
         {
           "id": "wolf-kills",
-          "currentValue": 68,
-          "recentValue": 3,
+          "currentValue": 74,
+          "recentValue": 9,
           "recentGameIds": [
             "Nales-20260628192619",
-            "Nales-20260628203455"
+            "Nales-20260628203455",
+            "Nales-20260703194346",
+            "Nales-20260703195732",
+            "Nales-20260703201610"
           ],
           "unlockedLevels": [
             {
@@ -71454,29 +71663,33 @@
               "tier": "argent",
               "subLevel": 1,
               "threshold": 30,
-              "unlockedAtGame": "Nales-20260628203455"
+              "unlockedAtGame": "Nales-20260703201610"
             },
             {
               "tier": "argent",
               "subLevel": 2,
               "threshold": 50,
-              "unlockedAtGame": "Nales-20260628203455"
+              "unlockedAtGame": "Nales-20260703201610"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 70,
+              "unlockedAtGame": "Nales-20260703201610"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
-            "subLevel": 3,
-            "threshold": 70
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 100
           },
-          "progress": 0.9714285714285714
+          "progress": 0.74
         },
         {
           "id": "hunter-kill-enemy",
           "currentValue": 3,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260624193838"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
@@ -71488,10 +71701,8 @@
         {
           "id": "hunter-kill-villager",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260624193838"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -71509,24 +71720,32 @@
         },
         {
           "id": "consecutive-same-victim-kill",
-          "currentValue": 4,
-          "recentValue": 0,
-          "recentGameIds": [],
-          "unlockedLevels": [],
+          "currentValue": 6,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Nales-20260703195732",
+            "Nales-20260703201610"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260703195732"
+            }
+          ],
           "nextLevel": {
-            "tier": "bronze",
+            "tier": "argent",
             "subLevel": 1,
-            "threshold": 5
+            "threshold": 10
           },
-          "progress": 0.8
+          "progress": 0.6
         },
         {
           "id": "hunter-killed-by-wolf",
           "currentValue": 6,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260624193838"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -71584,9 +71803,11 @@
         },
         {
           "id": "revenge-kill",
-          "currentValue": 4,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 5,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703201610"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -71600,7 +71821,7 @@
             "subLevel": 1,
             "threshold": 10
           },
-          "progress": 0.4
+          "progress": 0.5
         },
         {
           "id": "loup-necromancien-resurrect",
@@ -71685,9 +71906,9 @@
         {
           "id": "max-loot-single-game",
           "currentValue": 540,
-          "recentValue": 195,
+          "recentValue": 135,
           "recentGameIds": [
-            "Nales-20260624195828"
+            "Nales-20260628190821"
           ],
           "unlockedLevels": [
             {
@@ -71726,12 +71947,13 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 35,
-          "recentValue": 3,
+          "currentValue": 36,
+          "recentValue": 4,
           "recentGameIds": [
             "Nales-20260628190821",
             "Nales-20260628195306",
-            "Nales-20260628205130"
+            "Nales-20260628205130",
+            "Nales-20260703202954"
           ],
           "unlockedLevels": [
             {
@@ -71770,7 +71992,7 @@
             "subLevel": 3,
             "threshold": 40
           },
-          "progress": 0.875
+          "progress": 0.9
         },
         {
           "id": "misunderstood",
@@ -71877,7 +72099,7 @@
           "currentValue": 1,
           "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260619200442"
+            "Nales-20260624202638"
           ],
           "unlockedLevels": [
             {
@@ -79879,14 +80101,13 @@
     "76561198252871868": {
       "playerId": "76561198252871868",
       "playerName": "viserion",
-      "totalUnlocked": 42,
+      "totalUnlocked": 44,
       "achievements": [
         {
           "id": "victories-villageois",
           "currentValue": 28,
-          "recentValue": 4,
+          "recentValue": 3,
           "recentGameIds": [
-            "Nales-20260503201903",
             "Nales-20260529203453",
             "Nales-20260628192619",
             "Nales-20260628203455"
@@ -80021,9 +80242,8 @@
         {
           "id": "wolf-sabotages",
           "currentValue": 27,
-          "recentValue": 6,
+          "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260503204055",
             "Nales-20260529210254"
           ],
           "unlockedLevels": [
@@ -80086,10 +80306,11 @@
         },
         {
           "id": "alakazam",
-          "currentValue": 1,
-          "recentValue": 1,
+          "currentValue": 2,
+          "recentValue": 2,
           "recentGameIds": [
-            "Nales-20260529200952"
+            "Nales-20260529200952",
+            "Nales-20260701200020"
           ],
           "unlockedLevels": [
             {
@@ -80097,6 +80318,28 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Nales-20260529200952"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "starvation",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260701190728"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260701190728"
             }
           ],
           "nextLevel": {
@@ -80276,9 +80519,8 @@
         {
           "id": "hunter-killed-by-wolf",
           "currentValue": 3,
-          "recentValue": 2,
+          "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260503201903",
             "Nales-20260628205130"
           ],
           "unlockedLevels": [],
@@ -80429,13 +80671,13 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 19,
+          "currentValue": 20,
           "recentValue": 4,
           "recentGameIds": [
-            "Nales-20260503194235",
             "Nales-20260529195353",
             "Nales-20260628192619",
-            "Nales-20260628201158"
+            "Nales-20260628201158",
+            "Nales-20260701204623"
           ],
           "unlockedLevels": [
             {
@@ -80455,14 +80697,20 @@
               "subLevel": 3,
               "threshold": 10,
               "unlockedAtGame": "Nales-20260417203659"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 20,
+              "unlockedAtGame": "Nales-20260701204623"
             }
           ],
           "nextLevel": {
             "tier": "argent",
-            "subLevel": 1,
-            "threshold": 20
+            "subLevel": 2,
+            "threshold": 30
           },
-          "progress": 0.95
+          "progress": 0.6666666666666666
         },
         {
           "id": "bavard",
@@ -80559,7 +80807,7 @@
           "currentValue": 3,
           "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260503201903"
+            "Nales-20260529203453"
           ],
           "unlockedLevels": [
             {
@@ -84827,12 +85075,13 @@
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 24,
-          "recentValue": 3,
+          "currentValue": 26,
+          "recentValue": 4,
           "recentGameIds": [
-            "Nales-20260605193623",
             "Nales-20260626205957",
-            "Nales-20260628195306"
+            "Nales-20260628195306",
+            "Nales-20260701200020",
+            "Nales-20260701202132"
           ],
           "unlockedLevels": [
             {
@@ -84859,15 +85108,13 @@
             "subLevel": 1,
             "threshold": 30
           },
-          "progress": 0.8
+          "progress": 0.8666666666666667
         },
         {
           "id": "victories-solo",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260605205128"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -84921,10 +85168,8 @@
         {
           "id": "wolf-sabotages",
           "currentValue": 4,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260626193654"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -84948,9 +85193,11 @@
         },
         {
           "id": "starvation",
-          "currentValue": 1,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 2,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260701190728"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -84964,7 +85211,7 @@
             "subLevel": 1,
             "threshold": 3
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "romeo-juliette",
@@ -85052,10 +85299,8 @@
         {
           "id": "avenger-death",
           "currentValue": 2,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260626193654"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -85128,9 +85373,8 @@
         {
           "id": "amoureux-loup-total-kills",
           "currentValue": 5,
-          "recentValue": 4,
+          "recentValue": 3,
           "recentGameIds": [
-            "Nales-20260626191104",
             "Nales-20260628203455"
           ],
           "unlockedLevels": [
@@ -85183,10 +85427,8 @@
         {
           "id": "solo-master",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260605205128"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -85219,14 +85461,18 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 25,
-          "recentValue": 5,
+          "currentValue": 29,
+          "recentValue": 9,
           "recentGameIds": [
             "Nales-20260626195634",
             "Nales-20260626205957",
             "Nales-20260628190821",
             "Nales-20260628195306",
-            "Nales-20260628201158"
+            "Nales-20260628201158",
+            "Nales-20260701190728",
+            "Nales-20260701194039",
+            "Nales-20260701200020",
+            "Nales-20260701202132"
           ],
           "unlockedLevels": [
             {
@@ -85259,7 +85505,7 @@
             "subLevel": 2,
             "threshold": 30
           },
-          "progress": 0.8333333333333334
+          "progress": 0.9666666666666667
         },
         {
           "id": "false-guilty",
@@ -85334,7 +85580,7 @@
           "currentValue": 2,
           "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260605193623"
+            "Nales-20260626205957"
           ],
           "unlockedLevels": [
             {
@@ -87778,17 +88024,21 @@
     "76561198821608819": {
       "playerId": "76561198821608819",
       "playerName": "Nylel",
-      "totalUnlocked": 28,
+      "totalUnlocked": 31,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 18,
-          "recentValue": 4,
+          "currentValue": 24,
+          "recentValue": 8,
           "recentGameIds": [
-            "Nales-20260624195828",
-            "Nales-20260626205957",
             "Nales-20260628195306",
-            "Nales-20260628203455"
+            "Nales-20260628203455",
+            "Nales-20260701200020",
+            "Nales-20260701202132",
+            "Nales-20260703195732",
+            "Nales-20260703201610",
+            "Nales-20260703202954",
+            "Nales-20260703204516"
           ],
           "unlockedLevels": [
             {
@@ -87815,7 +88065,7 @@
             "subLevel": 1,
             "threshold": 30
           },
-          "progress": 0.6
+          "progress": 0.8
         },
         {
           "id": "victories-loup",
@@ -87859,10 +88109,10 @@
         },
         {
           "id": "speed-run",
-          "currentValue": 4,
+          "currentValue": 5,
           "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260626205957"
+            "Nales-20260703201610"
           ],
           "unlockedLevels": [
             {
@@ -87870,23 +88120,26 @@
               "subLevel": 1,
               "threshold": 3,
               "unlockedAtGame": "Nales-20260619200442"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260703201610"
             }
           ],
           "nextLevel": {
             "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 5
+            "subLevel": 3,
+            "threshold": 10
           },
-          "progress": 0.8
+          "progress": 0.5
         },
         {
           "id": "lost-after-camp-switch",
           "currentValue": 2,
-          "recentValue": 2,
-          "recentGameIds": [
-            "Nales-20260626191104",
-            "Nales-20260626203610"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -87905,10 +88158,8 @@
         {
           "id": "wolf-sabotages",
           "currentValue": 16,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260624202638"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -87983,30 +88234,41 @@
         },
         {
           "id": "death-turn1",
-          "currentValue": 3,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 6,
+          "recentValue": 3,
+          "recentGameIds": [
+            "Nales-20260703194346",
+            "Nales-20260703201610",
+            "Nales-20260703204516"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 3,
               "unlockedAtGame": "Nales-20260610204244"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260703201610"
             }
           ],
           "nextLevel": {
             "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 5
+            "subLevel": 3,
+            "threshold": 10
           },
           "progress": 0.6
         },
         {
           "id": "avenger-death",
-          "currentValue": 1,
-          "recentValue": 1,
+          "currentValue": 2,
+          "recentValue": 2,
           "recentGameIds": [
-            "Nales-20260628195306"
+            "Nales-20260628195306",
+            "Nales-20260701204623"
           ],
           "unlockedLevels": [
             {
@@ -88021,15 +88283,32 @@
             "subLevel": 2,
             "threshold": 3
           },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "deaths-all-zones",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260628201158",
+            "Nales-20260628195306",
+            "Nales-20260701202132",
+            "Nales-20260703204516",
+            "Nales-20260628203455"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
           "progress": 0.3333333333333333
         },
         {
           "id": "zombie-kills",
           "currentValue": 2,
-          "recentValue": 2,
-          "recentGameIds": [
-            "Nales-20260626191104"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -88047,10 +88326,10 @@
         },
         {
           "id": "wolf-kills",
-          "currentValue": 20,
-          "recentValue": 1,
+          "currentValue": 22,
+          "recentValue": 2,
           "recentGameIds": [
-            "Nales-20260624202638"
+            "Nales-20260703192135"
           ],
           "unlockedLevels": [
             {
@@ -88069,7 +88348,7 @@
               "tier": "bronze",
               "subLevel": 3,
               "threshold": 15,
-              "unlockedAtGame": "Nales-20260624202638"
+              "unlockedAtGame": "Nales-20260703192135"
             }
           ],
           "nextLevel": {
@@ -88077,7 +88356,22 @@
             "subLevel": 1,
             "threshold": 30
           },
-          "progress": 0.6666666666666666
+          "progress": 0.7333333333333333
+        },
+        {
+          "id": "hunter-kill-enemy",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703195732"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "assassin-potion-kill-enemy",
@@ -88102,10 +88396,8 @@
         {
           "id": "same-color-kills",
           "currentValue": 2,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260624202638"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
@@ -88130,9 +88422,9 @@
         {
           "id": "max-loot-single-game",
           "currentValue": 385,
-          "recentValue": 385,
+          "recentValue": 320,
           "recentGameIds": [
-            "Nales-20260626203610"
+            "Nales-20260701190728"
           ],
           "unlockedLevels": [],
           "nextLevel": {
@@ -88145,10 +88437,8 @@
         {
           "id": "zombie-item-uses",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260626191104"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -88166,12 +88456,16 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 10,
-          "recentValue": 3,
+          "currentValue": 15,
+          "recentValue": 7,
           "recentGameIds": [
-            "Nales-20260626201209",
             "Nales-20260628201158",
-            "Nales-20260628203455"
+            "Nales-20260628203455",
+            "Nales-20260701190728",
+            "Nales-20260701194039",
+            "Nales-20260701202132",
+            "Nales-20260701204623",
+            "Nales-20260703204516"
           ],
           "unlockedLevels": [
             {
@@ -88198,15 +88492,13 @@
             "subLevel": 1,
             "threshold": 20
           },
-          "progress": 0.5
+          "progress": 0.75
         },
         {
           "id": "meneur",
           "currentValue": 4,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260628192619"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -88246,7 +88538,7 @@
           "currentValue": 1,
           "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260624195828"
+            "Nales-20260628195306"
           ],
           "unlockedLevels": [
             {
@@ -88264,13 +88556,32 @@
           "progress": 0.5
         },
         {
+          "id": "winning-months",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703204516"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260703204516"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "resurrected",
           "currentValue": 2,
-          "recentValue": 2,
-          "recentGameIds": [
-            "Nales-20260626191104",
-            "Nales-20260626203610"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -88585,18 +88896,17 @@
     "76561198012466841": {
       "playerId": "76561198012466841",
       "playerName": "Harmore",
-      "totalUnlocked": 20,
+      "totalUnlocked": 24,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 5,
-          "recentValue": 5,
+          "currentValue": 6,
+          "recentValue": 4,
           "recentGameIds": [
-            "Nales-20260522194341",
-            "Nales-20260522205417",
             "Nales-20260524190954",
             "Nales-20260612202700",
-            "Nales-20260612205815"
+            "Nales-20260612205815",
+            "Nales-20260701200020"
           ],
           "unlockedLevels": [
             {
@@ -88617,14 +88927,15 @@
             "subLevel": 3,
             "threshold": 10
           },
-          "progress": 0.5
+          "progress": 0.6
         },
         {
           "id": "victories-loup",
-          "currentValue": 1,
-          "recentValue": 1,
+          "currentValue": 3,
+          "recentValue": 2,
           "recentGameIds": [
-            "Nales-20260522201204"
+            "Nales-20260701190728",
+            "Nales-20260701204623"
           ],
           "unlockedLevels": [
             {
@@ -88639,15 +88950,13 @@
             "subLevel": 2,
             "threshold": 5
           },
-          "progress": 0.2
+          "progress": 0.6
         },
         {
           "id": "vegan-wolf",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260522201204"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -88688,9 +88997,8 @@
         {
           "id": "speed-run",
           "currentValue": 2,
-          "recentValue": 2,
+          "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260522205417",
             "Nales-20260612205815"
           ],
           "unlockedLevels": [],
@@ -88726,9 +89034,8 @@
         {
           "id": "wolf-sabotages",
           "currentValue": 6,
-          "recentValue": 6,
+          "recentValue": 5,
           "recentGameIds": [
-            "Nales-20260522201204",
             "Nales-20260524200619",
             "Nales-20260612190918",
             "Nales-20260612200127"
@@ -88762,13 +89069,14 @@
         },
         {
           "id": "death-turn1",
-          "currentValue": 4,
-          "recentValue": 4,
+          "currentValue": 6,
+          "recentValue": 5,
           "recentGameIds": [
-            "Nales-20260522205417",
             "Nales-20260524190954",
             "Nales-20260524195406",
-            "Nales-20260524204129"
+            "Nales-20260524204129",
+            "Nales-20260701200020",
+            "Nales-20260701204623"
           ],
           "unlockedLevels": [
             {
@@ -88776,25 +89084,52 @@
               "subLevel": 1,
               "threshold": 3,
               "unlockedAtGame": "Nales-20260524195406"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260701200020"
             }
           ],
           "nextLevel": {
             "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 5
+            "subLevel": 3,
+            "threshold": 10
           },
-          "progress": 0.8
+          "progress": 0.6
+        },
+        {
+          "id": "deaths-all-zones",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260524193427",
+            "Nales-20260524195406",
+            "Nales-20260524190954",
+            "Nales-20260701204623",
+            "Nales-20260701202132"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "wolf-kills",
-          "currentValue": 11,
-          "recentValue": 11,
+          "currentValue": 14,
+          "recentValue": 14,
           "recentGameIds": [
             "Nales-20260524193427",
             "Nales-20260524200619",
             "Nales-20260612190918",
             "Nales-20260612193136",
-            "Nales-20260612200127"
+            "Nales-20260612200127",
+            "Nales-20260701190728",
+            "Nales-20260701204623"
           ],
           "unlockedLevels": [
             {
@@ -88815,7 +89150,7 @@
             "subLevel": 3,
             "threshold": 15
           },
-          "progress": 0.7333333333333333
+          "progress": 0.9333333333333333
         },
         {
           "id": "consecutive-same-victim-kill",
@@ -88881,10 +89216,8 @@
         {
           "id": "loup-devin-double-seer",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260522201204"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -88903,10 +89236,8 @@
         {
           "id": "loup-devin-ultimate",
           "currentValue": 2,
-          "recentValue": 2,
-          "recentGameIds": [
-            "Nales-20260522201204"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -88925,9 +89256,9 @@
         {
           "id": "max-loot-single-game",
           "currentValue": 305,
-          "recentValue": 305,
+          "recentValue": 160,
           "recentGameIds": [
-            "Nales-20260522194341"
+            "Nales-20260612202700"
           ],
           "unlockedLevels": [],
           "nextLevel": {
@@ -88954,13 +89285,13 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 4,
+          "currentValue": 5,
           "recentValue": 4,
           "recentGameIds": [
-            "Nales-20260522194341",
             "Nales-20260524190954",
             "Nales-20260612202700",
-            "Nales-20260612205815"
+            "Nales-20260612205815",
+            "Nales-20260701200020"
           ],
           "unlockedLevels": [
             {
@@ -88968,22 +89299,26 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Nales-20260522194341"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260701200020"
             }
           ],
           "nextLevel": {
             "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 5
+            "subLevel": 3,
+            "threshold": 10
           },
-          "progress": 0.8
+          "progress": 0.5
         },
         {
           "id": "only-passer",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260522194341"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
@@ -88995,10 +89330,8 @@
         {
           "id": "democrat",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260522194341"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
@@ -89009,10 +89342,11 @@
         },
         {
           "id": "colors-of-lycans",
-          "currentValue": 1,
-          "recentValue": 1,
+          "currentValue": 2,
+          "recentValue": 2,
           "recentGameIds": [
-            "Nales-20260522194341"
+            "Nales-20260524190954",
+            "Nales-20260701200020"
           ],
           "unlockedLevels": [
             {
@@ -89020,21 +89354,50 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Nales-20260522194341"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Nales-20260701200020"
             }
           ],
           "nextLevel": {
             "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 2
+            "subLevel": 3,
+            "threshold": 3
           },
-          "progress": 0.5
+          "progress": 0.6666666666666666
         },
         {
-          "id": "resurrected",
+          "id": "winning-months",
           "currentValue": 1,
           "recentValue": 1,
           "recentGameIds": [
-            "Nales-20260524195406"
+            "Nales-20260701204623"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260701204623"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 2,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Nales-20260524195406",
+            "Nales-20260701204623"
           ],
           "unlockedLevels": [
             {
@@ -89049,7 +89412,7 @@
             "subLevel": 1,
             "threshold": 3
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "collectionneur",
@@ -94515,6 +94878,1320 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Nales-20260628205130"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        }
+      ]
+    },
+    "76561198030446176": {
+      "playerId": "76561198030446176",
+      "playerName": "Kuroihyoko",
+      "totalUnlocked": 9,
+      "achievements": [
+        {
+          "id": "victories-villageois",
+          "currentValue": 6,
+          "recentValue": 6,
+          "recentGameIds": [
+            "Nales-20260701202132",
+            "Nales-20260703194346",
+            "Nales-20260703195732",
+            "Nales-20260703201610",
+            "Nales-20260703202954",
+            "Nales-20260703204516"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260701202132"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260703202954"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 10
+          },
+          "progress": 0.6
+        },
+        {
+          "id": "speed-run",
+          "currentValue": 2,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Nales-20260703194346",
+            "Nales-20260703201610"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "death-turn1",
+          "currentValue": 3,
+          "recentValue": 3,
+          "recentGameIds": [
+            "Nales-20260701204623",
+            "Nales-20260703194346",
+            "Nales-20260703204516"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Nales-20260703204516"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
+          "id": "zombie-kills",
+          "currentValue": 2,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Nales-20260701204623"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260701204623"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "hunter-killed-by-wolf",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260701190728"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 275,
+          "recentValue": 275,
+          "recentGameIds": [
+            "Nales-20260701190728"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.6875
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 4,
+          "recentValue": 4,
+          "recentGameIds": [
+            "Nales-20260701202132",
+            "Nales-20260703192135",
+            "Nales-20260703202954",
+            "Nales-20260703204516"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260701202132"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.8
+        },
+        {
+          "id": "meneur",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703201610"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260703201610"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "democrat",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703202954"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260701202132"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260701202132"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703204516"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260703204516"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260701204623"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260701204623"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        }
+      ]
+    },
+    "76561198054625933": {
+      "playerId": "76561198054625933",
+      "playerName": "Sitael",
+      "totalUnlocked": 6,
+      "achievements": [
+        {
+          "id": "victories-villageois",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260701202132"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260701202132"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "alakazam",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260701190728"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260701190728"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "assassin-potion-kill-enemy",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260701204623"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260701204623"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 250,
+          "recentValue": 250,
+          "recentGameIds": [
+            "Nales-20260701202132"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.625
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260701202132"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260701202132"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "meneur",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260701202132"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260701202132"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260701202132"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260701202132"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        }
+      ]
+    },
+    "76561199820758090": {
+      "playerId": "76561199820758090",
+      "playerName": "TomInMotion",
+      "totalUnlocked": 4,
+      "achievements": [
+        {
+          "id": "victories-loup",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260701204623"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260701204623"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "wolf-kills",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260701204623"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260701204623"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260701204623"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260701204623"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260701204623"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260701204623"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        }
+      ]
+    },
+    "76561199562852963": {
+      "playerId": "76561199562852963",
+      "playerName": "noerabs",
+      "totalUnlocked": 4,
+      "achievements": [
+        {
+          "id": "victories-villageois",
+          "currentValue": 3,
+          "recentValue": 3,
+          "recentGameIds": [
+            "Nales-20260703201610",
+            "Nales-20260703202954",
+            "Nales-20260703204516"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260703201610"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
+          "id": "wolf-survived-hunter-shot",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703194346"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260703194346"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 4
+          },
+          "progress": 0.25
+        },
+        {
+          "id": "speed-run",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703201610"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "wolf-kills",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703194346"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260703194346"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 145,
+          "recentValue": 145,
+          "recentGameIds": [
+            "Nales-20260703202954"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.3625
+        },
+        {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703201610"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260703201610"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        }
+      ]
+    },
+    "76561198832674909": {
+      "playerId": "76561198832674909",
+      "playerName": "Polyflème",
+      "totalUnlocked": 3,
+      "achievements": [
+        {
+          "id": "victories-villageois",
+          "currentValue": 3,
+          "recentValue": 3,
+          "recentGameIds": [
+            "Nales-20260703194346",
+            "Nales-20260703195732",
+            "Nales-20260703201610"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260703194346"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
+          "id": "speed-run",
+          "currentValue": 2,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Nales-20260703194346",
+            "Nales-20260703201610"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 135,
+          "recentValue": 135,
+          "recentGameIds": [
+            "Nales-20260703194346"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.3375
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703192135"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260703192135"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "only-passer",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703195732"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703194346"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260703194346"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        }
+      ]
+    },
+    "76561199755733234": {
+      "playerId": "76561199755733234",
+      "playerName": "Yukino_FR",
+      "totalUnlocked": 5,
+      "achievements": [
+        {
+          "id": "victories-villageois",
+          "currentValue": 5,
+          "recentValue": 5,
+          "recentGameIds": [
+            "Nales-20260703194346",
+            "Nales-20260703195732",
+            "Nales-20260703201610",
+            "Nales-20260703202954",
+            "Nales-20260703204516"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260703194346"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260703204516"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 10
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "speed-run",
+          "currentValue": 2,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Nales-20260703194346",
+            "Nales-20260703201610"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "hunter-killed-by-wolf",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703201610"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 90,
+          "recentValue": 90,
+          "recentGameIds": [
+            "Nales-20260703202954"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.225
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 2,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Nales-20260703192135",
+            "Nales-20260703195732"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260703192135"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703194346"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260703194346"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703204516"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260703204516"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        }
+      ]
+    },
+    "76561198153531279": {
+      "playerId": "76561198153531279",
+      "playerName": "Red",
+      "totalUnlocked": 7,
+      "achievements": [
+        {
+          "id": "victories-villageois",
+          "currentValue": 2,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Nales-20260703201610",
+            "Nales-20260703204516"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260703201610"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
+          "id": "speed-run",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703201610"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "lost-after-camp-switch",
+          "currentValue": 2,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Nales-20260703194346",
+            "Nales-20260703195732"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260703194346"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "death-turn1",
+          "currentValue": 3,
+          "recentValue": 3,
+          "recentGameIds": [
+            "Nales-20260703194346",
+            "Nales-20260703201610",
+            "Nales-20260703204516"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Nales-20260703204516"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
+          "id": "avenger-death",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703195732"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260703195732"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "wolf-kills",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703202954"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260703202954"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 135,
+          "recentValue": 135,
+          "recentGameIds": [
+            "Nales-20260703192135"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.3375
+        },
+        {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703201610"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260703201610"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 2,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Nales-20260703194346",
+            "Nales-20260703195732"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260703194346"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        }
+      ]
+    },
+    "76561199476000956": {
+      "playerId": "76561199476000956",
+      "playerName": "Niamoorrr",
+      "totalUnlocked": 0,
+      "achievements": [
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 35,
+          "recentValue": 35,
+          "recentGameIds": [
+            "Nales-20260703192135"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.0875
+        }
+      ]
+    },
+    "76561198810919982": {
+      "playerId": "76561198810919982",
+      "playerName": "PRDX Gamstar08",
+      "totalUnlocked": 6,
+      "achievements": [
+        {
+          "id": "victories-villageois",
+          "currentValue": 3,
+          "recentValue": 3,
+          "recentGameIds": [
+            "Nales-20260703194346",
+            "Nales-20260703201610",
+            "Nales-20260703202954"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260703194346"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
+          "id": "speed-run",
+          "currentValue": 2,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Nales-20260703194346",
+            "Nales-20260703201610"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "death-turn1",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703194346"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "exploded",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703202954"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260703202954"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "wolf-kills",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703195732"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260703195732"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 35,
+          "recentValue": 35,
+          "recentGameIds": [
+            "Nales-20260703201610"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.0875
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703194346"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260703194346"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703194346"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260703194346"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260703204516"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260703204516"
             }
           ],
           "nextLevel": {
