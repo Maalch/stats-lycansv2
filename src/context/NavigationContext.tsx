@@ -88,6 +88,7 @@ export interface RolesStatsState {
 export interface TalkingTimeState {
   minGames: number;
   displayMode: 'total' | 'outside' | 'during';
+  campFilter?: string; // 'all', 'villageois', 'loup', or 'autres'
   focusChart?: string; // For future expansion if needed
 }
 

@@ -8,7 +8,7 @@ import { useThemeAdjustedDynamicPlayersColor } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
 import { formatSecondsToMinutesSeconds } from '../../utils/durationFormatters';
 import { MIN_GAMES_OPTIONS, MIN_GAMES_DEFAULTS, CHART_LIMITS } from '../../config/chartConstants';
-import type { PlayerTalkingTimeStats } from '../../hooks/utils/talkingTimeUtils';
+import type { PlayerTalkingTimeStats, CampFilter } from '../../hooks/utils/talkingTimeUtils';
 
 // Extended type for chart data with highlighting info
 type ChartTalkingTimeStat = PlayerTalkingTimeStats & {
@@ -20,7 +20,6 @@ type TalkingTimeMode = 'total' | 'outside' | 'during';
 const minGamesOptions = MIN_GAMES_OPTIONS.STANDARD;
 
 export function TalkingTimeChart() {
-  const { data: talkingTimeData, isLoading: dataLoading, error: fetchError } = useTalkingTimeStats();
   const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
   const { settings } = useSettings();
 
@@ -31,7 +30,12 @@ export function TalkingTimeChart() {
   const [displayMode, setDisplayMode] = useState<TalkingTimeMode>(
     navigationState.talkingTimeState?.displayMode || 'total'
   );
+  const [campFilter, setCampFilter] = useState<CampFilter>(
+    (navigationState.talkingTimeState?.campFilter as CampFilter) || 'all'
+  );
   const [highlightedPlayer, setHighlightedPlayer] = useState<string | null>(null);
+
+  const { data: talkingTimeData, isLoading: dataLoading, error: fetchError } = useTalkingTimeStats(campFilter);
 
   const { joueursData } = useJoueursData();
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
@@ -41,16 +45,18 @@ export function TalkingTimeChart() {
     const currentNavState = navigationState.talkingTimeState;
     if (!currentNavState || 
         currentNavState.minGames !== minGames ||
-        currentNavState.displayMode !== displayMode) {
+        currentNavState.displayMode !== displayMode ||
+        currentNavState.campFilter !== campFilter) {
       updateNavigationState({
         talkingTimeState: {
           minGames,
           displayMode,
+          campFilter,
           focusChart: currentNavState?.focusChart
         }
       });
     }
-  }, [minGames, displayMode, updateNavigationState]);
+  }, [minGames, displayMode, campFilter, updateNavigationState]);
 
   // Data processing with highlighting support
   const { chartData, highlightedPlayerAdded } = useMemo(() => {
@@ -207,6 +213,28 @@ export function TalkingTimeChart() {
               <option value="total">Temps Total</option>
               <option value="outside">Hors Meeting</option>
               <option value="during">En Meeting</option>
+            </select>
+
+            <label htmlFor="camp-filter-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginLeft: '1rem' }}>
+              Camp:
+            </label>
+            <select
+              id="camp-filter-select"
+              value={campFilter}
+              onChange={(e) => setCampFilter(e.target.value as CampFilter)}
+              style={{
+                background: 'var(--bg-tertiary)',
+                color: 'var(--text-primary)',
+                border: '1px solid var(--border-color)',
+                borderRadius: '4px',
+                padding: '0.25rem 0.5rem',
+                fontSize: '0.9rem'
+              }}
+            >
+              <option value="all">Tous les camps</option>
+              <option value="villageois">Camp Villageois</option>
+              <option value="loup">Camp Loup</option>
+              <option value="autres">Autres (Solo)</option>
             </select>
 
             <label htmlFor="min-games-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginLeft: '1rem' }}>
