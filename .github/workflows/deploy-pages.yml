@@ -2,7 +2,13 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [master]
+    branches: [main]
+  workflow_run:
+    workflows:
+      - "Update Lycans Stats Data"
+      - "Update Discord Team Stats Data"
+      - "Update Rankings, Titles & Achievements"
+    types: [completed]
   workflow_dispatch: # Allow manual triggering
 
 # Required permissions for GitHub Pages deployment
@@ -19,6 +25,8 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    # For workflow_run triggers, only deploy if the triggering workflow succeeded
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
