@@ -110,7 +110,27 @@ export function ClipViewer({
                 </div>
                 <div className="lycans-clip-info-col">
                   <h3>POV</h3>
-                  <span className="lycans-clip-player-name">{clip.POVPlayer}</span>
+                  {relatedClips.length > 0 && onRelatedClip ? (
+                    <div className="lycans-clip-info-bar">
+                      <button
+                        className="lycans-clip-nav-btn lycans-clip-related-btn lycans-clip-current-btn"
+                        disabled
+                      >
+                        👁️ {clip.POVPlayer}
+                      </button>
+                      {relatedClips.map((relatedClip) => (
+                        <button
+                          key={relatedClip.ClipId}
+                          className="lycans-clip-nav-btn lycans-clip-related-btn"
+                          onClick={() => onRelatedClip(relatedClip.ClipId)}
+                        >
+                          {relatedClip.POVPlayer}
+                        </button>
+                      ))}
+                    </div>
+                  ) : (
+                    <span className="lycans-clip-player-name">{clip.POVPlayer}</span>
+                  )}
                 </div>
                 {otherPlayers.length > 0 && (
                   <div className="lycans-clip-info-col">
@@ -133,7 +153,7 @@ export function ClipViewer({
             )}
 
             {/* Navigation Section */}
-            {(nextClip || relatedClips.length > 0 || onRandomClip) && (
+            {(nextClip || onRandomClip) && (
               <div className="lycans-clip-info-section">
                 <h3>Navigation</h3>
                 <div className="lycans-clip-navigation">
@@ -153,20 +173,6 @@ export function ClipViewer({
                     >
                       ▶ Suivant: {getClipDisplayName(nextClip)}
                     </button>
-                  )}
-                  {relatedClips.length > 0 && onRelatedClip && (
-                    <div className="lycans-clip-related-clips">
-                      <p className="lycans-clip-related-label">Autres POV:</p>
-                      {relatedClips.map((relatedClip) => (
-                        <button
-                          key={relatedClip.ClipId}
-                          className="lycans-clip-nav-btn lycans-clip-related-btn"
-                          onClick={() => onRelatedClip(relatedClip.ClipId)}
-                        >
-                          {getClipDisplayName(relatedClip)} ({relatedClip.POVPlayer})
-                        </button>
-                      ))}
-                    </div>
                   )}
                 </div>
               </div>

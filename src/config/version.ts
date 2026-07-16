@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.9.8';
+export const APP_VERSION = '1.9.9';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,25 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.9.10',
+    date: '16/07/2026',
+    description: 'Amélioration de la navigation et de l\'affichage de la page de Clips dans',
+    link: {
+      mainTab: 'clips',
+      text: 'Clips'
+    }
+  },
+  {
+    version: 'v1.9.9',
+    date: '16/07/2026',
+    description: 'Ajouts d\'un filtre de camp sur les classements temps de paroles dans',
+    link: {
+      mainTab: 'rankings',
+      subTab: 'talkingTime',
+      text: 'Classements / Temps de Parole'
+    }
+  },
   {
     version: 'v1.9.8',
     date: '25/06/2026',
