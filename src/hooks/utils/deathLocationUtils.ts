@@ -7,7 +7,7 @@ import type { DeathType } from '../../types/deathTypes';
  * Centralized color mapping used across all death location visualizations
  */
 export function getDeathTypeColor(deathType: string, lycansColors: Record<string, string>): string {
-  if (deathType === 'BY_WOLF' || deathType === 'SURVIVALIST_NOT_SAVED') {
+  if (deathType === 'BY_WOLF' || deathType === 'SURVIVALIST_NOT_SAVED' || deathType === 'MOLE') {
     return lycansColors['Loup'];
   } else if (deathType === 'VOTED') {
     return 'var(--chart-color-1)';

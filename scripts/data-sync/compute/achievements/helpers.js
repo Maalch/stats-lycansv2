@@ -6,7 +6,7 @@
  */
 
 // Re-export datasyncExport utilities used by evaluators
-export { getPlayerId, getPlayerMainCampFromRole, getPlayerCampFromRole, getPlayerFinalRole, DeathTypeCode } from '../../../../src/utils/datasyncExport.js';
+export { getPlayerId, getPlayerMainCampFromRole, getPlayerCampFromRole, getPlayerFinalRole, DeathTypeCode, DeathTypeCategoryCode } from '../../../../src/utils/datasyncExport.js';
 
 import { getPlayerId as _getPlayerId, getPlayerCampFromRole, getPlayerFinalRole, getPlayerMainCampFromRole } from '../../../../src/utils/datasyncExport.js';
 

@@ -6,7 +6,7 @@
  */
 
 import { isWolfCamp, getPlayerCampForAchievement, isHunterRole, isAliveAtMeeting, isKilledByPlayer, isActionTargetPlayer, getDeathDay } from './helpers.js';
-import { getPlayerId, getPlayerFinalRole, getPlayerCampFromRole, DeathTypeCode } from './helpers.js';
+import { getPlayerId, getPlayerFinalRole, getPlayerCampFromRole, DeathTypeCode, DeathTypeCategoryCode } from './helpers.js';
 
 /**
  * Count wolf kills across all games
@@ -23,7 +23,7 @@ export function wolfKills(playerGames, allGames, playerId, params) {
     // Count players killed by this wolf in this game
     let killsInGame = 0;
     for (const victim of game.PlayerStats) {
-      if (victim.DeathType === DeathTypeCode.BY_WOLF && isKilledByPlayer(game, victim, playerId)) {
+      if (DeathTypeCategoryCode.WOLF_KILLS.includes(victim.DeathType) && isKilledByPlayer(game, victim, playerId)) {
         killsInGame++;;
       }
     }
@@ -108,7 +108,7 @@ export function wolfWinNoKills(playerGames, allGames, playerId, params) {
     // Check if this wolf made any kills
     const madeKills = game.PlayerStats.some(victim =>
       isKilledByPlayer(game, victim, playerId) &&
-      victim.DeathType === DeathTypeCode.BY_WOLF
+      DeathTypeCategoryCode.WOLF_KILLS.includes(victim.DeathType)
     );
     
     if (!madeKills) {
@@ -211,7 +211,7 @@ export function wolfNecromancerResurrect(playerGames, allGames, playerId, params
     const anyResurrectedKilledTwo = resurrectedPlayers.some(resurrected => {
       const resurrectedId = getPlayerId(resurrected);
       const kills = game.PlayerStats.filter(victim =>
-        victim.DeathType === DeathTypeCode.BY_WOLF &&
+        DeathTypeCategoryCode.WOLF_KILLS.includes(victim.DeathType) &&
         isKilledByPlayer(game, victim, resurrectedId)
       );
       return kills.length >= 2;
@@ -410,7 +410,7 @@ export function wolfAllKillsSolo(playerGames, allGames, playerId, params) {
 
     // Collect all BY_WOLF kills in the game
     const wolfKillsInGame = game.PlayerStats.filter(
-      victim => victim.DeathType === DeathTypeCode.BY_WOLF
+      victim => DeathTypeCategoryCode.WOLF_KILLS.includes(victim.DeathType)
     );
 
     // Must have made at least 1 kill
@@ -487,7 +487,7 @@ export function wolfTransformKillNights(playerGames, allGames, playerId, params)
       // Must have killed at least one player that same night
       const hasKill = game.PlayerStats.some(v =>
         isKilledByPlayer(game, v, playerId) &&
-        v.DeathType === DeathTypeCode.BY_WOLF &&
+        DeathTypeCategoryCode.WOLF_KILLS.includes(v.DeathType) &&
         v.DeathTiming === timing
       );
       if (!hasKill) continue;
@@ -521,7 +521,7 @@ export function wolfLossHarvestNoKills(playerGames, allGames, playerId, params) 
     // Check if this wolf made any kills
     const madeKills = game.PlayerStats.some(victim =>
       isKilledByPlayer(game, victim, playerId) &&
-      victim.DeathType === DeathTypeCode.BY_WOLF
+      DeathTypeCategoryCode.WOLF_KILLS.includes(victim.DeathType)
     );
     
     if (!madeKills) {
@@ -560,7 +560,7 @@ export function wolfEclipseKills(playerGames, allGames, playerId, params) {
     // Count wolf kills whose victim died on an eclipse day
     let killsInGame = 0;
     for (const victim of game.PlayerStats) {
-      if (victim.DeathType !== DeathTypeCode.BY_WOLF) continue;
+      if (!DeathTypeCategoryCode.WOLF_KILLS.includes(victim.DeathType)) continue;
       if (!isKilledByPlayer(game, victim, playerId)) continue;
       const victimDay = getDeathDay(victim.DeathTiming);
       if (victimDay !== null && eclipseDays.has(victimDay)) {

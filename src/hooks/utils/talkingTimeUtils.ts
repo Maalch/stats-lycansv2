@@ -1,6 +1,8 @@
 import type { GameLogEntry } from '../useCombinedRawData';
 import { getPlayerId, getCanonicalPlayerName } from '../../utils/playerIdentification';
-import { calculateGameDuration } from '../../utils/datasyncExport';
+import { calculateGameDuration, getPlayerMainCampFromRole } from '../../utils/datasyncExport';
+
+export type CampFilter = 'all' | 'villageois' | 'loup' | 'autres';
 
 export interface PlayerTalkingTimeStats {
   player: string;
@@ -38,8 +40,11 @@ function gameHasTalkingData(game: GameLogEntry): boolean {
  * Compute per-player talking time statistics from game log data
  * Excludes games without talking time data (created before feature implementation)
  * Normalizes talking time per 60 minutes of gameplay
+ *
+ * @param gameData - Array of game log entries
+ * @param campFilter - Filter by camp based on initial role: 'all', 'villageois', 'loup', or 'autres'
  */
-export function computeTalkingTimeStats(gameData: GameLogEntry[]): TalkingTimeData | null {
+export function computeTalkingTimeStats(gameData: GameLogEntry[], campFilter: CampFilter = 'all'): TalkingTimeData | null {
   if (!gameData || gameData.length === 0) {
     return null;
   }
@@ -68,6 +73,20 @@ export function computeTalkingTimeStats(gameData: GameLogEntry[]): TalkingTimeDa
     game.PlayerStats.forEach(player => {
       const playerId = getPlayerId(player);
       const displayName = getCanonicalPlayerName(player);
+
+      // Apply camp filter based on initial role (MainRoleInitial + Power)
+      if (campFilter !== 'all') {
+        const playerCamp = getPlayerMainCampFromRole(player.MainRoleInitial, player.Power);
+        const campFilterMap: Record<CampFilter, string> = {
+          'all': '',
+          'villageois': 'Villageois',
+          'loup': 'Loup',
+          'autres': 'Autres'
+        };
+        if (playerCamp !== campFilterMap[campFilter]) {
+          return;
+        }
+      }
 
       // Calculate player-specific game duration
       // If player died, use their death time; otherwise use game end time

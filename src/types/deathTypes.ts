@@ -19,6 +19,7 @@ export const DEATH_TYPES = {
   
   // Wolf Kills
   BY_WOLF: 'BY_WOLF',                       // Tué par Loup
+  MOLE: 'MOLE',                             // Tué par Loup (joueur infiltré)
   SURVIVALIST_NOT_SAVED: 'SURVIVALIST_NOT_SAVED', // Tué par Loup (Survivaliste non sauvé)
   
   // Other Creature Kills
@@ -76,7 +77,8 @@ export const DEATH_TYPE_CATEGORIES = {
   VOTING: [DEATH_TYPES.VOTED],
   
   WOLF_KILLS: [
-    DEATH_TYPES.BY_WOLF
+    DEATH_TYPES.BY_WOLF,
+    DEATH_TYPES.MOLE
   ],
   
   CREATURE_KILLS: [
@@ -148,6 +150,7 @@ export const SYSTEM_DEATH_TYPES: readonly DeathType[] = [
  */
 export const KILLER_DEATH_TYPES: readonly DeathType[] = [
   DEATH_TYPES.BY_WOLF,
+  DEATH_TYPES.MOLE,
   DEATH_TYPES.SURVIVALIST_NOT_SAVED,
   DEATH_TYPES.BY_ZOMBIE,
   DEATH_TYPES.BY_BEAST,
@@ -174,6 +177,7 @@ export const KILLER_DEATH_TYPES: readonly DeathType[] = [
 export const DEATH_TYPE_LABELS: Record<DeathType, string> = {
   [DEATH_TYPES.VOTED]: 'Mort aux votes',
   [DEATH_TYPES.BY_WOLF]: 'Tué par Loup',
+  [DEATH_TYPES.MOLE]: 'Tué par Loup (joueur infiltré)',
   [DEATH_TYPES.SURVIVALIST_NOT_SAVED]: 'Tué par Loup',
   [DEATH_TYPES.BY_ZOMBIE]: 'Tué par Zombie',
   [DEATH_TYPES.BY_BEAST]: 'Tué par La Bête',

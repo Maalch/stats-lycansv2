@@ -1,8 +1,8 @@
 {
   "_meta": {
     "description": "Reference file for Lycans v2 game mechanics: camps, roles, powers, accessories, gadgets, effects, events, and game rules. Extracted from in-game translations and gameLog data.",
-    "version": "0.312",
-    "lastUpdated": "2026-06-06",
+    "version": "0.321",
+    "lastUpdated": "2026-07-06",
     "sourceTranslationsFile": "ExternalData/translations.json",
     "notes": "French names match gameLog.json values. Descriptions are cleaned from in-game markup (<color> tags, {0} placeholders). This file can be manually edited to adjust or enrich descriptions. potionEffects = drinkable effects from potions/scrolls. statusEffects = in-game states applied by role abilities, environmental events, or other mechanics (many overlap with potionEffects but represent the broader set of all possible player states)."
   },
@@ -120,7 +120,7 @@
       "camp": "solo",
       "emoji": "🔍",
       "type": "solo",
-      "description": "Gagne en atteignant 100% d'espionnage et en survivant jusqu'au meeting suivant. La cible est colorée en rouge et visible sur la minimap. L'espionnage progresse si la cible est visible et/ou si l'Espion est immobile. Pendant les meetings, la progression est affichée à tous.",
+      "description": "Gagne en atteignant 100% d'espionnage et en survivant jusqu'au meeting suivant. La cible est colorée en rouge et visible sur la minimap. L'espionnage progresse si la cible est visible et/ou si l'Espion est immobile, mais la progression ralentit à mesure que l'Espion avance pendant la même demi-journée (retours dégressifs). Pendant les meetings, la progression est affichée à tous.",
       "descriptionShort": "Gagne en espionnant des cibles désignées",
       "translationKey": "NALES_ROLE_DESCRIPTION_SPY"
     },
@@ -130,7 +130,7 @@
       "camp": "solo",
       "emoji": "🔬",
       "type": "solo",
-      "description": "Gagne en rejoignant un meeting avec 100% de Recherche. La recherche augmente en restant près d'un loup transformé, plus vite si le risque est élevé. Peut voir tous les loups transformés sur la minimap et créer des gadgets.",
+      "description": "Gagne en rejoignant un meeting avec 100% de Recherche. La recherche augmente en restant près d'un loup transformé, plus vite si le risque est élevé. La progression ralentit à mesure que le Scientifique avance pendant la même nuit (retours dégressifs). Peut voir tous les loups transformés sur la minimap et créer des gadgets.",
       "descriptionShort": "Gagne en observant des loups qui sont transformés",
       "translationKey": "NALES_ROLE_DESCRIPTION_SCIENTIST"
     },
@@ -140,7 +140,7 @@
       "camp": "solo",
       "emoji": "💕",
       "type": "duo",
-      "description": "Rôle duo composé d'un Amoureux Villageois et d'un Amoureux Loup. Ils gagnent en survivant ensemble jusqu'à ce qu'il ne reste que 4 joueurs en meeting. Peuvent communiquer par télépathie (canal privé). Le Villageois perd de la vie la nuit si le Loup n'est pas transformé, et seuls les kills du Loup le nourrissent. Les autres Loups voient la nuit teintée en rose quand les Amoureux sont dans la partie.",
+      "description": "Rôle duo composé d'un Amoureux Villageois et d'un Amoureux Loup. Ils gagnent en survivant ensemble jusqu'à ce qu'il ne reste que 4 joueurs en meeting. Peuvent communiquer par télépathie (canal privé). Le Villageois perd de la vie la nuit si le Loup n'est pas transformé, et seuls les kills du Loup le nourrissent. La nourriture récupérée par l'Amoureux Villageois soigne légèrement l'Amoureux Loup s'il est en forme de loup. Les autres Loups voient la nuit teintée en rose quand les Amoureux sont dans la partie.",
       "descriptionShort": "Villageois + Loup. Gagnent en survivant ensemble",
       "subRoles": [
         {
@@ -284,8 +284,7 @@
         { "effect": "Sourd", "duration": 20 },
         { "effect": "Paranoia", "duration": 12 },
         { "effect": "Flatulences", "duration": 20 },
-        { "effect": "Myope", "duration": 25 },
-        { "effect": "Confusion", "duration": 15 }
+        { "effect": "Myope", "duration": 25 }
       ]
     },
     {
@@ -834,12 +833,12 @@
       "name": "Potion",
       "emoji": "🧪",
       "translationKey": "NALES_POTION",
-      "description": "Fiole contenant un effet aléatoire. La couleur correspond à un effet, mais celui-ci est inconnu du joueur (sauf pour l'Alchimiste). L'effet s'applique au buveur. Certaines potions ont un effet plus court si bues en Loup ou Zombie."
+      "description": "Fiole contenant un effet aléatoire. La couleur correspond à un effet, mais celui-ci est inconnu du joueur (sauf pour l'Alchimiste). L'effet s'applique au buveur."
     }
   ],
 
   "potionEffects": [
-    { "id": "assassin", "name": "Assassin", "type": "positive", "durationSeconds": 20, "translationKey": "NALES_EFFECT_ASSASSIN", "tutorial": "Vous permet de tuer un humain ou d'assommer un loup" },
+    { "id": "assassin", "name": "Assassin", "type": "positive", "durationSeconds": 20, "translationKey": "NALES_EFFECT_ASSASSIN", "tutorial": "Vous permet de tuer un humain ou d'assommer un loup (les Villageois ne peuvent pas l'utiliser pour tuer le premier jour)" },
     { "id": "audition-plus", "name": "Audition+", "type": "positive", "durationSeconds": 45, "translationKey": "EFFECT_AUDITION_PLUS", "tutorial": "Vous entendez mieux et voyez les victimes sur la minimap" },
     { "id": "celerite", "name": "Célérité", "type": "positive", "durationSeconds": 45, "translationKey": "EFFECT_SPEED", "tutorial": "Augmente votre vitesse de déplacement" },
     { "id": "clairvoyance", "name": "Clairvoyance", "type": "positive", "durationSeconds": 75, "translationKey": "NALES_EFFECT_CLAIRVOYANCE", "tutorial": "Indique les joueurs proches sur votre minimap" },
@@ -889,9 +888,9 @@
     { "id": "hante", "name": "Hanté", "translationKey": "NALES_EFFECT_HAUNTED", "tutorial": "Lance automatiquement un effet aléatoire sur le joueur lui-même toutes les quelques secondes.", "randomEffects": ["Soins", "Dégâts", "Ouvre les portes", "Ferme les portes", "Téléportation", "Obtenir un objet", "Étourdi", "Aveuglé", "Clairvoyance", "Flatulences", "Invisible", "Paranoia", "Célérité", "Son", "Lanternes clignotantes", "Rotation forcée"] },
     { "id": "chaos", "name": "Chaos", "translationKey": "NALES_EFFECT_CHAOS", "tutorial": "Lance automatiquement une action aléatoire toutes les quelques secondes.", "randomEffects": ["Piège", "Grenade", "Parchemin", "Verrou", "Fumigène", "Diamant"] },
     { "id": "myope", "name": "Myope", "translationKey": "NALES_EFFECT_NEARSIGHTED" },
-    { "id": "assassin", "name": "Assassin", "translationKey": "NALES_EFFECT_ASSASSIN", "tutorial": "Vous permet de tuer un humain ou d'assommer un loup" },
+    { "id": "assassin", "name": "Assassin", "translationKey": "NALES_EFFECT_ASSASSIN", "tutorial": "Vous permet de tuer un humain ou d'assommer un loup (les Villageois ne peuvent pas l'utiliser pour tuer le premier jour)" },
     { "id": "puant", "name": "Puant", "translationKey": "NALES_EFFECT_STINKING", "tutorial": "Ralentit les joueurs proches, portée plus grande sur les loups" },
-    { "id": "nausee", "name": "Nausée", "translationKey": "NALES_EFFECT_NAUSEATED" },
+    { "id": "nausee", "name": "Nausée", "translationKey": "NALES_EFFECT_NAUSEATED", "tutorial": "Réduit la vitesse des joueurs proches et applique un léger brouillard" },
     { "id": "muet", "name": "Muet", "translationKey": "NALES_EFFECT_MUTE" },
     { "id": "clairvoyance", "name": "Clairvoyance", "translationKey": "NALES_EFFECT_CLAIRVOYANCE", "tutorial": "Indique les joueurs proches sur votre minimap" },
     { "id": "assomme", "name": "Assommé", "translationKey": "NALES_EFFECT_DOWNED" },
@@ -1012,6 +1011,13 @@
       "emoji": "😡",
       "description": "Le premier loup qui se transforme est plus puissant mais les suivants sont affaiblis. Si aucun loup ne s'est transformé 20 secondes après le début de la nuit, un loup aléatoire se transforme automatiquement.",
       "translationKey": "NALES_EVENT_RAGE"
+    },
+    {
+      "id": "vengeance",
+      "name": "Vengeance",
+      "emoji": "⚔️",
+      "description": "Ne fait rien pendant la journée. S'il y a au moins une victime de loup pendant la nuit, le meeting suivant se tient sous un brouillard rouge. Si personne n'est éliminé au vote lors de ce meeting, un Villageois aléatoire meurt.",
+      "translationKey": "NALES_EVENT_VENGEANCE"
     }
   ],
 
