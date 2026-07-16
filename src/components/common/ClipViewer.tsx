@@ -95,32 +95,31 @@ export function ClipViewer({
 
           {/* Metadata Section */}
           <div className="lycans-clip-metadata">
-            {(gameId || gameDate) && (
-              <div className="lycans-clip-info-section">
-                <h3>Partie</h3>
-                <div className="lycans-clip-game-info">
-                  {gameId && <span className="lycans-clip-game-id">#{gameId}</span>}
-                  {gameDate && (
-                    <span className="lycans-clip-game-date">
-                      {new Date(gameDate).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' })}
-                    </span>
-                  )}
-                </div>
-              </div>
-            )}
-
             <div className="lycans-clip-info-section">
-              <h3>Joueurs</h3>
-              <div className="lycans-clip-players">
-                <div className="lycans-clip-pov-player">
-                  <span className="lycans-clip-pov-badge">POV</span>
+              <div className="lycans-clip-info-columns">
+                <div className="lycans-clip-info-col">
+                  <h3>Partie</h3>
+                  <div className="lycans-clip-game-info">
+                    {gameId && <span className="lycans-clip-game-id">#{gameId}</span>}
+                    {gameDate && (
+                      <span className="lycans-clip-game-date">
+                        {new Date(gameDate).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="lycans-clip-info-col">
+                  <h3>POV</h3>
                   <span className="lycans-clip-player-name">{clip.POVPlayer}</span>
                 </div>
                 {otherPlayers.length > 0 && (
-                  <div className="lycans-clip-other-players">
-                    {otherPlayers.map((player, idx) => (
-                      <span key={idx} className="lycans-clip-player-name">{player}</span>
-                    ))}
+                  <div className="lycans-clip-info-col">
+                    <h3>Joueurs</h3>
+                    <div className="lycans-clip-info-bar">
+                      {otherPlayers.map((player, idx) => (
+                        <span key={idx} className="lycans-clip-player-name lycans-clip-other-player-inline">{player}</span>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
