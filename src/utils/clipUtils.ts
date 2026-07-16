@@ -116,6 +116,20 @@ export function getRandomClip(clips: Clip[]): Clip | null {
 }
 
 /**
+ * Get the set of clip IDs that are referenced as NextClip by another clip.
+ * These are "continuation" clips (not sequence starters) and should be excluded from random selection.
+ */
+export function getSequenceContinuationClipIds(allClips: Clip[]): Set<string> {
+  const ids = new Set<string>();
+  allClips.forEach(clip => {
+    if (clip.NextClip) {
+      ids.add(clip.NextClip);
+    }
+  });
+  return ids;
+}
+
+/**
  * Find related clips in a clip array
  */
 export function findRelatedClips(clip: Clip, allClips: Clip[]): Clip[] {

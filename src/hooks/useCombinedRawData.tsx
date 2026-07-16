@@ -564,6 +564,34 @@ export function useFilteredGameLogData(): {
   return { data: filteredData, isLoading, error };
 }
 
+/**
+ * Filtered GameLog data that respects settings context but ignores the game type (Parties Moddées) filter.
+ * Used for pages like Clips where all game types should always be shown.
+ */
+export function useFilteredGameLogDataAllTypes(): {
+  data: GameLogEntry[] | null;
+  isLoading: boolean;
+  error: string | null;
+} {
+  const { settings } = useSettings();
+  const { data: rawGameLogData, isLoading, error } = useGameLogData();
+
+  const filteredData = useMemo(() => {
+    if (!rawGameLogData) return null;
+
+    const settingsWithoutGameTypeFilter = {
+      ...settings,
+      independentFilters: settings.independentFilters
+        ? { ...settings.independentFilters, gameTypeEnabled: false }
+        : settings.independentFilters,
+    };
+
+    return applyIndependentGameLogFilters(rawGameLogData.GameStats, settingsWithoutGameTypeFilter);
+  }, [rawGameLogData, settings]);
+
+  return { data: filteredData, isLoading, error };
+}
+
 
 /**
  * Extract timestamp and trailing number from game ID
