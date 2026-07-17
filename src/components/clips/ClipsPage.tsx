@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { useFilteredGameLogDataAllTypes } from '../../hooks/useCombinedRawData';
+import { useFilteredGameLogData } from '../../hooks/useCombinedRawData';
 import { ClipViewer } from '../common/ClipViewer';
 import { 
   getUniqueTags, 
@@ -7,8 +7,7 @@ import {
   findNextClip,
   getClipDisplayName,
   getAllClipPlayers,
-  parseOtherPlayers,
-  getSequenceContinuationClipIds
+  parseOtherPlayers
 } from '../../utils/clipUtils';
 import { useSettings } from '../../context/SettingsContext';
 import { useNavigation } from '../../context/NavigationContext';
@@ -22,7 +21,7 @@ type SortField = 'gameNumber' | 'date' | 'name' | 'pov' | 'players';
 type SortDirection = 'asc' | 'desc';
 
 export function ClipsPage() {
-  const { data: gameData, isLoading, error } = useFilteredGameLogDataAllTypes();
+  const { data: gameData, isLoading, error } = useFilteredGameLogData();
   const { joueursData } = useJoueursData();
   const { settings } = useSettings();
   const { navigationFilters } = useNavigation();
@@ -207,14 +206,12 @@ export function ClipsPage() {
     }
   };
 
-  // Handle random clip selection — exclude sequence-continuation clips (those referenced as NextClip)
+  // Handle random clip selection
   const handleRandomClip = () => {
     if (filteredAndSortedClips.length === 0) return;
-    const continuationIds = getSequenceContinuationClipIds(allClips);
-    const candidates = filteredAndSortedClips.filter(c => !continuationIds.has(c.ClipId));
-    const pool = candidates.length > 0 ? candidates : filteredAndSortedClips;
-    const randomIndex = Math.floor(Math.random() * pool.length);
-    setSelectedClip(pool[randomIndex]);
+    const randomIndex = Math.floor(Math.random() * filteredAndSortedClips.length);
+    const randomClip = filteredAndSortedClips[randomIndex];
+    setSelectedClip(randomClip);
   };
 
   // Handle sort

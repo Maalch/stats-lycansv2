@@ -20,4 +20,14 @@ export const DATA_SOURCES = {
     modVersionLabel: 'Discord Team - Multiple AWS Versions',
     indexDescription: 'Game logs from AWS S3 bucket for Discord Team. Updated periodically via GitHub Actions.'
   }
+  ,
+  
+  anaeecorp: {
+    name: 'Anaee Corp',
+    outputDir: 'data/anaeecorp',
+    gameFilter: (gameId) => gameId.startsWith('Holdener-'), // Only Holdener- games
+    generateJoueurs: true, // Generate from game log
+    modVersionLabel: 'Anaee Corp - Multiple AWS Versions',
+    indexDescription: 'Game logs from AWS S3 bucket for Anaee Corp.'
+  }
 };

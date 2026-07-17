@@ -25,7 +25,7 @@ Base URL: `https://your-domain.com/stats-lycansv2/`
 | `playerFilterMode` | `none`, `include`, `exclude` | Player filter mode | `playerFilterMode=include` |
 | `players` | `Player1,Player2,Player3` | Comma-separated list of players (URL encoded) | `players=Ponce,AmberAerin,Flippy` |
 | `highlightedPlayer` | `PlayerName` | Player to highlight in charts | `highlightedPlayer=Ponce` |
-| `dataSource` | `main`, `discord` | Data source to use | `dataSource=main` |
+| `dataSource` | `main`, `discord`, `anaeecorp`| Data source to use | `dataSource=main` |
 
 #### Navigation Parameters
 | Parameter | Values | Description | Example |

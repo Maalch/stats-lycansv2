@@ -2,7 +2,7 @@
  * Centralized utility for managing data file paths based on data source
  */
 
-export type DataSource = 'main' | 'discord';
+export type DataSource = 'main' | 'discord' | 'anaeecorp';
 
 /**
  * Get the base data directory path for the given data source
@@ -10,7 +10,15 @@ export type DataSource = 'main' | 'discord';
  * @returns The base path to the data directory
  */
 export function getDataPath(dataSource: DataSource): string {
-  return dataSource === 'discord' ? 'data/discord/' : 'data/';
+  switch (dataSource) {
+    case 'discord':
+      return 'data/discord/';
+    case 'anaeecorp':               // ◄ AJOUTEZ VOTRE NOUVELLE SOURCE ICI !
+      return 'data/anaeecorp/';     // pointera vers /data/anaeecorp/
+    case 'main':
+    default:
+      return 'data/';
+  }
 }
 
 /**

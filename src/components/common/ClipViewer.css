@@ -83,26 +83,26 @@
 .lycans-clip-warning-banner {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.4rem 1rem;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
   background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
   border-left: 4px solid #ff4757;
   margin: 0 1.5rem;
-  margin-top: 0.75rem;
+  margin-top: 1rem;
   border-radius: 8px;
   animation: warningPulse 2s ease-in-out infinite;
   box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
 }
 
 .lycans-clip-warning-icon {
-  font-size: 1rem;
+  font-size: 1.5rem;
   animation: warningShake 0.5s ease-in-out infinite;
 }
 
 .lycans-clip-warning-text {
   color: white;
   font-weight: 600;
-  font-size: 0.875rem;
+  font-size: 1rem;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
@@ -183,45 +183,6 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-}
-
-.lycans-clip-info-section-headers {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.lycans-clip-info-columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 1rem;
-}
-
-.lycans-clip-info-col {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.lycans-clip-info-bar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.lycans-clip-info-divider {
-  color: var(--text-secondary);
-  opacity: 0.4;
-  font-size: 1.1rem;
-  margin: 0 0.1rem;
-}
-
-.lycans-clip-other-player-inline {
-  background: var(--bg-secondary);
-  padding: 0.25rem 0.75rem;
-  border-radius: 4px;
-  font-size: 0.875rem;
 }
 
 .lycans-clip-info-section {
@@ -350,9 +311,7 @@
 
 .lycans-clip-related-clips {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
+  flex-direction: column;
   gap: 0.5rem;
 }
 
@@ -365,16 +324,6 @@
 
 .lycans-clip-related-btn {
   font-size: 0.875rem;
-  padding: 0.25rem 0.75rem;
-  background: var(--accent-primary);
-  border-color: var(--accent-primary);
-  color: white;
-  font-weight: 600;
-}
-
-.lycans-clip-current-btn {
-  pointer-events: none;
-  opacity: 0.55;
 }
 
 /* Responsive Design */

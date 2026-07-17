@@ -99,10 +99,10 @@ const LYCAN_SCHEMA = {
       GAMEID: 'Game', //Game ID (unique), same as Game v2 sheet
       POVPLAYER: 'POV', //Name of the player that displayed the POV of the clip
       OTHERSPLAYERS: 'Personnes impliquées', //List players involved in the clip. The POVPLAYER is in this list
-      RELATEDCLIPS: 'Autres POVs', //List of related CLIPID (for example, for different POVs). Empty most of the times.
+      RELATEDCLIPS: 'Clips associés', //List of related CLIPID (for example, for different POVs). Empty most of the times.
       NEXTCLIP: 'Suite de clips', //Name of the next CLIPID, if the clip are directly in sequence. Empty most of the times.
       NEWNAME: 'Nom créé', //Displayed of the clip. Can be empty.
-      ADDITIONALINFO: 'Précision', //Additional information/explanation/context about the clip action
+      ADDITIONALINFO: 'Contexte', //Additional information/explanation/context about the clip action
       TAGS: 'Tags', //List of Tags for the clip (to regroup them more easily). Can be empty 
     }
   },

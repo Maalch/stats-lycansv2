@@ -95,51 +95,32 @@ export function ClipViewer({
 
           {/* Metadata Section */}
           <div className="lycans-clip-metadata">
-            <div className="lycans-clip-info-section">
-              <div className="lycans-clip-info-columns">
-                <div className="lycans-clip-info-col">
-                  <h3>Partie</h3>
-                  <div className="lycans-clip-game-info">
-                    {gameId && <span className="lycans-clip-game-id">#{gameId}</span>}
-                    {gameDate && (
-                      <span className="lycans-clip-game-date">
-                        {new Date(gameDate).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' })}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="lycans-clip-info-col">
-                  <h3>POV</h3>
-                  {relatedClips.length > 0 && onRelatedClip ? (
-                    <div className="lycans-clip-info-bar">
-                      <button
-                        className="lycans-clip-nav-btn lycans-clip-related-btn lycans-clip-current-btn"
-                        disabled
-                      >
-                        👁️ {clip.POVPlayer}
-                      </button>
-                      {relatedClips.map((relatedClip) => (
-                        <button
-                          key={relatedClip.ClipId}
-                          className="lycans-clip-nav-btn lycans-clip-related-btn"
-                          onClick={() => onRelatedClip(relatedClip.ClipId)}
-                        >
-                          {relatedClip.POVPlayer}
-                        </button>
-                      ))}
-                    </div>
-                  ) : (
-                    <span className="lycans-clip-player-name">{clip.POVPlayer}</span>
+            {(gameId || gameDate) && (
+              <div className="lycans-clip-info-section">
+                <h3>Partie</h3>
+                <div className="lycans-clip-game-info">
+                  {gameId && <span className="lycans-clip-game-id">#{gameId}</span>}
+                  {gameDate && (
+                    <span className="lycans-clip-game-date">
+                      {new Date(gameDate).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+                    </span>
                   )}
                 </div>
+              </div>
+            )}
+
+            <div className="lycans-clip-info-section">
+              <h3>Joueurs</h3>
+              <div className="lycans-clip-players">
+                <div className="lycans-clip-pov-player">
+                  <span className="lycans-clip-pov-badge">POV</span>
+                  <span className="lycans-clip-player-name">{clip.POVPlayer}</span>
+                </div>
                 {otherPlayers.length > 0 && (
-                  <div className="lycans-clip-info-col">
-                    <h3>Joueurs</h3>
-                    <div className="lycans-clip-info-bar">
-                      {otherPlayers.map((player, idx) => (
-                        <span key={idx} className="lycans-clip-player-name lycans-clip-other-player-inline">{player}</span>
-                      ))}
-                    </div>
+                  <div className="lycans-clip-other-players">
+                    {otherPlayers.map((player, idx) => (
+                      <span key={idx} className="lycans-clip-player-name">{player}</span>
+                    ))}
                   </div>
                 )}
               </div>
@@ -153,7 +134,7 @@ export function ClipViewer({
             )}
 
             {/* Navigation Section */}
-            {(nextClip || onRandomClip) && (
+            {(nextClip || relatedClips.length > 0 || onRandomClip) && (
               <div className="lycans-clip-info-section">
                 <h3>Navigation</h3>
                 <div className="lycans-clip-navigation">
@@ -173,6 +154,20 @@ export function ClipViewer({
                     >
                       ▶ Suivant: {getClipDisplayName(nextClip)}
                     </button>
+                  )}
+                  {relatedClips.length > 0 && onRelatedClip && (
+                    <div className="lycans-clip-related-clips">
+                      <p className="lycans-clip-related-label">Autres POV:</p>
+                      {relatedClips.map((relatedClip) => (
+                        <button
+                          key={relatedClip.ClipId}
+                          className="lycans-clip-nav-btn lycans-clip-related-btn"
+                          onClick={() => onRelatedClip(relatedClip.ClipId)}
+                        >
+                          {getClipDisplayName(relatedClip)} ({relatedClip.POVPlayer})
+                        </button>
+                      ))}
+                    </div>
                   )}
                 </div>
               </div>

@@ -145,8 +145,9 @@ export async function ensureDataDirectory(absoluteDataDir) {
  * Fetch stats list URLs from AWS S3
  */
 export async function fetchStatsListUrls(teamName = '') {
-  const statsListUrl = process.env.STATS_LIST_URL;
-  
+  //const statsListUrl = process.env.STATS_LIST_URL;
+  const statsListUrl = "http://localhost:5173/data/bucket/StatsList.json";
+
   if (!statsListUrl) {
     throw new Error('STATS_LIST_URL environment variable not found');
   }
@@ -156,6 +157,7 @@ export async function fetchStatsListUrls(teamName = '') {
   
   try {
     const response = await fetch(statsListUrl);
+  
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }

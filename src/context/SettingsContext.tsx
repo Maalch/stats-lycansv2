@@ -41,7 +41,7 @@ export interface SettingsState {
   independentFilters: IndependentFilters;
   
   // Data source selection (main team vs Discord team)
-  dataSource: 'main' | 'discord';
+  dataSource: 'main' | 'discord'| 'anaeecorp';
   
   // Tab navigation (for URL persistence)
   tab: string | null;
@@ -160,12 +160,27 @@ function urlStateToSettings(urlState: UrlState): Partial<SettingsState> {
   }
   
   // Parse data source
+ /*
   if (urlState.dataSource === 'discord') {
     settings.dataSource = 'discord';
   } else if (urlState.dataSource) {
     settings.dataSource = 'main';
   }
-  
+  */
+
+// 1. Ton tableau de validation
+const ALLOWED_SOURCES = ['main', 'discord', 'anaeecorp'] as const;
+
+// 2. Le parsing ultra-robuste et propre
+if (urlState?.dataSource && (ALLOWED_SOURCES as readonly string[]).includes(urlState.dataSource)) {
+  // On force le cast uniquement vers une chaîne de caractères compatible
+  settings.dataSource = urlState.dataSource as typeof ALLOWED_SOURCES[number];
+} else {
+  // Fallback si l'URL est vide ou invalide
+  settings.dataSource = 'main'; 
+}
+
+
   // Parse tab and subtab
   if (urlState.tab) {
     settings.tab = urlState.tab;

@@ -32,7 +32,7 @@ const RECENT_GAMES_WINDOW_MS = 6 * 60 * 60 * 1000;
 const FILE_AGE_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
 
 // Minimum number of players required for a valid game
-const MIN_PLAYERS = 8;
+const MIN_PLAYERS = 1;
 
 /**
  * Parse date from filename (format: Prefix-YYYYMMDDHHMMSS.json)
@@ -296,7 +296,7 @@ async function syncDataSource(sourceKey, forceFullSync = false) {
     // === LOAD EXISTING DATA ===
     let existingGameLog = null;
     let existingGamesMap = new Map();
-    
+
     if (!forceFullSync) {
       existingGameLog = await loadExistingGameLog(ABSOLUTE_DATA_DIR);
       if (existingGameLog) {
@@ -314,6 +314,7 @@ async function syncDataSource(sourceKey, forceFullSync = false) {
       console.log(`   - Game-level update: refresh games newer than ${gameCutoffDate.toISOString()} (6 hours)`);
     }
 
+    
     // === FETCH AWS DATA ===
     console.log(`\n📦 Fetching ${config.name} data from S3 bucket...`);
     const allGameLogUrls = await fetchStatsListUrls(config.name);
@@ -321,24 +322,24 @@ async function syncDataSource(sourceKey, forceFullSync = false) {
     if (allGameLogUrls.length === 0) {
       throw new Error('No game log files found in AWS S3 bucket');
     }
-    
+   
     // Filter URLs based on file age (unless full sync)
     const { filteredUrls: gameLogUrls, skippedCount, totalCount } = filterRecentSessionFiles(
       allGameLogUrls,
       fileCutoffDate,
       forceFullSync
     );
-    
+   
     if (skippedCount > 0) {
       console.log(`🔍 File-level filtering: skipping ${skippedCount} old session files (${gameLogUrls.length}/${totalCount} will be fetched)`);
     }
-    
+      
     if (gameLogUrls.length === 0) {
       console.log(`ℹ️  No recent session files to fetch - all data is up to date`);
       console.log(`✅ ${config.name} data sync completed (no changes needed)`);
       return;
     }
-    
+
     const awsGameLogs = [];
     console.log(`📦 Fetching ${gameLogUrls.length} AWS game log files...`);
     console.log(`🔧 Correcting victorious status for disconnected players (${config.name})...`);
@@ -362,16 +363,18 @@ async function syncDataSource(sourceKey, forceFullSync = false) {
     if (awsGameLogs.length === 0) {
       throw new Error('Failed to fetch any AWS game log files');
     }
-    
+   
     console.log(`✓ Successfully fetched ${awsGameLogs.length} AWS game log files`);
 
     // === MERGE DATA ===
     console.log(`\n🔄 Creating unified dataset from AWS sources (${config.name})...`);
     
     const mergeResult = mergeWithIncremental(awsGameLogs, config, existingGamesMap, gameCutoffDate);
-    
+
+
+
     // Deduce sabotage names from positions for unnamed sabotages
-    const sabotageNamesDeduced = deduceMissingSabotageNames(mergeResult.gameStats);
+   const sabotageNamesDeduced = deduceMissingSabotageNames(mergeResult.gameStats);
     if (sabotageNamesDeduced > 0) {
       console.log(`✓ Deduced ${sabotageNamesDeduced} sabotage names from positions`);
     }
@@ -390,7 +393,7 @@ async function syncDataSource(sourceKey, forceFullSync = false) {
     };
     
     await saveDataToFile(ABSOLUTE_DATA_DIR, 'gameLog.json', unifiedGameLog);
-    
+   
     // Generate or create placeholder joueurs.json
     if (config.generateJoueurs) {
       await generateJoueursFromGameLog(ABSOLUTE_DATA_DIR, unifiedGameLog, config.name);
