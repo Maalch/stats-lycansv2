@@ -1,0 +1,140 @@
+name: Update AnaeeCorp Stats Data
+
+on:
+  schedule:
+    # Run only on Monday, Thursday, and Saturday (the day after usual game days) at 4 AM UTC
+    - cron: '0 4 * * 1,4,6'
+  repository_dispatch:
+    types: [new-game-data] # Triggered by S3 event notification via Lambda webhook
+  workflow_dispatch: # Allow manual triggering
+    inputs:
+      full_sync:
+        description: 'Force full synchronization (re-fetch all games from AWS)'
+        required: false
+        default: false
+        type: boolean
+  push:
+    paths:
+      - '.github/workflows/update-anaeecorpdata.yml'
+
+jobs:
+  update-anaeecorp-data:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.LYCANSTRACKER_SECRET_ACTIONS }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
+
+      - name: Install dependencies
+        run: |
+          cd scripts/data-sync
+          npm install
+
+      - name: Fetch and process anaeecorp Team data
+        env:
+          # anaeecorp Team AWS S3 URL
+          STATS_LIST_URL: ${{ secrets.STATS_LIST_URL }}
+        run: |
+          echo "🚀 Starting anaeecorp Team data fetch from AWS S3..."
+          echo "📡 AWS S3: ${STATS_LIST_URL:0:30}..." # Show partial URL for debugging
+          
+          # Determine sync mode
+          if [ "${{ inputs.full_sync }}" == "true" ]; then
+            echo "🔄 Sync mode: FULL (forced via workflow input)"
+            node scripts/data-sync/fetch-data-unified.js anaeecorp --full
+          else
+            echo "🔄 Sync mode: INCREMENTAL (only new + recent games)"
+            node scripts/data-sync/fetch-data-unified.js anaeecorp
+          fi
+          
+          echo "✅ anaeecorp Team data fetch completed"
+          echo "ℹ️  Note: Rankings and titles are generated weekly via update-rankings-titles.yml"
+          
+      - name: Validate anaeecorp Team data files
+        run: |
+          echo "🔍 Validating anaeecorp Team data files..."
+          
+          # Check for required anaeecorp Team data files in anaeecorp folder (rankings are generated separately)
+          REQUIRED_FILES=(
+            "data/anaeecorp/gameLog.json" 
+            "data/anaeecorp/index.json" 
+            "data/anaeecorp/joueurs.json"
+          )
+          
+          for file in "${REQUIRED_FILES[@]}"; do
+            if [ ! -f "$file" ]; then
+              echo "❌ Required file $file not found!"
+              exit 1
+            else
+              echo "✅ Found $file"
+            fi
+          done
+          
+          # Check if main data file is valid JSON
+          if ! jq empty "data/anaeecorp/gameLog.json" 2>/dev/null; then
+            echo "❌ Invalid JSON in anaeecorp/gameLog.json"
+            exit 1
+          else
+            echo "✅ anaeecorp/gameLog.json is valid JSON"
+          fi
+          
+          # Check file size (should not be empty)
+          if [ ! -s "data/anaeecorp/gameLog.json" ]; then
+            echo "❌ anaeecorp/gameLog.json is empty"
+            exit 1
+          fi
+          
+          # Extract and display stats
+          TOTAL_GAMES=$(jq '.TotalRecords' data/anaeecorp/gameLog.json)
+          AWS_GAMES=$(jq '.Sources.AWS' data/anaeecorp/gameLog.json)
+          echo "📊 anaeecorp Team Stats:"
+          echo "   - Total games: $TOTAL_GAMES"
+          echo "   - AWS games: $AWS_GAMES"
+          
+          echo "✅ All anaeecorp Team data files validated successfully"
+
+      - name: Copy anaeecorp Team data to docs folder
+        run: |
+          mkdir -p docs/data/anaeecorp
+          cp -r data/anaeecorp/* docs/data/anaeecorp/
+          echo "✅ anaeecorp Team data copied to docs/data/anaeecorp/"
+
+      - name: Commit and push if changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/anaeecorp/ docs/data/anaeecorp/
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: update anaeecorp Team stats data from AWS S3 $(date '+%Y-%m-%d %H:%M:%S')"
+            git push
+            echo "✅ anaeecorp Team data updated and pushed successfully"
+          else
+            echo "ℹ️  No anaeecorp Team data changes detected - skipping commit"
+          fi
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "🔍 anaeecorp Team Workflow Summary:"
+          echo "- Data sync completed from AWS S3 (anaeecorp Team)"
+          echo "- Files updated: $(git diff --name-only HEAD~1 2>/dev/null | grep 'anaeecorp' | wc -l || echo '0')"
+          echo "- Timestamp: $(date '+%Y-%m-%d %H:%M:%S UTC')"
+          echo "- Source: AWS S3 anaeecorp Team bucket"
+          echo "- Output folder: data/anaeecorp/"
+          echo "- Data types: Game logs, Player data, Index"
+          echo "- Note: Rankings and titles are generated weekly via update-rankings-titles.yml"
+          ls -la data/anaeecorp/ 2>/dev/null || echo "No anaeecorp Team data files found"
