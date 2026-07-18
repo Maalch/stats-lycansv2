@@ -25,7 +25,7 @@ export const DATA_SOURCES = {
   anaeecorp: {
     name: 'Anaee Corp',
     outputDir: 'data/anaeecorp',
-    gameFilter: (gameId) => gameId.startsWith('Holdener-'), // Only Holdener- games
+    gameFilter: (gameId) => gameId.startsWith('Holdener-') || gameId.startsWith('Anaee-') || gameId.startsWith('Rigner-') || gameId.startsWith('Botmog-') || gameId.startsWith('Tsuna-') || gameId.startsWith('khalen-'), // Only Holdener- games
     generateJoueurs: true, // Generate from game log
     modVersionLabel: 'Anaee Corp - Multiple AWS Versions',
     indexDescription: 'Game logs from AWS S3 bucket for Anaee Corp.'
