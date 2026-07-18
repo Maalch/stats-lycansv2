@@ -32,7 +32,7 @@ const RECENT_GAMES_WINDOW_MS = 6 * 60 * 60 * 1000;
 const FILE_AGE_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
 
 // Minimum number of players required for a valid game
-const MIN_PLAYERS = 1;
+const MIN_PLAYERS = 6;
 
 /**
  * Parse date from filename (format: Prefix-YYYYMMDDHHMMSS.json)
