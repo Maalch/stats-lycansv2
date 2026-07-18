@@ -1,12 +1,12 @@
 {
   "ModVersion": "Anaee Corp - Multiple AWS Versions",
-  "TotalRecords": 25,
+  "TotalRecords": 26,
   "Sources": {
     "Legacy": 0,
-    "AWS": 25,
+    "AWS": 26,
     "Merged": 0
   },
-  "LastSync": "2026-07-18T13:29:06.863Z",
+  "LastSync": "2026-07-18T15:01:01.888Z",
   "GameStats": [
     {
       "Id": "khalen-20260519102155",
@@ -23827,6 +23827,78 @@
         },
         {
           "Date": "2026-07-17T09:29:30.9152498Z",
+          "Timing": "N1",
+          "Type": "NewPhase",
+          "Name": "N1"
+        }
+      ],
+      "Version": "0.321",
+      "Modded": true
+    },
+    {
+      "Id": "Rigner-20260718145653",
+      "StartDate": "2026-07-18T14:56:53.9791044Z",
+      "EndDate": "2026-07-18T14:57:27.8799720Z",
+      "MapName": "Village",
+      "HarvestGoal": 1200,
+      "HarvestDone": 0,
+      "EndTiming": "M1",
+      "PlayerStats": [
+        {
+          "ID": "76561198047490206",
+          "Username": "Rigner",
+          "Color": "Orange",
+          "Hat": "MagicianHat(Clone)(Clone)",
+          "MainRoleInitial": "Loup",
+          "MainRoleChanges": [],
+          "Power": "Hôte",
+          "SecondaryRole": "Mage bleu",
+          "DeathDateIrl": null,
+          "DeathTiming": null,
+          "DeathPosition": null,
+          "DeathType": null,
+          "KillerName": null,
+          "Victorious": true,
+          "Votes": [],
+          "SecondsTalkedOutsideMeeting": 0,
+          "SecondsTalkedDuringMeeting": 0,
+          "SecondsSpentImmobileStanding": 4,
+          "SecondsSpentImmobileCrouched": 0,
+          "SecondsSpentWalkingStanding": 2,
+          "SecondsSpentWalkingCrouched": 0,
+          "SecondsSpentRunning": 13,
+          "TotalCollectedLoot": 0,
+          "Actions": [
+            {
+              "Date": "2026-07-18T14:57:11.0582245Z",
+              "Timing": "N1",
+              "Position": {
+                "x": 182.3736,
+                "y": 28.7085018,
+                "z": 181.068726
+              },
+              "ActionType": "Transform",
+              "ActionName": null,
+              "ActionTarget": null
+            }
+          ]
+        }
+      ],
+      "GameEvents": [
+        {
+          "Date": "2026-07-18T14:56:54.2464698Z",
+          "Timing": "J1",
+          "Type": "DailyEventStart",
+          "Name": "Plague"
+        },
+        {
+          "Date": "2026-07-18T14:56:54.2730514Z",
+          "Timing": "J1",
+          "Type": "NewPhase",
+          "Name": "J1"
+        },
+        {
+          "Date": "2026-07-18T14:57:10.8957099Z",
           "Timing": "N1",
           "Type": "NewPhase",
           "Name": "N1"
