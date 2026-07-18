@@ -194,8 +194,6 @@ export async function fetchStatsListUrls(teamName = '') {
       // 2. Text to Url Array
       const urls = transformXMLtoUrlList(xmlText, statsListUrl);
 
-      console.log(urls);
-
     console.log(`✓ Found ${urls.length} files in stats list`);
     
     // Filter out the StatsList.json itself to get only game log files
