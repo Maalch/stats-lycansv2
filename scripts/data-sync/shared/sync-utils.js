@@ -4,6 +4,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../../src/utils/datasyncExport.js';
+import { XMLParser } from 'fast-xml-parser';
 
 /**
  * Correct Victorious status for disconnected players
@@ -142,11 +143,35 @@ export async function ensureDataDirectory(absoluteDataDir) {
 }
 
 /**
+ * Transform XML AWS S3 to urls array
+ * @param {string} xmlString - XML from AWS.
+ * @param {string} baseUrl - bucket URL
+ * @returns {string[]} URL Array.
+ */
+export function transformXMLtoUrlList(xmlString, baseUrl) {
+    const options = {
+        isArray: (name) => name === 'Contents'
+    };
+    
+    const parser = new XMLParser(options);
+    const jsonObj = parser.parse(xmlString);
+    
+    // Grâce à l'option au-dessus, contents est forcément un tableau (si présent)
+    const contentsArray = jsonObj.ListBucketResult?.Contents;
+    if (!contentsArray) return [];
+    
+    const cleanBaseUrl = baseUrl.replace(/\/$/, '');
+    
+    return contentsArray
+        .filter(item => item && item.Key) // Sécurité contre les objets mal formés
+        .map(item => `${cleanBaseUrl}/${item.Key}`);
+}
+
+/**
  * Fetch stats list URLs from AWS S3
  */
 export async function fetchStatsListUrls(teamName = '') {
   const statsListUrl = process.env.STATS_LIST_URL;
-  //const statsListUrl = "http://localhost:5173/data/bucket/StatsList.json";
 
   if (!statsListUrl) {
     throw new Error('STATS_LIST_URL environment variable not found');
@@ -161,8 +186,16 @@ export async function fetchStatsListUrls(teamName = '') {
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
-    
-    const urls = await response.json();
+
+    // transform KEY into STATS_LIST_URL/KEY in List
+        // 1. XML to text
+      const xmlText = await response.text();
+
+      // 2. Text to Url Array
+      const urls = transformXMLtoUrlList(xmlText, statsListUrl);
+
+      console.log(urls);
+
     console.log(`✓ Found ${urls.length} files in stats list`);
     
     // Filter out the StatsList.json itself to get only game log files
