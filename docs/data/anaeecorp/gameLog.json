@@ -1,12 +1,12 @@
 {
   "ModVersion": "Anaee Corp - Multiple AWS Versions",
-  "TotalRecords": 1,
+  "TotalRecords": 2,
   "Sources": {
     "Legacy": 0,
-    "AWS": 1,
+    "AWS": 2,
     "Merged": 0
   },
-  "LastSync": "2026-07-19T12:27:21.767Z",
+  "LastSync": "2026-07-19T12:51:18.895Z",
   "GameStats": [
     {
       "Id": "Rigner-20260719120747",
@@ -135,7 +135,7 @@
             }
           ],
           "SecondsTalkedOutsideMeeting": 31,
-          "SecondsTalkedDuringMeeting": 44,
+          "SecondsTalkedDuringMeeting": 45,
           "SecondsSpentImmobileStanding": 121,
           "SecondsSpentImmobileCrouched": 36,
           "SecondsSpentWalkingStanding": 245,
@@ -202,7 +202,7 @@
             }
           ],
           "SecondsTalkedOutsideMeeting": 15,
-          "SecondsTalkedDuringMeeting": 3,
+          "SecondsTalkedDuringMeeting": 4,
           "SecondsSpentImmobileStanding": 74,
           "SecondsSpentImmobileCrouched": 9,
           "SecondsSpentWalkingStanding": 328,
@@ -723,6 +723,951 @@
           "Timing": "M3",
           "Type": "NewPhase",
           "Name": "M3"
+        }
+      ],
+      "Version": "0.321",
+      "Modded": true
+    },
+    {
+      "Id": "Rigner-20260719122746",
+      "StartDate": "2026-07-19T12:27:46.9653483Z",
+      "EndDate": "2026-07-19T12:47:52.9467471Z",
+      "MapName": "Village",
+      "HarvestGoal": 1700,
+      "HarvestDone": 2070,
+      "EndTiming": "M4",
+      "PlayerStats": [
+        {
+          "ID": "76561198913595171",
+          "Username": "M3lv1",
+          "Color": "Bleu royal",
+          "Hat": "m_JesterHat01",
+          "MainRoleInitial": "Villageois",
+          "MainRoleChanges": [],
+          "Power": "Survivaliste",
+          "SecondaryRole": null,
+          "DeathDateIrl": "2026-07-19T12:41:41.3205744Z",
+          "DeathTiming": "N3",
+          "DeathPosition": {
+            "x": 98.26296,
+            "y": 22.2811069,
+            "z": 196.1266
+          },
+          "DeathType": "BY_WOLF",
+          "KillerName": "MôA",
+          "Victorious": true,
+          "Votes": [
+            {
+              "Target": "Passé",
+              "Date": "2026-07-19T12:38:30.3600503Z",
+              "Day": 2
+            }
+          ],
+          "SecondsTalkedOutsideMeeting": 151,
+          "SecondsTalkedDuringMeeting": 141,
+          "SecondsSpentImmobileStanding": 62,
+          "SecondsSpentImmobileCrouched": 57,
+          "SecondsSpentWalkingStanding": 290,
+          "SecondsSpentWalkingCrouched": 44,
+          "SecondsSpentRunning": 11,
+          "TotalCollectedLoot": 305,
+          "Actions": [
+            {
+              "Date": "2026-07-19T12:28:58.7702879Z",
+              "Timing": "J1",
+              "Position": {
+                "x": 156.711212,
+                "y": 23.8667717,
+                "z": 133.577332
+              },
+              "ActionType": "TakeAccessory",
+              "ActionName": "Boule de cristal",
+              "ActionTarget": null
+            }
+          ]
+        },
+        {
+          "ID": "76561199001967591",
+          "Username": "MioMeph",
+          "Color": "Violet",
+          "Hat": "m_LaurelWreath01",
+          "MainRoleInitial": "Villageois",
+          "MainRoleChanges": [],
+          "Power": "Exorciste",
+          "SecondaryRole": null,
+          "DeathDateIrl": "2026-07-19T12:30:29.8943543Z",
+          "DeathTiming": "N1",
+          "DeathPosition": {
+            "x": 151.481232,
+            "y": 22.2811069,
+            "z": 251.121
+          },
+          "DeathType": "BY_WOLF",
+          "KillerName": "axelwlt",
+          "Victorious": true,
+          "Votes": [],
+          "SecondsTalkedOutsideMeeting": 21,
+          "SecondsTalkedDuringMeeting": 0,
+          "SecondsSpentImmobileStanding": 45,
+          "SecondsSpentImmobileCrouched": 0,
+          "SecondsSpentWalkingStanding": 71,
+          "SecondsSpentWalkingCrouched": 0,
+          "SecondsSpentRunning": 39,
+          "TotalCollectedLoot": 70,
+          "Actions": [
+            {
+              "Date": "2026-07-19T12:28:34.6229688Z",
+              "Timing": "J1",
+              "Position": {
+                "x": 120.671043,
+                "y": 22.0796776,
+                "z": 135.080109
+              },
+              "ActionType": "TakeAccessory",
+              "ActionName": "Livre de sorts",
+              "ActionTarget": null
+            },
+            {
+              "Date": "2026-07-19T12:28:49.9618466Z",
+              "Timing": "J1",
+              "Position": {
+                "x": 139.023422,
+                "y": 22.1246223,
+                "z": 118.695908
+              },
+              "ActionType": "UseGadget",
+              "ActionName": "Livre de sorts",
+              "ActionTarget": "Karnarok"
+            },
+            {
+              "Date": "2026-07-19T12:29:29.9212757Z",
+              "Timing": "N1",
+              "Position": {
+                "x": 141.818008,
+                "y": 22.2610016,
+                "z": 157.285
+              },
+              "ActionType": "UseGadget",
+              "ActionName": "Livre de sorts",
+              "ActionTarget": "M3lv1"
+            },
+            {
+              "Date": "2026-07-19T12:30:15.1875126Z",
+              "Timing": "N1",
+              "Position": {
+                "x": 113.033676,
+                "y": 22.171236,
+                "z": 222.1522
+              },
+              "ActionType": "UseGadget",
+              "ActionName": "Livre de sorts",
+              "ActionTarget": "Stacy176"
+            }
+          ]
+        },
+        {
+          "ID": "76561198007547842",
+          "Username": "axelwlt",
+          "Color": "Turquoise",
+          "Hat": "m_BachelorHat01",
+          "MainRoleInitial": "Loup",
+          "MainRoleChanges": [],
+          "Power": "Ritualiste",
+          "SecondaryRole": "Astral",
+          "DeathDateIrl": null,
+          "DeathTiming": null,
+          "DeathPosition": null,
+          "DeathType": null,
+          "KillerName": null,
+          "Victorious": false,
+          "Votes": [
+            {
+              "Target": "Passé",
+              "Date": "2026-07-19T12:38:31.3223550Z",
+              "Day": 2
+            },
+            {
+              "Target": "Passé",
+              "Date": "2026-07-19T12:44:45.2371652Z",
+              "Day": 3
+            }
+          ],
+          "SecondsTalkedOutsideMeeting": 64,
+          "SecondsTalkedDuringMeeting": 5,
+          "SecondsSpentImmobileStanding": 161,
+          "SecondsSpentImmobileCrouched": 25,
+          "SecondsSpentWalkingStanding": 339,
+          "SecondsSpentWalkingCrouched": 2,
+          "SecondsSpentRunning": 111,
+          "TotalCollectedLoot": 180,
+          "Actions": [
+            {
+              "Date": "2026-07-19T12:28:38.1380021Z",
+              "Timing": "J1",
+              "Position": {
+                "x": 174.035965,
+                "y": 21.7648735,
+                "z": 108.885582
+              },
+              "ActionType": "TakeAccessory",
+              "ActionName": "Loupe",
+              "ActionTarget": null
+            },
+            {
+              "Date": "2026-07-19T12:30:08.5207509Z",
+              "Timing": "N1",
+              "Position": {
+                "x": 141.9336,
+                "y": 22.171236,
+                "z": 187.458771
+              },
+              "ActionType": "Transform",
+              "ActionName": null,
+              "ActionTarget": null
+            },
+            {
+              "Date": "2026-07-19T12:40:52.6259974Z",
+              "Timing": "N3",
+              "Position": {
+                "x": 110.024536,
+                "y": 22.2811069,
+                "z": 210.87677
+              },
+              "ActionType": "Transform",
+              "ActionName": null,
+              "ActionTarget": null
+            },
+            {
+              "Date": "2026-07-19T12:46:43.4108624Z",
+              "Timing": "N4",
+              "Position": {
+                "x": 160.244644,
+                "y": 22.2811069,
+                "z": 237.627731
+              },
+              "ActionType": "Transform",
+              "ActionName": null,
+              "ActionTarget": null
+            }
+          ]
+        },
+        {
+          "ID": "76561199503876418",
+          "Username": "CorbaxUwU",
+          "Color": "Vert foncé",
+          "Hat": "m_Bunnyears01",
+          "MainRoleInitial": "Villageois",
+          "MainRoleChanges": [],
+          "Power": "Survivaliste",
+          "SecondaryRole": null,
+          "DeathDateIrl": null,
+          "DeathTiming": null,
+          "DeathPosition": null,
+          "DeathType": null,
+          "KillerName": null,
+          "Victorious": true,
+          "Votes": [
+            {
+              "Target": "Passé",
+              "Date": "2026-07-19T12:33:33.2371843Z",
+              "Day": 1
+            },
+            {
+              "Target": "M3lv1",
+              "Date": "2026-07-19T12:37:41.7094012Z",
+              "Day": 2
+            },
+            {
+              "Target": "Passé",
+              "Date": "2026-07-19T12:44:44.5808293Z",
+              "Day": 3
+            }
+          ],
+          "SecondsTalkedOutsideMeeting": 42,
+          "SecondsTalkedDuringMeeting": 113,
+          "SecondsSpentImmobileStanding": 53,
+          "SecondsSpentImmobileCrouched": 76,
+          "SecondsSpentWalkingStanding": 447,
+          "SecondsSpentWalkingCrouched": 19,
+          "SecondsSpentRunning": 43,
+          "TotalCollectedLoot": 240,
+          "Actions": [
+            {
+              "Date": "2026-07-19T12:33:57.9418150Z",
+              "Timing": "J2",
+              "Position": {
+                "x": 163.729767,
+                "y": 22.0796776,
+                "z": 118.583939
+              },
+              "ActionType": "DrinkPotion",
+              "ActionName": "Muet",
+              "ActionTarget": null
+            },
+            {
+              "Date": "2026-07-19T12:47:45.6542973Z",
+              "Timing": "N4",
+              "Position": {
+                "x": 122.137024,
+                "y": 22.2811089,
+                "z": 172.219452
+              },
+              "ActionType": "UseGadget",
+              "ActionName": "Bouteille incendiaire",
+              "ActionTarget": null
+            }
+          ]
+        },
+        {
+          "ID": "76561198789380722",
+          "Username": "Yara",
+          "Color": "Gris",
+          "Hat": "m_JesterHat01",
+          "MainRoleInitial": "Villageois",
+          "MainRoleChanges": [],
+          "Power": "Prêtre",
+          "SecondaryRole": null,
+          "DeathDateIrl": null,
+          "DeathTiming": null,
+          "DeathPosition": null,
+          "DeathType": null,
+          "KillerName": null,
+          "Victorious": true,
+          "Votes": [
+            {
+              "Target": "Passé",
+              "Date": "2026-07-19T12:38:28.8919516Z",
+              "Day": 2
+            },
+            {
+              "Target": "Passé",
+              "Date": "2026-07-19T12:44:44.3033363Z",
+              "Day": 3
+            }
+          ],
+          "SecondsTalkedOutsideMeeting": 49,
+          "SecondsTalkedDuringMeeting": 5,
+          "SecondsSpentImmobileStanding": 212,
+          "SecondsSpentImmobileCrouched": 9,
+          "SecondsSpentWalkingStanding": 272,
+          "SecondsSpentWalkingCrouched": 0,
+          "SecondsSpentRunning": 145,
+          "TotalCollectedLoot": 295,
+          "Actions": [
+            {
+              "Date": "2026-07-19T12:29:39.2500541Z",
+              "Timing": "N1",
+              "Position": {
+                "x": 129.83342,
+                "y": 22.2811069,
+                "z": 192.228516
+              },
+              "ActionType": "UseGadget",
+              "ActionName": "Radar",
+              "ActionTarget": null
+            },
+            {
+              "Date": "2026-07-19T12:34:00.3728441Z",
+              "Timing": "J2",
+              "Position": {
+                "x": 169.084946,
+                "y": 22.2811069,
+                "z": 240.034988
+              },
+              "ActionType": "TakeAccessory",
+              "ActionName": "Boule de cristal",
+              "ActionTarget": null
+            }
+          ]
+        },
+        {
+          "ID": "76561198111374489",
+          "Username": "Joy",
+          "Color": "Rouge",
+          "Hat": "m_KnightHelmet01",
+          "MainRoleInitial": "Villageois Élite",
+          "MainRoleChanges": [],
+          "Power": "Alchimiste",
+          "SecondaryRole": null,
+          "DeathDateIrl": null,
+          "DeathTiming": null,
+          "DeathPosition": null,
+          "DeathType": null,
+          "KillerName": null,
+          "Victorious": true,
+          "Votes": [
+            {
+              "Target": "Passé",
+              "Date": "2026-07-19T12:33:38.6905663Z",
+              "Day": 1
+            },
+            {
+              "Target": "Passé",
+              "Date": "2026-07-19T12:38:28.0401020Z",
+              "Day": 2
+            },
+            {
+              "Target": "Passé",
+              "Date": "2026-07-19T12:44:40.2915546Z",
+              "Day": 3
+            }
+          ],
+          "SecondsTalkedOutsideMeeting": 165,
+          "SecondsTalkedDuringMeeting": 129,
+          "SecondsSpentImmobileStanding": 99,
+          "SecondsSpentImmobileCrouched": 30,
+          "SecondsSpentWalkingStanding": 263,
+          "SecondsSpentWalkingCrouched": 24,
+          "SecondsSpentRunning": 222,
+          "TotalCollectedLoot": 320,
+          "Actions": [
+            {
+              "Date": "2026-07-19T12:29:42.8764003Z",
+              "Timing": "N1",
+              "Position": {
+                "x": 122.535027,
+                "y": 22.2811069,
+                "z": 194.1994
+              },
+              "ActionType": "DrinkPotion",
+              "ActionName": "Blanche - Camouflé",
+              "ActionTarget": null
+            },
+            {
+              "Date": "2026-07-19T12:35:29.5722884Z",
+              "Timing": "N2",
+              "Position": {
+                "x": 120.012939,
+                "y": 22.171236,
+                "z": 211.695969
+              },
+              "ActionType": "DrinkPotion",
+              "ActionName": "Blanche - Invisible",
+              "ActionTarget": null
+            },
+            {
+              "Date": "2026-07-19T12:40:28.0035760Z",
+              "Timing": "J3",
+              "Position": {
+                "x": 134.449951,
+                "y": 22.206337,
+                "z": 188.259277
+              },
+              "ActionType": "UseGadget",
+              "ActionName": "Balle",
+              "ActionTarget": null
+            },
+            {
+              "Date": "2026-07-19T12:41:10.9484127Z",
+              "Timing": "N3",
+              "Position": {
+                "x": 165.8361,
+                "y": 26.2301636,
+                "z": 168.0853
+              },
+              "ActionType": "DrinkPotion",
+              "ActionName": "Blanche - Énergie",
+              "ActionTarget": null
+            },
+            {
+              "Date": "2026-07-19T12:45:21.8889574Z",
+              "Timing": "J4",
+              "Position": {
+                "x": 154.921219,
+                "y": 21.7644424,
+                "z": 92.31186
+              },
+              "ActionType": "DrinkPotion",
+              "ActionName": "Invisible",
+              "ActionTarget": null
+            }
+          ]
+        },
+        {
+          "ID": "76561198064367175",
+          "Username": "Holdener",
+          "Color": "Jaune",
+          "Hat": "SombreroStache(Clone)(Clone)",
+          "MainRoleInitial": "Villageois",
+          "MainRoleChanges": [],
+          "Power": "Ombre",
+          "SecondaryRole": null,
+          "DeathDateIrl": "2026-07-19T12:30:23.8256230Z",
+          "DeathTiming": "N1",
+          "DeathPosition": {
+            "x": 112.587296,
+            "y": 22.0299416,
+            "z": 239.459808
+          },
+          "DeathType": "BY_WOLF",
+          "KillerName": "axelwlt",
+          "Victorious": true,
+          "Votes": [],
+          "SecondsTalkedOutsideMeeting": 30,
+          "SecondsTalkedDuringMeeting": 0,
+          "SecondsSpentImmobileStanding": 23,
+          "SecondsSpentImmobileCrouched": 5,
+          "SecondsSpentWalkingStanding": 104,
+          "SecondsSpentWalkingCrouched": 3,
+          "SecondsSpentRunning": 14,
+          "TotalCollectedLoot": 45,
+          "Actions": []
+        },
+        {
+          "ID": "76561198277339785",
+          "Username": "Karnarok",
+          "Color": "Vert pomme",
+          "Hat": "m_AstronautHelmet01",
+          "MainRoleInitial": "Villageois",
+          "MainRoleChanges": [],
+          "Power": "Magicien",
+          "SecondaryRole": "Carabinier",
+          "DeathDateIrl": null,
+          "DeathTiming": null,
+          "DeathPosition": null,
+          "DeathType": null,
+          "KillerName": null,
+          "Victorious": true,
+          "Votes": [
+            {
+              "Target": "Passé",
+              "Date": "2026-07-19T12:38:36.6919930Z",
+              "Day": 2
+            },
+            {
+              "Target": "Rigner",
+              "Date": "2026-07-19T12:44:52.2963521Z",
+              "Day": 3
+            }
+          ],
+          "SecondsTalkedOutsideMeeting": 108,
+          "SecondsTalkedDuringMeeting": 79,
+          "SecondsSpentImmobileStanding": 212,
+          "SecondsSpentImmobileCrouched": 18,
+          "SecondsSpentWalkingStanding": 314,
+          "SecondsSpentWalkingCrouched": 1,
+          "SecondsSpentRunning": 93,
+          "TotalCollectedLoot": 240,
+          "Actions": [
+            {
+              "Date": "2026-07-19T12:29:02.7114165Z",
+              "Timing": "J1",
+              "Position": {
+                "x": 137.078339,
+                "y": 22.07968,
+                "z": 126.167549
+              },
+              "ActionType": "UseGadget",
+              "ActionName": "Parchemin (Téléportation)",
+              "ActionTarget": "MioMeph"
+            },
+            {
+              "Date": "2026-07-19T12:40:54.1618668Z",
+              "Timing": "N3",
+              "Position": {
+                "x": 127.137878,
+                "y": 22.2811089,
+                "z": 208.332855
+              },
+              "ActionType": "UseGadget",
+              "ActionName": "Bouteille incendiaire",
+              "ActionTarget": null
+            },
+            {
+              "Date": "2026-07-19T12:45:17.3728437Z",
+              "Timing": "J4",
+              "Position": {
+                "x": 112.119705,
+                "y": 22.2811069,
+                "z": 172.4573
+              },
+              "ActionType": "TakeAccessory",
+              "ActionName": "Boule de cristal",
+              "ActionTarget": null
+            },
+            {
+              "Date": "2026-07-19T12:45:36.1420541Z",
+              "Timing": "J4",
+              "Position": {
+                "x": 116.334023,
+                "y": 22.3411236,
+                "z": 169.522049
+              },
+              "ActionType": "DrinkPotion",
+              "ActionName": "Invisible",
+              "ActionTarget": null
+            }
+          ]
+        },
+        {
+          "ID": "76561199216324750",
+          "Username": "MôA",
+          "Color": "Rouge",
+          "Hat": "m_Paperbag01",
+          "MainRoleInitial": "Loup",
+          "MainRoleChanges": [],
+          "Power": "Dupeur",
+          "SecondaryRole": null,
+          "DeathDateIrl": null,
+          "DeathTiming": null,
+          "DeathPosition": null,
+          "DeathType": null,
+          "KillerName": null,
+          "Victorious": false,
+          "Votes": [
+            {
+              "Target": "Passé",
+              "Date": "2026-07-19T12:38:33.4594404Z",
+              "Day": 2
+            },
+            {
+              "Target": "Passé",
+              "Date": "2026-07-19T12:44:42.5085950Z",
+              "Day": 3
+            }
+          ],
+          "SecondsTalkedOutsideMeeting": 129,
+          "SecondsTalkedDuringMeeting": 58,
+          "SecondsSpentImmobileStanding": 200,
+          "SecondsSpentImmobileCrouched": 32,
+          "SecondsSpentWalkingStanding": 343,
+          "SecondsSpentWalkingCrouched": 9,
+          "SecondsSpentRunning": 54,
+          "TotalCollectedLoot": 65,
+          "Actions": [
+            {
+              "Date": "2026-07-19T12:41:37.5940153Z",
+              "Timing": "N3",
+              "Position": {
+                "x": 101.060158,
+                "y": 22.2811069,
+                "z": 194.255783
+              },
+              "ActionType": "Transform",
+              "ActionName": null,
+              "ActionTarget": null
+            },
+            {
+              "Date": "2026-07-19T12:47:14.0471532Z",
+              "Timing": "N4",
+              "Position": {
+                "x": 167.372314,
+                "y": 22.2811069,
+                "z": 266.8146
+              },
+              "ActionType": "Transform",
+              "ActionName": null,
+              "ActionTarget": null
+            }
+          ]
+        },
+        {
+          "ID": "76561198330793890",
+          "Username": "Stacy176",
+          "Color": "Turquoise",
+          "Hat": "CatHeart(Clone)(Clone)",
+          "MainRoleInitial": "Villageois",
+          "MainRoleChanges": [],
+          "Power": "Détective",
+          "SecondaryRole": null,
+          "DeathDateIrl": null,
+          "DeathTiming": null,
+          "DeathPosition": null,
+          "DeathType": null,
+          "KillerName": null,
+          "Victorious": true,
+          "Votes": [
+            {
+              "Target": "Passé",
+              "Date": "2026-07-19T12:33:36.5869055Z",
+              "Day": 1
+            },
+            {
+              "Target": "Passé",
+              "Date": "2026-07-19T12:39:04.5894691Z",
+              "Day": 2
+            },
+            {
+              "Target": "Passé",
+              "Date": "2026-07-19T12:44:46.0616076Z",
+              "Day": 3
+            }
+          ],
+          "SecondsTalkedOutsideMeeting": 49,
+          "SecondsTalkedDuringMeeting": 34,
+          "SecondsSpentImmobileStanding": 69,
+          "SecondsSpentImmobileCrouched": 18,
+          "SecondsSpentWalkingStanding": 392,
+          "SecondsSpentWalkingCrouched": 34,
+          "SecondsSpentRunning": 125,
+          "TotalCollectedLoot": 170,
+          "Actions": []
+        },
+        {
+          "ID": "76561199562214341",
+          "Username": "daichi",
+          "Color": "Gris",
+          "Hat": "m_TrafficCone01",
+          "MainRoleInitial": "Villageois Élite",
+          "MainRoleChanges": [],
+          "Power": "Guetteur",
+          "SecondaryRole": "Acteur",
+          "DeathDateIrl": null,
+          "DeathTiming": null,
+          "DeathPosition": null,
+          "DeathType": null,
+          "KillerName": null,
+          "Victorious": true,
+          "Votes": [
+            {
+              "Target": "Passé",
+              "Date": "2026-07-19T12:33:36.9554885Z",
+              "Day": 1
+            },
+            {
+              "Target": "Passé",
+              "Date": "2026-07-19T12:38:29.5908490Z",
+              "Day": 2
+            },
+            {
+              "Target": "Passé",
+              "Date": "2026-07-19T12:44:53.9573429Z",
+              "Day": 3
+            }
+          ],
+          "SecondsTalkedOutsideMeeting": 61,
+          "SecondsTalkedDuringMeeting": 47,
+          "SecondsSpentImmobileStanding": 128,
+          "SecondsSpentImmobileCrouched": 72,
+          "SecondsSpentWalkingStanding": 301,
+          "SecondsSpentWalkingCrouched": 20,
+          "SecondsSpentRunning": 117,
+          "TotalCollectedLoot": 385,
+          "Actions": [
+            {
+              "Date": "2026-07-19T12:28:23.7090680Z",
+              "Timing": "J1",
+              "Position": {
+                "x": 218.516815,
+                "y": 30.661499,
+                "z": 185.416122
+              },
+              "ActionType": "UseGadget",
+              "ActionName": "Balle",
+              "ActionTarget": null
+            },
+            {
+              "Date": "2026-07-19T12:30:17.7026419Z",
+              "Timing": "N1",
+              "Position": {
+                "x": 163.725815,
+                "y": 22.2811069,
+                "z": 254.72229
+              },
+              "ActionType": "UseGadget",
+              "ActionName": "Radar",
+              "ActionTarget": null
+            },
+            {
+              "Date": "2026-07-19T12:35:22.7115266Z",
+              "Timing": "N2",
+              "Position": {
+                "x": 158.847061,
+                "y": 24.5667229,
+                "z": 170.8157
+              },
+              "ActionType": "UseGadget",
+              "ActionName": "Radar",
+              "ActionTarget": null
+            },
+            {
+              "Date": "2026-07-19T12:40:00.2042628Z",
+              "Timing": "J3",
+              "Position": {
+                "x": 103.914696,
+                "y": 22.2811069,
+                "z": 202.497986
+              },
+              "ActionType": "UseGadget",
+              "ActionName": "Balle",
+              "ActionTarget": null
+            },
+            {
+              "Date": "2026-07-19T12:41:03.3307317Z",
+              "Timing": "N3",
+              "Position": {
+                "x": 97.58082,
+                "y": 22.2811069,
+                "z": 188.863113
+              },
+              "ActionType": "DrinkPotion",
+              "ActionName": "Invisible",
+              "ActionTarget": null
+            }
+          ]
+        },
+        {
+          "ID": "76561198047490206",
+          "Username": "Rigner",
+          "Color": "Orange",
+          "Hat": "MagicianHat(Clone)(Clone)",
+          "MainRoleInitial": "Idiot du Village",
+          "MainRoleChanges": [],
+          "Power": null,
+          "SecondaryRole": "Marchand",
+          "DeathDateIrl": "2026-07-19T12:47:42.8543884Z",
+          "DeathTiming": "N4",
+          "DeathPosition": {
+            "x": 110.118752,
+            "y": 22.2811069,
+            "z": 204.561142
+          },
+          "DeathType": "BY_WOLF",
+          "KillerName": "axelwlt",
+          "Victorious": false,
+          "Votes": [
+            {
+              "Target": "Stacy176",
+              "Date": "2026-07-19T12:33:35.4727846Z",
+              "Day": 1
+            },
+            {
+              "Target": "Passé",
+              "Date": "2026-07-19T12:38:32.2331155Z",
+              "Day": 2
+            },
+            {
+              "Target": "Passé",
+              "Date": "2026-07-19T12:44:46.7942137Z",
+              "Day": 3
+            }
+          ],
+          "SecondsTalkedOutsideMeeting": 119,
+          "SecondsTalkedDuringMeeting": 62,
+          "SecondsSpentImmobileStanding": 189,
+          "SecondsSpentImmobileCrouched": 64,
+          "SecondsSpentWalkingStanding": 266,
+          "SecondsSpentWalkingCrouched": 12,
+          "SecondsSpentRunning": 104,
+          "TotalCollectedLoot": 245,
+          "Actions": [
+            {
+              "Date": "2026-07-19T12:33:46.9907651Z",
+              "Timing": "J2",
+              "Position": {
+                "x": 107.135406,
+                "y": 22.2811069,
+                "z": 200.712051
+              },
+              "ActionType": "TakeAccessory",
+              "ActionName": "Corne d'abondance",
+              "ActionTarget": null
+            },
+            {
+              "Date": "2026-07-19T12:40:10.0586875Z",
+              "Timing": "J3",
+              "Position": {
+                "x": 124.264381,
+                "y": 22.0796776,
+                "z": 142.9445
+              },
+              "ActionType": "DrinkPotion",
+              "ActionName": "Muet",
+              "ActionTarget": null
+            },
+            {
+              "Date": "2026-07-19T12:40:48.5266502Z",
+              "Timing": "N3",
+              "Position": {
+                "x": 137.676376,
+                "y": 22.0796776,
+                "z": 136.728867
+              },
+              "ActionType": "UseGadget",
+              "ActionName": "Parchemin (Célérité)",
+              "ActionTarget": "Stacy176"
+            }
+          ]
+        }
+      ],
+      "GameEvents": [
+        {
+          "Date": "2026-07-19T12:27:47.0390114Z",
+          "Timing": "J1",
+          "Type": "NewPhase",
+          "Name": "J1"
+        },
+        {
+          "Date": "2026-07-19T12:29:23.9298586Z",
+          "Timing": "N1",
+          "Type": "NewPhase",
+          "Name": "N1"
+        },
+        {
+          "Date": "2026-07-19T12:30:40.9251620Z",
+          "Timing": "M1",
+          "Type": "NewPhase",
+          "Name": "M1"
+        },
+        {
+          "Date": "2026-07-19T12:30:40.9261683Z",
+          "Timing": "M1",
+          "Type": "NewMayor",
+          "Name": "MôA"
+        },
+        {
+          "Date": "2026-07-19T12:33:41.9434083Z",
+          "Timing": "J2",
+          "Type": "NewPhase",
+          "Name": "J2"
+        },
+        {
+          "Date": "2026-07-19T12:35:18.9098362Z",
+          "Timing": "N2",
+          "Type": "NewPhase",
+          "Name": "N2"
+        },
+        {
+          "Date": "2026-07-19T12:36:35.9119307Z",
+          "Timing": "M2",
+          "Type": "NewPhase",
+          "Name": "M2"
+        },
+        {
+          "Date": "2026-07-19T12:39:09.6146265Z",
+          "Timing": "J3",
+          "Type": "NewPhase",
+          "Name": "J3"
+        },
+        {
+          "Date": "2026-07-19T12:40:46.5776854Z",
+          "Timing": "N3",
+          "Type": "NewPhase",
+          "Name": "N3"
+        },
+        {
+          "Date": "2026-07-19T12:42:03.5715755Z",
+          "Timing": "M3",
+          "Type": "NewPhase",
+          "Name": "M3"
+        },
+        {
+          "Date": "2026-07-19T12:44:58.9749572Z",
+          "Timing": "J4",
+          "Type": "NewPhase",
+          "Name": "J4"
+        },
+        {
+          "Date": "2026-07-19T12:46:35.9408442Z",
+          "Timing": "N4",
+          "Type": "NewPhase",
+          "Name": "N4"
+        },
+        {
+          "Date": "2026-07-19T12:47:52.9437069Z",
+          "Timing": "M4",
+          "Type": "NewPhase",
+          "Name": "M4"
         }
       ],
       "Version": "0.321",
