@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.9.8';
+export const APP_VERSION = '1.9.9';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,11 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.9.9',
+    date: '19/07/2026',
+    description: 'Fork du site et adaptation à la commu d\'Anaee !'
+  },
   {
     version: 'v1.9.8',
     date: '25/06/2026',

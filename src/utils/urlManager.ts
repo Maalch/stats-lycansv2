@@ -124,7 +124,7 @@ export function buildUrlSearch(state: Partial<UrlState>): string {
     urlParams.set('highlightedPlayer', state.highlightedPlayer);
   }
   
-  if (state.dataSource && state.dataSource !== 'main') {
+  if (state.dataSource && state.dataSource !== 'anaeecorp') {
     urlParams.set('dataSource', state.dataSource);
   }
   

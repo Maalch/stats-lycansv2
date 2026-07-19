@@ -344,10 +344,10 @@ export function SettingsPanel() {
   const handleHighlightedPlayerChange = (playerName: string) => {
     updateSettings({ highlightedPlayer: playerName || null });
   };
-  /*
-  const handleDataSourceChange = (dataSource: 'main' | 'discord') => {
-    updateSettings({ dataSource });
-  };*/
+
+  const handleDataSourceChange = (newdataSource: DataSource) => {
+    updateSettings({ dataSource: newdataSource });
+  };
 
   const handleResetFilters = () => {
     resetSettings();
@@ -396,7 +396,7 @@ export function SettingsPanel() {
         </div>
       </div>
 
-{/* Data Source Selection Section : not active for now
+{/* Data Source Selection Section : not active for now*/}
 
       <div className="settings-section">
         <div className="settings-section-header">
@@ -404,9 +404,20 @@ export function SettingsPanel() {
         </div>
         <div className="settings-group">
           <p className="settings-explanation">
-            Sélectionnez la source de données à afficher : équipe principale (Ponce) ou équipe Discord (Nales).
+            Sélectionnez la source de données à afficher :  équipe de la Tchiim (Anaee), équipe du mardi (Ponce), équipe discord (Nales).
           </p>
           <div className="settings-radio-group-inline" style={{ marginTop: '1rem' }}>
+            <label className="settings-radio-inline">
+              <input
+                type="radio"
+                name="dataSource"
+                value="anaeecorp"
+                checked={settings.dataSource === 'anaeecorp'}
+                onChange={() => handleDataSourceChange('anaeecorp')}
+              />
+              <span>Équipe de la Tchiim (Anaee)</span>
+            </label>
+          
             <label className="settings-radio-inline">
               <input
                 type="radio"
@@ -415,8 +426,9 @@ export function SettingsPanel() {
                 checked={settings.dataSource === 'main'}
                 onChange={() => handleDataSourceChange('main')}
               />
-              <span>Équipe Principale (Ponce)</span>
+              <span>Équipe du Mardi (Ponce)</span>
             </label>
+            
             <label className="settings-radio-inline">
               <input
                 type="radio"
@@ -428,14 +440,28 @@ export function SettingsPanel() {
               <span>Équipe Discord (Nales)</span>
             </label>
           </div>
-          {settings.dataSource === 'discord' && (
+
+
+          { settings.dataSource === 'anaeecorp' && (
+            <p className="settings-info-text" style={{ marginTop: '0.5rem' }}>
+              ℹ️ Affichage des données de l'équipe de la Tchim.
+            </p>
+          )}
+
+          { settings.dataSource === 'main' && (
+            <p className="settings-info-text" style={{ marginTop: '0.5rem' }}>
+              ℹ️ Affichage des données de l'équipe du Mardi.
+            </p>
+          )}
+
+          { settings.dataSource === 'discord' && (
             <p className="settings-info-text" style={{ marginTop: '0.5rem' }}>
               ℹ️ Affichage des données de l'équipe Discord. Les jeux commencent par "Nales-".
             </p>
           )}
         </div>
       </div>
-}
+
 
       {/* Highlighted Player Section (always visible) */}
       <div className="settings-section">
@@ -767,7 +793,7 @@ export function SettingsPanel() {
           <strong>Résumé:</strong> {filteredGames.length} partie{filteredGames.length > 1 ? 's' : ''} 
           {activeFilterCount > 0 ? ` (avec ${activeFilterCount} filtre${activeFilterCount > 1 ? 's' : ''} actif${activeFilterCount > 1 ? 's' : ''})` : ' (aucun filtre actif)'}
           {settings.highlightedPlayer && ` • "${settings.highlightedPlayer}" mis en évidence`}
-          {settings.dataSource === 'discord' && ` • 📊 Équipe Discord`}
+          {` • 📊 Équipe ` + settings.dataSource}
         </p>
       </div>
       

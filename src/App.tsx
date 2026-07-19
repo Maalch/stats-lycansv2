@@ -643,16 +643,8 @@ function MainApp() {
               </div>
 
               <footer className="lycans-dashboard-footer">
-                <p>Soldat Flippy - AmberAerin - Maalch - 2026</p>
+                <p>Origin : Soldat Flippy - AmberAerin - Maalch ; Holdener - 2026</p>
                 <p>
-                  <a 
-                    href="mailto:admin@lycanstracker.fr" 
-                    className="contact-link"
-                    title="Contactez-nous pour vos commentaires et suggestions"
-                  >
-                    📧 Contact & Feedback
-                  </a>
-                  <span className="footer-separator"> • </span>
                   <button 
                     onClick={() => setShowPrivacyPolicy(true)}
                     className="contact-link privacy-link"
@@ -662,7 +654,7 @@ function MainApp() {
                   </button>
                   <span className="footer-separator"> • </span>
                   <a
-                    href="https://github.com/Maalch/stats-lycansv2"
+                    href="https://github.com/Holdener/stats-lycansv2"
                     className="contact-link"
                     target="_blank"
                     rel="noopener noreferrer"
