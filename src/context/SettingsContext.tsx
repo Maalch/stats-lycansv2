@@ -76,7 +76,7 @@ const defaultSettings: SettingsState = {
     mapNameFilter: 'all',
     playerFilter: { mode: 'none', players: [] },
   },
-  dataSource: 'main',
+  dataSource: 'anaeecorp',
   tab: null,
   subtab: null,
   selectedPlayerSelectionView: undefined,
@@ -160,14 +160,7 @@ function urlStateToSettings(urlState: UrlState): Partial<SettingsState> {
   }
   
   // Parse data source
- /*
-  if (urlState.dataSource === 'discord') {
-    settings.dataSource = 'discord';
-  } else if (urlState.dataSource) {
-    settings.dataSource = 'main';
-  }
-  */
-
+ 
 // 1. Ton tableau de validation
 const ALLOWED_SOURCES = ['main', 'discord', 'anaeecorp'] as const;
 
@@ -177,7 +170,7 @@ if (urlState?.dataSource && (ALLOWED_SOURCES as readonly string[]).includes(urlS
   settings.dataSource = urlState.dataSource as typeof ALLOWED_SOURCES[number];
 } else {
   // Fallback si l'URL est vide ou invalide
-  settings.dataSource = 'main'; 
+  settings.dataSource = 'anaeecorp'; 
 }
 
 

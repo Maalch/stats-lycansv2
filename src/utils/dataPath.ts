@@ -16,8 +16,9 @@ export function getDataPath(dataSource: DataSource): string {
     case 'anaeecorp':               // ◄ AJOUTEZ VOTRE NOUVELLE SOURCE ICI !
       return 'data/anaeecorp/';     // pointera vers /data/anaeecorp/
     case 'main':
+      return 'data/'
     default:
-      return 'data/';
+      return 'data/anaeecorp';
   }
 }
 
