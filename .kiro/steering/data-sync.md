@@ -7,13 +7,14 @@ Stats Lycans uses a multi-source data pipeline with AWS S3 as the primary source
 ## Architecture
 
 ```
-AWS S3 Bucket
+AWS S3 Bucket (XML ListBucketResult)
     │
-    └── StatsList.json (array of game log URLs)
+    └── S3 bucket listing (XML format, parsed in-memory)
           │
           ├── Ponce-20250116183045.json
           ├── Tsuna-20250117091522.json
-          └── Nales-20250118102030.json
+          ├── Nales-20250118102030.json
+          └── Holdener-20260718120000.json
                 │
                 ▼
         fetch-data-unified.js
@@ -22,9 +23,13 @@ AWS S3 Bucket
                 │            data/joueurs.json
                 │            data/index.json
                 │
-                └─[discord]─► data/discord/gameLog.json
-                             data/discord/joueurs.json
-                             data/discord/index.json
+                ├─[discord]─► data/discord/gameLog.json
+                │             data/discord/joueurs.json
+                │             data/discord/index.json
+                │
+                └─[anaeecorp]─► data/anaeecorp/gameLog.json
+                               data/anaeecorp/joueurs.json
+                               data/anaeecorp/index.json
 ```
 
 ## Key Files
@@ -33,7 +38,7 @@ AWS S3 Bucket
 |------|---------|
 | `fetch-data-unified.js` | Main AWS sync script (supports multiple teams) |
 | `shared/data-sources.js` | Team configuration (prefixes, output dirs, filters) |
-| `shared/sync-utils.js` | Core utilities (fetch, merge, validate) |
+| `shared/sync-utils.js` | Core utilities (fetch, merge, validate, XML parsing) |
 | `generate-rankings.js` | Generate player rankings from game data |
 | `generate-titles.js` | Generate player titles based on stats |
 | `generate-achievements.js` | Generate player achievements |
@@ -57,6 +62,15 @@ export const DATA_SOURCES = {
     outputDir: 'data/discord',
     gameFilter: (gameId) => gameId.startsWith('Nales-'),
     generateJoueurs: true,
+  },
+  anaeecorp: {
+    name: 'Anaee Corp',
+    outputDir: 'data/anaeecorp',
+    gameFilter: (gameId) => gameId.startsWith('Holdener-') || 
+                           gameId.startsWith('Anaee-') || 
+                           gameId.startsWith('Rigner-') || 
+                           gameId.startsWith('Karnarok-'),
+    generateJoueurs: true,
   }
 };
 ```
@@ -79,17 +93,45 @@ export const DATA_SOURCES = {
 | `playerTitles.json` | `update-rankings-titles.yml` | Weekly (Sunday 6 AM UTC) |
 | `playerAchievements.json` | `update-rankings-titles.yml` | Weekly (Sunday 6 AM UTC) |
 
+## Data Fetching
+
+### XML-Based S3 Listing (Current)
+
+The sync now uses AWS S3's native XML bucket listing instead of `StatsList.json`:
+
+1. Fetches bucket listing (XML `ListBucketResult`) directly from `STATS_LIST_URL`
+2. Parses XML using `fast-xml-parser` library
+3. Extracts all `<Contents><Key>` entries
+4. Constructs full URLs: `{baseUrl}/{key}`
+
+This approach is more reliable and doesn't require maintaining a separate `StatsList.json` file.
+
+### XML Parser Configuration
+
+```javascript
+import { XMLParser } from 'fast-xml-parser';
+
+const parser = new XMLParser({
+  isArray: (name) => name === 'Contents'
+});
+
+const jsonObj = parser.parse(xmlString);
+const urls = jsonObj.ListBucketResult?.Contents
+  .map(item => `${baseUrl}/${item.Key}`);
+```
+
 ## Sync Behavior
 
 ### Incremental Sync (default)
 - Loads existing `gameLog.json`
-- Fetches only files from last 7 days (file-level)
+- Fetches only files from last 7 days (file-level, based on filename date parsing)
 - Updates games from last 6 hours (game-level)
 - Skips older games that haven't changed
+- Minimum players threshold: **6 players** (games with fewer are filtered out)
 
 ### Full Sync (`--full` flag)
 - Ignores existing data
-- Fetches all files listed in StatsList.json
+- Fetches all files from S3 bucket listing
 - Rebuilds entire dataset from scratch
 
 ## Validation Pipeline
@@ -137,5 +179,5 @@ newTeam: {
 The sync script handles errors gracefully:
 - Individual file fetch failures don't stop the sync
 - Corrupted games (missing `EndDate`) are skipped
-- Games with fewer than 8 players are filtered out
+- Games with fewer than 6 players are filtered out
 - All errors are logged with context

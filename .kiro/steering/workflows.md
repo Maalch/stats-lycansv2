@@ -2,7 +2,7 @@
 
 ## Overview
 
-Three main workflows handle data synchronization and site deployment.
+Four main workflows handle data synchronization and site deployment.
 
 ## Workflows Summary
 
@@ -10,6 +10,7 @@ Three main workflows handle data synchronization and site deployment.
 |----------|---------|----------|
 | `update-data.yml` | Main team AWS sync | Mon/Tue/Thu 8 PM UTC |
 | `update-discorddata.yml` | Discord team AWS sync | Mon/Thu/Sat 4 AM UTC |
+| `update-anaeecorpdata.yml` | Anaee Corp AWS sync | Mon/Thu/Sat 4 AM UTC |
 | `update-rankings-titles.yml` | Generate rankings/titles/achievements | Weekly (Sun 6 AM UTC) |
 | `deploy-pages.yml` | Build and deploy to GitHub Pages | On push to main |
 
@@ -45,7 +46,7 @@ Three main workflows handle data synchronization and site deployment.
 - **Push:** Changes to `.github/workflows/update-discorddata.yml`
 
 ### Secrets Required
-- `STATS_LIST_URL` — AWS S3 StatsList.json URL
+- `STATS_LIST_URL` — AWS S3 bucket URL
 - `LYCANSTRACKER_SECRET_ACTIONS` — GitHub token for commits
 
 ### Steps
@@ -56,6 +57,29 @@ Three main workflows handle data synchronization and site deployment.
 5. Validate Discord team data files
 6. Copy to `docs/data/discord/`
 7. Commit and push if changes
+
+## update-anaeecorpdata.yml
+
+### Triggers
+- **Schedule:** Monday, Thursday, Saturday at 4 AM UTC
+- **Manual:** `workflow_dispatch` with `full_sync` option
+- **Push:** Changes to `.github/workflows/update-anaeecorpdata.yml`
+
+### Secrets Required
+- `STATS_LIST_URL` — AWS S3 bucket URL
+- `LYCANSTRACKER_SECRET_ACTIONS` — GitHub token for commits
+
+### Steps
+1. Checkout repository
+2. Setup Node.js 24
+3. Install dependencies
+4. Run `fetch-data-unified.js anaeecorp`
+5. Validate Anaee Corp team data files
+6. Copy to `docs/data/anaeecorp/`
+7. Commit and push if changes
+
+### Purpose
+Syncs game data for the Anaee Corp team (prefixes: `Holdener-`, `Anaee-`, `Rigner-`, `Karnarok-`)
 
 ## update-rankings-titles.yml
 
@@ -92,6 +116,8 @@ Generates pre-calculated data for performance:
 | `STATS_LIST_URL` | AWS S3 URL to StatsList.json | update-data.yml, update-discorddata.yml |
 | `LYCANSTRACKER_SECRET_ACTIONS` | GitHub PAT for committing changes | All workflows |
 | `LYCANS_API_BASE` | Legacy Google Sheets API URL (optional) | update-data.yml |
+
+**Note:** All sync workflows now use XML-based S3 bucket listing. `STATS_LIST_URL` points to the S3 bucket root, which returns an XML `ListBucketResult` that is parsed to extract all game log files.
 
 ## Setting Up Secrets
 
