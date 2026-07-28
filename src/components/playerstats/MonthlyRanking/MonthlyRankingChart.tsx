@@ -4,7 +4,6 @@ import { useSettings } from '../../../context/SettingsContext';
 import { useCombinedFilteredRawData, type GameLogEntry } from '../../../hooks/useCombinedRawData';
 import { useJoueursData } from '../../../hooks/useJoueursData';
 import { useThemeAdjustedDynamicPlayersColor } from '../../../types/api';
-import { CHART_LIMITS } from '../../../config/chartConstants';
 import { getPlayerId } from '../../../utils/playerIdentification';
 import { getPlayerMainCampFromRole } from '../../../utils/datasyncExport';
 import { FullscreenChart } from '../../common/FullscreenChart';
@@ -112,7 +111,7 @@ function buildBarRacePlayers(
     b.loupAndSoloGames - a.loupAndSoloGames ||
     b.soloGames - a.soloGames
   );
-  const topPlayers = eligiblePlayers.slice(0, CHART_LIMITS.TOP_20);
+  const topPlayers = eligiblePlayers;
 
   let totalWinPercent = 0;
   for (const p of eligiblePlayers) totalWinPercent += p.winPercent;

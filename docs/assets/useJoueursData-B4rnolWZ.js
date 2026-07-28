@@ -1,1 +1,5 @@
+<<<<<<<< HEAD:docs/assets/useJoueursData-B4rnolWZ.js
 import{a as l,r as t}from"./index-Dnfz8Tsx.js";import{a as f,D}from"./dataPath-DPCs0Zuv.js";import{h as S}from"./logger-Tl--x7fi.js";function J(){const{settings:s}=l(),[u,c]=t.useState(null),[n,r]=t.useState(!0),[i,o]=t.useState(null);return t.useEffect(()=>{(async()=>{try{r(!0),o(null);const a=s.dataSource,e=await f(a,D.JOUEURS);c(e)}catch(a){const e=S(a,"useJoueursData");o(e)}finally{r(!1)}})()},[s.dataSource]),{joueursData:u,isLoading:n,error:i}}export{J as u};
+========
+import{a as l,r as t}from"./index-SI5TAWzM.js";import{a as f,D}from"./dataPath-BTE_l0SS.js";import{h as S}from"./logger-Tl--x7fi.js";function J(){const{settings:s}=l(),[u,c]=t.useState(null),[n,r]=t.useState(!0),[i,o]=t.useState(null);return t.useEffect(()=>{(async()=>{try{r(!0),o(null);const a=s.dataSource,e=await f(a,D.JOUEURS);c(e)}catch(a){const e=S(a,"useJoueursData");o(e)}finally{r(!1)}})()},[s.dataSource]),{joueursData:u,isLoading:n,error:i}}export{J as u};
+>>>>>>>> f46a54a9 (remove the top 20 limitation on monthly/yearly ranking):docs/assets/useJoueursData-Dk4QhnAG.js
