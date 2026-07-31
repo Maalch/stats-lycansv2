@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { useNavigation } from '../../context/NavigationContext';
 import { useSettings } from '../../context/SettingsContext';
 import { useThemeAdjustedDynamicPlayersColor, getRandomColor } from '../../types/api';
@@ -570,28 +571,38 @@ export function RankingsDisplay({ rankings, title, emptyMessage, rankingType = '
     return playersColor[playerName] || getRandomColor(playerName);
   };
 
-  // Helper function to highlight player names in comparison descriptions
-  const highlightPlayerNames = (description: string) => {
-    // Extract player names from comparison descriptions
-    // They typically appear after "avec " or "contre "
+  // Highlight player names as real JSX nodes (never inject raw names as HTML - untrusted display names)
+  const highlightPlayerNames = (description: string): ReactNode[] => {
+    // Extract player names from comparison descriptions; they typically appear after "avec " or "contre "
     const patterns = [
       /avec ([^:]+?):/,
       /contre ([^:]+?):/,
     ];
-    
-    let highlightedDescription = description;
-    
-    patterns.forEach(pattern => {
-      const match = description.match(pattern);
-      if (match && match[1]) {
-        const playerName = match[1].trim();
-        const playerColor = getPlayerColor(playerName);
-        const highlightedName = `<span class="player-name-highlight" style="color: ${playerColor};">${playerName}</span>`;
-        highlightedDescription = highlightedDescription.replace(playerName, highlightedName);
-      }
+
+    const matches = patterns
+      .map(pattern => description.match(pattern))
+      .filter((match): match is RegExpMatchArray => match !== null && match.index !== undefined && !!match[1])
+      .sort((a, b) => (a.index ?? 0) - (b.index ?? 0));
+
+    const nodes: ReactNode[] = [];
+    let cursor = 0;
+
+    matches.forEach((match, i) => {
+      const playerName = match[1].trim();
+      const nameStart = description.indexOf(playerName, match.index ?? 0);
+      if (nameStart < cursor) return; // skip overlapping match
+
+      nodes.push(description.slice(cursor, nameStart));
+      nodes.push(
+        <span key={`highlight-${i}`} className="player-name-highlight" style={{ color: getPlayerColor(playerName) }}>
+          {playerName}
+        </span>
+      );
+      cursor = nameStart + playerName.length;
     });
-    
-    return highlightedDescription;
+
+    nodes.push(description.slice(cursor));
+    return nodes;
   };
 
   if (rankings.length === 0) {
@@ -793,10 +804,9 @@ export function RankingsDisplay({ rankings, title, emptyMessage, rankingType = '
                 <div className="ranking-header">
                   <span className="ranking-title">{Ranking.title}</span>
                 </div>
-                <p 
-                  className="ranking-description"
-                  dangerouslySetInnerHTML={{ __html: highlightPlayerNames(Ranking.description) }}
-                />
+                <p className="ranking-description">
+                  {highlightPlayerNames(Ranking.description)}
+                </p>
               </div>
             ))}
           </div>
