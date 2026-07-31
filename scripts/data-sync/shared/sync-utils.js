@@ -197,83 +197,89 @@ export async function fetchGameLogData(url) {
 }
 
 /**
- * Merge AWS game logs with optional filtering
- * @param {Array} awsGameLogs - Array of game log objects
- * @param {Object} config - Configuration object with filtering options
- * @returns {Object} - Unified game log
+ * Time window for updating recent games (6 hours in milliseconds).
+ * Games ending within this window may be re-fetched/updated in place even if
+ * already present, since disconnected-player/lover corrections can arrive late.
  */
-export async function mergeAWSGameLogs(awsGameLogs, config) {
-  const teamLabel = config.name ? ` (${config.name})` : '';
-  console.log(`Processing AWS game logs into unified structure${teamLabel}...`);
-  
-  if (config.gameFilter) {
-    console.log('🔍 Applying game filter...');
+export const RECENT_GAMES_WINDOW_MS = 6 * 60 * 60 * 1000;
+
+/** Time window for file-level filtering (7 days in milliseconds) */
+export const FILE_AGE_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
+
+/** Minimum number of players required for a valid main Werewolf game (not applied to Battle Royale games) */
+export const MIN_PLAYERS = 8;
+
+/**
+ * Parse date from filename (format: Prefix-YYYYMMDDHHMMSS.json)
+ * @param {string} url - Full URL or filename
+ * @returns {Date|null} - Parsed date or null if parsing fails
+ */
+export function parseDateFromFilename(url) {
+  try {
+    const filename = url.split('/').pop();
+    const match = filename.match(/-(\d{14})\.json$/);
+    if (!match) return null;
+    
+    const dateStr = match[1]; // YYYYMMDDHHMMSS
+    const year = dateStr.substring(0, 4);
+    const month = dateStr.substring(4, 6);
+    const day = dateStr.substring(6, 8);
+    const hour = dateStr.substring(8, 10);
+    const minute = dateStr.substring(10, 12);
+    const second = dateStr.substring(12, 14);
+    
+    const isoString = `${year}-${month}-${day}T${hour}:${minute}:${second}Z`;
+    const date = new Date(isoString);
+    
+    if (isNaN(date.getTime())) return null;
+    return date;
+  } catch (error) {
+    return null;
+  }
+}
+
+/**
+ * Filter URLs to only include recent session files
+ * @param {Array<string>} urls - List of file URLs
+ * @param {Date} cutoffDate - Cutoff date for file filtering
+ * @param {boolean} forceFullSync - If true, skip filtering
+ * @returns {Object} - Filtered URLs and stats
+ */
+export function filterRecentSessionFiles(urls, cutoffDate, forceFullSync) {
+  if (forceFullSync) {
+    return { filteredUrls: urls, skippedCount: 0, totalCount: urls.length };
   }
   
-  const gamesByIdMap = new Map();
-  let totalGamesProcessed = 0;
-  let filteredGamesCount = 0;
-  let corruptedGamesCount = 0;
+  const filteredUrls = [];
+  let skippedCount = 0;
   
-  // Process all AWS game logs
-  for (const gameLog of awsGameLogs) {
-    if (gameLog.GameStats && Array.isArray(gameLog.GameStats)) {
-      gameLog.GameStats.forEach(awsGame => {
-        const gameId = awsGame.Id;
-        
-        // Filter out corrupted games without EndDate
-        if (!awsGame.EndDate) {
-          corruptedGamesCount++;
-          return;
-        }
-        
-        // Apply filter if provided
-        if (config.gameFilter && !config.gameFilter(gameId)) {
-          filteredGamesCount++;
-          return; // Skip this game
-        }
-        
-        // Check if game already exists (from another mod version file)
-        if (gamesByIdMap.has(gameId)) {
-          console.log(`⚠️  Duplicate game ID ${gameId} found - keeping first occurrence`);
-        } else {
-          // Add game with mod version metadata
-          const gameWithMetadata = {
-            ...awsGame,
-            Version: gameLog.ModVersion,
-            Modded: true
-          };
-          gamesByIdMap.set(gameId, gameWithMetadata);
-          totalGamesProcessed++;
-        }
-      });
+  for (const url of urls) {
+    const fileDate = parseDateFromFilename(url);
+    
+    if (!fileDate) {
+      // Can't parse date - include the file to be safe
+      console.log(`⚠️  Could not parse date from ${url.split('/').pop()} - including file`);
+      filteredUrls.push(url);
+    } else if (fileDate >= cutoffDate) {
+      filteredUrls.push(url);
+    } else {
+      skippedCount++;
     }
   }
   
-  if (config.gameFilter && filteredGamesCount > 0) {
-    console.log(`✓ Filtered out ${filteredGamesCount} games`);
-  }
-  
-  console.log(`✓ Processed ${totalGamesProcessed} unique games from ${awsGameLogs.length} AWS files`);
-  
-  // Convert map back to array
-  const allGameStats = Array.from(gamesByIdMap.values());
-  
-  // Sort by StartDate to maintain chronological order
-  allGameStats.sort((a, b) => new Date(a.StartDate) - new Date(b.StartDate));
-  
-  const unifiedGameLog = {
-    ModVersion: config.modVersionLabel || "Multiple AWS Versions",
-    TotalRecords: allGameStats.length,
-    Sources: {
-      Legacy: 0,
-      AWS: totalGamesProcessed,
-      Merged: 0
-    },
-    GameStats: allGameStats
-  };
-  
-  return unifiedGameLog;
+  return { filteredUrls, skippedCount, totalCount: urls.length };
+}
+
+/**
+ * Check if a game is within the recent time window and should be updated
+ * @param {Object} game - Game data
+ * @param {Date} cutoffDate - Cutoff date for recent games
+ * @returns {boolean} - True if game is recent
+ */
+export function isRecentGame(game, cutoffDate) {
+  if (!game.EndDate) return false;
+  const gameEndDate = new Date(game.EndDate);
+  return gameEndDate >= cutoffDate;
 }
 
 /**
@@ -312,16 +318,39 @@ export async function createDataIndex(absoluteDataDir, awsFilesCount, totalGames
 }
 
 /**
- * Generate joueurs.json from game log player stats
+ * Generate/update joueurs.json from game log player stats.
+ *
+ * IMPORTANT: This merges with any existing joueurs.json rather than overwriting it,
+ * preserving curated fields (Image, Twitch, Youtube, Couleur) for known players.
+ * Only players not already present (by SteamID or Username) are added, with a
+ * best-guess Couleur derived from their most frequently used in-game color.
  */
 export async function generateJoueursFromGameLog(absoluteDataDir, gameLog, teamName = '') {
   const teamLabel = teamName ? ` ${teamName}` : '';
   console.log(`📋 Generating joueurs.json from${teamLabel} game log...`);
-  
-  // Map to track players by ID (not username) - keeps only the last username per ID
-  const playerIdMap = new Map();
-  
-  // Iterate through all games and player stats chronologically
+
+  // Load existing joueurs.json to preserve curated data (Image/Twitch/Youtube/Couleur)
+  let existingPlayers = [];
+  try {
+    const existingContent = await fs.readFile(path.join(absoluteDataDir, 'joueurs.json'), 'utf8');
+    existingPlayers = JSON.parse(existingContent).Players || [];
+    console.log(`  Found existing joueurs.json with ${existingPlayers.length} players - will preserve curated data`);
+  } catch (error) {
+    if (error.code !== 'ENOENT') {
+      console.error(`⚠️  Failed to read existing joueurs.json: ${error.message}`);
+    }
+  }
+
+  const existingBySteamID = new Map();
+  const existingByUsername = new Map();
+  existingPlayers.forEach(player => {
+    if (player.SteamID) existingBySteamID.set(String(player.SteamID), player);
+    if (player.Joueur) existingByUsername.set(player.Joueur, player);
+  });
+
+  // Track brand-new players (and their color usage) discovered in the game log
+  const newPlayersMap = new Map();
+
   gameLog.GameStats.forEach(game => {
     if (game.PlayerStats && Array.isArray(game.PlayerStats)) {
       game.PlayerStats.forEach(playerStat => {
@@ -331,21 +360,15 @@ export async function generateJoueursFromGameLog(absoluteDataDir, gameLog, teamN
         
         if (!username || !id) return; // Skip if no username or ID
         
-        // Use ID as the key - this will overwrite with the latest username if it changes
-        if (!playerIdMap.has(id)) {
-          playerIdMap.set(id, {
-            username: username,
-            colors: {},
-            gamesPlayed: 0
-          });
+        // Skip players we already know about - never overwrite curated data
+        if (existingBySteamID.has(String(id)) || existingByUsername.has(username)) return;
+        
+        if (!newPlayersMap.has(id)) {
+          newPlayersMap.set(id, { username, colors: {} });
         }
         
-        const playerData = playerIdMap.get(id);
-        
-        // Update to the latest username for this ID
-        playerData.username = username;
-        playerData.gamesPlayed++;
-        
+        const playerData = newPlayersMap.get(id);
+        playerData.username = username; // Use the latest username for this ID
         if (color) {
           playerData.colors[color] = (playerData.colors[color] || 0) + 1;
         }
@@ -353,11 +376,10 @@ export async function generateJoueursFromGameLog(absoluteDataDir, gameLog, teamN
     }
   });
   
-  // Create players array with most common color
-  const players = [];
+  // Build new player entries with their most common color
+  const newPlayers = [];
   
-  for (const [id, data] of playerIdMap.entries()) {
-    // Find the most common color for this player
+  for (const [id, data] of newPlayersMap.entries()) {
     let mostCommonColor = null;
     let maxCount = 0;
     
@@ -368,7 +390,7 @@ export async function generateJoueursFromGameLog(absoluteDataDir, gameLog, teamN
       }
     }
     
-    players.push({
+    newPlayers.push({
       Joueur: data.username,
       SteamID: id,
       Image: null,
@@ -378,18 +400,21 @@ export async function generateJoueursFromGameLog(absoluteDataDir, gameLog, teamN
     });
   }
   
-  // Sort players alphabetically by username
+  // Merge preserved existing players with newly discovered ones
+  const players = [...existingPlayers, ...newPlayers];
   players.sort((a, b) => a.Joueur.localeCompare(b.Joueur));
   
-  // Create the joueurs data structure
   const joueursData = {
     TotalRecords: players.length,
-    Players: players,
-    description: "Player data extracted from game logs. Social media links not available."
+    Players: players
   };
   
   await saveDataToFile(absoluteDataDir, 'joueurs.json', joueursData);
-  console.log(`✓ Generated joueurs.json with ${joueursData.TotalRecords} players`);
+  if (newPlayers.length > 0) {
+    console.log(`✓ Added ${newPlayers.length} new player(s) to joueurs.json (${joueursData.TotalRecords} total, curated data preserved)`);
+  } else {
+    console.log(`✓ joueurs.json unchanged - no new players found (${joueursData.TotalRecords} total)`);
+  }
   
   return joueursData;
 }

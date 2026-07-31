@@ -4,7 +4,12 @@ import {
   fetchStatsListUrls, 
   fetchGameLogData,
   correctVictoriousStatusForDisconnectedPlayers,
-  correctLoverSecondaryRole
+  correctLoverSecondaryRole,
+  RECENT_GAMES_WINDOW_MS,
+  FILE_AGE_WINDOW_MS,
+  MIN_PLAYERS,
+  filterRecentSessionFiles,
+  isRecentGame
 } from './shared/sync-utils.js';
 import { deduceMissingSabotageNames } from './shared/mapUtils.js';
 
@@ -12,78 +17,8 @@ import { deduceMissingSabotageNames } from './shared/mapUtils.js';
 const args = process.argv.slice(2);
 const forceFullSync = args.includes('--full') || args.includes('-f');
 
-// Time window for updating recent games (6 hours in milliseconds)
-const RECENT_GAMES_WINDOW_MS = 6 * 60 * 60 * 1000;
-
-// Time window for file-level filtering (7 days in milliseconds)
-const FILE_AGE_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
-
-// Minimum number of players required for a valid main Werewolf game
-// NOTE: This filter is NOT applied to Battle Royale games
-const MIN_PLAYERS = 8;
-
 // Main Team game filter
 const MAIN_TEAM_FILTER = (gameId) => gameId?.startsWith('Ponce-') || gameId?.startsWith('Tsuna-') || gameId?.startsWith('khalen-');
-
-/**
- * Parse date from filename (format: Prefix-YYYYMMDDHHMMSS.json)
- * @param {string} url - Full URL or filename
- * @returns {Date|null} - Parsed date or null if parsing fails
- */
-function parseDateFromFilename(url) {
-  try {
-    const filename = url.split('/').pop();
-    const match = filename.match(/-(\d{14})\.json$/);
-    if (!match) return null;
-    
-    const dateStr = match[1];
-    const year = dateStr.substring(0, 4);
-    const month = dateStr.substring(4, 6);
-    const day = dateStr.substring(6, 8);
-    const hour = dateStr.substring(8, 10);
-    const minute = dateStr.substring(10, 12);
-    const second = dateStr.substring(12, 14);
-    
-    const isoString = `${year}-${month}-${day}T${hour}:${minute}:${second}Z`;
-    const date = new Date(isoString);
-    
-    if (isNaN(date.getTime())) return null;
-    return date;
-  } catch (error) {
-    return null;
-  }
-}
-
-/**
- * Filter URLs to only include recent session files
- * @param {Array<string>} urls - List of file URLs
- * @param {Date} cutoffDate - Cutoff date for file filtering
- * @param {boolean} forceFullSync - If true, skip filtering
- * @returns {Object} - Filtered URLs and stats
- */
-function filterRecentSessionFiles(urls, cutoffDate, forceFullSync) {
-  if (forceFullSync) {
-    return { filteredUrls: urls, skippedCount: 0, totalCount: urls.length };
-  }
-  
-  const filteredUrls = [];
-  let skippedCount = 0;
-  
-  for (const url of urls) {
-    const fileDate = parseDateFromFilename(url);
-    
-    if (!fileDate) {
-      console.log(`⚠️  Could not parse date from ${url.split('/').pop()} - including file`);
-      filteredUrls.push(url);
-    } else if (fileDate >= cutoffDate) {
-      filteredUrls.push(url);
-    } else {
-      skippedCount++;
-    }
-  }
-  
-  return { filteredUrls, skippedCount, totalCount: urls.length };
-}
 
 /**
  * Load existing gameLog.json if it exists (for incremental sync)
@@ -105,18 +40,6 @@ async function loadExistingGameLog() {
     console.error('⚠️  Failed to load existing gameLog.json:', error.message);
     return null;
   }
-}
-
-/**
- * Check if a game is within the recent time window and should be updated
- * @param {Object} game - Game data
- * @param {Date} cutoffDate - Cutoff date for recent games
- * @returns {boolean} - True if game is recent
- */
-function isRecentGame(game, cutoffDate) {
-  if (!game.EndDate) return false;
-  const gameEndDate = new Date(game.EndDate);
-  return gameEndDate >= cutoffDate;
 }
 
 // Data sources

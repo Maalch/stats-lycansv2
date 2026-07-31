@@ -43,12 +43,33 @@ import {
   loadCache, 
   saveCache, 
   detectNewGames, 
-  createEmptyCache
+  createEmptyCache,
+  hashGame
 } from './shared/cache-manager.js';
 
 // Default data directory relative to project root (two levels up from scripts/data-sync/)
 const DATA_DIR = '../../data';
 const ABSOLUTE_DATA_DIR = path.resolve(process.cwd(), DATA_DIR);
+
+/**
+ * Compute the full (non-incremental) set of statistics for a dataset.
+ * Shared by the full-recalculation path and by the incremental path's
+ * fallback when previously-processed games were edited in place.
+ * @param {Array} games - Games to compute statistics for
+ * @returns {Object} - All computed statistics for the dataset
+ */
+function computeFullDatasetStats(games) {
+  return {
+    stats: computePlayerStats(games),
+    mapStats: computeMapStats(games),
+    deathStats: computeDeathStatistics(games),
+    hunterStats: computeHunterStatistics(games),
+    campStats: computePlayerCampPerformance(games),
+    seriesData: computePlayerSeriesData(games),
+    votingStats: computeVotingStatistics(games),
+    talkingStats: computeTalkingTimeStats(games)
+  };
+}
 
 /**
  * Generate Rankings for all players (full recalculation)
@@ -149,6 +170,10 @@ function generateAllPlayerRankings(gameLogData, returnCache = false) {
     cache.moddedGames.campStats = moddedOnlyCampStats;
     cache.moddedGames.votingStats = moddedOnlyVotingStats;
     cache.moddedGames.talkingStats = moddedOnlyTalkingStats;
+
+    // Record per-game content hashes so future incremental runs can detect in-place edits
+    cache.allGames.gameHashes = Object.fromEntries(allGames.map(g => [g.Id, hashGame(g)]));
+    cache.moddedGames.gameHashes = Object.fromEntries(moddedGames.map(g => [g.Id, hashGame(g)]));
     
     return { Rankings, updatedCache: cache };
   }
@@ -174,16 +199,18 @@ function generateAllPlayerRankingsIncremental(gameLogData, cache) {
   const allGames = validGames;
   const moddedGames = allGames.filter(game => game.Modded === true);
 
-  // Detect new games for both datasets
+  // Detect new AND changed (edited in place) games for both datasets
   const allGamesDetection = detectNewGames(allGames, cache.allGames);
   const moddedGamesDetection = detectNewGames(moddedGames, cache.moddedGames);
 
   const hasNewAllGames = allGamesDetection.newGames.length > 0;
+  const hasChangedAllGames = allGamesDetection.changedGames.length > 0;
   const hasNewModdedGames = moddedGamesDetection.newGames.length > 0;
+  const hasChangedModdedGames = moddedGamesDetection.changedGames.length > 0;
 
   console.log(`  Incremental processing:`);
-  console.log(`    All games: ${allGamesDetection.newGames.length} new (${allGames.length} total)`);
-  console.log(`    Modded games: ${moddedGamesDetection.newGames.length} new (${moddedGames.length} total)`);
+  console.log(`    All games: ${allGamesDetection.newGames.length} new, ${allGamesDetection.changedGames.length} changed (${allGames.length} total)`);
+  console.log(`    Modded games: ${moddedGamesDetection.newGames.length} new, ${moddedGamesDetection.changedGames.length} changed (${moddedGames.length} total)`);
 
   // Compute statistics incrementally or use cached values
   let allGamesStats, moddedOnlyStats;
@@ -196,7 +223,31 @@ function generateAllPlayerRankingsIncremental(gameLogData, cache) {
   let allGamesTalkingStats, moddedOnlyTalkingStats;
 
   // All games dataset
-  if (hasNewAllGames) {
+  if (hasChangedAllGames) {
+    // Additive incremental updaters can't handle edits to already-counted games
+    // (they would double-count), so fall back to a full recompute for correctness.
+    console.log(`    Existing games were edited - recomputing all games stats from scratch...`);
+    
+    const full = computeFullDatasetStats(allGames);
+    allGamesStats = full.stats;
+    allGamesMapStats = full.mapStats;
+    allGamesDeathStats = full.deathStats;
+    allGamesHunterStats = full.hunterStats;
+    allGamesCampStats = full.campStats;
+    allGamesSeriesData = full.seriesData;
+    allGamesVotingStats = full.votingStats;
+    allGamesTalkingStats = full.talkingStats;
+    
+    cache.allGames.totalGames = allGames.length;
+    cache.allGames.playerStats = convertPlayerStatsToCache(allGamesStats.playerStats);
+    cache.allGames.seriesState = extractSeriesState(allGamesSeriesData);
+    cache.allGames.mapStats = allGamesMapStats;
+    cache.allGames.deathStats = allGamesDeathStats;
+    cache.allGames.hunterStats = allGamesHunterStats;
+    cache.allGames.campStats = allGamesCampStats;
+    cache.allGames.votingStats = allGamesVotingStats;
+    cache.allGames.talkingStats = allGamesTalkingStats;
+  } else if (hasNewAllGames) {
     console.log(`    Computing updated stats for all games...`);
     
     allGamesStats = updatePlayerStatsIncremental(
@@ -250,7 +301,29 @@ function generateAllPlayerRankingsIncremental(gameLogData, cache) {
   }
 
   // Modded games dataset
-  if (hasNewModdedGames) {
+  if (hasChangedModdedGames) {
+    console.log(`    Existing modded games were edited - recomputing modded stats from scratch...`);
+    
+    const full = computeFullDatasetStats(moddedGames);
+    moddedOnlyStats = full.stats;
+    moddedOnlyMapStats = full.mapStats;
+    moddedOnlyDeathStats = full.deathStats;
+    moddedOnlyHunterStats = full.hunterStats;
+    moddedOnlyCampStats = full.campStats;
+    moddedOnlySeriesData = full.seriesData;
+    moddedOnlyVotingStats = full.votingStats;
+    moddedOnlyTalkingStats = full.talkingStats;
+    
+    cache.moddedGames.totalGames = moddedGames.length;
+    cache.moddedGames.playerStats = convertPlayerStatsToCache(moddedOnlyStats.playerStats);
+    cache.moddedGames.seriesState = extractSeriesState(moddedOnlySeriesData);
+    cache.moddedGames.mapStats = moddedOnlyMapStats;
+    cache.moddedGames.deathStats = moddedOnlyDeathStats;
+    cache.moddedGames.hunterStats = moddedOnlyHunterStats;
+    cache.moddedGames.campStats = moddedOnlyCampStats;
+    cache.moddedGames.votingStats = moddedOnlyVotingStats;
+    cache.moddedGames.talkingStats = moddedOnlyTalkingStats;
+  } else if (hasNewModdedGames) {
     console.log(`    Computing updated stats for modded games...`);
     
     moddedOnlyStats = updatePlayerStatsIncremental(
@@ -302,6 +375,10 @@ function generateAllPlayerRankingsIncremental(gameLogData, cache) {
     moddedOnlyVotingStats = cache.moddedGames.votingStats || { playerBehavior: [], playerAccuracy: [], playerTargets: [] };
     moddedOnlyTalkingStats = cache.moddedGames.talkingStats || { playerStats: [], totalGames: 0, gamesWithTalkingData: 0 };
   }
+
+  // Keep per-game hashes in sync so future runs can detect new/edited/removed games
+  cache.allGames.gameHashes = allGamesDetection.currentHashes;
+  cache.moddedGames.gameHashes = moddedGamesDetection.currentHashes;
 
   console.log(`  Generating Rankings for ${allGamesStats.playerStats.length} players...`);
 

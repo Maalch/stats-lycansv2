@@ -7,6 +7,7 @@
 
 import fs from 'fs/promises';
 import path from 'path';
+import crypto from 'crypto';
 
 /**
  * Cache structure:
@@ -40,7 +41,9 @@ import path from 'path';
  * }
  */
 
-const CACHE_VERSION = "2.0.0";
+// Bumped to 3.0.0: cache now tracks per-game content hashes (see gameHashes) to detect
+// in-place edits to already-processed games, not just count-based additions.
+const CACHE_VERSION = "3.0.0";
 const CACHE_FILENAME = "playerStatsCache.json";
 
 /**
@@ -60,7 +63,8 @@ export function createEmptyCache() {
       deathStats: null,
       hunterStats: [],
       campStats: [],
-      votingStats: null
+      votingStats: null,
+      gameHashes: {}
     },
     
     moddedGames: {
@@ -71,9 +75,20 @@ export function createEmptyCache() {
       deathStats: null,
       hunterStats: [],
       campStats: [],
-      votingStats: null
+      votingStats: null,
+      gameHashes: {}
     }
   };
+}
+
+/**
+ * Compute a stable content hash for a game, used to detect in-place edits
+ * (e.g. victory-status corrections) to games that were already processed.
+ * @param {Object} game - Game object from gameLog.json
+ * @returns {string} - SHA1 hex hash of the game's JSON content
+ */
+export function hashGame(game) {
+  return crypto.createHash('sha1').update(JSON.stringify(game)).digest('hex');
 }
 
 /**
@@ -137,42 +152,50 @@ export async function saveCache(dataDir, cache) {
 }
 
 /**
- * Detect new games by comparing game log with cache
+ * Detect new and changed games by comparing per-game content hashes against the cache.
+ *
+ * Unlike a count-based diff, this also catches games that were already processed but
+ * later edited in place (e.g. disconnected-player victory corrections applied by
+ * sync-utils.js within the 6h "recent games" update window), since the count of games
+ * stays the same in that case but the content differs.
+ *
  * @param {Array} games - Array of game objects from gameLog.json
  * @param {Object} datasetCache - Cache for specific dataset (allGames or moddedGames)
- * @returns {Object} - { newGames: [], existingGameIds: Set }
+ * @returns {Object} - { newGames: [], changedGames: [], existingGameIds: Set, currentHashes: Object }
  */
 export function detectNewGames(games, datasetCache) {
+  const cachedHashes = datasetCache.gameHashes || {};
   const existingGameIds = new Set();
   const newGames = [];
-  
-  // Build set of existing game IDs from the count (we assume games are append-only)
-  // We'll identify new games by comparing total count and checking end dates
-  const cachedGameCount = datasetCache.totalGames || 0;
-  
-  // Sort games by StartDate to get chronological order
-  const sortedGames = [...games].sort((a, b) => 
-    new Date(a.StartDate) - new Date(b.StartDate)
-  );
-  
-  if (sortedGames.length <= cachedGameCount) {
-    // No new games
-    console.log(`  No new games detected (${sortedGames.length} games, cache has ${cachedGameCount})`);
-    return { newGames: [], existingGameIds: new Set(sortedGames.map(g => g.Id)) };
+  const changedGames = [];
+  const currentHashes = {};
+
+  for (const game of games) {
+    const hash = hashGame(game);
+    currentHashes[game.Id] = hash;
+    const cachedHash = cachedHashes[game.Id];
+
+    if (cachedHash === undefined) {
+      newGames.push(game);
+    } else if (cachedHash !== hash) {
+      changedGames.push(game);
+    } else {
+      existingGameIds.add(game.Id);
+    }
   }
-  
-  // Games are append-only, so take the last N games where N = total - cached
-  const newGameCount = sortedGames.length - cachedGameCount;
-  newGames.push(...sortedGames.slice(-newGameCount));
-  
-  sortedGames.slice(0, cachedGameCount).forEach(g => existingGameIds.add(g.Id));
-  
-  console.log(`  Detected ${newGames.length} new games (total: ${sortedGames.length}, cached: ${cachedGameCount})`);
-  if (newGames.length > 0) {
-    console.log(`    Newest game: ${newGames[newGames.length - 1].Id} (${newGames[newGames.length - 1].EndDate})`);
+
+  if (newGames.length === 0 && changedGames.length === 0) {
+    console.log(`  No new or changed games detected (${games.length} games)`);
+  } else {
+    if (newGames.length > 0) {
+      console.log(`  Detected ${newGames.length} new game(s) (total: ${games.length}, cached: ${Object.keys(cachedHashes).length})`);
+    }
+    if (changedGames.length > 0) {
+      console.log(`  Detected ${changedGames.length} changed existing game(s) - full recalculation required for correctness`);
+    }
   }
-  
-  return { newGames, existingGameIds };
+
+  return { newGames, changedGames, existingGameIds, currentHashes };
 }
 
 /**
