@@ -295,38 +295,10 @@ export function PlayerAchievementsDisplay({
     return buildAchievementRanking(allData, expandedAchievementId, currentPlayerName ?? null);
   }, [expandedAchievementId, allData, currentPlayerName]);
 
-  // Loading state
-  if (isLoading) {
-    return (
-      <div className="achievements-section">
-        <div className="achievements-loading">
-          <div className="loading-spinner"></div>
-          <p>Chargement des succès...</p>
-        </div>
-      </div>
-    );
-  }
-
-  // Empty state
-  if (!achievementsWithProgress || achievementsWithProgress.length === 0) {
-    return (
-      <div className="achievements-section">
-        <div className="achievements-empty">
-          <p>🏆 Aucun succès disponible</p>
-          <p className="achievements-empty-subtitle">
-            Les succès seront disponibles après la prochaine synchronisation hebdomadaire
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  // Compute summary stats
-  const totalLevels = achievementsWithProgress.reduce((sum, a) => sum + a.levels.length, 0);
-  const totalUnlocked = playerAchievements?.totalUnlocked || 0;
-  const tierCounts = computeTierCounts(playerAchievements);
-
   // --- Comparison mode data ---
+  // All hooks below must run unconditionally on every render (Rules of Hooks) — the
+  // isLoading/empty-state early returns come after, so use a null-safe list here.
+  const safeAchievements = achievementsWithProgress ?? [];
 
   // List of all players available for comparison (excluding the current player)
   const availablePlayers = useMemo(() => {
@@ -384,7 +356,7 @@ export function PlayerAchievementsDisplay({
     let otherOnly = 0;
     let neither = 0;
 
-    for (const ach of achievementsWithProgress) {
+    for (const ach of safeAchievements) {
       for (const level of ach.levels) {
         const key = `${ach.id}-${level.tier}-${level.subLevel}`;
         const mainHas = mainSet.has(key);
@@ -398,12 +370,12 @@ export function PlayerAchievementsDisplay({
     }
 
     return { shared, mainOnly, otherOnly, neither };
-  }, [compareIsActive, playerAchievements, comparePlayerData, achievementsWithProgress]);
+  }, [compareIsActive, playerAchievements, comparePlayerData, safeAchievements]);
 
   // Count per-category unlocked achievements (at least 1 level)
   const categoryCounts = useMemo(() => {
     const counts: Record<string, { total: number; unlocked: number }> = {};
-    for (const ach of achievementsWithProgress) {
+    for (const ach of safeAchievements) {
       if (!counts[ach.category]) counts[ach.category] = { total: 0, unlocked: 0 };
       counts[ach.category].total++;
       if (ach.playerProgress && ach.playerProgress.unlockedLevels.length > 0) {
@@ -411,12 +383,12 @@ export function PlayerAchievementsDisplay({
       }
     }
     return counts;
-  }, [achievementsWithProgress]);
+  }, [safeAchievements]);
 
   // Filter by category
   const filteredAchievements = selectedCategory
-    ? achievementsWithProgress.filter(a => a.category === selectedCategory)
-    : achievementsWithProgress;
+    ? safeAchievements.filter(a => a.category === selectedCategory)
+    : safeAchievements;
 
   // Sort: unlocked first (by progress desc), then locked, group by category
   const sortedCategories = Object.entries(categories)
@@ -455,7 +427,7 @@ export function PlayerAchievementsDisplay({
   const percentileData = useMemo(() => {
     if (!allData) return null;
     const achValues = new Map<string, number[]>();
-    for (const def of achievementsWithProgress) {
+    for (const def of safeAchievements) {
       const values: number[] = [];
       for (const player of Object.values(allData.players)) {
         const ach = player.achievements.find(a => a.id === def.id);
@@ -464,7 +436,38 @@ export function PlayerAchievementsDisplay({
       achValues.set(def.id, values);
     }
     return achValues;
-  }, [allData, achievementsWithProgress]);
+  }, [allData, safeAchievements]);
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="achievements-section">
+        <div className="achievements-loading">
+          <div className="loading-spinner"></div>
+          <p>Chargement des succès...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Empty state
+  if (!achievementsWithProgress || achievementsWithProgress.length === 0) {
+    return (
+      <div className="achievements-section">
+        <div className="achievements-empty">
+          <p>🏆 Aucun succès disponible</p>
+          <p className="achievements-empty-subtitle">
+            Les succès seront disponibles après la prochaine synchronisation hebdomadaire
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Compute summary stats
+  const totalLevels = achievementsWithProgress.reduce((sum, a) => sum + a.levels.length, 0);
+  const totalUnlocked = playerAchievements?.totalUnlocked || 0;
+  const tierCounts = computeTierCounts(playerAchievements);
 
   /** Get Top X% for a given achievement value. Returns undefined if not computable. */
   const getTopPercent = (achId: string, value: number): number | undefined => {
