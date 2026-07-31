@@ -134,6 +134,12 @@ export function PlayerSelectionPage() {
       ? gameLogData.GameStats.filter(game => game.Modded === true)
       : gameLogData.GameStats;
 
+    // Lookup maps built once, reused below instead of repeated Array.find() calls
+    const joueursBySteamId = new Map(
+      (joueursData?.Players ?? []).filter(p => p.SteamID).map(p => [p.SteamID as string, p])
+    );
+    const joueursByName = new Map((joueursData?.Players ?? []).map(p => [p.Joueur, p]));
+
     // Group by unique player ID (Steam ID or Username fallback)
     const playerMap = new Map<string, {
       games: number;
@@ -150,12 +156,12 @@ export function PlayerSelectionPage() {
         // Use the playerIdentification utility to get unique ID
         const playerId = getPlayerId(playerStat);
         
-        // Find canonical player name from joueurs.json
-        const playerInfo = joueursData?.Players?.find(p => p.SteamID === playerId);
-        // Player names are already normalized during data loading, but prefer joueurs.json if available
-        const canonicalName = playerInfo?.Joueur || playerStat.Username;
-        
         if (!playerMap.has(playerId)) {
+          // Find canonical player name from joueurs.json (only needed the first time we see this player)
+          const playerInfo = joueursBySteamId.get(playerId);
+          // Player names are already normalized during data loading, but prefer joueurs.json if available
+          const canonicalName = playerInfo?.Joueur || playerStat.Username;
+
           playerMap.set(playerId, {
             games: 0,
             wins: 0,
@@ -182,12 +188,7 @@ export function PlayerSelectionPage() {
 
     return Array.from(playerMap.entries()).map(([playerId, stats]): PlayerBasicStats => {
       // Find player data from joueurs.json by SteamID first, then fall back to name matching
-      let playerInfo = joueursData?.Players?.find(p => p.SteamID === playerId);
-      
-      // If not found by SteamID, try matching by name
-      if (!playerInfo) {
-        playerInfo = joueursData?.Players?.find(p => p.Joueur === stats.displayName);
-      }
+      const playerInfo = joueursBySteamId.get(playerId) ?? joueursByName.get(stats.displayName);
       
       return {
         id: playerId, // Use the unique player ID as the identifier
