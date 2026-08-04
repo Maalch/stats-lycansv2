@@ -1,8 +1,8 @@
 {
   "_meta": {
     "description": "Reference file for Lycans v2 game mechanics: camps, roles, powers, accessories, gadgets, effects, events, and game rules. Extracted from in-game translations and gameLog data.",
-    "version": "0.329",
-    "lastUpdated": "2026-07-28",
+    "version": "0.333",
+    "lastUpdated": "2026-08-03",
     "sourceTranslationsFile": "ExternalData/translations.json",
     "notes": "French names match gameLog.json values. Descriptions are cleaned from in-game markup (<color> tags, {0} placeholders). This file can be manually edited to adjust or enrich descriptions. potionEffects = drinkable effects from potions/scrolls. statusEffects = in-game states applied by role abilities, environmental events, or other mechanics (many overlap with potionEffects but represent the broader set of all possible player states)."
   },
@@ -307,7 +307,7 @@
       "id": "acrobate",
       "name": "Acrobate",
       "emoji": "🤸",
-      "description": "Peut effectuer de grands sauts à certains emplacements spécifiques des maps (indiqués sur la minimap et par des flèches). Chaque saut nécessite quelques secondes de préparation. Est immunisé aux dégâts de chute.",
+      "description": "Peut effectuer de grands sauts à certains emplacements spécifiques des maps (indiqués sur la minimap et par des flèches). Chaque saut nécessite quelques secondes de préparation et il émet un grognement au moment du saut. Est immunisé aux dégâts de chute.",
       "descriptionShort": "Peut faire de puissants sauts à certains emplacements de la carte",
       "translationKey": "NALES_ROLE_DESCRIPTION_ACROBAT"
     }
@@ -406,7 +406,7 @@
       "id": "inventeur",
       "name": "Inventeur",
       "emoji": "⚙️",
-      "description": "Charge son pouvoir en récoltant la ferraille qui apparaît parfois quand un joueur utilise un objet. Un son l'avertit de sa proximité. Peut utiliser sa charge pour placer secrètement un Camoufleur sur un joueur (ou sur lui-même). Quand un loup transformé s'approche, le Camoufleur s'active et émet une épaisse fumée visible uniquement par les loups transformés et l'Inventeur.",
+      "description": "Charge son pouvoir en récoltant la ferraille qui apparaît parfois quand un joueur utilise un objet. Un son l'avertit de sa proximité. Peut utiliser sa charge pour placer secrètement un Camoufleur sur un joueur (ou sur lui-même). Quand un loup transformé s'approche, il est légèrement ralenti et le Camoufleur s'active et émet une épaisse fumée visible uniquement par les loups transformés et l'Inventeur.",
       "descriptionShort": "Peut placer des Camoufleurs sur les joueurs pour les aider à échapper aux loups",
       "translationKey": "NALES_ROLE_DESCRIPTION_INVENTOR"
     }
@@ -878,7 +878,7 @@
     { "id": "vision-vraie", "name": "Vision vraie", "type": "positive", "durationSeconds": 45, "translationKey": "EFFECT_TRUESIGHT", "tutorial": "Vous voyez dans le noir et ignorez les illusions visuelles" },
     { "id": "blanche", "name": "Blanche", "type": "positive", "durationNote": "60% de la durée de la potion de base équivalente", "translationKey": "EFFECT_BLANCHE", "tutorial": "Potion créée par l'Alchimiste. Applique un effet positif aléatoire parmi les effets positifs possibles, plus court qu'une potion classique.", "source": "alchimiste"},
     { "id": "camoufle", "name": "Camouflé", "type": "positive", "durationSeconds": 90, "translationKey": "NALES_EFFECT_CAMOUFLAGE", "tutorial": "Rend le joueur moins visible pour les autres joueurs, en particulier les loups transformés" },
-    { "id": "confusion", "name": "Confusion", "type": "negative", "durationSeconds": 30, "translationKey": "NALES_EFFECT_CONFUSED", "tutorial": "Perturbe la vision et la perception du joueur" },
+    { "id": "confusion", "name": "Confusion", "type": "negative", "durationSeconds": 30, "translationKey": "NALES_EFFECT_CONFUSED", "tutorial": "Perturbe la vision et la perception du joueur et le ralentit" },
     { "id": "immunite", "name": "Immunité", "type": "neutral", "durationSeconds": 80, "translationKey": "NALES_EFFECT_IMMUNE", "tutorial": "Retire tous les effets (sauf exception) de la cible et empêche ces effets d'être appliqués" }
   ],
 
