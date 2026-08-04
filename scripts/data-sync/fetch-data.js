@@ -828,34 +828,39 @@ async function main() {
     }
 
     // === FETCH LEGACY DATA ===
-    console.log('\n📊 Fetching Legacy data from Google Sheets API...');
+    // Legacy (Google Sheets) is only checked on a forced full sync - incremental runs are AWS-only
     let legacyGameLogData = null;
     let legacyBRData = null;
     let legacyJoueursData = null;
-    
-    for (const endpoint of LEGACY_DATA_ENDPOINTS) {
-      try {
-        const data = await fetchLegacyEndpointData(endpoint);
-        if (data) {
-          if (endpoint === 'gameLog') {
-            legacyGameLogData = data;
-            await saveDataToFile('gameLog-Legacy.json', data);
-          } else if (endpoint === 'rawBRData') {
-            legacyBRData = data;
-            await saveDataToFile('rawBRData.json', data);
-          } else if (endpoint === 'joueurs') {
-            legacyJoueursData = data;
-            // Don't save directly - will be merged with AWS players later
-            console.log(`✓ Fetched ${data.TotalRecords || data.Players?.length || 0} players from legacy API`);
+
+    if (forceFullSync) {
+      console.log('\n📊 Fetching Legacy data from Google Sheets API...');
+      for (const endpoint of LEGACY_DATA_ENDPOINTS) {
+        try {
+          const data = await fetchLegacyEndpointData(endpoint);
+          if (data) {
+            if (endpoint === 'gameLog') {
+              legacyGameLogData = data;
+              await saveDataToFile('gameLog-Legacy.json', data);
+            } else if (endpoint === 'rawBRData') {
+              legacyBRData = data;
+              await saveDataToFile('rawBRData.json', data);
+            } else if (endpoint === 'joueurs') {
+              legacyJoueursData = data;
+              // Don't save directly - will be merged with AWS players later
+              console.log(`✓ Fetched ${data.TotalRecords || data.Players?.length || 0} players from legacy API`);
+            }
+          } else {
+            console.warn(`⚠️  No valid data received for ${endpoint} - existing file will not be overwritten`);
           }
-        } else {
-          console.warn(`⚠️  No valid data received for ${endpoint} - existing file will not be overwritten`);
+          // Small delay between requests
+          await new Promise(resolve => setTimeout(resolve, 1000));
+        } catch (err) {
+          console.error(`Failed to fetch legacy ${endpoint}:`, err.message);
         }
-        // Small delay between requests
-        await new Promise(resolve => setTimeout(resolve, 1000));
-      } catch (err) {
-        console.error(`Failed to fetch legacy ${endpoint}:`, err.message);
       }
+    } else {
+      console.log('\n⏭️  Skipping Legacy data fetch (incremental sync - AWS games only)');
     }
 
     // === FETCH AWS DATA ===
@@ -945,14 +950,20 @@ async function main() {
       }
     }
     
-    // Create placeholder BR data if not fetched from legacy
+    // Preserve existing BR data when legacy wasn't fetched (skipped or failed) - don't clobber with a placeholder
     if (!legacyBRData) {
-      const emptyBRData = {
-        description: "Battle Royale data not available from current sources",
-        BRParties: { totalRecords: 0, data: [] },
-        BRRefParties: { totalRecords: 0, data: [] }
-      };
-      await saveDataToFile('rawBRData.json', emptyBRData);
+      const rawBRDataPath = path.join(ABSOLUTE_DATA_DIR, 'rawBRData.json');
+      const hasExistingBRData = await fs.access(rawBRDataPath).then(() => true).catch(() => false);
+      if (!hasExistingBRData) {
+        const emptyBRData = {
+          description: "Battle Royale data not available from current sources",
+          BRParties: { totalRecords: 0, data: [] },
+          BRRefParties: { totalRecords: 0, data: [] }
+        };
+        await saveDataToFile('rawBRData.json', emptyBRData);
+      } else {
+        console.log('ℹ️  Legacy data not fetched - keeping existing rawBRData.json');
+      }
     }
     
     // Merge joueurs data with AWS players
