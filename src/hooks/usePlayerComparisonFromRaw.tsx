@@ -4,6 +4,7 @@ import { useCombinedFilteredRawData } from './useCombinedRawData';
 import { 
   generatePlayerComparison,
   getAvailablePlayersForComparison,
+  computeOpposingWinsDiffMap,
   type PlayerComparisonData
 } from './utils/playerComparisonUtils';
 
@@ -42,9 +43,17 @@ export function usePlayerComparisonFromRaw() {
     };
   }, [playerStatsData, rawGameData]);
 
+  const getOpposingWinsDiffMap = useMemo(() => {
+    return (player1Name: string) => {
+      if (!rawGameData) return null;
+      return computeOpposingWinsDiffMap(player1Name, rawGameData);
+    };
+  }, [rawGameData]);
+
   return {
     availablePlayers,
     generateComparison,
+    getOpposingWinsDiffMap,
     isLoading: statsLoading || dataLoading,
     error: statsError || dataError
   };
