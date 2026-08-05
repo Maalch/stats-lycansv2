@@ -494,6 +494,53 @@ export function createSpecialRoleScaler(values: number[]) {
 }
 
 /**
+ * Single-pass computation of opposing-camp win counts between player1 and every
+ * other player. Used to color-code the comparison target list without paying the
+ * O(players) cost of generatePlayerComparison for each candidate.
+ */
+export function computeOpposingWinsDiffMap(
+  player1Identifier: string,
+  rawGameData: GameLogEntry[]
+): Map<string, { player1Wins: number; player2Wins: number }> {
+  const diffMap = new Map<string, { player1Wins: number; player2Wins: number }>();
+
+  const getMainCampAffiliation = (camp: string): string => {
+    if (camp === 'Loup' || camp === 'Traître' || camp === 'Louveteau') {
+      return 'Loup';
+    }
+    return camp;
+  };
+
+  rawGameData.forEach(game => {
+    const player1Stat = game.PlayerStats.find(p =>
+      getPlayerId(p) === player1Identifier ||
+      p.Username.toLowerCase() === player1Identifier.toLowerCase()
+    );
+    if (!player1Stat) return;
+
+    const player1Camp = getMainCampAffiliation(
+      getPlayerCampFromRole(getPlayerFinalRole(player1Stat.MainRoleInitial, player1Stat.MainRoleChanges || []))
+    );
+
+    game.PlayerStats.forEach(otherStat => {
+      if (otherStat === player1Stat) return;
+
+      const otherCamp = getMainCampAffiliation(
+        getPlayerCampFromRole(getPlayerFinalRole(otherStat.MainRoleInitial, otherStat.MainRoleChanges || []))
+      );
+      if (otherCamp === player1Camp) return; // Only opposing-camp games count
+
+      const entry = diffMap.get(otherStat.Username) || { player1Wins: 0, player2Wins: 0 };
+      if (player1Stat.Victorious) entry.player1Wins++;
+      if (otherStat.Victorious) entry.player2Wins++;
+      diffMap.set(otherStat.Username, entry);
+    });
+  });
+
+  return diffMap;
+}
+
+/**
  * Generate player comparison data
  * @param player1Identifier - Player 1 name or ID
  * @param player2Identifier - Player 2 name or ID

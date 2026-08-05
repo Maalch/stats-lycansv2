@@ -8,7 +8,7 @@ import { useJoueursData } from '../../hooks/useJoueursData';
 import { findPlayerByName } from '../../utils/playersUtils';
 
 export function PlayerComparisonChart() {
-  const { availablePlayers, generateComparison, isLoading, error } = usePlayerComparisonFromRaw();
+  const { availablePlayers, generateComparison, getOpposingWinsDiffMap, isLoading, error } = usePlayerComparisonFromRaw();
   const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
   const { settings } = useSettings();
   const { joueursData } = useJoueursData();
@@ -83,6 +83,23 @@ export function PlayerComparisonChart() {
     const result = generateComparison(selectedPlayer1, selectedPlayer2);
     return result;
   }, [selectedPlayer1, selectedPlayer2, generateComparison, availablePlayers.length]);
+
+  // Opposing-camp win diff (per candidate player 2) used to color-code the "Joueur 2" list
+  const opposingWinsDiffMap = useMemo(() => {
+    if (!selectedPlayer1) return null;
+    return getOpposingWinsDiffMap(selectedPlayer1);
+  }, [selectedPlayer1, getOpposingWinsDiffMap]);
+
+  const getPlayer2OptionColor = (playerName: string): string | undefined => {
+    if (!opposingWinsDiffMap) return undefined;
+    const diff = opposingWinsDiffMap.get(playerName);
+    if (!diff) return undefined;
+
+    const winsDiff = diff.player2Wins - diff.player1Wins;
+    if (winsDiff < 0) return 'var(--accent-tertiary)'; // Player 1 wins more often (success)
+    if (winsDiff > 0) return 'var(--accent-secondary)'; // Player 1 wins less often (danger)
+    return undefined; // Tied - keep default color
+  };
 
   // Metric descriptions for tooltip
   const metricDescriptions: Record<string, string> = {
@@ -352,7 +369,7 @@ export function PlayerComparisonChart() {
             {availablePlayers
               .filter(player => player !== selectedPlayer1)
               .map(player => (
-                <option key={player} value={player}>{player}</option>
+                <option key={player} value={player} style={{ color: getPlayer2OptionColor(player) }}>{player}</option>
               ))}
           </select>
         </div>
