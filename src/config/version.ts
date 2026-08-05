@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.9.10';
+export const APP_VERSION = '1.9.11';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -15,7 +15,7 @@ export interface ChangelogEntry {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
-    version: 'v1.9.10',
+    version: 'v1.9.11',
     date: '05/08/2026',
     description: 'Ajout d\'un graphique du taux de victoire des camps à phase active (La Bête, Mercenaire, Contrebandier, Cultiste) dans',
     link: {
