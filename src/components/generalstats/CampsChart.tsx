@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Rectangle } from 'recharts';
 import { useCampWinStatsFromRaw } from '../../hooks/useCampWinStatsFromRaw';
+import { useActivePhaseWinRateFromRaw } from '../../hooks/useActivePhaseWinRateFromRaw';
 import { useThemeAdjustedLycansColorScheme, lycansOtherCategoryColor } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
 import { useNavigation } from '../../context/NavigationContext';
@@ -11,6 +12,7 @@ const lycansDefaultColor = '#607D8B';
 export function CampsChart() {
   const { navigateToGameDetails } = useNavigation();
   const { campWinStats: victoriesDonnees, isLoading: chargementVictoires, errorInfo: erreurVictoires } = useCampWinStatsFromRaw();
+  const { activePhaseWinRateStats } = useActivePhaseWinRateFromRaw();
   // Get theme-adjusted colors
   const lycansColorScheme = useThemeAdjustedLycansColorScheme();
   
@@ -462,6 +464,114 @@ export function CampsChart() {
                 </div>
               </FullscreenChart>
             </div>
+
+            {activePhaseWinRateStats && activePhaseWinRateStats.length > 0 && (
+              <div className="lycans-graphique-section">
+                <h3>Taux de victoire - phase active lancée</h3>
+                <p className="lycans-stats-info">
+                  Taux de victoire parmi les parties où la phase active a été lancée (victoire ou échec spécifique au camp)
+                </p>
+                <FullscreenChart title="Taux de victoire - phase active lancée">
+                  <div style={{ height: 400 }}>
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart
+                        data={activePhaseWinRateStats}
+                        margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis 
+                          dataKey="camp"
+                          angle={-45}
+                          textAnchor="end"
+                          height={90}
+                          interval={0}
+                          fontSize={11}
+                          tick={({ x, y, payload }) => (
+                            <text
+                              x={x}
+                              y={y}
+                              dy={16}
+                              textAnchor="end"
+                              fill="var(--text-secondary)"
+                              fontSize={11}
+                              transform={`rotate(-45 ${x} ${y})`}
+                            >
+                              {payload.value}
+                            </text>
+                          )}
+                        />
+                        <YAxis 
+                          label={{ value: 'Taux de victoire (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}
+                          domain={[0, 100]}
+                        />
+                        <Tooltip
+                          content={({ active, payload }) => {
+                            if (active && payload && payload.length > 0) {
+                              const dataPoint = payload[0].payload;
+
+                              return (
+                                <div style={{ 
+                                  background: 'var(--bg-secondary)', 
+                                  color: 'var(--text-primary)', 
+                                  padding: 12, 
+                                  borderRadius: 8,
+                                  border: '1px solid var(--border-color)'
+                                }}>
+                                  <div><strong>{dataPoint.camp}</strong></div>
+                                  <div>Victoires : {dataPoint.wins} / {dataPoint.total}</div>
+                                  <div>Taux de victoire: {dataPoint.winRate.toFixed(1)}%</div>
+                                  <div style={{ 
+                                    fontSize: '0.8rem', 
+                                    color: 'var(--accent-primary)', 
+                                    marginTop: '0.5rem',
+                                    fontWeight: 'bold',
+                                    textAlign: 'center',
+                                    animation: 'pulse 1.5s infinite'
+                                  }}>
+                                    🖱️ Cliquez pour voir les parties
+                                  </div>
+                                </div>
+                              );
+                            }
+                            return null;
+                          }}
+                        />
+                        <Bar 
+                          dataKey="winRate"
+                          style={{ cursor: 'pointer' }}
+                          shape={(props) => {
+                            const { x, y, width, height, payload, index } = props;
+                            const entry = payload as { camp: string };
+                            const fillColor = lycansColorScheme[entry.camp as keyof typeof lycansColorScheme] || `var(--chart-color-${((index ?? 0) % 6) + 1})`;
+
+                            return (
+                              <Rectangle
+                                x={x}
+                                y={y}
+                                width={width}
+                                height={height}
+                                fill={fillColor}
+                                onClick={() => {
+                                  navigateToGameDetails({
+                                    campFilter: {
+                                      selectedCamp: entry.camp,
+                                      campFilterMode: 'all-assignments',
+                                      _smallCamps: [] as string[]
+                                    },
+                                    fromComponent: 'Taux de victoire - phase active lancée'
+                                  });
+                                }}
+                                style={{ cursor: 'pointer' }}
+                              />
+                            );
+                          }}
+                        />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                </FullscreenChart>
+              </div>
+            )}
           </>
         )}
       </div>

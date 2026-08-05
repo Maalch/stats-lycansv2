@@ -15,7 +15,7 @@ export const DEATH_TYPES = {
   // Voting and Starvation
   VOTED: 'VOTED',                           // Mort aux votes
   STARVATION: 'STARVATION',                 // Mort de faim
-  STARVATION_AS_BEAST: 'STARVATION_AS_BEAST', // Mort bestiale (GDOC specific)
+
   
   // Wolf Kills
   BY_WOLF: 'BY_WOLF',                       // Tué par Loup
@@ -52,6 +52,7 @@ export const DEATH_TYPES = {
   SMUGGLER_LOOT_FAILURE: 'SMUGGLER_LOOT_FAILURE', // Mort en Contrebandier (échec de loot)
   MERCENARY_LOOT_FAILURE: 'MERCENARY_LOOT_FAILURE', // Mort en Mercenaire (échec de loot)
   CULTIST_FAILED: 'CULTIST_FAILED',         // Mort en Cultiste (échec de capture)
+  STARVATION_AS_BEAST: 'STARVATION_AS_BEAST', // La Bête meurt sans avoir tuer le nombre de cibles 
   
   // Environmental
   BOMB: 'BOMB',                             // A explosé
