@@ -5,6 +5,7 @@ import { useSettings } from '../../../context/SettingsContext';
 import { useNavigation } from '../../../context/NavigationContext';
 import { useJoueursData } from '../../../hooks/useJoueursData';
 import { useThemeAdjustedLycansColorScheme, useThemeAdjustedDynamicPlayersColor } from '../../../types/api';
+import { CHART_LIMITS, MIN_GAMES_OPTIONS } from '../../../config/chartConstants';
 
 interface HunterViewProps {
   hunterStats: any;
@@ -23,6 +24,7 @@ export function HunterView({
   const { joueursData } = useJoueursData();
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
   const [hoveredPlayer, setHoveredPlayer] = useState<string | null>(null);
+  const [minShotsForPrecision, setMinShotsForPrecision] = useState<number>(MIN_GAMES_OPTIONS.COMPACT[1]);
 
   if (isLoading) return <div className="donnees-attente">Chargement des statistiques chasseurs...</div>;
   if (error) return <div className="donnees-probleme">Erreur: {error}</div>;
@@ -106,6 +108,39 @@ export function HunterView({
       highlightedPlayerAddedToBest,
       finalBadHuntersData,
       highlightedPlayerAddedToBad
+    };
+  })();
+
+  // Process most precise hunters data with highlighting logic
+  const {
+    finalPrecisionHuntersData,
+    highlightedPlayerAddedToPrecision
+  } = (() => {
+    const eligiblePrecisionHunters = hunterStats.hunterStats.filter((h: any) => h.totalShots >= minShotsForPrecision);
+    const topPrecisionHunters = eligiblePrecisionHunters
+      .sort((a: any, b: any) => b.accuracy - a.accuracy)
+      .slice(0, CHART_LIMITS.TOP_15);
+
+    const highlightedPlayerInPrecisionTop15 = settings.highlightedPlayer &&
+      topPrecisionHunters.some((h: any) => h.hunterName === settings.highlightedPlayer);
+
+    const finalPrecisionHuntersData = [...topPrecisionHunters];
+    let highlightedPlayerAddedToPrecision = false;
+
+    if (settings.highlightedPlayer && !highlightedPlayerInPrecisionTop15) {
+      const highlightedHunter = hunterStats.hunterStats.find((h: any) => h.hunterName === settings.highlightedPlayer && h.totalShots > 0);
+      if (highlightedHunter) {
+        finalPrecisionHuntersData.push({
+          ...highlightedHunter,
+          isHighlightedAddition: true
+        } as any);
+        highlightedPlayerAddedToPrecision = true;
+      }
+    }
+
+    return {
+      finalPrecisionHuntersData,
+      highlightedPlayerAddedToPrecision
     };
   })();
 
@@ -308,8 +343,221 @@ export function HunterView({
     return null;
   };
 
+  const PrecisionHunterTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      const data = payload[0].payload;
+      const isHighlightedAddition = data.isHighlightedAddition;
+      const isHighlightedFromSettings = settings.highlightedPlayer === data.hunterName;
+
+      return (
+        <div style={{
+          background: 'var(--bg-secondary)',
+          border: '1px solid var(--border-color)',
+          borderRadius: '8px',
+          padding: '12px',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+          color: 'var(--text-primary)',
+          fontSize: '0.9rem'
+        }}>
+          <p style={{
+            fontWeight: 'bold',
+            marginBottom: '8px',
+            color: isHighlightedFromSettings ? 'var(--accent-primary)' : 'var(--text-primary)'
+          }}>
+            {label}
+            {isHighlightedAddition && (
+              <span style={{
+                color: 'var(--accent-primary)',
+                fontSize: '0.8rem',
+                fontStyle: 'italic',
+                marginLeft: '4px'
+              }}> (🎯)</span>
+            )}
+          </p>
+          <p style={{ color: 'var(--text-primary)', margin: '4px 0' }}>
+            <strong>Précision:</strong> {data.accuracy.toFixed(1)}%
+          </p>
+          <p style={{ color: 'var(--text-primary)', margin: '4px 0' }}>
+            <strong>Tirs réussis:</strong> {data.hitShots}/{data.totalShots}
+          </p>
+          <p style={{ color: 'var(--text-primary)', margin: '4px 0' }}>
+            <strong>Parties en Chasseur:</strong> {data.gamesPlayedAsHunter}
+          </p>
+
+          {isHighlightedAddition && (
+            <div style={{
+              fontSize: '0.75rem',
+              color: 'var(--accent-primary)',
+              marginTop: '0.25rem',
+              fontStyle: 'italic'
+            }}>
+              🎯 Affiché via sélection personnelle
+            </div>
+          )}
+          {isHighlightedFromSettings && !isHighlightedAddition && (
+            <div style={{
+              fontSize: '0.75rem',
+              color: 'var(--accent-primary)',
+              marginTop: '0.25rem',
+              fontStyle: 'italic'
+            }}>
+              🎯 Joueur sélectionné
+            </div>
+          )}
+          <div style={{
+            fontSize: '0.8rem',
+            color: 'var(--accent-primary)',
+            marginTop: '0.5rem',
+            fontWeight: 'bold',
+            textAlign: 'center',
+            animation: 'pulse 1.5s infinite'
+          }}>
+            🖱️ Cliquez pour voir les parties
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <div className="lycans-graphiques-groupe">
+      <div className="lycans-graphique-section">
+        <div>
+          <h3>Chasseurs les plus précis</h3>
+          {highlightedPlayerAddedToPrecision && settings.highlightedPlayer && (
+            <p style={{
+              fontSize: '0.8rem',
+              color: 'var(--accent-primary-text)',
+              fontStyle: 'italic',
+              marginTop: '0.25rem',
+              marginBottom: '0.5rem'
+            }}>
+              🎯 "{settings.highlightedPlayer}" affiché en plus du top 15
+            </p>
+          )}
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+          <label htmlFor="min-shots-precision-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+            Min. tir de chasseur:
+          </label>
+          <select
+            id="min-shots-precision-select"
+            value={minShotsForPrecision}
+            onChange={(e) => setMinShotsForPrecision(Number(e.target.value))}
+            style={{
+              background: 'var(--bg-tertiary)',
+              color: 'var(--text-primary)',
+              border: '1px solid var(--border-color)',
+              borderRadius: '4px',
+              padding: '0.25rem 0.5rem',
+              fontSize: '0.9rem'
+            }}
+          >
+            {MIN_GAMES_OPTIONS.COMPACT.map(option => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </div>
+        <FullscreenChart title="Précision des Tirs du Chasseur">
+          <div style={{ height: 440 }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                data={finalPrecisionHuntersData}
+                margin={{ top: 60, right: 30, left: 20, bottom: 10 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis
+                  dataKey="hunterName"
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                  interval={0}
+                  tick={({ x, y, payload }) => (
+                    <text
+                      x={x}
+                      y={y}
+                      dy={10}
+                      fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary-text)' : 'var(--text-secondary)'}
+                      fontSize={settings.highlightedPlayer === payload.value ? 14 : 12}
+                      fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'normal'}
+                      textAnchor="end"
+                      transform={`rotate(-45 ${x} ${y})`}
+                    >
+                      {payload.value}
+                    </text>
+                  )}
+                />
+                <YAxis
+                  label={{
+                    value: 'Précision des tirs (%)',
+                    angle: 270,
+                    position: 'left',
+                    style: { textAnchor: 'middle' }
+                  }}
+                  domain={[0, 100]}
+                />
+                <Tooltip content={<PrecisionHunterTooltip />} />
+                <Bar
+                  dataKey="accuracy"
+                  fill="var(--chart-primary)"
+                  style={{ cursor: 'pointer' }}
+                  shape={(props) => {
+                    const { x, y, width, height, payload } = props;
+                    const entry = payload as any;
+                    const isHighlightedFromSettings = settings.highlightedPlayer === entry.hunterName;
+                    const isHighlightedAddition = entry.isHighlightedAddition;
+
+                    return (
+                      <Rectangle
+                        x={x}
+                        y={y}
+                        width={width}
+                        height={height}
+                        fill={playersColor[entry.hunterName] || lycansColors['Chasseur'] || '#8884d8'}
+                        stroke={
+                          isHighlightedFromSettings
+                            ? 'var(--accent-primary)'
+                            : hoveredPlayer === entry.hunterName
+                              ? 'var(--text-primary)'
+                              : 'none'
+                        }
+                        strokeWidth={
+                          isHighlightedFromSettings
+                            ? 3
+                            : hoveredPlayer === entry.hunterName
+                              ? 2
+                              : 0
+                        }
+                        strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
+                        opacity={isHighlightedAddition ? 0.8 : 1}
+                        onClick={() => {
+                          if (entry?.hunterName) {
+                            navigateToGameDetails({
+                              selectedPlayer: entry.hunterName,
+                              campFilter: { selectedCamp: 'Chasseur', campFilterMode: 'all-assignments' },
+                              fromComponent: 'Statistiques de Mort - Chasseurs les plus précis'
+                            });
+                          }
+                        }}
+                        onMouseEnter={() => setHoveredPlayer(entry.hunterName || null)}
+                        onMouseLeave={() => setHoveredPlayer(null)}
+                        style={{ cursor: 'pointer' }}
+                      />
+                    );
+                  }}
+                />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </FullscreenChart>
+        <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
+          Top {Math.min(15, finalPrecisionHuntersData.filter((h: any) => !h.isHighlightedAddition).length)} des chasseurs les plus précis (minimum {minShotsForPrecision} tir{minShotsForPrecision > 1 ? 's' : ''})
+        </p>
+      </div>
+
       <div className="lycans-graphique-section">
         <div>
           <h3>Bons Chasseurs</h3>

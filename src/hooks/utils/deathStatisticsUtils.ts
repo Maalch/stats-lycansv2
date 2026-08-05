@@ -625,6 +625,9 @@ export interface HunterStats {
   victimsByCamp: Record<string, number>;
   goodVictimsByCamp: Record<string, number>; // Non-Villageois + pre-0.202 Idiot du Village
   badVictimsByCamp: Record<string, number>;  // Villageois + post-0.202 Idiot du Village
+  totalShots: number;
+  hitShots: number;
+  accuracy: number; // Percentage of shots that hit a target
 }
 
 /**
@@ -650,6 +653,8 @@ export function computeHunterStatistics(gameData: GameLogEntry[], selectedCamp?:
     victimsCamps: string[];
     gameVersions: string[]; // Track game versions for special rule handling
     gameModded: boolean[]; // Track if game was modded for special rule handling
+    totalShots: number;
+    hitShots: number;
   }> = {};
 
   // Track latest display names for hunter IDs
@@ -689,10 +694,22 @@ export function computeHunterStatistics(gameData: GameLogEntry[], selectedCamp?:
             gamesPlayed: 0,
             victimsCamps: [],
             gameVersions: [],
-            gameModded: []
+            gameModded: [],
+            totalShots: 0,
+            hitShots: 0
           };
         }
         hunterKillsMap[hunterId].gamesPlayed++;
+
+        // Track hunter shoot actions (shot precision)
+        (player.Actions || []).forEach(action => {
+          if (action.ActionType === 'HunterShoot') {
+            hunterKillsMap[hunterId].totalShots++;
+            if (action.ActionTarget) {
+              hunterKillsMap[hunterId].hitShots++;
+            }
+          }
+        });
       }
     });
 
@@ -783,7 +800,8 @@ export function computeHunterStatistics(gameData: GameLogEntry[], selectedCamp?:
       
       const averageKillsPerGame = data.gamesPlayed > 0 ? totalKills / data.gamesPlayed : 0;
       const averageNonVillageoisKillsPerGame = data.gamesPlayed > 0 ? nonVillageoisKills / data.gamesPlayed : 0;
-      
+      const accuracy = data.totalShots > 0 ? (data.hitShots / data.totalShots) * 100 : 0;
+
       return {
         hunterName: displayNameById[hunterId] || hunterId,
         totalKills,
@@ -795,7 +813,10 @@ export function computeHunterStatistics(gameData: GameLogEntry[], selectedCamp?:
         killsByDeathType,
         victimsByCamp,
         goodVictimsByCamp,
-        badVictimsByCamp
+        badVictimsByCamp,
+        totalShots: data.totalShots,
+        hitShots: data.hitShots,
+        accuracy
       };
     })
     .sort((a, b) => b.totalKills - a.totalKills);
