@@ -288,14 +288,6 @@
       ]
     },
     {
-      "id": "predateur",
-      "name": "Prédateur",
-      "emoji": "🐆",
-      "description": "Transformé, provoque l'effet de peur de moins loin. En journée, peut choisir une proie : elle est avertie, mais le Prédateur connaît la distance, entend les battements de cœur, et reçoit un bonus s'il la tue. Si la proie est le Chasseur, ses balles font moins de dégâts.",
-      "descriptionShort": "Est entendu de moins loin et peut choisir une proie pour la nuit",
-      "translationKey": "NALES_ROLE_DESCRIPTION_PREDATOR"
-    },
-    {
       "id": "sournois",
       "name": "Sournois",
       "emoji": "🦇",
@@ -929,7 +921,6 @@
     { "id": "confusion", "name": "Confusion", "translationKey": "NALES_EFFECT_CONFUSED" },
     { "id": "resistance", "name": "Résistance", "translationKey": "NALES_EFFECT_RESISTANCE" },
     { "id": "ressuscite", "name": "Ressuscité", "translationKey": "NALES_EFFECT_RESURRECTED" },
-    { "id": "predateur", "name": "Prédateur", "translationKey": "NALES_EFFECT_PREDATOR" },
     { "id": "petrifie", "name": "Pétrifié", "translationKey": "NALES_EFFECT_PETRIFIED" },
     { "id": "portail", "name": "Portail", "translationKey": "NALES_EFFECT_PORTAL" },
     { "id": "affaibli", "name": "Affaibli", "translationKey": "NALES_EFFECT_WEAKENED" },
@@ -1224,7 +1215,6 @@
       "Hôte": { "category": "wolfPowers", "id": "hote" },
       "Braconnier": { "category": "wolfPowers", "id": "braconnier" },
       "Ritualiste": { "category": "wolfPowers", "id": "ritualiste" },
-      "Prédateur": { "category": "wolfPowers", "id": "predateur", "legacy": true, "replacedBy": "acrobate" },
       "Acrobate": { "category": "wolfPowers", "id": "acrobate" },
       "Sournois": { "category": "wolfPowers", "id": "sournois" },
       "Paysan": { "category": "villagerPowers", "id": "paysan", "legacy": true, "replacedBy": "ermite" },
