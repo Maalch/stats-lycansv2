@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.9.11';
+export const APP_VERSION = '1.9.12';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,22 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.9.12',
+    date: '05/08/2026',
+    description: 'Ajout d\'un classement des chasseurs les plus précis (avec filtre "Min. tir de chasseur") dans',
+    link: {
+      mainTab: 'rankings',
+      subTab: 'deathStats',
+      text: 'Classements / Morts & Kills',
+      navigationState: {
+        deathStatisticsState: {
+          selectedCamp: 'Tous les camps',
+          selectedView: 'hunter'
+        }
+      }
+    }
+  },
   {
     version: 'v1.9.11',
     date: '05/08/2026',
