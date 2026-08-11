@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Rectangle } from 'recharts';
 import { getTopSurvivorsForDay, getWorstSurvivorsForDay, getTopTimeAliveStats, getWorstTimeAliveStats, type SurvivalStatistics } from '../../../hooks/utils/survivalStatisticsUtils';
 import { useTimeAliveStatisticsFromRaw } from '../../../hooks/useSurvivalStatisticsFromRaw';
@@ -50,6 +50,7 @@ export function SurvivalView({
   const { joueursData } = useJoueursData();
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
   const { data: timeAliveStats, isLoading: timeAliveLoading, error: timeAliveError } = useTimeAliveStatisticsFromRaw(selectedCamp);
+  const { navigationState, updateNavigationState } = useNavigation();
 
   // State for day selection and hover
   const [selectedDay, setSelectedDay] = useState<number>(CHART_DEFAULTS.DEFAULT_SELECTED_DAY);
@@ -57,6 +58,19 @@ export function SurvivalView({
   const [sortMode, setSortMode] = useState<'highest' | 'lowest'>('highest');
   const [timeAliveSortMode, setTimeAliveSortMode] = useState<'highest' | 'lowest'>('highest');
   const [hoveredTimeAlivePlayer, setHoveredTimeAlivePlayer] = useState<string | null>(null);
+  const [minGamesForTimeAlive, setMinGamesForTimeAlive] = useState<number>(
+    navigationState.survivalViewState?.minGamesForTimeAlive || minGamesForAverage
+  );
+
+  // Sync min games (time alive chart) to navigation state so it persists across navigation
+  useEffect(() => {
+    const currentNavState = navigationState.survivalViewState;
+    if (!currentNavState || currentNavState.minGamesForTimeAlive !== minGamesForTimeAlive) {
+      updateNavigationState({
+        survivalViewState: { minGamesForTimeAlive }
+      });
+    }
+  }, [minGamesForTimeAlive, navigationState.survivalViewState, updateNavigationState]);
 
   // Get available days from the data
   const availableDays = useMemo(() => {
@@ -191,7 +205,7 @@ export function SurvivalView({
       timeAliveHighlightedAddedToHighest: false 
     };
 
-    const topPlayers = getTopTimeAliveStats(timeAliveStats, minGamesForAverage);
+    const topPlayers = getTopTimeAliveStats(timeAliveStats, minGamesForTimeAlive);
     const highlightedPlayerInTop15 = settings.highlightedPlayer && 
       topPlayers.some(p => p.playerName === settings.highlightedPlayer);
 
@@ -207,7 +221,7 @@ export function SurvivalView({
       const highlightedPlayerStats = timeAliveStats.playerTimeAliveStats.find(
         p => p.playerName === settings.highlightedPlayer
       );
-      if (highlightedPlayerStats && highlightedPlayerStats.gamesAnalyzed >= minGamesForAverage) {
+      if (highlightedPlayerStats && highlightedPlayerStats.gamesAnalyzed >= minGamesForTimeAlive) {
         baseData.push({
           name: settings.highlightedPlayer,
           value: highlightedPlayerStats.averagePercentageAlive,
@@ -222,7 +236,7 @@ export function SurvivalView({
       timeAliveHighestData: baseData, 
       timeAliveHighlightedAddedToHighest: highlightedPlayerAdded 
     };
-  }, [timeAliveStats, minGamesForAverage, settings.highlightedPlayer]);
+  }, [timeAliveStats, minGamesForTimeAlive, settings.highlightedPlayer]);
 
   // Process data for lowest percentage-of-time-alive chart
   const { timeAliveLowestData, timeAliveHighlightedAddedToLowest } = useMemo(() => {
@@ -231,7 +245,7 @@ export function SurvivalView({
       timeAliveHighlightedAddedToLowest: false 
     };
 
-    const worstPlayers = getWorstTimeAliveStats(timeAliveStats, minGamesForAverage);
+    const worstPlayers = getWorstTimeAliveStats(timeAliveStats, minGamesForTimeAlive);
     const highlightedPlayerInWorst15 = settings.highlightedPlayer && 
       worstPlayers.some(p => p.playerName === settings.highlightedPlayer);
 
@@ -247,7 +261,7 @@ export function SurvivalView({
       const highlightedPlayerStats = timeAliveStats.playerTimeAliveStats.find(
         p => p.playerName === settings.highlightedPlayer
       );
-      if (highlightedPlayerStats && highlightedPlayerStats.gamesAnalyzed >= minGamesForAverage) {
+      if (highlightedPlayerStats && highlightedPlayerStats.gamesAnalyzed >= minGamesForTimeAlive) {
         baseData.push({
           name: settings.highlightedPlayer,
           value: highlightedPlayerStats.averagePercentageAlive,
@@ -262,7 +276,7 @@ export function SurvivalView({
       timeAliveLowestData: baseData, 
       timeAliveHighlightedAddedToLowest: highlightedPlayerAdded 
     };
-  }, [timeAliveStats, minGamesForAverage, settings.highlightedPlayer]);
+  }, [timeAliveStats, minGamesForTimeAlive, settings.highlightedPlayer]);
 
   // Handle bar click to navigate to game details
   const handleBarClick = (playerName: string) => {
@@ -278,7 +292,7 @@ export function SurvivalView({
       const data = payload[0].payload as ChartTimeAliveData;
       const isHighlightedAddition = data.isHighlightedAddition;
       const isHighlightedFromSettings = settings.highlightedPlayer === data.name;
-      const meetsMinGames = data.gamesPlayed >= minGamesForAverage;
+      const meetsMinGames = data.gamesPlayed >= minGamesForTimeAlive;
 
       return (
         <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
@@ -296,7 +310,7 @@ export function SurvivalView({
               marginTop: '0.25rem',
               fontStyle: 'italic'
             }}>
-              🎯 Affiché via sélection (&lt; {minGamesForAverage} parties au total)
+              🎯 Affiché via sélection (&lt; {minGamesForTimeAlive} parties au total)
             </div>
           )}
           {isHighlightedAddition && meetsMinGames && (
@@ -635,27 +649,55 @@ export function SurvivalView({
       </div>
 
       <div className="lycans-graphique-controles" style={{ marginTop: '1rem', marginBottom: '1.5rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <label htmlFor="time-alive-sort-mode-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: 'bold' }}>
-            Classement :
-          </label>
-          <select
-            id="time-alive-sort-mode-select"
-            value={timeAliveSortMode}
-            onChange={(e) => setTimeAliveSortMode(e.target.value as 'highest' | 'lowest')}
-            style={{
-              background: 'var(--bg-tertiary)',
-              color: 'var(--text-primary)',
-              border: '1px solid var(--border-color)',
-              borderRadius: '4px',
-              padding: '0.5rem',
-              fontSize: '0.9rem',
-              minWidth: '150px'
-            }}
-          >
-            <option value="highest">🛡️ Meilleurs taux</option>
-            <option value="lowest">⚰️ Plus faibles taux</option>
-          </select>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <label htmlFor="time-alive-min-games-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: 'bold' }}>
+              Min. parties :
+            </label>
+            <select
+              id="time-alive-min-games-select"
+              value={minGamesForTimeAlive}
+              onChange={(e) => setMinGamesForTimeAlive(parseInt(e.target.value))}
+              style={{
+                background: 'var(--bg-tertiary)',
+                color: 'var(--text-primary)',
+                border: '1px solid var(--border-color)',
+                borderRadius: '4px',
+                padding: '0.5rem',
+                fontSize: '0.9rem',
+                minWidth: '80px'
+              }}
+            >
+              {minGamesOptions.map(option => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <label htmlFor="time-alive-sort-mode-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: 'bold' }}>
+              Classement :
+            </label>
+            <select
+              id="time-alive-sort-mode-select"
+              value={timeAliveSortMode}
+              onChange={(e) => setTimeAliveSortMode(e.target.value as 'highest' | 'lowest')}
+              style={{
+                background: 'var(--bg-tertiary)',
+                color: 'var(--text-primary)',
+                border: '1px solid var(--border-color)',
+                borderRadius: '4px',
+                padding: '0.5rem',
+                fontSize: '0.9rem',
+                minWidth: '150px'
+              }}
+            >
+              <option value="highest">🛡️ Meilleurs taux</option>
+              <option value="lowest">⚰️ Plus faibles taux</option>
+            </select>
+          </div>
         </div>
       </div>
 

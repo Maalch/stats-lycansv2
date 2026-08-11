@@ -136,6 +136,10 @@ export interface PlayerSynergyState {
   minSameCampGames: number;
 }
 
+export interface SurvivalViewState {
+  minGamesForTimeAlive: number;
+}
+
 export interface NavigationState {
   // PlayerGameHistoryChart state
   selectedPlayerName?: string;
@@ -169,6 +173,7 @@ export interface NavigationState {
   monthlyRankingState?: MonthlyRankingState;
   potionScrollStatsState?: PotionScrollStatsState;
   playerSynergyState?: PlayerSynergyState;
+  survivalViewState?: SurvivalViewState;
 }
 
 interface NavigationContextType {

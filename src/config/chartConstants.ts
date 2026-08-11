@@ -25,9 +25,9 @@ export const MIN_GAMES_OPTIONS = {
   /** Compact options for small datasets */
   COMPACT: [1, 10, 25, 50, 100] as const,
   /** Standard options for most charts */
-  STANDARD: [5, 10, 25, 50, 100, 200] as const,
+  STANDARD: [1, 5, 10, 25, 50, 100, 200] as const,
   /** Extended options for large datasets */
-  EXTENDED: [5, 10, 25, 50, 100, 200, 400] as const,
+  EXTENDED: [1, 5, 10, 25, 50, 100, 200, 400] as const,
   /** Meetings options, big datasets */
   MEETINGS: [3, 25, 50, 100, 250, 500, 1000] as const,
 } as const;
