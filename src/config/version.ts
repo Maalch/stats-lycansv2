@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.9.12';
+export const APP_VERSION = '1.9.13';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,22 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.9.13',
+    date: '11/08/2026',
+    description: 'Ajout d\'un classement du pourcentage de temps en vie par partie (basé sur l\'heure de mort réelle, parties en version 0.201+) dans',
+    link: {
+      mainTab: 'rankings',
+      subTab: 'deathStats',
+      text: 'Classements / Morts & Kills / Survie',
+      navigationState: {
+        deathStatisticsState: {
+          selectedCamp: 'Tous les camps',
+          selectedView: 'survival'
+        }
+      }
+    }
+  },
   {
     version: 'v1.9.12',
     date: '05/08/2026',
