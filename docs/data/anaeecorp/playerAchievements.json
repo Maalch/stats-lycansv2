@@ -1,9 +1,9 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-08-02T09:19:52.165Z",
+  "generatedAt": "2026-08-11T12:09:31.251Z",
   "teamName": "Anaee Corp",
-  "totalPlayers": 20,
-  "totalGames": 36,
+  "totalPlayers": 21,
+  "totalGames": 43,
   "recentGamesCount": 15,
   "categories": {
     "victories": {
@@ -2940,21 +2940,21 @@
     "76561198913595171": {
       "playerId": "76561198913595171",
       "playerName": "M3lv1",
-      "totalUnlocked": 14,
+      "totalUnlocked": 17,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 8,
+          "currentValue": 10,
           "recentValue": 8,
           "recentGameIds": [
-            "Rigner-20260719122746",
-            "Rigner-20260719135247",
             "Rigner-20260719141224",
             "Botmog-20260724190738",
             "Botmog-20260724200921",
             "Botmog-20260724204332",
             "Botmog-20260730191001",
-            "Botmog-20260730200544"
+            "Botmog-20260730200544",
+            "Botmog-20260804190338",
+            "Botmog-20260804210103"
           ],
           "unlockedLevels": [
             {
@@ -2968,14 +2968,20 @@
               "subLevel": 2,
               "threshold": 5,
               "unlockedAtGame": "Botmog-20260724200921"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "Botmog-20260804210103"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 3,
-            "threshold": 10
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 30
           },
-          "progress": 0.8
+          "progress": 0.3333333333333333
         },
         {
           "id": "victories-loup",
@@ -3002,11 +3008,8 @@
         {
           "id": "wolf-sabotages",
           "currentValue": 2,
-          "recentValue": 2,
-          "recentGameIds": [
-            "Rigner-20260719120747",
-            "Rigner-20260719125134"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -3023,13 +3026,42 @@
           "progress": 0.6666666666666666
         },
         {
-          "id": "wolf-kills",
-          "currentValue": 5,
-          "recentValue": 5,
+          "id": "romeo-juliette",
+          "currentValue": 1,
+          "recentValue": 1,
           "recentGameIds": [
-            "Rigner-20260719120747",
-            "Rigner-20260719125134",
-            "Botmog-20260724193345"
+            "Botmog-20260804193451"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "death-turn1",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804203841"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "wolf-kills",
+          "currentValue": 8,
+          "recentValue": 4,
+          "recentGameIds": [
+            "Botmog-20260724193345",
+            "Botmog-20260804195137"
           ],
           "unlockedLevels": [
             {
@@ -3042,7 +3074,7 @@
               "tier": "bronze",
               "subLevel": 2,
               "threshold": 5,
-              "unlockedAtGame": "Botmog-20260724193345"
+              "unlockedAtGame": "Botmog-20260804195137"
             }
           ],
           "nextLevel": {
@@ -3050,15 +3082,13 @@
             "subLevel": 3,
             "threshold": 15
           },
-          "progress": 0.3333333333333333
+          "progress": 0.5333333333333333
         },
         {
           "id": "hunter-killed-by-wolf",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Rigner-20260719131417"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
@@ -3068,11 +3098,26 @@
           "progress": 0.2
         },
         {
+          "id": "revenge-kill",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804195137"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "solo-master",
           "currentValue": 1,
           "recentValue": 1,
           "recentGameIds": [
-            "Rigner-20260719131417"
+            "Botmog-20260804203841"
           ],
           "unlockedLevels": [
             {
@@ -3091,10 +3136,10 @@
         },
         {
           "id": "max-loot-single-game",
-          "currentValue": 345,
-          "recentValue": 345,
+          "currentValue": 355,
+          "recentValue": 355,
           "recentGameIds": [
-            "Botmog-20260724200921"
+            "Botmog-20260804210103"
           ],
           "unlockedLevels": [],
           "nextLevel": {
@@ -3102,16 +3147,16 @@
             "subLevel": 1,
             "threshold": 400
           },
-          "progress": 0.8625
+          "progress": 0.8875
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 3,
+          "currentValue": 5,
           "recentValue": 3,
           "recentGameIds": [
-            "Rigner-20260719122746",
-            "Rigner-20260719135247",
-            "Botmog-20260724200921"
+            "Botmog-20260724200921",
+            "Botmog-20260804190338",
+            "Botmog-20260804210103"
           ],
           "unlockedLevels": [
             {
@@ -3119,14 +3164,20 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Rigner-20260719122746"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Botmog-20260804210103"
             }
           ],
           "nextLevel": {
             "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 5
+            "subLevel": 3,
+            "threshold": 10
           },
-          "progress": 0.6
+          "progress": 0.5
         },
         {
           "id": "lone-non-voter",
@@ -3151,11 +3202,48 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "meneur",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804201729"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804201729"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "democrat",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804201729"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "colors-of-lycans",
           "currentValue": 1,
           "recentValue": 1,
           "recentGameIds": [
-            "Rigner-20260719122746"
+            "Rigner-20260719141224"
           ],
           "unlockedLevels": [
             {
@@ -3196,10 +3284,10 @@
         },
         {
           "id": "resurrected",
-          "currentValue": 1,
+          "currentValue": 2,
           "recentValue": 1,
           "recentGameIds": [
-            "Rigner-20260719131417"
+            "Botmog-20260804203841"
           ],
           "unlockedLevels": [
             {
@@ -3214,14 +3302,15 @@
             "subLevel": 1,
             "threshold": 3
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "juste-un-dernier-verre",
-          "currentValue": 1,
-          "recentValue": 1,
+          "currentValue": 2,
+          "recentValue": 2,
           "recentGameIds": [
-            "Botmog-20260730200544"
+            "Botmog-20260730200544",
+            "Botmog-20260804210103"
           ],
           "unlockedLevels": [
             {
@@ -3236,14 +3325,15 @@
             "subLevel": 1,
             "threshold": 3
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "collectionneur",
-          "currentValue": 1,
-          "recentValue": 1,
+          "currentValue": 2,
+          "recentValue": 2,
           "recentGameIds": [
-            "Botmog-20260730200544"
+            "Botmog-20260730200544",
+            "Botmog-20260804190338"
           ],
           "unlockedLevels": [
             {
@@ -3258,24 +3348,23 @@
             "subLevel": 1,
             "threshold": 3
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6666666666666666
         }
       ]
     },
     "76561199001967591": {
       "playerId": "76561199001967591",
       "playerName": "MioMeph",
-      "totalUnlocked": 17,
+      "totalUnlocked": 22,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 9,
-          "recentValue": 4,
+          "currentValue": 11,
+          "recentValue": 3,
           "recentGameIds": [
-            "Botmog-20260724183958",
-            "Botmog-20260724190738",
-            "Botmog-20260724222431",
-            "Botmog-20260730221757"
+            "Botmog-20260730221757",
+            "Botmog-20260804190338",
+            "Botmog-20260804210103"
           ],
           "unlockedLevels": [
             {
@@ -3289,14 +3378,20 @@
               "subLevel": 2,
               "threshold": 5,
               "unlockedAtGame": "Rigner-20260719141224"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "Botmog-20260804190338"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 3,
-            "threshold": 10
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 30
           },
-          "progress": 0.9
+          "progress": 0.36666666666666664
         },
         {
           "id": "victories-loup",
@@ -3319,11 +3414,34 @@
           "progress": 0.2
         },
         {
-          "id": "wolf-loss-harvest-no-kills",
+          "id": "vegan-wolf",
           "currentValue": 1,
           "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260730200544"
+            "Botmog-20260804195137"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804195137"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "wolf-loss-harvest-no-kills",
+          "currentValue": 2,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Botmog-20260730200544",
+            "Botmog-20260804213247"
           ],
           "unlockedLevels": [
             {
@@ -3338,7 +3456,7 @@
             "subLevel": 1,
             "threshold": 4
           },
-          "progress": 0.25
+          "progress": 0.5
         },
         {
           "id": "alakazam",
@@ -3364,16 +3482,18 @@
         },
         {
           "id": "death-turn1",
-          "currentValue": 1,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 2,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804201729"
+          ],
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 3
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "voted-as-villager",
@@ -3396,16 +3516,32 @@
           "progress": 0.3333333333333333
         },
         {
-          "id": "deaths-all-zones",
+          "id": "avenger-death",
           "currentValue": 1,
           "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260730191001",
-            "Botmog-20260724222431",
-            "Botmog-20260724183958",
-            "Botmog-20260730200544",
-            "Botmog-20260730203438"
+            "Botmog-20260804195137"
           ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804195137"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "deaths-all-zones",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
@@ -3415,12 +3551,32 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "zombie-kills",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804195137"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804195137"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "wolf-kills",
           "currentValue": 11,
-          "recentValue": 8,
+          "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260724200921",
-            "Botmog-20260730185334",
             "Botmog-20260730214144"
           ],
           "unlockedLevels": [
@@ -3462,10 +3618,8 @@
         {
           "id": "hunter-killed-by-wolf",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Botmog-20260724222431"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
@@ -3476,10 +3630,10 @@
         },
         {
           "id": "same-color-kills",
-          "currentValue": 1,
+          "currentValue": 2,
           "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260730185334"
+            "Botmog-20260804195137"
           ],
           "unlockedLevels": [],
           "nextLevel": {
@@ -3487,15 +3641,13 @@
             "subLevel": 1,
             "threshold": 3
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "loup-devin-ultimate",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Botmog-20260730185334"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -3514,8 +3666,10 @@
         {
           "id": "solo-master",
           "currentValue": 1,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804195137"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -3534,9 +3688,8 @@
         {
           "id": "villageois-top-loot",
           "currentValue": 4,
-          "recentValue": 2,
+          "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260724193345",
             "Botmog-20260730205354"
           ],
           "unlockedLevels": [],
@@ -3606,10 +3759,11 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 2,
-          "recentValue": 1,
+          "currentValue": 3,
+          "recentValue": 2,
           "recentGameIds": [
-            "Botmog-20260730205354"
+            "Botmog-20260730205354",
+            "Botmog-20260804203841"
           ],
           "unlockedLevels": [
             {
@@ -3624,7 +3778,7 @@
             "subLevel": 2,
             "threshold": 5
           },
-          "progress": 0.4
+          "progress": 0.6
         },
         {
           "id": "only-passer",
@@ -3641,11 +3795,10 @@
         },
         {
           "id": "meneur",
-          "currentValue": 2,
-          "recentValue": 2,
+          "currentValue": 3,
+          "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260724190738",
-            "Botmog-20260724193345"
+            "Botmog-20260804203841"
           ],
           "unlockedLevels": [
             {
@@ -3653,21 +3806,28 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Botmog-20260724190738"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Botmog-20260804203841"
             }
           ],
           "nextLevel": {
             "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 3
+            "subLevel": 3,
+            "threshold": 5
           },
-          "progress": 0.6666666666666666
+          "progress": 0.6
         },
         {
           "id": "democrat",
-          "currentValue": 1,
-          "recentValue": 1,
+          "currentValue": 2,
+          "recentValue": 2,
           "recentGameIds": [
-            "Botmog-20260730205354"
+            "Botmog-20260730205354",
+            "Botmog-20260804210103"
           ],
           "unlockedLevels": [],
           "nextLevel": {
@@ -3675,14 +3835,14 @@
             "subLevel": 1,
             "threshold": 3
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "colors-of-lycans",
           "currentValue": 1,
           "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260724183958"
+            "Botmog-20260730221757"
           ],
           "unlockedLevels": [
             {
@@ -3701,9 +3861,11 @@
         },
         {
           "id": "resurrected",
-          "currentValue": 1,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 2,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804195137"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -3717,14 +3879,14 @@
             "subLevel": 1,
             "threshold": 3
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "collectionneur",
-          "currentValue": 1,
+          "currentValue": 2,
           "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260724193345"
+            "Botmog-20260804210103"
           ],
           "unlockedLevels": [
             {
@@ -3739,7 +3901,7 @@
             "subLevel": 1,
             "threshold": 3
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6666666666666666
         }
       ]
     },
@@ -4205,19 +4367,18 @@
     "76561199503876418": {
       "playerId": "76561199503876418",
       "playerName": "CorbaxUwU",
-      "totalUnlocked": 31,
+      "totalUnlocked": 32,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 15,
-          "recentValue": 6,
+          "currentValue": 17,
+          "recentValue": 5,
           "recentGameIds": [
-            "Botmog-20260724200921",
-            "Botmog-20260724213148",
-            "Botmog-20260724222431",
             "Botmog-20260730191001",
             "Botmog-20260730200544",
-            "Botmog-20260730221757"
+            "Botmog-20260730221757",
+            "Botmog-20260804210103",
+            "Botmog-20260804213247"
           ],
           "unlockedLevels": [
             {
@@ -4244,7 +4405,7 @@
             "subLevel": 1,
             "threshold": 30
           },
-          "progress": 0.5
+          "progress": 0.5666666666666667
         },
         {
           "id": "victories-loup",
@@ -4292,10 +4453,8 @@
         {
           "id": "wolf-survived-hunter-shot",
           "currentValue": 2,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Botmog-20260724204332"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -4379,10 +4538,8 @@
         {
           "id": "wolf-eclipse-kills",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Botmog-20260724204332"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
@@ -4414,6 +4571,36 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "romeo-juliette",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804190338"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "death-turn1",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804201729"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "voted-as-villager",
           "currentValue": 1,
           "recentValue": 0,
@@ -4436,9 +4623,8 @@
         {
           "id": "wolf-kills",
           "currentValue": 15,
-          "recentValue": 13,
+          "recentValue": 9,
           "recentGameIds": [
-            "Botmog-20260724204332",
             "Botmog-20260730194023",
             "Botmog-20260730205354"
           ],
@@ -4561,10 +4747,10 @@
         },
         {
           "id": "villageois-top-loot",
-          "currentValue": 3,
+          "currentValue": 4,
           "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260724215822"
+            "Botmog-20260804193451"
           ],
           "unlockedLevels": [],
           "nextLevel": {
@@ -4572,14 +4758,14 @@
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.6
+          "progress": 0.8
         },
         {
           "id": "max-loot-single-game",
           "currentValue": 670,
-          "recentValue": 495,
+          "recentValue": 345,
           "recentGameIds": [
-            "Botmog-20260724215822"
+            "Botmog-20260804195137"
           ],
           "unlockedLevels": [
             {
@@ -4618,11 +4804,8 @@
         {
           "id": "spider-man-pointing",
           "currentValue": 4,
-          "recentValue": 2,
-          "recentGameIds": [
-            "Botmog-20260724213148",
-            "Botmog-20260724222431"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -4682,12 +4865,14 @@
         },
         {
           "id": "meneur",
-          "currentValue": 7,
-          "recentValue": 4,
+          "currentValue": 9,
+          "recentValue": 6,
           "recentGameIds": [
             "Botmog-20260730191001",
             "Botmog-20260730200544",
-            "Botmog-20260730221757"
+            "Botmog-20260730221757",
+            "Botmog-20260804210103",
+            "Botmog-20260804213247"
           ],
           "unlockedLevels": [
             {
@@ -4714,7 +4899,7 @@
             "subLevel": 1,
             "threshold": 10
           },
-          "progress": 0.7
+          "progress": 0.9
         },
         {
           "id": "democrat",
@@ -4734,7 +4919,7 @@
           "currentValue": 2,
           "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260724200921"
+            "Botmog-20260730191001"
           ],
           "unlockedLevels": [
             {
@@ -4801,10 +4986,12 @@
         },
         {
           "id": "collectionneur",
-          "currentValue": 2,
-          "recentValue": 1,
+          "currentValue": 4,
+          "recentValue": 3,
           "recentGameIds": [
-            "Botmog-20260730221757"
+            "Botmog-20260730221757",
+            "Botmog-20260804190338",
+            "Botmog-20260804195137"
           ],
           "unlockedLevels": [
             {
@@ -4812,14 +4999,20 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Rigner-20260719125134"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Botmog-20260804190338"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "or",
             "subLevel": 1,
-            "threshold": 3
+            "threshold": 8
           },
-          "progress": 0.6666666666666666
+          "progress": 0.5
         }
       ]
     },
@@ -5578,19 +5771,18 @@
     "76561198064367175": {
       "playerId": "76561198064367175",
       "playerName": "Holdener",
-      "totalUnlocked": 39,
+      "totalUnlocked": 41,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 13,
-          "recentValue": 6,
+          "currentValue": 15,
+          "recentValue": 5,
           "recentGameIds": [
-            "Botmog-20260724204332",
-            "Botmog-20260724213148",
-            "Botmog-20260724222431",
             "Botmog-20260730191001",
             "Botmog-20260730200544",
-            "Botmog-20260730221757"
+            "Botmog-20260730221757",
+            "Botmog-20260804190338",
+            "Botmog-20260804213247"
           ],
           "unlockedLevels": [
             {
@@ -5617,15 +5809,13 @@
             "subLevel": 1,
             "threshold": 30
           },
-          "progress": 0.43333333333333335
+          "progress": 0.5
         },
         {
           "id": "victories-loup",
           "currentValue": 5,
-          "recentValue": 4,
+          "recentValue": 2,
           "recentGameIds": [
-            "Botmog-20260724215822",
-            "Botmog-20260724225604",
             "Botmog-20260730194023",
             "Botmog-20260730205354"
           ],
@@ -5675,10 +5865,8 @@
         {
           "id": "vegan-wolf",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Botmog-20260724215822"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -5695,12 +5883,32 @@
           "progress": 0.3333333333333333
         },
         {
-          "id": "speed-run",
-          "currentValue": 2,
+          "id": "wolf-loss-harvest-no-kills",
+          "currentValue": 1,
           "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260724225604"
+            "Botmog-20260804210103"
           ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804210103"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 4
+          },
+          "progress": 0.25
+        },
+        {
+          "id": "speed-run",
+          "currentValue": 2,
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
@@ -5764,10 +5972,8 @@
         {
           "id": "death-turn1",
           "currentValue": 2,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Botmog-20260724204332"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
@@ -5775,6 +5981,19 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "deaths-all-zones",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "zombie-kills",
@@ -5799,9 +6018,8 @@
         {
           "id": "wolf-kills",
           "currentValue": 10,
-          "recentValue": 3,
+          "recentValue": 2,
           "recentGameIds": [
-            "Botmog-20260724225604",
             "Botmog-20260730194023",
             "Botmog-20260730205354"
           ],
@@ -5855,9 +6073,10 @@
         {
           "id": "solo-master",
           "currentValue": 2,
-          "recentValue": 1,
+          "recentValue": 2,
           "recentGameIds": [
-            "Botmog-20260730214144"
+            "Botmog-20260730214144",
+            "Botmog-20260804195137"
           ],
           "unlockedLevels": [
             {
@@ -5941,10 +6160,12 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 1,
-          "recentValue": 1,
+          "currentValue": 3,
+          "recentValue": 3,
           "recentGameIds": [
-            "Botmog-20260730211500"
+            "Botmog-20260730211500",
+            "Botmog-20260804193451",
+            "Botmog-20260804213247"
           ],
           "unlockedLevels": [
             {
@@ -5959,7 +6180,7 @@
             "subLevel": 2,
             "threshold": 5
           },
-          "progress": 0.2
+          "progress": 0.6
         },
         {
           "id": "bavard",
@@ -5998,9 +6219,11 @@
         },
         {
           "id": "lone-non-voter",
-          "currentValue": 4,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 5,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804210103"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -6012,7 +6235,7 @@
               "tier": "argent",
               "subLevel": 1,
               "threshold": 3,
-              "unlockedAtGame": "Botmog-20260724193345"
+              "unlockedAtGame": "Botmog-20260804210103"
             }
           ],
           "nextLevel": {
@@ -6020,7 +6243,7 @@
             "subLevel": 1,
             "threshold": 8
           },
-          "progress": 0.5
+          "progress": 0.625
         },
         {
           "id": "meneur",
@@ -6052,15 +6275,15 @@
         },
         {
           "id": "colors-of-lycans",
-          "currentValue": 9,
+          "currentValue": 10,
           "recentValue": 6,
           "recentGameIds": [
-            "Botmog-20260724204332",
-            "Botmog-20260724213148",
-            "Botmog-20260724225604",
             "Botmog-20260730191001",
             "Botmog-20260730194023",
-            "Botmog-20260730205354"
+            "Botmog-20260730200544",
+            "Botmog-20260730205354",
+            "Botmog-20260730221757",
+            "Botmog-20260804213247"
           ],
           "unlockedLevels": [
             {
@@ -6123,7 +6346,7 @@
             "subLevel": 1,
             "threshold": 12
           },
-          "progress": 0.75
+          "progress": 0.8333333333333334
         },
         {
           "id": "winning-months",
@@ -6149,30 +6372,37 @@
         },
         {
           "id": "resurrected",
-          "currentValue": 2,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 3,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804195137"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Rigner-20260719131417"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Botmog-20260804195137"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "or",
             "subLevel": 1,
-            "threshold": 3
+            "threshold": 8
           },
-          "progress": 0.6666666666666666
+          "progress": 0.375
         },
         {
           "id": "juste-un-dernier-verre",
           "currentValue": 3,
-          "recentValue": 3,
+          "recentValue": 2,
           "recentGameIds": [
-            "Botmog-20260724222431",
             "Botmog-20260730194023",
             "Botmog-20260730211500"
           ],
@@ -6199,13 +6429,14 @@
         },
         {
           "id": "collectionneur",
-          "currentValue": 4,
-          "recentValue": 4,
+          "currentValue": 5,
+          "recentValue": 5,
           "recentGameIds": [
             "Botmog-20260730191001",
             "Botmog-20260730200544",
             "Botmog-20260730205354",
-            "Botmog-20260730211500"
+            "Botmog-20260730211500",
+            "Botmog-20260804195137"
           ],
           "unlockedLevels": [
             {
@@ -6226,24 +6457,25 @@
             "subLevel": 1,
             "threshold": 8
           },
-          "progress": 0.5
+          "progress": 0.625
         }
       ]
     },
     "76561198277339785": {
       "playerId": "76561198277339785",
       "playerName": "Karnarok",
-      "totalUnlocked": 23,
+      "totalUnlocked": 31,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 12,
-          "recentValue": 4,
+          "currentValue": 15,
+          "recentValue": 5,
           "recentGameIds": [
-            "Botmog-20260724213148",
-            "Botmog-20260724222431",
             "Botmog-20260730191001",
-            "Botmog-20260730200544"
+            "Botmog-20260730200544",
+            "Botmog-20260804190338",
+            "Botmog-20260804210103",
+            "Botmog-20260804213247"
           ],
           "unlockedLevels": [
             {
@@ -6270,14 +6502,14 @@
             "subLevel": 1,
             "threshold": 30
           },
-          "progress": 0.4
+          "progress": 0.5
         },
         {
           "id": "victories-loup",
-          "currentValue": 1,
+          "currentValue": 2,
           "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260724215822"
+            "Botmog-20260804201729"
           ],
           "unlockedLevels": [
             {
@@ -6292,15 +6524,35 @@
             "subLevel": 2,
             "threshold": 5
           },
-          "progress": 0.2
+          "progress": 0.4
+        },
+        {
+          "id": "victories-solo",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804195137"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804195137"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "wolf-survived-hunter-shot",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Botmog-20260724204332"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -6352,9 +6604,8 @@
         {
           "id": "wolf-sabotages",
           "currentValue": 4,
-          "recentValue": 3,
+          "recentValue": 2,
           "recentGameIds": [
-            "Botmog-20260724215822",
             "Botmog-20260730214144"
           ],
           "unlockedLevels": [
@@ -6422,6 +6673,28 @@
           "progress": 0.8
         },
         {
+          "id": "avenger-death",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804210103"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804210103"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "deaths-all-zones",
           "currentValue": 1,
           "recentValue": 0,
@@ -6436,12 +6709,12 @@
         },
         {
           "id": "wolf-kills",
-          "currentValue": 9,
-          "recentValue": 5,
+          "currentValue": 15,
+          "recentValue": 8,
           "recentGameIds": [
-            "Botmog-20260724204332",
-            "Botmog-20260724215822",
-            "Botmog-20260730203438"
+            "Botmog-20260730203438",
+            "Botmog-20260804201729",
+            "Botmog-20260804203841"
           ],
           "unlockedLevels": [
             {
@@ -6455,14 +6728,20 @@
               "subLevel": 2,
               "threshold": 5,
               "unlockedAtGame": "Botmog-20260730203438"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 15,
+              "unlockedAtGame": "Botmog-20260804203841"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 3,
-            "threshold": 15
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 30
           },
-          "progress": 0.6
+          "progress": 0.5
         },
         {
           "id": "hunter-kill-enemy",
@@ -6493,12 +6772,54 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "vaudou-triple-resurrect",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804195137"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804195137"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "solo-master",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804195137"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804195137"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "villageois-top-loot",
           "currentValue": 5,
-          "recentValue": 3,
+          "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260724213148",
-            "Botmog-20260730185334",
             "Botmog-20260730200544"
           ],
           "unlockedLevels": [
@@ -6547,9 +6868,8 @@
         {
           "id": "wolf-transform-kill-nights",
           "currentValue": 2,
-          "recentValue": 2,
+          "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260724215822",
             "Botmog-20260730203438"
           ],
           "unlockedLevels": [],
@@ -6562,10 +6882,12 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 4,
-          "recentValue": 1,
+          "currentValue": 6,
+          "recentValue": 3,
           "recentGameIds": [
-            "Botmog-20260730211500"
+            "Botmog-20260730211500",
+            "Botmog-20260804193451",
+            "Botmog-20260804213247"
           ],
           "unlockedLevels": [
             {
@@ -6573,22 +6895,26 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Rigner-20260719131417"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Botmog-20260804193451"
             }
           ],
           "nextLevel": {
             "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 5
+            "subLevel": 3,
+            "threshold": 10
           },
-          "progress": 0.8
+          "progress": 0.6
         },
         {
           "id": "only-passer",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Botmog-20260724213148"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
@@ -6600,10 +6926,8 @@
         {
           "id": "lone-non-voter",
           "currentValue": 2,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Botmog-20260724215822"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -6621,11 +6945,10 @@
         },
         {
           "id": "meneur",
-          "currentValue": 4,
-          "recentValue": 2,
+          "currentValue": 5,
+          "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260724213148",
-            "Botmog-20260730185334"
+            "Botmog-20260804195137"
           ],
           "unlockedLevels": [
             {
@@ -6639,21 +6962,27 @@
               "subLevel": 2,
               "threshold": 3,
               "unlockedAtGame": "Botmog-20260730185334"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Botmog-20260804195137"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 3,
-            "threshold": 5
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
           },
-          "progress": 0.8
+          "progress": 0.5
         },
         {
           "id": "colors-of-lycans",
           "currentValue": 1,
           "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260724213148"
+            "Botmog-20260730191001"
           ],
           "unlockedLevels": [
             {
@@ -6671,10 +7000,34 @@
           "progress": 0.5
         },
         {
-          "id": "juste-un-dernier-verre",
+          "id": "winning-months",
           "currentValue": 1,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804213247"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804213247"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "juste-un-dernier-verre",
+          "currentValue": 2,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804213247"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -6688,15 +7041,17 @@
             "subLevel": 1,
             "threshold": 3
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "collectionneur",
-          "currentValue": 5,
-          "recentValue": 2,
+          "currentValue": 7,
+          "recentValue": 4,
           "recentGameIds": [
             "Botmog-20260730194023",
-            "Botmog-20260730211500"
+            "Botmog-20260730211500",
+            "Botmog-20260804210103",
+            "Botmog-20260804213247"
           ],
           "unlockedLevels": [
             {
@@ -6717,21 +7072,20 @@
             "subLevel": 1,
             "threshold": 8
           },
-          "progress": 0.625
+          "progress": 0.875
         }
       ]
     },
     "76561199216324750": {
       "playerId": "76561199216324750",
       "playerName": "MôA",
-      "totalUnlocked": 20,
+      "totalUnlocked": 25,
       "achievements": [
         {
           "id": "victories-villageois",
           "currentValue": 8,
-          "recentValue": 3,
+          "recentValue": 2,
           "recentGameIds": [
-            "Botmog-20260724200921",
             "Botmog-20260730191001",
             "Botmog-20260730221757"
           ],
@@ -6785,10 +7139,8 @@
         {
           "id": "wolf-loss-harvest-no-kills",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Botmog-20260724222431"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -6819,10 +7171,10 @@
         },
         {
           "id": "wolf-sabotages",
-          "currentValue": 2,
+          "currentValue": 4,
           "recentValue": 2,
           "recentGameIds": [
-            "Botmog-20260724213148"
+            "Botmog-20260804210103"
           ],
           "unlockedLevels": [
             {
@@ -6830,14 +7182,20 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Botmog-20260724213148"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Botmog-20260804210103"
             }
           ],
           "nextLevel": {
             "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 3
+            "subLevel": 3,
+            "threshold": 5
           },
-          "progress": 0.6666666666666666
+          "progress": 0.8
         },
         {
           "id": "alakazam",
@@ -6879,10 +7237,8 @@
         {
           "id": "voted-as-villager",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Botmog-20260724225604"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -6942,14 +7298,14 @@
         },
         {
           "id": "deaths-all-zones",
-          "currentValue": 1,
+          "currentValue": 2,
           "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260724213148",
-            "Botmog-20260724204332",
+            "Botmog-20260730191001",
+            "Botmog-20260804203841",
             "Botmog-20260730221757",
-            "Botmog-20260724215822",
-            "Botmog-20260724200921"
+            "Botmog-20260804193451",
+            "Botmog-20260730194023"
           ],
           "unlockedLevels": [],
           "nextLevel": {
@@ -6957,13 +7313,15 @@
             "subLevel": 1,
             "threshold": 3
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "wolf-kills",
-          "currentValue": 1,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 2,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804210103"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -6977,14 +7335,14 @@
             "subLevel": 2,
             "threshold": 5
           },
-          "progress": 0.2
+          "progress": 0.4
         },
         {
-          "id": "hunter-killed-by-wolf",
-          "currentValue": 2,
+          "id": "hunter-kill-enemy",
+          "currentValue": 1,
           "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260730203438"
+            "Botmog-20260804203841"
           ],
           "unlockedLevels": [],
           "nextLevel": {
@@ -6992,7 +7350,45 @@
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.4
+          "progress": 0.2
+        },
+        {
+          "id": "hunter-kill-villager",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804203841"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804203841"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "hunter-killed-by-wolf",
+          "currentValue": 3,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Botmog-20260730203438",
+            "Botmog-20260804203841"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "amoureux-loup-total-kills",
@@ -7069,10 +7465,10 @@
         },
         {
           "id": "loup-devin-ultimate",
-          "currentValue": 1,
+          "currentValue": 2,
           "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260724222431"
+            "Botmog-20260804210103"
           ],
           "unlockedLevels": [
             {
@@ -7087,7 +7483,7 @@
             "subLevel": 1,
             "threshold": 3
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "solo-master",
@@ -7110,19 +7506,41 @@
           "progress": 0.6666666666666666
         },
         {
-          "id": "max-loot-single-game",
-          "currentValue": 395,
-          "recentValue": 250,
+          "id": "villageois-top-loot",
+          "currentValue": 1,
+          "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260730194023"
+            "Botmog-20260804201729"
           ],
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
-            "threshold": 400
+            "threshold": 5
           },
-          "progress": 0.9875
+          "progress": 0.2
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 520,
+          "recentValue": 520,
+          "recentGameIds": [
+            "Botmog-20260804201729"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Botmog-20260804201729"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 600
+          },
+          "progress": 0.8666666666666667
         },
         {
           "id": "spider-man-pointing",
@@ -7188,7 +7606,7 @@
           "currentValue": 2,
           "recentValue": 2,
           "recentGameIds": [
-            "Botmog-20260724200921",
+            "Botmog-20260730191001",
             "Botmog-20260730221757"
           ],
           "unlockedLevels": [
@@ -7211,24 +7629,67 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "juste-un-dernier-verre",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804210103"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804210103"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "collectionneur",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804210103"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804210103"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         }
       ]
     },
     "76561198330793890": {
       "playerId": "76561198330793890",
       "playerName": "Stacy176",
-      "totalUnlocked": 22,
+      "totalUnlocked": 25,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 10,
-          "recentValue": 5,
+          "currentValue": 11,
+          "recentValue": 4,
           "recentGameIds": [
-            "Botmog-20260721202539",
-            "Botmog-20260721215029",
             "Botmog-20260724190738",
             "Botmog-20260724200921",
-            "Botmog-20260724213148"
+            "Botmog-20260724213148",
+            "Botmog-20260804213247"
           ],
           "unlockedLevels": [
             {
@@ -7255,15 +7716,13 @@
             "subLevel": 1,
             "threshold": 30
           },
-          "progress": 0.3333333333333333
+          "progress": 0.36666666666666664
         },
         {
           "id": "victories-loup",
           "currentValue": 2,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Botmog-20260721195354"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -7282,10 +7741,8 @@
         {
           "id": "victories-solo",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Botmog-20260721193129"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -7359,10 +7816,8 @@
         {
           "id": "avenger-death",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Botmog-20260721212725"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -7380,12 +7835,12 @@
         },
         {
           "id": "wolf-kills",
-          "currentValue": 14,
+          "currentValue": 16,
           "recentValue": 8,
           "recentGameIds": [
-            "Botmog-20260721195354",
             "Botmog-20260724204332",
-            "Botmog-20260724211017"
+            "Botmog-20260724211017",
+            "Botmog-20260804190338"
           ],
           "unlockedLevels": [
             {
@@ -7399,22 +7854,26 @@
               "subLevel": 2,
               "threshold": 5,
               "unlockedAtGame": "Botmog-20260724211017"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 15,
+              "unlockedAtGame": "Botmog-20260804190338"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 3,
-            "threshold": 15
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 30
           },
-          "progress": 0.9333333333333333
+          "progress": 0.5333333333333333
         },
         {
           "id": "hunter-kill-enemy",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Botmog-20260721210016"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
@@ -7438,26 +7897,32 @@
         },
         {
           "id": "same-color-kills",
-          "currentValue": 2,
-          "recentValue": 1,
+          "currentValue": 3,
+          "recentValue": 2,
           "recentGameIds": [
-            "Botmog-20260724204332"
+            "Botmog-20260724204332",
+            "Botmog-20260804190338"
           ],
-          "unlockedLevels": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Botmog-20260804190338"
+            }
+          ],
           "nextLevel": {
-            "tier": "bronze",
+            "tier": "argent",
             "subLevel": 1,
-            "threshold": 3
+            "threshold": 8
           },
-          "progress": 0.6666666666666666
+          "progress": 0.375
         },
         {
           "id": "amoureux-wins",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Botmog-20260721193129"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -7476,10 +7941,8 @@
         {
           "id": "solo-master",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Botmog-20260721193129"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -7497,10 +7960,10 @@
         },
         {
           "id": "villageois-top-loot",
-          "currentValue": 1,
+          "currentValue": 2,
           "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260721215029"
+            "Botmog-20260804203841"
           ],
           "unlockedLevels": [],
           "nextLevel": {
@@ -7508,14 +7971,14 @@
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.2
+          "progress": 0.4
         },
         {
           "id": "max-loot-single-game",
           "currentValue": 620,
-          "recentValue": 620,
+          "recentValue": 490,
           "recentGameIds": [
-            "Botmog-20260721215029"
+            "Botmog-20260724215822"
           ],
           "unlockedLevels": [
             {
@@ -7540,10 +8003,11 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 1,
-          "recentValue": 1,
+          "currentValue": 2,
+          "recentValue": 2,
           "recentGameIds": [
-            "Botmog-20260724193345"
+            "Botmog-20260724193345",
+            "Botmog-20260804195137"
           ],
           "unlockedLevels": [
             {
@@ -7558,7 +8022,7 @@
             "subLevel": 2,
             "threshold": 5
           },
-          "progress": 0.2
+          "progress": 0.4
         },
         {
           "id": "lone-non-voter",
@@ -7583,9 +8047,8 @@
         {
           "id": "meneur",
           "currentValue": 2,
-          "recentValue": 2,
+          "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260721193129",
             "Botmog-20260724193345"
           ],
           "unlockedLevels": [
@@ -7604,13 +8067,29 @@
           "progress": 0.6666666666666666
         },
         {
-          "id": "colors-of-lycans",
-          "currentValue": 3,
-          "recentValue": 3,
+          "id": "democrat",
+          "currentValue": 1,
+          "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260721193129",
+            "Botmog-20260804201729"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "colors-of-lycans",
+          "currentValue": 4,
+          "recentValue": 4,
+          "recentGameIds": [
+            "Botmog-20260724190738",
             "Botmog-20260724200921",
-            "Botmog-20260724213148"
+            "Botmog-20260724213148",
+            "Botmog-20260804213247"
           ],
           "unlockedLevels": [
             {
@@ -7630,14 +8109,20 @@
               "subLevel": 3,
               "threshold": 3,
               "unlockedAtGame": "Botmog-20260724213148"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Botmog-20260804213247"
             }
           ],
           "nextLevel": {
             "tier": "argent",
-            "subLevel": 1,
-            "threshold": 4
+            "subLevel": 2,
+            "threshold": 5
           },
-          "progress": 0.75
+          "progress": 0.8
         },
         {
           "id": "winning-months",
@@ -7684,16 +8169,16 @@
     "76561198047490206": {
       "playerId": "76561198047490206",
       "playerName": "Rigner",
-      "totalUnlocked": 20,
+      "totalUnlocked": 26,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 5,
+          "currentValue": 7,
           "recentValue": 3,
           "recentGameIds": [
-            "Botmog-20260721202539",
-            "Botmog-20260721215029",
-            "Botmog-20260724204332"
+            "Botmog-20260724204332",
+            "Botmog-20260804190338",
+            "Botmog-20260804210103"
           ],
           "unlockedLevels": [
             {
@@ -7714,7 +8199,29 @@
             "subLevel": 3,
             "threshold": 10
           },
-          "progress": 0.5
+          "progress": 0.7
+        },
+        {
+          "id": "victories-loup",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804201729"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804201729"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "victories-solo",
@@ -7746,10 +8253,11 @@
         },
         {
           "id": "wolf-survived-hunter-shot",
-          "currentValue": 2,
-          "recentValue": 1,
+          "currentValue": 3,
+          "recentValue": 2,
           "recentGameIds": [
-            "Botmog-20260724222431"
+            "Botmog-20260724222431",
+            "Botmog-20260804203841"
           ],
           "unlockedLevels": [
             {
@@ -7764,17 +8272,42 @@
             "subLevel": 1,
             "threshold": 4
           },
-          "progress": 0.5
+          "progress": 0.75
+        },
+        {
+          "id": "wolf-loss-harvest-no-kills",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804213247"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804213247"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 4
+          },
+          "progress": 0.25
         },
         {
           "id": "wolf-sabotages",
-          "currentValue": 18,
-          "recentValue": 15,
+          "currentValue": 42,
+          "recentValue": 39,
           "recentGameIds": [
             "Botmog-20260724190738",
             "Botmog-20260724200921",
             "Botmog-20260724213148",
-            "Botmog-20260724222431"
+            "Botmog-20260724222431",
+            "Botmog-20260804201729",
+            "Botmog-20260804203841",
+            "Botmog-20260804213247"
           ],
           "unlockedLevels": [
             {
@@ -7799,21 +8332,39 @@
               "tier": "argent",
               "subLevel": 1,
               "threshold": 10,
-              "unlockedAtGame": "Botmog-20260724222431"
+              "unlockedAtGame": "Botmog-20260804213247"
             },
             {
               "tier": "argent",
               "subLevel": 2,
               "threshold": 15,
-              "unlockedAtGame": "Botmog-20260724222431"
+              "unlockedAtGame": "Botmog-20260804213247"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Botmog-20260804213247"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 30,
+              "unlockedAtGame": "Botmog-20260804213247"
+            },
+            {
+              "tier": "or",
+              "subLevel": 2,
+              "threshold": 40,
+              "unlockedAtGame": "Botmog-20260804213247"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "or",
             "subLevel": 3,
-            "threshold": 20
+            "threshold": 50
           },
-          "progress": 0.9
+          "progress": 0.84
         },
         {
           "id": "alakazam",
@@ -7836,12 +8387,51 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "death-turn1",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804210103"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "avenger-death",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804203841"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804203841"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "wolf-kills",
-          "currentValue": 9,
-          "recentValue": 4,
+          "currentValue": 14,
+          "recentValue": 9,
           "recentGameIds": [
             "Botmog-20260724200921",
-            "Botmog-20260724222431"
+            "Botmog-20260724222431",
+            "Botmog-20260804201729",
+            "Botmog-20260804203841"
           ],
           "unlockedLevels": [
             {
@@ -7854,7 +8444,7 @@
               "tier": "bronze",
               "subLevel": 2,
               "threshold": 5,
-              "unlockedAtGame": "Botmog-20260724222431"
+              "unlockedAtGame": "Botmog-20260804201729"
             }
           ],
           "nextLevel": {
@@ -7862,7 +8452,38 @@
             "subLevel": 3,
             "threshold": 15
           },
-          "progress": 0.6
+          "progress": 0.9333333333333333
+        },
+        {
+          "id": "consecutive-same-victim-kill",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804203841"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "same-color-kills",
+          "currentValue": 2,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Botmog-20260804201729",
+            "Botmog-20260804203841"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "solo-master",
@@ -7889,10 +8510,8 @@
         {
           "id": "villageois-top-loot",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Botmog-20260721193129"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
@@ -7904,9 +8523,9 @@
         {
           "id": "max-loot-single-game",
           "currentValue": 550,
-          "recentValue": 550,
+          "recentValue": 365,
           "recentGameIds": [
-            "Botmog-20260721193129"
+            "Botmog-20260804190338"
           ],
           "unlockedLevels": [
             {
@@ -7938,10 +8557,10 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 2,
+          "currentValue": 3,
           "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260721212725"
+            "Botmog-20260804210103"
           ],
           "unlockedLevels": [
             {
@@ -7956,14 +8575,15 @@
             "subLevel": 2,
             "threshold": 5
           },
-          "progress": 0.4
+          "progress": 0.6
         },
         {
           "id": "lone-non-voter",
-          "currentValue": 1,
-          "recentValue": 1,
+          "currentValue": 2,
+          "recentValue": 2,
           "recentGameIds": [
-            "Botmog-20260724222431"
+            "Botmog-20260724222431",
+            "Botmog-20260804193451"
           ],
           "unlockedLevels": [
             {
@@ -7978,7 +8598,7 @@
             "subLevel": 1,
             "threshold": 3
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "meneur",
@@ -8005,7 +8625,7 @@
           "currentValue": 1,
           "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260721202539"
+            "Botmog-20260724204332"
           ],
           "unlockedLevels": [
             {
@@ -8427,17 +9047,15 @@
     "76561198272864922": {
       "playerId": "76561198272864922",
       "playerName": "Adrasse",
-      "totalUnlocked": 29,
+      "totalUnlocked": 34,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 7,
-          "recentValue": 4,
+          "currentValue": 9,
+          "recentValue": 2,
           "recentGameIds": [
-            "Botmog-20260724200921",
-            "Botmog-20260724204332",
-            "Botmog-20260724213148",
-            "Botmog-20260724222431"
+            "Botmog-20260804190338",
+            "Botmog-20260804210103"
           ],
           "unlockedLevels": [
             {
@@ -8458,14 +9076,14 @@
             "subLevel": 3,
             "threshold": 10
           },
-          "progress": 0.7
+          "progress": 0.9
         },
         {
           "id": "victories-loup",
-          "currentValue": 1,
+          "currentValue": 2,
           "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260724215822"
+            "Botmog-20260804201729"
           ],
           "unlockedLevels": [
             {
@@ -8480,27 +9098,35 @@
             "subLevel": 2,
             "threshold": 5
           },
-          "progress": 0.2
+          "progress": 0.4
         },
         {
           "id": "victories-solo",
-          "currentValue": 1,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 2,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804193451"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Botmog-20260721210016"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Botmog-20260804193451"
             }
           ],
           "nextLevel": {
             "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 2
+            "subLevel": 3,
+            "threshold": 3
           },
-          "progress": 0.5
+          "progress": 0.6666666666666666
         },
         {
           "id": "wolf-survived-hunter-shot",
@@ -8526,9 +9152,11 @@
         },
         {
           "id": "wolf-sabotages",
-          "currentValue": 1,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 2,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804203841"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -8542,7 +9170,7 @@
             "subLevel": 2,
             "threshold": 3
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "alakazam",
@@ -8580,10 +9208,27 @@
           "progress": 0.3333333333333333
         },
         {
-          "id": "avenger-death",
+          "id": "death-turn1",
           "currentValue": 1,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804195137"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "avenger-death",
+          "currentValue": 2,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804210103"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -8597,7 +9242,7 @@
             "subLevel": 2,
             "threshold": 3
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "deaths-all-zones",
@@ -8640,12 +9285,13 @@
         },
         {
           "id": "wolf-kills",
-          "currentValue": 14,
-          "recentValue": 8,
+          "currentValue": 20,
+          "recentValue": 10,
           "recentGameIds": [
-            "Botmog-20260724215822",
             "Botmog-20260730191001",
-            "Botmog-20260730203438"
+            "Botmog-20260730203438",
+            "Botmog-20260804201729",
+            "Botmog-20260804213247"
           ],
           "unlockedLevels": [
             {
@@ -8659,14 +9305,20 @@
               "subLevel": 2,
               "threshold": 5,
               "unlockedAtGame": "Botmog-20260730191001"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 15,
+              "unlockedAtGame": "Botmog-20260804213247"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 3,
-            "threshold": 15
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 30
           },
-          "progress": 0.9333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "consecutive-same-victim-kill",
@@ -8706,9 +9358,8 @@
         {
           "id": "same-color-kills",
           "currentValue": 4,
-          "recentValue": 3,
+          "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260724215822",
             "Botmog-20260730191001"
           ],
           "unlockedLevels": [
@@ -8729,10 +9380,8 @@
         {
           "id": "revenge-kill",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Botmog-20260724215822"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
@@ -8740,6 +9389,28 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "la-bete-wins",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804193451"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804193451"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "espion-wins",
@@ -8764,9 +9435,8 @@
         {
           "id": "loup-devin-ultimate",
           "currentValue": 2,
-          "recentValue": 2,
+          "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260724215822",
             "Botmog-20260730203438"
           ],
           "unlockedLevels": [
@@ -8786,31 +9456,38 @@
         },
         {
           "id": "solo-master",
-          "currentValue": 2,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 3,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Botmog-20260804193451",
+            "Botmog-20260804195137"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Rigner-20260719131417"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Botmog-20260804193451"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "or",
             "subLevel": 1,
-            "threshold": 3
+            "threshold": 6
           },
-          "progress": 0.6666666666666666
+          "progress": 0.5
         },
         {
           "id": "villageois-top-loot",
           "currentValue": 8,
-          "recentValue": 3,
+          "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260724211017",
-            "Botmog-20260730185334",
             "Botmog-20260730214144"
           ],
           "unlockedLevels": [
@@ -8831,9 +9508,9 @@
         {
           "id": "max-loot-single-game",
           "currentValue": 695,
-          "recentValue": 335,
+          "recentValue": 490,
           "recentGameIds": [
-            "Botmog-20260730214144"
+            "Botmog-20260804190338"
           ],
           "unlockedLevels": [
             {
@@ -8938,10 +9615,9 @@
         {
           "id": "colors-of-lycans",
           "currentValue": 2,
-          "recentValue": 2,
+          "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260724200921",
-            "Botmog-20260724213148"
+            "Botmog-20260804190338"
           ],
           "unlockedLevels": [
             {
@@ -8965,10 +9641,34 @@
           "progress": 0.6666666666666666
         },
         {
-          "id": "resurrected",
+          "id": "winning-months",
           "currentValue": 1,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804213247"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804213247"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 2,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804195137"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -8982,15 +9682,13 @@
             "subLevel": 1,
             "threshold": 3
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "juste-un-dernier-verre",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Botmog-20260724200921"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -9009,11 +9707,8 @@
         {
           "id": "collectionneur",
           "currentValue": 5,
-          "recentValue": 2,
-          "recentGameIds": [
-            "Botmog-20260724200921",
-            "Botmog-20260724215822"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -9040,17 +9735,18 @@
     "76561198385910638": {
       "playerId": "76561198385910638",
       "playerName": "Botmog",
-      "totalUnlocked": 28,
+      "totalUnlocked": 33,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 9,
-          "recentValue": 4,
+          "currentValue": 12,
+          "recentValue": 5,
           "recentGameIds": [
-            "Botmog-20260724204332",
-            "Botmog-20260724213148",
             "Botmog-20260730191001",
-            "Botmog-20260730200544"
+            "Botmog-20260730200544",
+            "Botmog-20260804190338",
+            "Botmog-20260804210103",
+            "Botmog-20260804213247"
           ],
           "unlockedLevels": [
             {
@@ -9064,14 +9760,20 @@
               "subLevel": 2,
               "threshold": 5,
               "unlockedAtGame": "Botmog-20260724200921"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "Botmog-20260804190338"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 3,
-            "threshold": 10
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 30
           },
-          "progress": 0.9
+          "progress": 0.4
         },
         {
           "id": "victories-loup",
@@ -9120,9 +9822,8 @@
         {
           "id": "wolf-sabotages",
           "currentValue": 28,
-          "recentValue": 11,
+          "recentValue": 6,
           "recentGameIds": [
-            "Botmog-20260724211017",
             "Botmog-20260730221757"
           ],
           "unlockedLevels": [
@@ -9193,10 +9894,8 @@
         {
           "id": "starvation",
           "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Botmog-20260724222431"
-          ],
+          "recentValue": 0,
+          "recentGameIds": [],
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -9264,10 +9963,12 @@
         },
         {
           "id": "hunter-kill-enemy",
-          "currentValue": 1,
-          "recentValue": 1,
+          "currentValue": 3,
+          "recentValue": 3,
           "recentGameIds": [
-            "Botmog-20260730200544"
+            "Botmog-20260730200544",
+            "Botmog-20260804190338",
+            "Botmog-20260804190338"
           ],
           "unlockedLevels": [],
           "nextLevel": {
@@ -9275,7 +9976,7 @@
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.2
+          "progress": 0.6
         },
         {
           "id": "hunter-kill-villager",
@@ -9290,6 +9991,28 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Botmog-20260730200544"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "hunter-double-kill",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804190338"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804190338"
             }
           ],
           "nextLevel": {
@@ -9344,12 +10067,15 @@
         },
         {
           "id": "villageois-top-loot",
-          "currentValue": 6,
-          "recentValue": 3,
+          "currentValue": 10,
+          "recentValue": 6,
           "recentGameIds": [
-            "Botmog-20260724204332",
             "Botmog-20260730194023",
-            "Botmog-20260730203438"
+            "Botmog-20260730203438",
+            "Botmog-20260804190338",
+            "Botmog-20260804195137",
+            "Botmog-20260804210103",
+            "Botmog-20260804213247"
           ],
           "unlockedLevels": [
             {
@@ -9357,34 +10083,40 @@
               "subLevel": 1,
               "threshold": 5,
               "unlockedAtGame": "Botmog-20260730194023"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Botmog-20260804213247"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "or",
             "subLevel": 1,
-            "threshold": 10
+            "threshold": 15
           },
-          "progress": 0.6
+          "progress": 0.6666666666666666
         },
         {
           "id": "max-loot-single-game",
-          "currentValue": 695,
-          "recentValue": 495,
+          "currentValue": 835,
+          "recentValue": 835,
           "recentGameIds": [
-            "Botmog-20260724204332"
+            "Botmog-20260804210103"
           ],
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 400,
-              "unlockedAtGame": "Botmog-20260721202539"
+              "unlockedAtGame": "Botmog-20260804210103"
             },
             {
               "tier": "argent",
               "subLevel": 1,
               "threshold": 600,
-              "unlockedAtGame": "Botmog-20260721202539"
+              "unlockedAtGame": "Botmog-20260804210103"
             }
           ],
           "nextLevel": {
@@ -9392,7 +10124,7 @@
             "subLevel": 1,
             "threshold": 850
           },
-          "progress": 0.8176470588235294
+          "progress": 0.9823529411764705
         },
         {
           "id": "wolf-transform-kill-nights",
@@ -9418,10 +10150,11 @@
         },
         {
           "id": "spider-man-pointing",
-          "currentValue": 1,
-          "recentValue": 1,
+          "currentValue": 3,
+          "recentValue": 2,
           "recentGameIds": [
-            "Botmog-20260724213148"
+            "Botmog-20260804195137",
+            "Botmog-20260804203841"
           ],
           "unlockedLevels": [
             {
@@ -9436,14 +10169,13 @@
             "subLevel": 2,
             "threshold": 5
           },
-          "progress": 0.2
+          "progress": 0.6
         },
         {
           "id": "meneur",
           "currentValue": 7,
-          "recentValue": 3,
+          "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260724204332",
             "Botmog-20260730191001"
           ],
           "unlockedLevels": [
@@ -9476,9 +10208,8 @@
         {
           "id": "democrat",
           "currentValue": 4,
-          "recentValue": 2,
+          "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260724204332",
             "Botmog-20260730191001"
           ],
           "unlockedLevels": [
@@ -9501,7 +10232,7 @@
           "currentValue": 1,
           "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260724204332"
+            "Botmog-20260730191001"
           ],
           "unlockedLevels": [
             {
@@ -9520,60 +10251,76 @@
         },
         {
           "id": "juste-un-dernier-verre",
-          "currentValue": 1,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 3,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Botmog-20260804195137",
+            "Botmog-20260804213247"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Botmog-20260724183958"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Botmog-20260804213247"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "or",
             "subLevel": 1,
-            "threshold": 3
+            "threshold": 8
           },
-          "progress": 0.3333333333333333
+          "progress": 0.375
         },
         {
           "id": "collectionneur",
-          "currentValue": 2,
-          "recentValue": 0,
-          "recentGameIds": [],
+          "currentValue": 3,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804213247"
+          ],
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Botmog-20260721210016"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Botmog-20260804213247"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "or",
             "subLevel": 1,
-            "threshold": 3
+            "threshold": 8
           },
-          "progress": 0.6666666666666666
+          "progress": 0.375
         }
       ]
     },
     "76561199084091418": {
       "playerId": "76561199084091418",
       "playerName": "Agliee",
-      "totalUnlocked": 8,
+      "totalUnlocked": 14,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 6,
-          "recentValue": 4,
+          "currentValue": 7,
+          "recentValue": 3,
           "recentGameIds": [
-            "Botmog-20260724213148",
-            "Botmog-20260724222431",
             "Botmog-20260730191001",
-            "Botmog-20260730200544"
+            "Botmog-20260730200544",
+            "Botmog-20260804213247"
           ],
           "unlockedLevels": [
             {
@@ -9594,7 +10341,73 @@
             "subLevel": 3,
             "threshold": 10
           },
-          "progress": 0.6
+          "progress": 0.7
+        },
+        {
+          "id": "victories-solo",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804203841"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804203841"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "wolf-loss-harvest-no-kills",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804190338"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804190338"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 4
+          },
+          "progress": 0.25
+        },
+        {
+          "id": "wolf-sabotages",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804190338"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804190338"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "death-turn1",
@@ -9616,8 +10429,8 @@
           "currentValue": 1,
           "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260724193345",
-            "Botmog-20260724215822",
+            "Botmog-20260730191001",
+            "Botmog-20260730194023",
             "Botmog-20260730185334",
             "Botmog-20260730211500",
             "Botmog-20260730203438"
@@ -9629,6 +10442,28 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "wolf-kills",
+          "currentValue": 2,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Botmog-20260804210103"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804210103"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "hunter-kill-enemy",
@@ -9661,18 +10496,40 @@
           "progress": 0.2
         },
         {
-          "id": "max-loot-single-game",
-          "currentValue": 405,
-          "recentValue": 405,
+          "id": "solo-master",
+          "currentValue": 1,
+          "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260724193345"
+            "Botmog-20260804203841"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804203841"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 440,
+          "recentValue": 440,
+          "recentGameIds": [
+            "Botmog-20260804213247"
           ],
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 400,
-              "unlockedAtGame": "Botmog-20260724193345"
+              "unlockedAtGame": "Botmog-20260804213247"
             }
           ],
           "nextLevel": {
@@ -9680,15 +10537,13 @@
             "subLevel": 1,
             "threshold": 600
           },
-          "progress": 0.675
+          "progress": 0.7333333333333333
         },
         {
           "id": "spider-man-pointing",
           "currentValue": 3,
-          "recentValue": 3,
+          "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260724193345",
-            "Botmog-20260724222431",
             "Botmog-20260730214144"
           ],
           "unlockedLevels": [
@@ -9709,10 +10564,8 @@
         {
           "id": "meneur",
           "currentValue": 6,
-          "recentValue": 5,
+          "recentValue": 3,
           "recentGameIds": [
-            "Botmog-20260724204332",
-            "Botmog-20260724213148",
             "Botmog-20260730203438",
             "Botmog-20260730211500"
           ],
@@ -9763,7 +10616,7 @@
           "currentValue": 1,
           "recentValue": 1,
           "recentGameIds": [
-            "Botmog-20260724213148"
+            "Botmog-20260730191001"
           ],
           "unlockedLevels": [
             {
@@ -9779,21 +10632,44 @@
             "threshold": 2
           },
           "progress": 0.5
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804203841"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804203841"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         }
       ]
     },
     "76561199218014806": {
       "playerId": "76561199218014806",
       "playerName": "MPK",
-      "totalUnlocked": 6,
+      "totalUnlocked": 11,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 2,
-          "recentValue": 2,
+          "currentValue": 3,
+          "recentValue": 3,
           "recentGameIds": [
             "Botmog-20260724204332",
-            "Botmog-20260724222431"
+            "Botmog-20260724222431",
+            "Botmog-20260804213247"
           ],
           "unlockedLevels": [
             {
@@ -9801,6 +10677,67 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Botmog-20260724204332"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
+          "id": "wolf-sabotages",
+          "currentValue": 2,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Botmog-20260804193451",
+            "Botmog-20260804195137"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804193451"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "death-turn1",
+          "currentValue": 2,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Botmog-20260804201729",
+            "Botmog-20260804210103"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "wolf-kills",
+          "currentValue": 2,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Botmog-20260804195137"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804195137"
             }
           ],
           "nextLevel": {
@@ -9855,6 +10792,28 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "solo-master",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804203841"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804203841"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "villageois-top-loot",
           "currentValue": 2,
           "recentValue": 2,
@@ -9894,10 +10853,11 @@
         },
         {
           "id": "colors-of-lycans",
-          "currentValue": 1,
-          "recentValue": 1,
+          "currentValue": 2,
+          "recentValue": 2,
           "recentGameIds": [
-            "Botmog-20260724204332"
+            "Botmog-20260724204332",
+            "Botmog-20260804203841"
           ],
           "unlockedLevels": [
             {
@@ -9905,14 +10865,42 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Botmog-20260724204332"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Botmog-20260804203841"
             }
           ],
           "nextLevel": {
             "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 2
+            "subLevel": 3,
+            "threshold": 3
           },
-          "progress": 0.5
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804203841"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804203841"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "collectionneur",
@@ -10687,6 +11675,260 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Botmog-20260730203438"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        }
+      ]
+    },
+    "76561198849652597": {
+      "playerId": "76561198849652597",
+      "playerName": "Aré",
+      "totalUnlocked": 11,
+      "achievements": [
+        {
+          "id": "victories-villageois",
+          "currentValue": 3,
+          "recentValue": 3,
+          "recentGameIds": [
+            "Botmog-20260804190338",
+            "Botmog-20260804210103",
+            "Botmog-20260804213247"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804190338"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
+          "id": "victories-solo",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804203841"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804203841"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "starvation",
+          "currentValue": 2,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Botmog-20260804190338",
+            "Botmog-20260804195137"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804190338"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "vaudou-triple-resurrect",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804203841"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804203841"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "solo-master",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804203841"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804203841"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 290,
+          "recentValue": 290,
+          "recentGameIds": [
+            "Botmog-20260804210103"
+          ],
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.725
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804190338"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804190338"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 3,
+          "recentValue": 3,
+          "recentGameIds": [
+            "Botmog-20260804193451",
+            "Botmog-20260804203841",
+            "Botmog-20260804210103"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804193451"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Botmog-20260804210103"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 8
+          },
+          "progress": 0.375
+        },
+        {
+          "id": "meneur",
+          "currentValue": 2,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Botmog-20260804201729",
+            "Botmog-20260804210103"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804201729"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804190338"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804190338"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Botmog-20260804213247"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Botmog-20260804213247"
             }
           ],
           "nextLevel": {
