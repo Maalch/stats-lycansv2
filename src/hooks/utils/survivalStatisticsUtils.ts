@@ -24,6 +24,17 @@ function parseDeathTimingDay(deathTiming: string | null): number | null {
 }
 
 /**
+ * Parse a game version string (e.g. "0.201", "0.98") into its integer build number.
+ * Cannot use parseFloat: "0.98" (build 98) would incorrectly compare as greater than "0.201" (build 201).
+ */
+function parseVersionNumber(version: string | null | undefined): number | null {
+  if (!version) return null;
+  const match = version.match(/^0\.(\d+)$/);
+  if (!match) return null;
+  return parseInt(match[1], 10);
+}
+
+/**
  * Player survival statistics for a specific day
  */
 export interface PlayerSurvivalStats {
@@ -300,7 +311,8 @@ export function computeTimeAliveStatistics(gameData: GameLogEntry[], campFilter?
 
   gameData.forEach(game => {
     // DeathDateIrl is only reliably populated from version 0.201 onward
-    if (parseFloat(game.Version) < 0.201) {
+    const versionNumber = parseVersionNumber(game.Version);
+    if (versionNumber === null || versionNumber < 201) {
       return;
     }
 
