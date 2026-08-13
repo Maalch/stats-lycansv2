@@ -2,6 +2,7 @@ import { useMemo, useState, useEffect } from 'react';
 import { useDeathStatisticsFromRaw, useAvailableCampsFromRaw, useHunterStatisticsFromRaw } from '../../../hooks/useDeathStatisticsFromRaw';
 import { useSurvivalStatisticsFromRaw } from '../../../hooks/useSurvivalStatisticsFromRaw';
 import { useMeetingSurvivalStatisticsFromRaw } from '../../../hooks/useMeetingSurvivalStatisticsFromRaw';
+import { useSeerStats } from '../../../hooks/useSeerStats';
 import { getAllDeathTypes } from '../../../hooks/utils/deathStatisticsUtils';
 import { DeathTypeCode, type DeathTypeCodeType } from '../../../utils/datasyncExport';
 import { useFilteredGameLogData } from '../../../hooks/useCombinedRawData';
@@ -14,6 +15,7 @@ import { DeathsView } from './DeathsView';
 import { HunterView } from './HunterView';
 import { SurvivalView } from './SurvivalView';
 import { MeetingSurvivalView } from './MeetingSurvivalView';
+import { SeerView } from './SeerView';
 
 export function DeathStatisticsChart() {
   const { navigationState, updateNavigationState } = useNavigation();
@@ -28,17 +30,17 @@ export function DeathStatisticsChart() {
   const [minGamesForAverage, setMinGamesForAverage] = useState<number>(
     navigationState.deathStatisticsState?.minGamesForAverage || 25
   );
-  const [selectedView, setSelectedView] = useState<'killers' | 'deaths' | 'hunter' | 'survival' | 'meetingSurvival'>(() => {
+  const [selectedView, setSelectedView] = useState<'killers' | 'deaths' | 'hunter' | 'survival' | 'meetingSurvival' | 'seer'>(() => {
     // Priority: URL param > NavigationContext > default
     const urlState = parseUrlState();
-    if (urlState.deathStatsView && ['killers', 'deaths', 'hunter', 'survival', 'meetingSurvival'].includes(urlState.deathStatsView)) {
-      return urlState.deathStatsView as 'killers' | 'deaths' | 'hunter' | 'survival' | 'meetingSurvival';
+    if (urlState.deathStatsView && ['killers', 'deaths', 'hunter', 'survival', 'meetingSurvival', 'seer'].includes(urlState.deathStatsView)) {
+      return urlState.deathStatsView as 'killers' | 'deaths' | 'hunter' | 'survival' | 'meetingSurvival' | 'seer';
     }
     
     const savedView = navigationState.deathStatisticsState?.selectedView as string | undefined;
     // Filter out legacy 'location' value
     if (savedView && savedView !== 'location') {
-      return savedView as 'killers' | 'deaths' | 'hunter' | 'survival' | 'meetingSurvival';
+      return savedView as 'killers' | 'deaths' | 'hunter' | 'survival' | 'meetingSurvival' | 'seer';
     }
     return 'killers';
   });
@@ -50,6 +52,8 @@ export function DeathStatisticsChart() {
   const { data: survivalStats, isLoading: survivalLoading, error: survivalError } = useSurvivalStatisticsFromRaw(selectedCamp);
   // Meeting survival stats use camp filter
   const { data: meetingSurvivalStats, isLoading: meetingSurvivalLoading, error: meetingSurvivalError } = useMeetingSurvivalStatisticsFromRaw(selectedCamp);
+  // Seer (Boule de Cristal) stats have no camp filter
+  const { data: seerStats, isLoading: seerLoading, error: seerError } = useSeerStats();
   const { data: gameLogData } = useFilteredGameLogData();
 
   const lycansColors = useThemeAdjustedLycansColorScheme();
@@ -78,8 +82,8 @@ export function DeathStatisticsChart() {
   useEffect(() => {
     const handleUrlChange = () => {
       const urlState = parseUrlState();
-      if (urlState.deathStatsView && ['killers', 'deaths', 'hunter', 'survival', 'meetingSurvival'].includes(urlState.deathStatsView)) {
-        const newView = urlState.deathStatsView as 'killers' | 'deaths' | 'hunter' | 'survival' | 'meetingSurvival';
+      if (urlState.deathStatsView && ['killers', 'deaths', 'hunter', 'survival', 'meetingSurvival', 'seer'].includes(urlState.deathStatsView)) {
+        const newView = urlState.deathStatsView as 'killers' | 'deaths' | 'hunter' | 'survival' | 'meetingSurvival' | 'seer';
         if (newView !== selectedView) {
           setSelectedView(newView);
         }
@@ -203,7 +207,7 @@ export function DeathStatisticsChart() {
   };
 
   // Function to handle view change with persistence
-  const handleViewChange = (newView: 'killers' | 'deaths' | 'hunter' | 'survival' | 'meetingSurvival') => {
+  const handleViewChange = (newView: 'killers' | 'deaths' | 'hunter' | 'survival' | 'meetingSurvival' | 'seer') => {
     setSelectedView(newView);
     updateNavigationState({
       deathStatisticsState: {
@@ -277,6 +281,13 @@ export function DeathStatisticsChart() {
           onClick={() => handleViewChange('hunter')}
         >
           Chasseur
+        </button>
+        <button
+          type="button"
+          className={`lycans-categorie-btn ${selectedView === 'seer' ? 'active' : ''}`}
+          onClick={() => handleViewChange('seer')}
+        >
+          Boule de Cristal
         </button>
       </div>
 
@@ -448,6 +459,15 @@ export function DeathStatisticsChart() {
           onMinGamesChange={handleMinGamesChange}
           isLoading={meetingSurvivalLoading}
           error={meetingSurvivalError}
+        />
+      )}
+
+      {/* Seer (Boule de Cristal) View */}
+      {selectedView === 'seer' && (
+        <SeerView
+          data={seerStats}
+          isLoading={seerLoading}
+          error={seerError}
         />
       )}
     </div>

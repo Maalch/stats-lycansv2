@@ -45,8 +45,14 @@ export const CHANGELOG: ChangelogEntry[] = [
     description: 'Ajout d\'une page "Boule de Cristal" : classement des Loups par taux de kills via devinette de rôle et des Villageois par taux de morts par devinette du rôle, sur les parties en version 0.284+, dans',
     link: {
       mainTab: 'rankings',
-      subTab: 'seerStats',
-      text: 'Classements / Boule de Cristal'
+      subTab: 'deathStats',
+      text: 'Classements / Morts & Kills / Boule de Cristal',
+      navigationState: {
+        deathStatisticsState: {
+          selectedCamp: 'Tous les camps',
+          selectedView: 'seer'
+        }
+      }
     }
   },
   {
