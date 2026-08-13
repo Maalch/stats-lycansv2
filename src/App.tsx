@@ -25,9 +25,6 @@ const MonthlyRankingChart = lazy(() => import('./components/playerstats/MonthlyR
 // Death statistics components
 const DeathStatisticsChart = lazy(() => import('./components/playerstats/DeathsAndKills/DeathStatisticsChart').then(m => ({ default: m.DeathStatisticsChart })));
 
-// Seer / Boule de Cristal statistics
-const SeerStatsChart = lazy(() => import('./components/playerstats/SeerStatsChart').then(m => ({ default: m.SeerStatsChart })));
-
 // Voting statistics components
 const VotingStatisticsChart = lazy(() => import('./components/playerstats/Voting/VotingStatisticsChart').then(m => ({ default: m.VotingStatisticsChart })));
 
@@ -164,12 +161,6 @@ const PLAYER_STATS_MENU = [
     label: 'Morts & Kills', 
     component: DeathStatisticsChart,
     description: 'Analyse des morts des joueurs'
-  },
-  { 
-    key: 'seerStats', 
-    label: 'Boule de Cristal', 
-    component: SeerStatsChart,
-    description: 'Classement des kills et morts par devinette de rôle (SEER)'
   },
   { 
     key: 'votingStats', 
