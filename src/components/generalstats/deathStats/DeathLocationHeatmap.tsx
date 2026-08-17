@@ -328,8 +328,9 @@ export function DeathLocationHeatmap() {
   const lycansColors = useThemeAdjustedLycansColorScheme();
 
   // Get all unique death types for chart configuration
+  // CULTIST_FAILED is excluded: it never has a meaningful death location, so it can't appear on this map
   const availableDeathTypes = useMemo(() => {
-    return gameLogData ? getAllDeathTypes(gameLogData) : [];
+    return gameLogData ? getAllDeathTypes(gameLogData).filter(type => type !== 'CULTIST_FAILED') : [];
   }, [gameLogData]);
 
   // Initialize default selected death types: all except 'VOTED' (Mort aux votes)
