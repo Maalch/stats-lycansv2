@@ -253,6 +253,8 @@ export function computeDeathLocationStats(
     .forEach(game => {
       game.PlayerStats
         .filter(player => player.DeathPosition !== null)
+        // CULTIST_FAILED deaths always report a meaningless fixed position, not the actual death location
+        .filter(player => player.DeathType !== 'CULTIST_FAILED')
         .filter(player => {
           // Apply camp filter if specified
           if (!campFilter || campFilter === 'Tous les camps') return true;
@@ -304,7 +306,9 @@ export function getAvailableMapsWithDeathData(gameData: GameLogEntry[]): string[
 
   gameData
     .forEach(game => {
-      const hasDeathPosition = game.PlayerStats.some(player => player.DeathPosition !== null);
+      const hasDeathPosition = game.PlayerStats.some(
+        player => player.DeathPosition !== null && player.DeathType !== 'CULTIST_FAILED'
+      );
       if (hasDeathPosition && game.MapName) {
         mapsSet.add(game.MapName);
       }
