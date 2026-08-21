@@ -2,8 +2,8 @@ name: Update Rankings, Titles & Achievements
 
 on:
   schedule:
-    # Run every Sunday at 6 AM UTC (once a week)
-    - cron: '0 6 * * 0'
+    # Run every Tuesday at 8 PM UTC (once a week)
+    - cron: '0 20 * * 2'
   workflow_dispatch: # Allow manual triggering
     inputs:
       team:
