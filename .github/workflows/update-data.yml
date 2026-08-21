@@ -2,14 +2,12 @@ name: Update Lycans Stats Data
 
 on:
   schedule:
-    # Tuesday (game day): 2:00 AM (before game day), 11:00 AM (first update), 1:00 PM (second update), 2:00 PM (third update), 4:00 PM (after games) UTC
+    # Tuesday (game day): 2:00 AM (before game day),  1:00 PM (second update), 2:30 PM (third update), 4:00 PM (after games) UTC
+    # Note: The 02:00 AM UTC run is the only one that will trigger a full sync (fetch all games from AWS) - hardcoded in the run step below. The other runs will only fetch new games since the last update.
     - cron: '0 2 * * 2'
-    - cron: '0 11 * * 2'
     - cron: '0 13 * * 2'
-    - cron: '0 14 * * 2'
+    - cron: '30 14 * * 2'
     - cron: '0 16 * * 2'
-    # Thursday (possible alternate game day): 8:00 PM UTC
-    - cron: '0 20 * * 4'
   repository_dispatch:
     types: [new-game-data] # Triggered by S3 event notification via Lambda webhook
   workflow_dispatch: # Allow manual triggering
@@ -74,8 +72,15 @@ jobs:
           CMD="node fetch-data.js"
           
           # Determine sync mode
+          # For scheduled runs on Tuesday at 2 AM UTC (02:00), use full sync
+          CURRENT_HOUR=$(date -u +%H)
+          CURRENT_DAY=$(date -u +%u)  # 1-7 (Monday-Sunday)
+
           if [ "${{ inputs.full_sync }}" == "true" ]; then
             echo "🔄 Sync mode: FULL (forced via workflow input)"
+            CMD="$CMD --full"
+          elif [ "${{ github.event_name }}" == "schedule" ] && [ "$CURRENT_DAY" == "2" ] && [ "$CURRENT_HOUR" == "02" ]; then
+            echo "🔄 Sync mode: FULL (Tuesday 2 AM UTC scheduled run)"
             CMD="$CMD --full"
           else
             echo "🔄 Sync mode: INCREMENTAL"
