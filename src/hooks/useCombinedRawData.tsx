@@ -102,6 +102,7 @@ export interface GameLogEntry {
   DisplayedId: string;    // Global chronological game number (e.g., "123")
   StartDate: string;
   EndDate: string;
+  IsBattleRoyale?: boolean;   // Whether this game is a Battle Royale game (defaults to false); excluded from all site data when true
   MapName: string;
   HarvestGoal: number;           // Target harvest for the game
   HarvestDone: number;            // Actual harvest achieved at the end of the game
@@ -201,9 +202,12 @@ function useCombinedRawData(): {
           BRRefParties: { totalRecords: 0, data: [] } 
         };
 
-        // Filter out corrupted games (games without EndDate) and add DisplayedId to each valid game
+        // Filter out corrupted games (games without EndDate) and Battle Royale games (not yet supported on the site)
         const validGames = gameLogResult.GameStats.filter(game => {
           if (!game.EndDate) {
+            return false;
+          }
+          if (game.IsBattleRoyale === true) {
             return false;
           }
           return true;
@@ -506,8 +510,8 @@ export function useGameLogData(): {
         
         const result = await fetchDataFile<GameLogData>(dataSource, DATA_FILES.GAME_LOG);
         
-        // Filter out corrupted games (games without EndDate)
-        const validGames = result.GameStats.filter(game => game.EndDate);
+        // Filter out corrupted games (games without EndDate) and Battle Royale games (not yet supported on the site)
+        const validGames = result.GameStats.filter(game => game.EndDate && game.IsBattleRoyale !== true);
         
         // Generate DisplayedIds for valid games
         const displayedIdMap = generateDisplayedIds(validGames);
