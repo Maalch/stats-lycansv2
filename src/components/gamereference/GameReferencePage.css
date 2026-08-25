@@ -787,7 +787,8 @@
   flex-wrap: wrap;
 }
 
-.ref-hub-tile__role-count {
+.ref-hub-tile__role-count,
+.ref-hub-tile__power-count {
   font-size: 0.75rem;
   font-weight: 600;
   padding: 0.15rem 0.5rem;
@@ -1126,4 +1127,14 @@
   .ref-grid--solo {
     grid-template-columns: 1fr;
   }
+}
+
+/* ============================================
+   Search match highlighting
+   ============================================ */
+.ref-highlight {
+  background: rgba(72, 83, 168, 0.28);
+  color: inherit;
+  border-radius: 3px;
+  padding: 0 1px;
 }

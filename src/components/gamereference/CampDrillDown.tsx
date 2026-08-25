@@ -6,8 +6,10 @@ import type {
   SecondaryRoleEntry,
   DeadRoleEntry,
   GameRuleEntry,
+  RelatedItem,
 } from '../../hooks/useGameReference';
 import { RelatedItemsChips } from './RelatedItemsChips';
+import { HighlightText } from './HighlightText';
 
 // ============================================
 // Props
@@ -22,6 +24,7 @@ interface CampDrillDownProps {
   deadRoles: DeadRoleEntry[];
   gameRules: GameRuleEntry[];
   searchTerms: string[];
+  onNavigateRelated: (item: RelatedItem) => void;
 }
 
 // ============================================
@@ -34,7 +37,7 @@ type LoupFilter = 'all' | 'roles' | 'pouvoirs';
 // ============================================
 // Expandable role card
 // ============================================
-function ExpandableRoleCard({ role, children }: { role: MainRoleEntry; children?: React.ReactNode }) {
+function ExpandableRoleCard({ role, searchTerms, onNavigateRelated, children }: { role: MainRoleEntry; searchTerms: string[]; onNavigateRelated: (item: RelatedItem) => void; children?: React.ReactNode }) {
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -48,14 +51,14 @@ function ExpandableRoleCard({ role, children }: { role: MainRoleEntry; children?
     >
       <div className="ref-card__header">
         <span className="ref-card__emoji">{role.emoji}</span>
-        <h3 className="ref-card__title">{role.name}</h3>
+        <h3 className="ref-card__title"><HighlightText text={role.name} terms={searchTerms} /></h3>
         {role.type && (
           <span className="ref-card__badge">{role.type}</span>
         )}
         <span className={`ref-card__expand-icon${expanded ? ' ref-card__expand-icon--open' : ''}`}>▾</span>
       </div>
       <p className="ref-card__description">
-        {expanded ? role.description : (role.descriptionShort || role.description)}
+        <HighlightText text={expanded ? role.description : (role.descriptionShort || role.description)} terms={searchTerms} />
       </p>
       {expanded && (
         <div className="ref-card__expanded-content">
@@ -66,7 +69,7 @@ function ExpandableRoleCard({ role, children }: { role: MainRoleEntry; children?
               ))}
             </div>
           )}
-          <RelatedItemsChips items={role.relatedItems} />
+          <RelatedItemsChips items={role.relatedItems} onNavigate={onNavigateRelated} />
           {children}
         </div>
       )}
@@ -74,7 +77,7 @@ function ExpandableRoleCard({ role, children }: { role: MainRoleEntry; children?
   );
 }
 
-function ExpandablePowerCard({ power, variant }: { power: PowerEntry; variant: 'wolf' | 'villager' | 'elite' }) {
+function ExpandablePowerCard({ power, variant, searchTerms, onNavigateRelated }: { power: PowerEntry; variant: 'wolf' | 'villager' | 'elite'; searchTerms: string[]; onNavigateRelated: (item: RelatedItem) => void }) {
   const [expanded, setExpanded] = useState(false);
   const variantClass = `ref-card--${variant}`;
 
@@ -89,11 +92,11 @@ function ExpandablePowerCard({ power, variant }: { power: PowerEntry; variant: '
     >
       <div className="ref-card__header">
         <span className="ref-card__emoji">{power.emoji}</span>
-        <h3 className="ref-card__title">{power.name}</h3>
+        <h3 className="ref-card__title"><HighlightText text={power.name} terms={searchTerms} /></h3>
         <span className={`ref-card__expand-icon${expanded ? ' ref-card__expand-icon--open' : ''}`}>▾</span>
       </div>
       <p className="ref-card__description">
-        {expanded ? power.description : (power.descriptionShort || power.description)}
+        <HighlightText text={expanded ? power.description : (power.descriptionShort || power.description)} terms={searchTerms} />
       </p>
       {expanded && power.availableEffects && power.availableEffects.length > 0 && (
         <div className="ref-card__available-effects">
@@ -109,7 +112,7 @@ function ExpandablePowerCard({ power, variant }: { power: PowerEntry; variant: '
       )}
       {expanded && power.relatedItems && (
         <div className="ref-card__expanded-content">
-          <RelatedItemsChips items={power.relatedItems} />
+          <RelatedItemsChips items={power.relatedItems} onNavigate={onNavigateRelated} />
         </div>
       )}
     </div>
@@ -120,13 +123,15 @@ function ExpandablePowerCard({ power, variant }: { power: PowerEntry; variant: '
 // Camp Drill-Down: Villageois
 // ============================================
 function VillageoisDrillDown({
-  mainRoles, villagerPowers, elitePowers, secondaryRoles, deadRoles
+  mainRoles, villagerPowers, elitePowers, secondaryRoles, deadRoles, searchTerms, onNavigateRelated
 }: {
   mainRoles: MainRoleEntry[];
   villagerPowers: PowerEntry[];
   elitePowers: PowerEntry[];
   secondaryRoles: SecondaryRoleEntry[];
   deadRoles: DeadRoleEntry[];
+  searchTerms: string[];
+  onNavigateRelated: (item: RelatedItem) => void;
 }) {
   const [filter, setFilter] = useState<VillageoisFilter>('all');
 
@@ -183,7 +188,7 @@ function VillageoisDrillDown({
           </h3>
           <div className="ref-grid">
             {villageoisRoles.map(role => (
-              <ExpandableRoleCard key={role.id} role={role} />
+              <ExpandableRoleCard key={role.id} role={role} searchTerms={searchTerms} onNavigateRelated={onNavigateRelated} />
             ))}
           </div>
         </div>
@@ -201,7 +206,7 @@ function VillageoisDrillDown({
           </p>
           <div className="ref-grid">
             {villagerPowers.map(p => (
-              <ExpandablePowerCard key={p.id} power={p} variant="villager" />
+              <ExpandablePowerCard key={p.id} power={p} variant="villager" searchTerms={searchTerms} onNavigateRelated={onNavigateRelated} />
             ))}
           </div>
         </div>
@@ -219,7 +224,7 @@ function VillageoisDrillDown({
           </p>
           <div className="ref-grid">
             {elitePowers.map(p => (
-              <ExpandablePowerCard key={p.id} power={p} variant="elite" />
+              <ExpandablePowerCard key={p.id} power={p} variant="elite" searchTerms={searchTerms} onNavigateRelated={onNavigateRelated} />
             ))}
           </div>
         </div>
@@ -240,9 +245,9 @@ function VillageoisDrillDown({
               <div key={r.id} className="ref-card ref-card--secondary">
                 <div className="ref-card__header">
                   <span className="ref-card__emoji">{r.emoji}</span>
-                  <h3 className="ref-card__title">{r.name}</h3>
+                  <h3 className="ref-card__title"><HighlightText text={r.name} terms={searchTerms} /></h3>
                 </div>
-                <p className="ref-card__description">{r.descriptionShort || r.description}</p>
+                <p className="ref-card__description"><HighlightText text={r.descriptionShort || r.description} terms={searchTerms} /></p>
                 {r.descriptionVillager && (
                   <div className="ref-card__variant">
                     <span className="ref-card__variant-label">🏘️ Villageois :</span>
@@ -266,9 +271,9 @@ function VillageoisDrillDown({
               <div key={r.id} className="ref-card ref-card--dead">
                 <div className="ref-card__header">
                   <span className="ref-card__emoji">{r.emoji}</span>
-                  <h3 className="ref-card__title">{r.name}</h3>
+                  <h3 className="ref-card__title"><HighlightText text={r.name} terms={searchTerms} /></h3>
                 </div>
-                <p className="ref-card__description">{r.description}</p>
+                <p className="ref-card__description"><HighlightText text={r.description} terms={searchTerms} /></p>
               </div>
             ))}
           </div>
@@ -282,13 +287,15 @@ function VillageoisDrillDown({
 // Camp Drill-Down: Loups
 // ============================================
 function LoupDrillDown({
-  mainRoles, wolfPowers, secondaryRoles, deadRoles, gameRules
+  mainRoles, wolfPowers, secondaryRoles, deadRoles, gameRules, searchTerms, onNavigateRelated
 }: {
   mainRoles: MainRoleEntry[];
   wolfPowers: PowerEntry[];
   secondaryRoles: SecondaryRoleEntry[];
   deadRoles: DeadRoleEntry[];
   gameRules: GameRuleEntry[];
+  searchTerms: string[];
+  onNavigateRelated: (item: RelatedItem) => void;
 }) {
   const [filter, setFilter] = useState<LoupFilter>('all');
 
@@ -312,9 +319,9 @@ function LoupDrillDown({
               <div key={rule.id} className="ref-card ref-card--rule ref-card--loup">
                 <div className="ref-card__header">
                   <span className="ref-card__emoji">{rule.emoji}</span>
-                  <h3 className="ref-card__title">{rule.name}</h3>
+                  <h3 className="ref-card__title"><HighlightText text={rule.name} terms={searchTerms} /></h3>
                 </div>
-                <p className="ref-card__description">{rule.description}</p>
+                <p className="ref-card__description"><HighlightText text={rule.description} terms={searchTerms} /></p>
                 {rule.details.length > 0 && (
                   <ul className="ref-card__details">
                     {rule.details.map((detail, i) => (
@@ -374,7 +381,7 @@ function LoupDrillDown({
           </h3>
           <div className="ref-grid">
             {loupRoles.map(role => (
-              <ExpandableRoleCard key={role.id} role={role} />
+              <ExpandableRoleCard key={role.id} role={role} searchTerms={searchTerms} onNavigateRelated={onNavigateRelated} />
             ))}
           </div>
         </div>
@@ -392,7 +399,7 @@ function LoupDrillDown({
           </p>
           <div className="ref-grid">
             {wolfPowers.map(p => (
-              <ExpandablePowerCard key={p.id} power={p} variant="wolf" />
+              <ExpandablePowerCard key={p.id} power={p} variant="wolf" searchTerms={searchTerms} onNavigateRelated={onNavigateRelated} />
             ))}
           </div>
         </div>
@@ -413,9 +420,9 @@ function LoupDrillDown({
               <div key={r.id} className="ref-card ref-card--secondary">
                 <div className="ref-card__header">
                   <span className="ref-card__emoji">{r.emoji}</span>
-                  <h3 className="ref-card__title">{r.name}</h3>
+                  <h3 className="ref-card__title"><HighlightText text={r.name} terms={searchTerms} /></h3>
                 </div>
-                <p className="ref-card__description">{r.descriptionShort || r.description}</p>
+                <p className="ref-card__description"><HighlightText text={r.descriptionShort || r.description} terms={searchTerms} /></p>
                 {r.descriptionWolf && (
                   <div className="ref-card__variant">
                     <span className="ref-card__variant-label">🐺 Loup :</span>
@@ -439,9 +446,9 @@ function LoupDrillDown({
               <div key={r.id} className="ref-card ref-card--dead">
                 <div className="ref-card__header">
                   <span className="ref-card__emoji">{r.emoji}</span>
-                  <h3 className="ref-card__title">{r.name}</h3>
+                  <h3 className="ref-card__title"><HighlightText text={r.name} terms={searchTerms} /></h3>
                 </div>
-                <p className="ref-card__description">{r.description}</p>
+                <p className="ref-card__description"><HighlightText text={r.description} terms={searchTerms} /></p>
               </div>
             ))}
           </div>
@@ -454,7 +461,7 @@ function LoupDrillDown({
 // ============================================
 // Camp Drill-Down: Solo
 // ============================================
-function SoloDrillDown({ mainRoles, secondaryRoles }: { mainRoles: MainRoleEntry[]; secondaryRoles: SecondaryRoleEntry[] }) {
+function SoloDrillDown({ mainRoles, secondaryRoles, searchTerms }: { mainRoles: MainRoleEntry[]; secondaryRoles: SecondaryRoleEntry[]; searchTerms: string[] }) {
   const soloRoles = mainRoles.filter(r => r.camp === 'solo');
 
   return (
@@ -466,7 +473,7 @@ function SoloDrillDown({ mainRoles, secondaryRoles }: { mainRoles: MainRoleEntry
         </h3>
         <div className="ref-grid ref-grid--solo">
           {soloRoles.map(role => (
-            <SoloRoleCard key={role.id} role={role} />
+            <SoloRoleCard key={role.id} role={role} searchTerms={searchTerms} />
           ))}
         </div>
       </div>
@@ -485,9 +492,9 @@ function SoloDrillDown({ mainRoles, secondaryRoles }: { mainRoles: MainRoleEntry
               <div key={r.id} className="ref-card ref-card--secondary">
                 <div className="ref-card__header">
                   <span className="ref-card__emoji">{r.emoji}</span>
-                  <h3 className="ref-card__title">{r.name}</h3>
+                  <h3 className="ref-card__title"><HighlightText text={r.name} terms={searchTerms} /></h3>
                 </div>
-                <p className="ref-card__description">{r.descriptionShort || r.description}</p>
+                <p className="ref-card__description"><HighlightText text={r.descriptionShort || r.description} terms={searchTerms} /></p>
               </div>
             ))}
           </div>
@@ -500,7 +507,7 @@ function SoloDrillDown({ mainRoles, secondaryRoles }: { mainRoles: MainRoleEntry
 // ============================================
 // Solo Role Card (larger, win-condition prominent)
 // ============================================
-function SoloRoleCard({ role }: { role: MainRoleEntry }) {
+function SoloRoleCard({ role, searchTerms }: { role: MainRoleEntry; searchTerms: string[] }) {
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -514,15 +521,15 @@ function SoloRoleCard({ role }: { role: MainRoleEntry }) {
     >
       <div className="ref-card__header">
         <span className="ref-card__emoji">{role.emoji}</span>
-        <h3 className="ref-card__title">{role.name}</h3>
+        <h3 className="ref-card__title"><HighlightText text={role.name} terms={searchTerms} /></h3>
         <span className={`ref-card__expand-icon${expanded ? ' ref-card__expand-icon--open' : ''}`}>▾</span>
       </div>
       <div className="ref-card__win-condition">
-        🏆 {role.descriptionShort || 'Condition de victoire unique'}
+        🏆 <HighlightText text={role.descriptionShort || 'Condition de victoire unique'} terms={searchTerms} />
       </div>
       {expanded && (
         <div className="ref-card__expanded-content">
-          <p className="ref-card__description">{role.description}</p>
+          <p className="ref-card__description"><HighlightText text={role.description} terms={searchTerms} /></p>
           {role.subRoles && (
             <div className="ref-card__subroles">
               {role.subRoles.map(sub => (
@@ -539,8 +546,7 @@ function SoloRoleCard({ role }: { role: MainRoleEntry }) {
 // ============================================
 // Main export
 // ============================================
-export function CampDrillDown({ camp, mainRoles, wolfPowers, villagerPowers, elitePowers, secondaryRoles, deadRoles, gameRules }: CampDrillDownProps) {
-  // Suppress unused searchTerms for now — will be used for highlighting later
+export function CampDrillDown({ camp, mainRoles, wolfPowers, villagerPowers, elitePowers, secondaryRoles, deadRoles, gameRules, searchTerms, onNavigateRelated }: CampDrillDownProps) {
   switch (camp.id) {
     case 'villageois':
       return (
@@ -550,6 +556,8 @@ export function CampDrillDown({ camp, mainRoles, wolfPowers, villagerPowers, eli
           elitePowers={elitePowers}
           secondaryRoles={secondaryRoles}
           deadRoles={deadRoles}
+          searchTerms={searchTerms}
+          onNavigateRelated={onNavigateRelated}
         />
       );
     case 'loup':
@@ -560,10 +568,12 @@ export function CampDrillDown({ camp, mainRoles, wolfPowers, villagerPowers, eli
           secondaryRoles={secondaryRoles}
           deadRoles={deadRoles}
           gameRules={gameRules}
+          searchTerms={searchTerms}
+          onNavigateRelated={onNavigateRelated}
         />
       );
     case 'solo':
-      return <SoloDrillDown mainRoles={mainRoles} secondaryRoles={secondaryRoles} />;
+      return <SoloDrillDown mainRoles={mainRoles} secondaryRoles={secondaryRoles} searchTerms={searchTerms} />;
     default:
       return null;
   }

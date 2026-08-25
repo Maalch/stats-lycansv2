@@ -13,10 +13,12 @@ import type {
   EventEntry,
   GameRuleEntry,
   MayorEntry,
+  RelatedItem,
 } from '../../hooks/useGameReference';
 import { CampHubTile } from './CampHubTile';
 import { CampDrillDown } from './CampDrillDown';
 import { RoleBreadcrumb } from './RoleBreadcrumb';
+import { resolveRelatedItem } from './relatedItemNavigation';
 import './GameReferencePage.css';
 
 // ============================================
@@ -53,7 +55,7 @@ const ITEM_CATEGORIES = [
   { key: 'events', label: 'Événements', icon: '⚡' },
 ] as const;
 
-type ItemCategoryKey = typeof ITEM_CATEGORIES[number]['key'];
+export type ItemCategoryKey = typeof ITEM_CATEGORIES[number]['key'];
 
 type CategoryKey = typeof CATEGORIES[number]['key'];
 
@@ -378,6 +380,30 @@ function SectionTitle({ title, count }: { title: string; count: number }) {
   );
 }
 
+function DrillDownEmptyState({ contextLabel, searchTerm, onClearSearch, onBackToOverview }: {
+  contextLabel: string;
+  searchTerm: string;
+  onClearSearch: () => void;
+  onBackToOverview: () => void;
+}) {
+  return (
+    <div className="ref-empty-state">
+      <h3 className="ref-empty-state__title">Aucun résultat ici</h3>
+      <p className="ref-empty-state__text">
+        La recherche &quot;{searchTerm.trim()}&quot; ne retourne aucun élément pour {contextLabel}.
+      </p>
+      <div className="ref-empty-state__actions">
+        <button type="button" className="ref-empty-state__button" onClick={onClearSearch}>
+          Effacer la recherche
+        </button>
+        <button type="button" className="ref-empty-state__button ref-empty-state__button--ghost" onClick={onBackToOverview}>
+          Retour à l'aperçu
+        </button>
+      </div>
+    </div>
+  );
+}
+
 // ============================================
 // Search helper
 // ============================================
@@ -432,6 +458,28 @@ export function GameReferencePage() {
     setSelectedItemCategory(key);
     setSelectedCamp(null);
   }, []);
+
+  const handleRelatedItemNavigate = useCallback((item: RelatedItem) => {
+    if (!data) return;
+    const resolved = resolveRelatedItem(data, item);
+    if (!resolved) return;
+
+    setViewMode('hierarchical');
+    // Jumping to a whole camp shows everything; jumping to a specific entry filters/highlights it via search.
+    setSearchTerm(item.type === 'camp' ? '' : resolved.name);
+
+    if (!resolved.target) return; // e.g. secondaryRole: stay put, let the search term do the filtering
+    if (resolved.target.kind === 'camp') {
+      setSelectedCamp(resolved.target.campId);
+      setSelectedItemCategory(null);
+    } else if (resolved.target.kind === 'itemCategory') {
+      setSelectedItemCategory(resolved.target.key);
+      setSelectedCamp(null);
+    } else {
+      setSelectedCamp(null);
+      setSelectedItemCategory(null);
+    }
+  }, [data]);
 
   const filteredData = useMemo<FilteredReferenceData | null>(() => {
     if (!data) return null;
@@ -560,8 +608,23 @@ export function GameReferencePage() {
   const renderHierarchicalContent = () => {
     const currentCampRaw = selectedCamp ? data.camps.find(c => c.id === selectedCamp) : null;
 
+    const getCampMatchCount = (campId: string): number => {
+      const campMainRoles = filteredData.mainRoles.filter(r => r.camp === campId).length;
+      const campDeadRoles = filteredData.deadRoles.filter(r => r.camp === campId).length;
+      const campGameRules = filteredData.gameRules.filter(r => r.campSpecific === campId).length;
+      const secondaryCount = filteredData.secondaryRoles.length; // shown under every camp
+      if (campId === 'villageois') {
+        return campMainRoles + filteredData.villagerPowers.length + filteredData.elitePowers.length + secondaryCount + campDeadRoles + campGameRules;
+      }
+      if (campId === 'loup') {
+        return campMainRoles + filteredData.wolfPowers.length + secondaryCount + campDeadRoles + campGameRules;
+      }
+      return campMainRoles + secondaryCount;
+    };
+
     // Camp drill-down view
     if (selectedCamp && currentCampRaw) {
+      const campMatchCount = getCampMatchCount(currentCampRaw.id);
       return (
         <div className="ref-drilldown-container">
           <RoleBreadcrumb
@@ -569,31 +632,52 @@ export function GameReferencePage() {
             campEmoji={currentCampRaw.emoji}
             onBackToOverview={handleBackToOverview}
           />
-          <CampDrillDown
-            camp={currentCampRaw}
-            mainRoles={filteredData.mainRoles}
-            wolfPowers={filteredData.wolfPowers}
-            villagerPowers={filteredData.villagerPowers}
-            elitePowers={filteredData.elitePowers}
-            secondaryRoles={filteredData.secondaryRoles}
-            deadRoles={filteredData.deadRoles}
-            gameRules={filteredData.gameRules.filter(r => r.campSpecific === currentCampRaw.id)}
-            searchTerms={searchTerms}
-          />
+          {hasActiveSearch && campMatchCount === 0 ? (
+            <DrillDownEmptyState
+              contextLabel={`le camp ${currentCampRaw.name}`}
+              searchTerm={searchTerm}
+              onClearSearch={() => setSearchTerm('')}
+              onBackToOverview={handleBackToOverview}
+            />
+          ) : (
+            <CampDrillDown
+              camp={currentCampRaw}
+              mainRoles={filteredData.mainRoles}
+              wolfPowers={filteredData.wolfPowers}
+              villagerPowers={filteredData.villagerPowers}
+              elitePowers={filteredData.elitePowers}
+              secondaryRoles={filteredData.secondaryRoles}
+              deadRoles={filteredData.deadRoles}
+              gameRules={filteredData.gameRules.filter(r => r.campSpecific === currentCampRaw.id)}
+              searchTerms={searchTerms}
+              onNavigateRelated={handleRelatedItemNavigate}
+            />
+          )}
         </div>
       );
     }
 
     // Item category view
     if (selectedItemCategory) {
+      const categoryMeta = ITEM_CATEGORIES.find(c => c.key === selectedItemCategory);
+      const categoryMatchCount = filteredData.counts[selectedItemCategory] || 0;
       return (
         <div className="ref-drilldown-container">
           <RoleBreadcrumb
-            campName={ITEM_CATEGORIES.find(c => c.key === selectedItemCategory)?.label}
-            campEmoji={ITEM_CATEGORIES.find(c => c.key === selectedItemCategory)?.icon}
+            campName={categoryMeta?.label}
+            campEmoji={categoryMeta?.icon}
             onBackToOverview={handleBackToOverview}
           />
-          {renderItemCategory(selectedItemCategory)}
+          {hasActiveSearch && categoryMatchCount === 0 ? (
+            <DrillDownEmptyState
+              contextLabel={categoryMeta?.label || 'cette catégorie'}
+              searchTerm={searchTerm}
+              onClearSearch={() => setSearchTerm('')}
+              onBackToOverview={handleBackToOverview}
+            />
+          ) : (
+            renderItemCategory(selectedItemCategory)
+          )}
         </div>
       );
     }
@@ -622,15 +706,23 @@ export function GameReferencePage() {
             <span>Explorer par Camp</span>
           </h2>
           <div className="ref-hub-grid">
-            {filteredData.camps.map(camp => (
-              <CampHubTile
-                key={camp.id}
-                camp={camp}
-                roles={filteredData.mainRoles.filter(r => r.camp === camp.id)}
-                onClick={() => handleCampClick(camp.id)}
-                powerCount={camp.id === 'villageois' ? filteredData.villagerPowers.length + filteredData.elitePowers.length : undefined}
-              />
-            ))}
+            {filteredData.camps.map(camp => {
+              const roleCount = filteredData.mainRoles.filter(r => r.camp === camp.id).length;
+              const powerCount = camp.id === 'villageois'
+                ? filteredData.villagerPowers.length + filteredData.elitePowers.length
+                : camp.id === 'loup'
+                  ? filteredData.wolfPowers.length
+                  : undefined;
+              return (
+                <CampHubTile
+                  key={camp.id}
+                  camp={camp}
+                  roleCount={roleCount}
+                  onClick={() => handleCampClick(camp.id)}
+                  powerCount={powerCount}
+                />
+              );
+            })}
           </div>
         </div>
 

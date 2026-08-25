@@ -1,15 +1,13 @@
-import type { CampEntry, MainRoleEntry } from '../../hooks/useGameReference';
+import type { CampEntry } from '../../hooks/useGameReference';
 
 interface CampHubTileProps {
   camp: CampEntry;
-  roles: MainRoleEntry[];
+  roleCount: number;
   onClick: () => void;
   powerCount?: number;
 }
 
-export function CampHubTile({ camp, roles, onClick, powerCount }: CampHubTileProps) {
-  const displayCount = powerCount ?? roles.length;
-  const label = powerCount !== undefined ? `${displayCount} pouvoir${displayCount > 1 ? 's' : ''}` : `${displayCount} rôle${displayCount > 1 ? 's' : ''}`;
+export function CampHubTile({ camp, roleCount, onClick, powerCount }: CampHubTileProps) {
   return (
     <button
       className={`ref-hub-tile ref-hub-tile--${camp.id}`}
@@ -23,8 +21,13 @@ export function CampHubTile({ camp, roles, onClick, powerCount }: CampHubTilePro
         <p className="ref-hub-tile__description">{camp.description}</p>
         <div className="ref-hub-tile__meta">
           <span className="ref-hub-tile__role-count">
-            {label}
+            {roleCount} rôle{roleCount > 1 ? 's' : ''}
           </span>
+          {powerCount !== undefined && powerCount > 0 && (
+            <span className="ref-hub-tile__power-count">
+              {powerCount} pouvoir{powerCount > 1 ? 's' : ''}
+            </span>
+          )}
           <span className="ref-hub-tile__win-condition">
             🏆 {camp.winCondition}
           </span>
