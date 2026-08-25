@@ -1,8 +1,8 @@
 {
   "_meta": {
     "description": "Reference file for Lycans v2 game mechanics: camps, roles, powers, accessories, gadgets, effects, events, and game rules. Extracted from in-game translations and gameLog data.",
-    "version": "0.333",
-    "lastUpdated": "2026-08-03",
+    "version": "0.344",
+    "lastUpdated": "2026-08-24",
     "sourceTranslationsFile": "ExternalData/translations.json",
     "notes": "French names match gameLog.json values. Descriptions are cleaned from in-game markup (<color> tags, {0} placeholders). This file can be manually edited to adjust or enrich descriptions. potionEffects = drinkable effects from potions/scrolls. statusEffects = in-game states applied by role abilities, environmental events, or other mechanics (many overlap with potionEffects but represent the broader set of all possible player states)."
   },
@@ -69,7 +69,7 @@
       "camp": "loup",
       "emoji": "🐺",
       "type": "base",
-      "description": "Peut se transformer en loup la nuit pour tuer les villageois. Peut recevoir un pouvoir de loup et un rôle secondaire.",
+      "description": "Peut se transformer en loup la nuit pour tuer les villageois. Peut recevoir un pouvoir de loup et un rôle secondaire. Rester immobile régénère sa santé au bout de 3 secondes.",
       "descriptionShort": "Transformez-vous et massacrez les villageois",
       "relatedItems": [
         { "type": "wolfPower", "id": "necromancien", "label": "Pouvoirs de Loup" },
@@ -433,8 +433,8 @@
       "id": "purificateur",
       "name": "Purificateur",
       "emoji": "🔥",
-      "description": "Villageois Élite qui peut lancer une bouteille incendiaire spéciale (flamme verte) qui brûle et inflige Confusion aux loups transformés mais soigne et accélère les humains. Si un loup le tue, il prend feu. Commence chaque jour avec une bouteille incendiaire.",
-      "descriptionShort": "Reçoit des bouteilles incendiaires et peut lancer des bouteilles incendiaires spéciales",
+      "description": "Villageois Élite qui peut lancer des bouteilles purifiantes (flamme verte) qui brûlent et infligent Confusion aux loups transformés mais soignent et accélèrent les humains. Si un loup le tue, il prend feu. Commence chaque jour avec une bouteille purifiante. Clique-droit pour lancer une version plus puissante qui affecte une plus large zone et dure plus longtemps.",
+      "descriptionShort": "Lance des bouteilles purifiantes qui affectent les loups et les humains",
       "translationKey": "NALES_ROLE_DESCRIPTION_PURIFIER"
     }
   ],
@@ -655,8 +655,8 @@
       "name": "Fantôme",
       "emoji": "👻",
       "camp": "villageois",
-      "description": "Rôle donné à un villageois mort. Peut attaquer les loups avec des frappes ou créer des murs de feu qui les blessent.",
-      "descriptionShort": "Attaque les loups après la mort",
+      "description": "Rôle donné à un villageois mort. Visible par tout le monde et voit et entend tout le monde. Peut soigner et donner un effet positif mineur à un villageois ciblé, ou créer un objet/accessoire aléatoire. Détruit définitivement si traversé par un loup (sauf pendant la nuit de sa mort). Un villageois tué par un loup récemment transformé (moins de 15 secondes) ne peut pas devenir fantôme.",
+      "descriptionShort": "Aide les villageois après la mort, mais peut être détruit par les loups",
       "translationKey": "NALES_ROLE_DESCRIPTION_GHOST"
     },
     {
@@ -929,7 +929,7 @@
     { "id": "isolation", "name": "Isolation", "translationKey": "NALES_EFFECT_ISOLATION" },
     { "id": "furtif", "name": "Furtif", "translationKey": "NALES_EFFECT_SNEAKY" },
     { "id": "energie", "name": "Énergie", "translationKey": "NALES_EFFECT_ENERGIZED", "tutorial": "Votre pouvoir se charge plus vite, ou vous régénérez votre santé" },
-    { "id": "resilience", "name": "Résilience", "translationKey": "NALES_EFFECT_RESILIENCE" },
+    { "id": "resilience", "name": "Résilience", "translationKey": "NALES_EFFECT_RESILIENCE", "tutorial": "Effet qui se déclenche sur un loup après qu'il soit victime d'un contrôle (immobilisation, ralentissement ...). Réduit de moitié la durée des nouveaux contrôles tant qu'il est actif." },
     { "id": "cavale", "name": "Cavale", "translationKey": "NALES_EFFECT_ESCAPING" },
     { "id": "transformation", "name": "Transformation !", "translationKey": "NALES_EFFECT_TRANSFORMATION" },
     { "id": "mystique", "name": "Mystique", "translationKey": "NALES_EFFECT_MYSTIC" },
@@ -981,7 +981,7 @@
       "id": "eclipse",
       "name": "Éclipse",
       "emoji": "🌑",
-      "description": "Les loups peuvent se transformer en journée (sauf la première journée) mais sont un peu plus lents. La journée entière est plus courte. Les villageois n'ont plus de seuil de santé minimum mais la nourriture les soigne davantage.",
+      "description": "Les loups peuvent se transformer en journée (sauf la première journée) mais sont un peu plus lents. La journée entière est plus courte, et le temps de transformation des loups est plus long. Les villageois n'ont plus de seuil de santé minimum mais la nourriture les soigne davantage.",
       "translationKey": "NALES_EVENT_ECLIPSE"
     },
     {
@@ -1155,7 +1155,7 @@
       "name": "Sabotage",
       "emoji": "💀",
       "campSpecific": "loup",
-      "description": "Les Loups peuvent saboter différents éléments de la carte pour gêner les Villageois.",
+      "description": "Les Loups peuvent saboter différents éléments de la carte pour gêner les Villageois. Plus il y a de Sabotage d'un même type, plus grandes sont les chances d'activation de l'effet (100% si tout est saboté).",
       "details": [
         "Sabotage de puits (Village) : affecte tous les joueurs la nuit suivante — santé diminue plus vite et léger ralentissement.",
         "Sabotage de portails : empêche les Villageois d'utiliser les portails pour se déplacer rapidement.",
