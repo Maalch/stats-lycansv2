@@ -158,8 +158,10 @@ export function PlayerCampChart() {
     const playerTotalGames = new Map<string, number>();
     
     for (const player of playerPerformance) {
-      const totalGames = player.campPerformance.reduce((sum, cp) => sum + cp.games, 0);
-      playerTotalGames.set(player.player, totalGames);
+      // Use player.totalGames (real game count), not a sum over campPerformance:
+      // that array also holds aggregate camps (Camp Villageois/Camp Loup/Rôles spéciaux)
+      // which duplicate their sub-role entries and would double-count games.
+      playerTotalGames.set(player.player, player.totalGames);
       
       for (const cp of player.campPerformance) {
         if (cp.games >= minGames) {
@@ -262,7 +264,7 @@ export function PlayerCampChart() {
       if (!highlightedPlayerData) return dataArray;
 
       const totalGames = playerTotalGames.get(settings.highlightedPlayer) || 
-                         highlightedPlayerData.campPerformance.reduce((sum, cp) => sum + cp.games, 0);
+                         highlightedPlayerData.totalGames;
 
       if (isTousLesCamps) {
         let bestPercentage: PlayPercentageEntry | null = null;
