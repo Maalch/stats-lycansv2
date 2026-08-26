@@ -32,16 +32,22 @@ export function usePlayerHighlight(
   const highlight = useMemo(() => {
     if (!playerName || !gameLogData || isLoading) return null;
 
-    // Get the player's last 10 game IDs
+    // Get the game IDs from the player's last session (all games within 12h before their last game)
     const playerGameIds: string[] = [];
+    let sessionCutoff: number | null = null;
     // Games in GameStats are sorted chronologically (oldest first)
     for (let i = gameLogData.GameStats.length - 1; i >= 0; i--) {
       const game = gameLogData.GameStats[i];
       const playerInGame = game.PlayerStats.find(ps => ps.Username === playerName);
-      if (playerInGame) {
-        playerGameIds.push(game.Id);
-        if (playerGameIds.length >= 10) break;
+      if (!playerInGame) continue;
+
+      const gameTime = new Date(game.StartDate).getTime();
+      if (sessionCutoff === null) {
+        sessionCutoff = gameTime - 12 * 60 * 60 * 1000;
+      } else if (gameTime < sessionCutoff) {
+        break;
       }
+      playerGameIds.push(game.Id);
     }
 
     const candidates = computeAllHighlights(

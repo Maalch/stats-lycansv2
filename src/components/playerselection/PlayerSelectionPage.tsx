@@ -435,7 +435,7 @@ export function PlayerSelectionPage() {
                           else handleViewChange(playerHighlight.navigateTo as 'achievements');
                         }} : undefined}
                       >
-                        <span className="player-highlight-label">Sur les dernières parties : </span>{playerHighlight.emoji} {playerHighlight.text}
+                        <span className="player-highlight-label">Sur la dernière session : </span>{playerHighlight.emoji} {playerHighlight.text}
                       </div>
                     )}
                     {(highlightedPlayerStats.twitch || highlightedPlayerStats.youtube || playerClips.length > 0) && (
