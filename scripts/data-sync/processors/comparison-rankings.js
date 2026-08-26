@@ -5,6 +5,9 @@
 import { createComparisonRanking } from '../helpers.js';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../../src/utils/datasyncExport.js';
 
+// Games-together threshold scales with a player's total participation instead of a fixed count
+const MIN_GAMES_TOGETHER_RATIO = 0.10;
+
 /**
  * Generate player comparison data for head-to-head statistics
  * @param {string} player1Name - First player name
@@ -140,13 +143,18 @@ function computePlayerRelationships(targetPlayerId, playerStatsData, rawGameData
 export function processComparisonRankings(playerStatsData, rawGameData, playerId, suffix) {
   if (!playerStatsData || !rawGameData) return [];
 
+  const targetPlayerStats = playerStatsData.find(p => p.player === playerId);
+  if (!targetPlayerStats) return [];
+
+  const minGames = Math.max(1, Math.round(targetPlayerStats.gamesPlayed * MIN_GAMES_TOGETHER_RATIO));
+
   const Rankings = [];
-  const relationships = computePlayerRelationships(playerId, playerStatsData, rawGameData, 15);
+  const relationships = computePlayerRelationships(playerId, playerStatsData, rawGameData, minGames);
 
   if (relationships.length === 0) return Rankings;
 
-  // 1. Best mate (highest same camp win rate, min. 15 games together)
-  const mateRelationships = relationships.filter(r => r.sameCampGames >= 15);
+  // 1. Best mate (highest same camp win rate, min. games together = minGames)
+  const mateRelationships = relationships.filter(r => r.sameCampGames >= minGames);
   if (mateRelationships.length > 0) {
     const bestMate = mateRelationships.reduce((best, current) => 
       current.sameCampWinRate > best.sameCampWinRate ? current : best
@@ -155,7 +163,7 @@ export function processComparisonRankings(playerStatsData, rawGameData, playerId
     Rankings.push(createComparisonRanking(
       `best-mate-${suffix ? 'modded' : 'all'}`,
       `🤝 Meilleur Coéquipier${suffix}`,
-      `Meilleur duo avec ${bestMate.otherPlayerName}: ${bestMate.sameCampWinRate.toFixed(1)}% de victoires en équipe (${bestMate.sameCampWins}/${bestMate.sameCampGames} parties, min. 15)`,
+      `Meilleur duo avec ${bestMate.otherPlayerName}: ${bestMate.sameCampWinRate.toFixed(1)}% de victoires en équipe (${bestMate.sameCampWins}/${bestMate.sameCampGames} parties, min. ${minGames})`,
       'good',
       bestMate.sameCampWinRate,
       {
@@ -166,7 +174,7 @@ export function processComparisonRankings(playerStatsData, rawGameData, playerId
     ));
   }
 
-  // 2. Worst mate (lowest same camp win rate, min. 10 games together)
+  // 2. Worst mate (lowest same camp win rate, same threshold as best mate)
   if (mateRelationships.length > 1) {
     const bestMate = mateRelationships.reduce((best, current) => 
       current.sameCampWinRate > best.sameCampWinRate ? current : best
@@ -181,7 +189,7 @@ export function processComparisonRankings(playerStatsData, rawGameData, playerId
       Rankings.push(createComparisonRanking(
         `worst-mate-${suffix ? 'modded' : 'all'}`,
         `💔 Pire Coéquipier${suffix}`,
-        `Duo le moins efficace avec ${worstMate.otherPlayerName}: ${worstMate.sameCampWinRate.toFixed(1)}% de victoires en équipe (${worstMate.sameCampWins}/${worstMate.sameCampGames} parties, min. 15)`,
+        `Duo le moins efficace avec ${worstMate.otherPlayerName}: ${worstMate.sameCampWinRate.toFixed(1)}% de victoires en équipe (${worstMate.sameCampWins}/${worstMate.sameCampGames} parties, min. ${minGames})`,
         'bad',
         worstMate.sameCampWinRate,
         {
@@ -193,8 +201,8 @@ export function processComparisonRankings(playerStatsData, rawGameData, playerId
     }
   }
 
-  // 3. Best matchup (highest opposing win rate, min. 15 games against)
-  const opponentRelationships = relationships.filter(r => r.opposingCampGames >= 15);
+  // 3. Best matchup (highest opposing win rate, min. games against = minGames)
+  const opponentRelationships = relationships.filter(r => r.opposingCampGames >= minGames);
   if (opponentRelationships.length > 0) {
     const bestMatchup = opponentRelationships.reduce((best, current) => 
       current.opposingWinRate > best.opposingWinRate ? current : best
@@ -203,7 +211,7 @@ export function processComparisonRankings(playerStatsData, rawGameData, playerId
     Rankings.push(createComparisonRanking(
       `best-matchup-${suffix ? 'modded' : 'all'}`,
       `⚔️ Meilleur Face-à-Face${suffix}`,
-      `Domination contre ${bestMatchup.otherPlayerName}: ${bestMatchup.opposingWinRate.toFixed(1)}% de victoires en affrontement (${bestMatchup.opposingWins}/${bestMatchup.opposingCampGames} parties, min. 15)`,
+      `Domination contre ${bestMatchup.otherPlayerName}: ${bestMatchup.opposingWinRate.toFixed(1)}% de victoires en affrontement (${bestMatchup.opposingWins}/${bestMatchup.opposingCampGames} parties, min. ${minGames})`,
       'good',
       bestMatchup.opposingWinRate,
       {
@@ -214,7 +222,7 @@ export function processComparisonRankings(playerStatsData, rawGameData, playerId
     ));
   }
 
-  // 4. Worst matchup (lowest opposing win rate, min. 10 games against)
+  // 4. Worst matchup (lowest opposing win rate, same threshold as best matchup)
   if (opponentRelationships.length > 1) {
     const bestMatchup = opponentRelationships.reduce((best, current) => 
       current.opposingWinRate > best.opposingWinRate ? current : best
@@ -229,7 +237,7 @@ export function processComparisonRankings(playerStatsData, rawGameData, playerId
       Rankings.push(createComparisonRanking(
         `worst-matchup-${suffix ? 'modded' : 'all'}`,
         `💀 Pire Face-à-Face${suffix}`,
-        `Faiblesse contre ${worstMatchup.otherPlayerName}: ${worstMatchup.opposingWinRate.toFixed(1)}% de victoires en affrontement (${worstMatchup.opposingWins}/${worstMatchup.opposingCampGames} parties, min. 15)`,
+        `Faiblesse contre ${worstMatchup.otherPlayerName}: ${worstMatchup.opposingWinRate.toFixed(1)}% de victoires en affrontement (${worstMatchup.opposingWins}/${worstMatchup.opposingCampGames} parties, min. ${minGames})`,
         'bad',
         worstMatchup.opposingWinRate,
         {
