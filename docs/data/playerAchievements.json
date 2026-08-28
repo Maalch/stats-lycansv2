@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-08-28T08:49:01.799Z",
+  "generatedAt": "2026-08-28T09:19:07.944Z",
   "teamName": "Main Team",
   "totalPlayers": 96,
   "totalGames": 1013,
@@ -2169,6 +2169,37 @@
       "mainTeamOnly": false
     },
     {
+      "id": "mayor-enemy-win",
+      "name": "Maire Infiltré·e",
+      "description": "Ils vous ont fait confiance... grave erreur",
+      "explanation": "Gagner X parties dans un camp ennemi des Villageois après avoir été élu·e Maire (élection réelle, hors attribution automatique) - version 0.260 ou supérieure",
+      "emoji": "🎭",
+      "category": "roles",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 6
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 10
+        }
+      ],
+      "mainTeamOnly": false
+    },
+    {
       "id": "solo-master",
       "name": "Je maîtrise le solo",
       "description": "Vous savez comment gagner avec chaque rôle",
@@ -2945,7 +2976,7 @@
       "name": "1, 2, 3 Soleil !",
       "description": "Vous faites concurrence aux statues vivantes",
       "explanation": "Faire X parties en restant immobile plus longtemps que vous ne bougez",
-      "emoji": "🎒",
+      "emoji": "🚦",
       "category": "special",
       "levels": [
         {
@@ -21106,7 +21137,7 @@
     "76561198045789440": {
       "playerId": "76561198045789440",
       "playerName": "Bytell",
-      "totalUnlocked": 251,
+      "totalUnlocked": 252,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -22706,6 +22737,26 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "mayor-enemy-win",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260331110854"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "solo-master",

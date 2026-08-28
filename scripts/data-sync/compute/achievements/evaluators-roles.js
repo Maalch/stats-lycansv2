@@ -7,6 +7,7 @@
 
 import { isWolfCamp, isSoloCamp, isKilledByPlayer, isVoteTargetPlayer } from './helpers.js';
 import { getPlayerId, getPlayerCampForAchievement, DeathTypeCode } from './helpers.js';
+import { compareVersion } from '../../shared/sync-utils.js';
 
 /**
  * Count wins as Agent where:
@@ -178,6 +179,46 @@ export function samePowerAsAlly(playerGames, allGames, playerId, params) {
       value++;
       gameIds.push(game.Id);
     }
+  }
+  return { value, gameIds };
+}
+
+/**
+ * Count wins on a non-Villageois camp where the player was actually elected Mayor
+ * (as opposed to auto-assigned). A NewMayor event is only a real election if it
+ * fires >= 3s after the NewPhase event sharing the same Timing, since auto-assigned
+ * mayors (first meeting, or replacement after the previous mayor's death) fire
+ * almost instantly after the phase change.
+ * Only considers games with mod version >= 0.260 (reliable event timestamps).
+ * Achievement: "Maire Infiltré·e"
+ */
+export function mayorEnemyWin(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+
+  for (const { game, playerStat } of playerGames) {
+    if (!playerStat.Victorious) continue;
+    if (!compareVersion(game.Version, '0.260')) continue;
+
+    const camp = getPlayerCampForAchievement(playerStat, true, { regroupWolfSubRoles: true });
+    if (camp === 'Villageois') continue;
+
+    const events = game.GameEvents || [];
+    const wasElected = events.some(newMayorEvent => {
+      if (newMayorEvent.Type !== 'NewMayor') return false;
+      if (newMayorEvent.Name !== playerStat.Username) return false;
+      if (!newMayorEvent.Date) return false;
+
+      const newPhaseEvent = events.find(e => e.Type === 'NewPhase' && e.Timing === newMayorEvent.Timing);
+      if (!newPhaseEvent || !newPhaseEvent.Date) return false;
+
+      const delaySeconds = (new Date(newMayorEvent.Date) - new Date(newPhaseEvent.Date)) / 1000;
+      return delaySeconds >= 3;
+    });
+    if (!wasElected) continue;
+
+    value++;
+    gameIds.push(game.Id);
   }
   return { value, gameIds };
 }

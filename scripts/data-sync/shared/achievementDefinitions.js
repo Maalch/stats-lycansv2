@@ -1325,6 +1325,26 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
   {
+    id: 'mayor-enemy-win',
+    name: 'Maire Infiltré·e',
+    description: 'Ils vous ont fait confiance... grave erreur',
+    explanation: 'Gagner X parties dans un camp ennemi des Villageois après avoir été élu·e Maire (élection réelle, hors attribution automatique)',
+    emoji: '🎭',
+    category: 'roles',
+    evaluator: 'mayorEnemyWin',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 6
+      { tier: 'or', subLevel: 1, threshold: 6 },
+      // Lycans: 10
+      { tier: 'lycans', subLevel: 1, threshold: 10 },
+    ],
+  },
+  {
     id: 'solo-master',
     name: 'Je maîtrise le solo',
     description: 'Vous savez comment gagner avec chaque rôle',
