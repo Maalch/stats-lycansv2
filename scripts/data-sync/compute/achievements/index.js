@@ -197,6 +197,31 @@ export const BR_EVALUATORS = {
 // ============================================================================
 
 /**
+ * Find the earliest chronological prefix of `items` whose cumulative value (as computed by
+ * `computeValue`) reaches `threshold`, and return the ID of the last item in that prefix.
+ *
+ * This replaces indexing into an evaluator's `gameIds` array by `threshold - 1`, which silently
+ * assumes exactly one gameId is pushed per +1 of value (breaks for any evaluator that can add
+ * more than 1 to `value` from a single game, e.g. multi-kill games). Relies on achievement value
+ * being monotonically non-decreasing as more of the player's chronological games are considered,
+ * which holds for all achievement evaluators (progress never regresses).
+ */
+function findGameIdForThreshold(items, threshold, computeValue, getId) {
+  if (items.length === 0) return null;
+  let lo = 0, hi = items.length - 1, result = items.length - 1;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1;
+    if (computeValue(items.slice(0, mid + 1)) >= threshold) {
+      result = mid;
+      hi = mid - 1;
+    } else {
+      lo = mid + 1;
+    }
+  }
+  return getId(items[result]);
+}
+
+/**
  * Compute all achievements for all players
  * @param {Array} gameData - Full game log array
  * @param {Array} achievementDefs - Achievement definitions array
@@ -260,6 +285,10 @@ export function computeAllAchievements(gameData, achievementDefs, joueursData = 
     
     // Get BR games for this player (matched by canonical name)
     const playerBRGames = playerBRGamesMap.get(playerName) || [];
+
+    // Chronological copies used for threshold→game attribution (see findGameIdForThreshold)
+    const chronoPlayerGames = [...playerGames].sort((a, b) => (a.game.StartDate || '').localeCompare(b.game.StartDate || ''));
+    const chronoPlayerBRGames = [...playerBRGames].sort((a, b) => (a.Game ?? 0) - (b.Game ?? 0));
     
     for (const def of achievementDefs) {
       // Skip main-team-only achievements if no BR data available
@@ -272,7 +301,7 @@ export function computeAllAchievements(gameData, achievementDefs, joueursData = 
         const brEvaluator = BR_EVALUATORS[def.evaluator];
         if (brEvaluator) {
         
-        const { value, gameIds } = brEvaluator(playerBRGames, brData, def.evaluatorParams || {});
+        const { value } = brEvaluator(playerBRGames, brData, def.evaluatorParams || {});
         
         if (value === 0) continue;
         
@@ -286,7 +315,12 @@ export function computeAllAchievements(gameData, achievementDefs, joueursData = 
         
         for (const level of def.levels) {
           if (value >= level.threshold) {
-            const thresholdGameId = gameIds.length >= level.threshold ? gameIds[level.threshold - 1] : gameIds[gameIds.length - 1];
+            const thresholdGameId = findGameIdForThreshold(
+              chronoPlayerBRGames,
+              level.threshold,
+              (prefix) => brEvaluator(prefix, brData, def.evaluatorParams || {}).value,
+              (entry) => `BR-${entry.Game}`
+            );
             unlockedLevels.push({
               tier: level.tier,
               subLevel: level.subLevel,
@@ -324,7 +358,7 @@ export function computeAllAchievements(gameData, achievementDefs, joueursData = 
         continue;
       }
       
-      const { value, gameIds } = evaluator(playerGames, gameData, playerId, def.evaluatorParams || {});
+      const { value } = evaluator(playerGames, gameData, playerId, def.evaluatorParams || {});
       
       if (value === 0) continue; // Skip achievements with no progress
       
@@ -339,7 +373,12 @@ export function computeAllAchievements(gameData, achievementDefs, joueursData = 
       for (const level of def.levels) {
         if (value >= level.threshold) {
           // Find the game where this threshold was crossed
-          const thresholdGameId = gameIds.length >= level.threshold ? gameIds[level.threshold - 1] : gameIds[gameIds.length - 1];
+          const thresholdGameId = findGameIdForThreshold(
+            chronoPlayerGames,
+            level.threshold,
+            (prefix) => evaluator(prefix, gameData, playerId, def.evaluatorParams || {}).value,
+            (item) => item.game.Id
+          );
           unlockedLevels.push({
             tier: level.tier,
             subLevel: level.subLevel,
