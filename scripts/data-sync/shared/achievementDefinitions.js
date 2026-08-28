@@ -1807,7 +1807,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     name: '1, 2, 3 Soleil !',
     description: 'Vous faites concurrence aux statues vivantes',
     explanation: 'Faire X parties en restant immobile plus longtemps que vous ne bougez',
-    emoji: '🎒',
+    emoji: '🚦',
     category: 'special',
     evaluator: 'immobileGreaterThanMoving',
     evaluatorParams: {},
