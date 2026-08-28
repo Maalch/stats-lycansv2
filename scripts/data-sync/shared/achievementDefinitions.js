@@ -1802,6 +1802,33 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
 
+  {
+    id: '1-2-3-soleil',
+    name: '1, 2, 3 Soleil !',
+    description: 'Vous faites concurrence aux statues vivantes',
+    explanation: 'Faire X parties en restant immobile plus longtemps que vous ne bougez',
+    emoji: '🎒',
+    category: 'special',
+    evaluator: 'immobileGreaterThanMoving',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 1, 5, 10
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      { tier: 'bronze', subLevel: 2, threshold: 5 },
+      { tier: 'bronze', subLevel: 3, threshold: 10 },
+      // Argent: 20, 30, 40
+      { tier: 'argent', subLevel: 1, threshold: 20 },
+      { tier: 'argent', subLevel: 2, threshold: 30 },
+      { tier: 'argent', subLevel: 3, threshold: 40 },
+      // Or: 50, 60, 70
+      { tier: 'or', subLevel: 1, threshold: 50 },
+      { tier: 'or', subLevel: 2, threshold: 60 },
+      { tier: 'or', subLevel: 3, threshold: 70 },
+      // Lycans: 100
+      { tier: 'lycans', subLevel: 1, threshold: 100 },
+    ],
+  },
+
   // ============================================================================
   // BATTLE ROYALE (main team only - no BR data for Discord)
   // ============================================================================

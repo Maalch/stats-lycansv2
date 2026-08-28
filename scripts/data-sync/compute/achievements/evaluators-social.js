@@ -219,3 +219,34 @@ export function musicalClips(playerGames, allGames, playerId, params) {
 
   return { value: seenClipIds.size, gameIds };
 }
+
+/**
+ * Count games where player spent more time immobile than moving
+ * "1, 2, 3 Soleil !" - Vous faites concurrence aux statues vivantes
+ * 
+ * Immobile time = SecondsSpentImmobileStanding + SecondsSpentImmobileCrouched
+ * Moving time = SecondsSpentWalkingStanding + SecondsSpentWalkingCrouched + SecondsSpentRunning
+ */
+export function immobileGreaterThanMoving(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+
+  for (const { game, playerStat } of playerGames) {
+    // Calculate total immobile time
+    const immobileTime = (playerStat.SecondsSpentImmobileStanding || 0) + 
+                          (playerStat.SecondsSpentImmobileCrouched || 0);
+    
+    // Calculate total moving time
+    const movingTime = (playerStat.SecondsSpentWalkingStanding || 0) + 
+                        (playerStat.SecondsSpentWalkingCrouched || 0) + 
+                        (playerStat.SecondsSpentRunning || 0);
+    
+    // Check if player was more immobile than moving
+    if (immobileTime > movingTime) {
+      value++;
+      gameIds.push(game.Id);
+    }
+  }
+
+  return { value, gameIds };
+}

@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-08-26T07:06:45.714Z",
+  "generatedAt": "2026-08-28T08:40:00.214Z",
   "teamName": "Main Team",
   "totalPlayers": 96,
   "totalGames": 1013,
@@ -2916,6 +2916,37 @@
       "explanation": "Faire X parties en utilisant au moins 5 items différents (gadgets ou potions)",
       "emoji": "🎒",
       "category": "items",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 8
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 15
+        }
+      ],
+      "mainTeamOnly": false
+    },
+    {
+      "id": "1-2-3-soleil",
+      "name": "1, 2, 3 Soleil !",
+      "description": "Vous faites concurrence aux statues vivantes",
+      "explanation": "Faire X parties en restant immobile plus longtemps que vous ne bougez",
+      "emoji": "🎒",
+      "category": "special",
       "levels": [
         {
           "tier": "bronze",
@@ -16290,7 +16321,7 @@
     "76561198034021995": {
       "playerId": "76561198034021995",
       "playerName": "Ponce",
-      "totalUnlocked": 298,
+      "totalUnlocked": 302,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -18761,6 +18792,44 @@
           "progress": 0.7333333333333333
         },
         {
+          "id": "1-2-3-soleil",
+          "currentValue": 50,
+          "recentValue": 3,
+          "recentGameIds": [
+            "khalen-20260825112814",
+            "khalen-20260825114542",
+            "khalen-20260825130646"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260303112824"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20260303141937"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 8,
+              "unlockedAtGame": "Ponce-20260414103448"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "khalen-20260505103834"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
+        },
+        {
           "id": "br-victories",
           "currentValue": 45,
           "recentValue": 2,
@@ -20985,7 +21054,7 @@
     "76561198045789440": {
       "playerId": "76561198045789440",
       "playerName": "Bytell",
-      "totalUnlocked": 248,
+      "totalUnlocked": 251,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -23229,6 +23298,40 @@
           "progress": 0.375
         },
         {
+          "id": "1-2-3-soleil",
+          "currentValue": 10,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260825130646"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260310125513"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Tsuna-20260512122153"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 8,
+              "unlockedAtGame": "khalen-20260630114009"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 15
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "br-victories",
           "currentValue": 10,
           "recentValue": 2,
@@ -23610,7 +23713,7 @@
     "76561198372242900": {
       "playerId": "76561198372242900",
       "playerName": "Lutti",
-      "totalUnlocked": 253,
+      "totalUnlocked": 255,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -25810,6 +25913,32 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "1-2-3-soleil",
+          "currentValue": 4,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260303141937"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Tsuna-20260428113338"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 8
+          },
+          "progress": 0.5
+        },
+        {
           "id": "br-victories",
           "currentValue": 15,
           "recentValue": 3,
@@ -26249,7 +26378,7 @@
     "76561199060053791": {
       "playerId": "76561199060053791",
       "playerName": "Tsuna",
-      "totalUnlocked": 239,
+      "totalUnlocked": 241,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -28292,6 +28421,32 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "1-2-3-soleil",
+          "currentValue": 7,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260317114853"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20260505131703"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 8
+          },
+          "progress": 0.875
+        },
+        {
           "id": "br-victories",
           "currentValue": 24,
           "recentValue": 0,
@@ -28678,7 +28833,7 @@
     "76561198100703382": {
       "playerId": "76561198100703382",
       "playerName": "Wingo",
-      "totalUnlocked": 63,
+      "totalUnlocked": 64,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -29355,6 +29510,28 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "1-2-3-soleil",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Tsuna-20260526140644"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260526140644"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "br-victories",
           "currentValue": 1,
           "recentValue": 1,
@@ -29517,7 +29694,7 @@
     "76561198012951437": {
       "playerId": "76561198012951437",
       "playerName": "Khalen",
-      "totalUnlocked": 258,
+      "totalUnlocked": 262,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -31814,6 +31991,40 @@
           "progress": 1
         },
         {
+          "id": "1-2-3-soleil",
+          "currentValue": 25,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260310132742"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20260421134357"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 8,
+              "unlockedAtGame": "khalen-20260505122147"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "Tsuna-20260602104926"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
+        },
+        {
           "id": "br-victories",
           "currentValue": 19,
           "recentValue": 4,
@@ -32181,7 +32392,7 @@
     "76561198361954746": {
       "playerId": "76561198361954746",
       "playerName": "Anaee",
-      "totalUnlocked": 212,
+      "totalUnlocked": 216,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -34145,6 +34356,45 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "1-2-3-soleil",
+          "currentValue": 57,
+          "recentValue": 4,
+          "recentGameIds": [
+            "khalen-20260825103210",
+            "khalen-20260825112814",
+            "khalen-20260825120656",
+            "khalen-20260825122851"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260303114954"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20260317132403"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 8,
+              "unlockedAtGame": "Tsuna-20260331110854"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20260414132539"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
+        },
+        {
           "id": "br-victories",
           "currentValue": 24,
           "recentValue": 4,
@@ -34551,7 +34801,7 @@
     "76561198390111869": {
       "playerId": "76561198390111869",
       "playerName": "Kao",
-      "totalUnlocked": 191,
+      "totalUnlocked": 195,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -36410,6 +36660,43 @@
           "progress": 0.75
         },
         {
+          "id": "1-2-3-soleil",
+          "currentValue": 33,
+          "recentValue": 2,
+          "recentGameIds": [
+            "khalen-20260811131420",
+            "Ponce-20260818111644"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260310121919"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Tsuna-20260324124541"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 8,
+              "unlockedAtGame": "Ponce-20260421112728"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "Tsuna-20260526131025"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
+        },
+        {
           "id": "br-victories",
           "currentValue": 13,
           "recentValue": 4,
@@ -36731,7 +37018,7 @@
     "76561198043736664": {
       "playerId": "76561198043736664",
       "playerName": "Arkantors",
-      "totalUnlocked": 126,
+      "totalUnlocked": 127,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -38034,6 +38321,29 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "1-2-3-soleil",
+          "currentValue": 2,
+          "recentValue": 2,
+          "recentGameIds": [
+            "khalen-20260714110357",
+            "khalen-20260714120725"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260714110357"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "br-victories",
           "currentValue": 9,
           "recentValue": 3,
@@ -38310,7 +38620,7 @@
     "76561198109331759": {
       "playerId": "76561198109331759",
       "playerName": "Flonflon",
-      "totalUnlocked": 166,
+      "totalUnlocked": 170,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -39991,6 +40301,42 @@
             "threshold": 8
           },
           "progress": 0.375
+        },
+        {
+          "id": "1-2-3-soleil",
+          "currentValue": 15,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260721110724"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260303142940"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20260310113848"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 8,
+              "unlockedAtGame": "Tsuna-20260428111511"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "khalen-20260721110724"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "br-victories",
@@ -42654,7 +43000,7 @@
     "76561198259068400": {
       "playerId": "76561198259068400",
       "playerName": "Zarcross",
-      "totalUnlocked": 60,
+      "totalUnlocked": 62,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -43442,6 +43788,37 @@
           "progress": 0.375
         },
         {
+          "id": "1-2-3-soleil",
+          "currentValue": 6,
+          "recentValue": 4,
+          "recentGameIds": [
+            "khalen-20260623120329",
+            "khalen-20260623122225",
+            "Tsuna-20260707121243",
+            "Tsuna-20260707133200"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260407134922"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20260623120329"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 8
+          },
+          "progress": 0.75
+        },
+        {
           "id": "br-participations",
           "currentValue": 14,
           "recentValue": 14,
@@ -43635,7 +44012,7 @@
     "76561198125108195": {
       "playerId": "76561198125108195",
       "playerName": "Monodie",
-      "totalUnlocked": 185,
+      "totalUnlocked": 187,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -45385,6 +45762,34 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "1-2-3-soleil",
+          "currentValue": 5,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Ponce-20260818131628"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260303114954"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20260804124352"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 8
+          },
+          "progress": 0.625
         },
         {
           "id": "br-victories",
@@ -47437,7 +47842,7 @@
     "76561198256660482": {
       "playerId": "76561198256660482",
       "playerName": "Baout",
-      "totalUnlocked": 84,
+      "totalUnlocked": 88,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -48489,6 +48894,50 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "1-2-3-soleil",
+          "currentValue": 17,
+          "recentValue": 9,
+          "recentGameIds": [
+            "Ponce-20260421131432",
+            "Ponce-20260421134357",
+            "Ponce-20260421135153",
+            "khalen-20260505102154",
+            "khalen-20260505111212",
+            "khalen-20260505112233",
+            "khalen-20260505113737",
+            "khalen-20260505115859",
+            "khalen-20260505122147"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260331102112"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Tsuna-20260331112437"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 8,
+              "unlockedAtGame": "Ponce-20260421121050"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "khalen-20260505113737"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
+        },
+        {
           "id": "br-participations",
           "currentValue": 23,
           "recentValue": 15,
@@ -48658,7 +49107,7 @@
     "76561199291323199": {
       "playerId": "76561199291323199",
       "playerName": "Miraaaaaah",
-      "totalUnlocked": 131,
+      "totalUnlocked": 134,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -50103,6 +50552,40 @@
           "progress": 0.375
         },
         {
+          "id": "1-2-3-soleil",
+          "currentValue": 14,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260825130646"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260310113848"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Tsuna-20260407123301"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 8,
+              "unlockedAtGame": "Tsuna-20260526140644"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 15
+          },
+          "progress": 0.9333333333333333
+        },
+        {
           "id": "br-victories",
           "currentValue": 2,
           "recentValue": 1,
@@ -51193,7 +51676,7 @@
     "76561198095017745": {
       "playerId": "76561198095017745",
       "playerName": "Craco",
-      "totalUnlocked": 112,
+      "totalUnlocked": 116,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -52356,6 +52839,40 @@
           "progress": 0.375
         },
         {
+          "id": "1-2-3-soleil",
+          "currentValue": 16,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260324124541"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20260414112931"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 8,
+              "unlockedAtGame": "khalen-20260505115859"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "Tsuna-20260616101710"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
+        },
+        {
           "id": "br-victories",
           "currentValue": 4,
           "recentValue": 1,
@@ -52632,7 +53149,7 @@
     "76561198875528482": {
       "playerId": "76561198875528482",
       "playerName": "ClydeCreator",
-      "totalUnlocked": 165,
+      "totalUnlocked": 169,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -54175,6 +54692,42 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "1-2-3-soleil",
+          "currentValue": 24,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260804102914"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260317112918"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20260317132403"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 8,
+              "unlockedAtGame": "Tsuna-20260331105200"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20260421110017"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
+        },
+        {
           "id": "br-victories",
           "currentValue": 5,
           "recentValue": 0,
@@ -54514,7 +55067,7 @@
     "76561198250955250": {
       "playerId": "76561198250955250",
       "playerName": "Tone",
-      "totalUnlocked": 177,
+      "totalUnlocked": 181,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -56275,6 +56828,43 @@
           "progress": 0.7333333333333333
         },
         {
+          "id": "1-2-3-soleil",
+          "currentValue": 21,
+          "recentValue": 2,
+          "recentGameIds": [
+            "khalen-20260825112814",
+            "khalen-20260825130646"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260310113848"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20260317122046"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 8,
+              "unlockedAtGame": "Tsuna-20260331123308"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "khalen-20260630125934"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
+        },
+        {
           "id": "br-victories",
           "currentValue": 7,
           "recentValue": 3,
@@ -56583,7 +57173,7 @@
     "76561198849250630": {
       "playerId": "76561198849250630",
       "playerName": "MathyMoon",
-      "totalUnlocked": 156,
+      "totalUnlocked": 160,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -58289,6 +58879,43 @@
           "progress": 0.5
         },
         {
+          "id": "1-2-3-soleil",
+          "currentValue": 28,
+          "recentValue": 2,
+          "recentGameIds": [
+            "Ponce-20260818125832",
+            "khalen-20260825112814"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260317112918"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Tsuna-20260407131940"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 8,
+              "unlockedAtGame": "khalen-20260505113737"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "Tsuna-20260526132528"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
+        },
+        {
           "id": "br-participations",
           "currentValue": 52,
           "recentValue": 15,
@@ -58850,7 +59477,7 @@
     "76561197982214828": {
       "playerId": "76561197982214828",
       "playerName": "Shaunz",
-      "totalUnlocked": 20,
+      "totalUnlocked": 21,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -59258,6 +59885,28 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "1-2-3-soleil",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Tsuna-20260407102345"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260407102345"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "br-participations",
           "currentValue": 1,
           "recentValue": 1,
@@ -59314,7 +59963,7 @@
     "76561198076015877": {
       "playerId": "76561198076015877",
       "playerName": "CHLOE",
-      "totalUnlocked": 118,
+      "totalUnlocked": 121,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -60664,6 +61313,42 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "1-2-3-soleil",
+          "currentValue": 12,
+          "recentValue": 3,
+          "recentGameIds": [
+            "khalen-20260728124502",
+            "khalen-20260825112814",
+            "khalen-20260825122851"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260310112619"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Tsuna-20260324133027"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 8,
+              "unlockedAtGame": "Tsuna-20260616121956"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 15
+          },
+          "progress": 0.8
+        },
+        {
           "id": "br-victories",
           "currentValue": 3,
           "recentValue": 3,
@@ -60892,7 +61577,7 @@
     "76561198056292624": {
       "playerId": "76561198056292624",
       "playerName": "RomainJacques",
-      "totalUnlocked": 114,
+      "totalUnlocked": 116,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -62248,6 +62933,34 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "1-2-3-soleil",
+          "currentValue": 4,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Ponce-20260818115223"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260512105357"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Tsuna-20260616112139"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 8
+          },
+          "progress": 0.5
         },
         {
           "id": "br-victories",
@@ -63773,7 +64486,7 @@
     "76561198052560531": {
       "playerId": "76561198052560531",
       "playerName": "Tovi",
-      "totalUnlocked": 41,
+      "totalUnlocked": 43,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -64320,6 +65033,32 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "1-2-3-soleil",
+          "currentValue": 4,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260505111212"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20260505131703"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 8
+          },
+          "progress": 0.5
+        },
+        {
           "id": "br-victories",
           "currentValue": 1,
           "recentValue": 1,
@@ -64492,7 +65231,7 @@
     "76561198317172114": {
       "playerId": "76561198317172114",
       "playerName": "Kissiffrote",
-      "totalUnlocked": 77,
+      "totalUnlocked": 81,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -65470,6 +66209,42 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "1-2-3-soleil",
+          "currentValue": 18,
+          "recentValue": 1,
+          "recentGameIds": [
+            "khalen-20260721123721"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260331112437"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Tsuna-20260407134922"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 8,
+              "unlockedAtGame": "khalen-20260505122147"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "khalen-20260623130321"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "br-participations",
@@ -67751,7 +68526,7 @@
     "76561198160286790": {
       "playerId": "76561198160286790",
       "playerName": "Raumane",
-      "totalUnlocked": 114,
+      "totalUnlocked": 118,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -69034,6 +69809,43 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "1-2-3-soleil",
+          "currentValue": 22,
+          "recentValue": 2,
+          "recentGameIds": [
+            "khalen-20260825103210",
+            "khalen-20260825130646"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260310112619"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Tsuna-20260407104039"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 8,
+              "unlockedAtGame": "Tsuna-20260526111103"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "Tsuna-20260707111328"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
+        },
+        {
           "id": "br-victories",
           "currentValue": 2,
           "recentValue": 1,
@@ -69613,7 +70425,7 @@
     "76561198167428396": {
       "playerId": "76561198167428396",
       "playerName": "ChloeRamdani",
-      "totalUnlocked": 24,
+      "totalUnlocked": 26,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -70143,6 +70955,36 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "1-2-3-soleil",
+          "currentValue": 5,
+          "recentValue": 3,
+          "recentGameIds": [
+            "khalen-20260825112814",
+            "khalen-20260825122851",
+            "khalen-20260825130646"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260526103939"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20260825112814"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 8
+          },
+          "progress": 0.625
+        },
+        {
           "id": "br-participations",
           "currentValue": 1,
           "recentValue": 1,
@@ -70381,7 +71223,7 @@
     "76561197961659274": {
       "playerId": "76561197961659274",
       "playerName": "MoMaN",
-      "totalUnlocked": 56,
+      "totalUnlocked": 58,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -71146,6 +71988,35 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "1-2-3-soleil",
+          "currentValue": 5,
+          "recentValue": 2,
+          "recentGameIds": [
+            "khalen-20260728105259",
+            "khalen-20260728111944"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260407120643"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Tsuna-20260512115000"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 8
+          },
+          "progress": 0.625
+        },
+        {
           "id": "br-victories",
           "currentValue": 5,
           "recentValue": 4,
@@ -71409,7 +72280,7 @@
     "76561199229494526": {
       "playerId": "76561199229494526",
       "playerName": "Meetozila",
-      "totalUnlocked": 73,
+      "totalUnlocked": 76,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -72306,6 +73177,43 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "1-2-3-soleil",
+          "currentValue": 13,
+          "recentValue": 4,
+          "recentGameIds": [
+            "Ponce-20260818131628",
+            "khalen-20260825112814",
+            "khalen-20260825130646",
+            "khalen-20260825134439"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260303133917"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20260519123955"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 8,
+              "unlockedAtGame": "khalen-20260623135742"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 15
+          },
+          "progress": 0.8666666666666667
         },
         {
           "id": "br-victories",
@@ -73450,7 +74358,7 @@
     "76561198245459930": {
       "playerId": "76561198245459930",
       "playerName": "Deujna",
-      "totalUnlocked": 103,
+      "totalUnlocked": 105,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -74853,6 +75761,32 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "1-2-3-soleil",
+          "currentValue": 3,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260414110519"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Tsuna-20260602104926"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 8
+          },
+          "progress": 0.375
+        },
+        {
           "id": "br-participations",
           "currentValue": 3,
           "recentValue": 3,
@@ -75914,7 +76848,7 @@
     "76561198158936831": {
       "playerId": "76561198158936831",
       "playerName": "Vicky_spleen",
-      "totalUnlocked": 50,
+      "totalUnlocked": 54,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -76631,6 +77565,47 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "1-2-3-soleil",
+          "currentValue": 39,
+          "recentValue": 6,
+          "recentGameIds": [
+            "khalen-20260728111944",
+            "khalen-20260728114312",
+            "khalen-20260825110422",
+            "khalen-20260825112814",
+            "khalen-20260825114542",
+            "khalen-20260825124548"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260414112931"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Tsuna-20260428102138"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 8,
+              "unlockedAtGame": "khalen-20260519102155"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "Tsuna-20260526140644"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "br-victories",
@@ -77394,7 +78369,7 @@
     "76561199160636691": {
       "playerId": "76561199160636691",
       "playerName": "Lizzie_Listening",
-      "totalUnlocked": 31,
+      "totalUnlocked": 35,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -77960,6 +78935,46 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "1-2-3-soleil",
+          "currentValue": 18,
+          "recentValue": 5,
+          "recentGameIds": [
+            "Tsuna-20260616121956",
+            "Tsuna-20260616124735",
+            "khalen-20260721104302",
+            "khalen-20260721120415",
+            "khalen-20260721123721"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260421112728"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20260421131432"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 8,
+              "unlockedAtGame": "khalen-20260505113737"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "Tsuna-20260616124735"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
+        },
+        {
           "id": "br-victories",
           "currentValue": 1,
           "recentValue": 1,
@@ -78065,7 +79080,7 @@
     "76561198136428224": {
       "playerId": "76561198136428224",
       "playerName": "Akhynna",
-      "totalUnlocked": 34,
+      "totalUnlocked": 36,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -78575,6 +79590,32 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "1-2-3-soleil",
+          "currentValue": 4,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260707114650"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20260721104302"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 8
+          },
+          "progress": 0.5
+        },
+        {
           "id": "br-victories",
           "currentValue": 2,
           "recentValue": 1,
@@ -79059,7 +80100,7 @@
     "76561199001131054": {
       "playerId": "76561199001131054",
       "playerName": "Mlle Sunny",
-      "totalUnlocked": 11,
+      "totalUnlocked": 12,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -79310,13 +80351,36 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "1-2-3-soleil",
+          "currentValue": 2,
+          "recentValue": 2,
+          "recentGameIds": [
+            "khalen-20260630135754",
+            "khalen-20260721102216"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260630135754"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         }
       ]
     },
     "76561199137379059": {
       "playerId": "76561199137379059",
       "playerName": "Tamaroush",
-      "totalUnlocked": 12,
+      "totalUnlocked": 14,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -79554,6 +80618,36 @@
             "threshold": 2
           },
           "progress": 0.5
+        },
+        {
+          "id": "1-2-3-soleil",
+          "currentValue": 3,
+          "recentValue": 3,
+          "recentGameIds": [
+            "Tsuna-20260707103628",
+            "Tsuna-20260707114650",
+            "Tsuna-20260707133200"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260707103628"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Tsuna-20260707133200"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 8
+          },
+          "progress": 0.375
         },
         {
           "id": "br-victories",

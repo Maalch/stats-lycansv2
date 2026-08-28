@@ -75,7 +75,7 @@ import {
 // Social/special evaluators
 import {
   talkingPercentage, deathsInAllZones, collectionneur, justeUnDernierVerre,
-  musicalClips,
+  musicalClips, immobileGreaterThanMoving,
 } from './evaluators-social.js';
 
 // BR evaluators
@@ -169,6 +169,7 @@ export const EVALUATORS = {
   collectionneur,
   justeUnDernierVerre,
   musicalClips,
+  immobileGreaterThanMoving,
   winsAgainstOnutrem,
   winningMonths,
   perfectSessions,
