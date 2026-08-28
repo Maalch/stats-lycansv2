@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.9.13';
+export const APP_VERSION = '1.9.15';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,8 +14,18 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+    {
+    version: 'v1.9.15',
+    date: '28/08/2026',
+    description: 'Ajout de deux nouveaux succès : "1-2-3 Soleil" et "Maire Infiltré·e" dans',
+    link: {
+      mainTab: 'playerSelection',
+      text: 'Joueurs / Succès',
+      navigationState: { selectedPlayerSelectionView: 'achievements' }
+    }
+  },
   {
-    version: 'v1.9.13',
+    version: 'v1.9.14',
     date: '11/08/2026',
     description: 'Ajout d\'un classement du pourcentage de temps en vie par partie (basé sur l\'heure de mort réelle, parties en version 0.201+) dans',
     link: {
