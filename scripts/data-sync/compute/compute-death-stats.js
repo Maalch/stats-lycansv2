@@ -2,7 +2,7 @@
  * Death statistics computation functions
  */
 
-import { getPlayerId, getPlayerCampFromRole, DeathTypeCode } from '../../../src/utils/datasyncExport.js';
+import { getPlayerId, getPlayerCampFromRole, getPlayerFinalRole, DeathTypeCode } from '../../../src/utils/datasyncExport.js';
 
 /**
  * Extract deaths from a single game
@@ -237,7 +237,7 @@ export function computeDeathStatistics(gameData) {
     const playerRolesInGame = new Map();
     game.PlayerStats.forEach(player => {
       const playerId = getPlayerId(player);
-      const role = player.MainRoleInitial;
+      const role = getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []);
       const power = player.Power;
       const camp = getPlayerCampFromRole(role, { regroupWolfSubRoles: true }, power);
       playerRolesInGame.set(playerId, camp);

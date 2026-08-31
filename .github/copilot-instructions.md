@@ -115,6 +115,11 @@ interface RawGameData {
 
 **Critical:** `Amoureux` is `MainRoleInitial`, not `SecondaryRole`. Solo roles win as their role name, not "Villageois". Recent data includes detailed vote tracking and death metadata.
 
+### Mid-Game Role Changes (`MainRoleChanges`)
+Today, the only possible role changes are `Villageois` → `Loup` (resurrection) and `Villageois` → `Zombie` (Vaudou infection). In both cases the player can only act during the Night phase from then on, and cannot loot or talk (outside/during meetings) after the change. Because of this:
+- Camp-based **win/kill/survival rate** stats (`compute-player-stats.js`, `compute-death-stats.js`, `compute-hunter-stats.js`) must resolve the player's camp via `getPlayerFinalRole(MainRoleInitial, MainRoleChanges)` before mapping to a camp, otherwise a resurrection/infection win gets misattributed to the `Villageois` camp instead of `Loup`/solo.
+- **Loot and talking-time** stats (`compute-loot-stats.js`, `compute-talking-stats.js`) intentionally bucket by `MainRoleInitial` (not final role) since a changed player contributes no further loot/talking after the change anyway — using the initial camp is correct here.
+
 ## Role System Architecture (CRITICAL)
 
 **ALWAYS use `src/utils/roleUtils.ts` helpers** for role checking - never compare `MainRoleInitial` directly for elite roles.

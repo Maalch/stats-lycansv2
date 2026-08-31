@@ -2,7 +2,7 @@
  * Player statistics computation functions
  */
 
-import { getPlayerId, getPlayerMainCampFromRole } from '../../../src/utils/datasyncExport.js';
+import { getPlayerId, getPlayerMainCampFromRole, getPlayerFinalRole } from '../../../src/utils/datasyncExport.js';
 
 /**
  * Compute player statistics from game data (full recalculation)
@@ -71,8 +71,9 @@ export function computePlayerStats(gameData) {
         stats.wins++;
       }
 
-      // Categorize by camp using the centralized logic
-      const mainCamp = getPlayerMainCampFromRole(player.MainRoleInitial, player.Power);
+      // Categorize by camp using the centralized logic (final role, in case of mid-game role changes)
+      const finalRole = getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []);
+      const mainCamp = getPlayerMainCampFromRole(finalRole, player.Power);
       if (mainCamp === 'Villageois') {
         stats.camps.villageois.played++;
         if (player.Victorious) stats.camps.villageois.won++;
@@ -151,8 +152,9 @@ export function updatePlayerStatsIncremental(cachedStats, newGames, totalGameCou
         stats.wins++;
       }
 
-      // Categorize by camp using the centralized logic
-      const mainCamp = getPlayerMainCampFromRole(player.MainRoleInitial, player.Power);
+      // Categorize by camp using the centralized logic (final role, in case of mid-game role changes)
+      const finalRole = getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []);
+      const mainCamp = getPlayerMainCampFromRole(finalRole, player.Power);
       if (mainCamp === 'Villageois') {
         stats.camps.villageois.played++;
         if (player.Victorious) stats.camps.villageois.won++;

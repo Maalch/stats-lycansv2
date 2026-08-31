@@ -112,8 +112,9 @@ export function computeHunterStatistics(gameData, selectedCamp) {
       
       // Check if death was caused by a hunter
       if (deathType && hunterDeathTypes.includes(deathType) && killerId && huntersInGame.has(killerId)) {
-        // Get victim's camp
-        const victimCamp = getPlayerCampFromRole(victim.MainRoleInitial, {
+        // Get victim's camp (final role, in case of mid-game role changes)
+        const victimFinalRole = getPlayerFinalRole(victim.MainRoleInitial, victim.MainRoleChanges || []);
+        const victimCamp = getPlayerCampFromRole(victimFinalRole, {
           regroupLovers: true,
           regroupVillagers: true,
           regroupWolfSubRoles: false
