@@ -292,7 +292,16 @@ if (!playerInfo) {
 ## Project-Specific Conventions
 
 **Component Structure:** Domain-based folders (`generalstats/`, `playerstats/`, `gamedetails/`, `settings/`, `playerselection/`, `brstats/`, `clips/`)  
-**Menu System:** 6 main tabs in `App.tsx`: `playerSelection` (👤), `rankings` (🏆), `general` (🎯), `gameDetails` (📋), `clips` (🎬), `br` (⚔️) — each with sub-menus (`PLAYER_STATS_MENU`, `GENERAL_STATS_MENU`, `BR_STATS_MENU`)  
+**Menu System:** 8 main tabs defined in `MAIN_TABS` in `App.tsx`, each with its own purpose and (where applicable) sub-menu:
+- **`playerSelection` ("Joueur"):** Search/select a specific player and view all info/stats scoped to that player (Rankings, Achievements, Titles). Component folder: `playerselection/`.
+- **`rankings` ("Classements"):** Comparative Rankings between players across many criteria (`PLAYER_STATS_MENU` submenu). Component folder: `playerstats/`.
+- **`general` ("Stats Parties"):** General meta/aggregate statistics with **no specific player referenced** — camps, roles, actions, events, victory types, etc. (`GENERAL_STATS_MENU` submenu). Component folder: `generalstats/`.
+- **`gameDetails` ("Détails des Parties"):** Per-game detail view/history of each individual game played. Component folder: `gamedetails/`.
+- **`clips` ("Clips"):** Video clips tied to specific games (`GameLogEntry.Clips[]`). Component folder: `clips/`.
+- **`br` ("Battle Royale"):** Stats for BR games, separate data pipeline (`rawBRData.json`), hidden for `dataSource === 'discord'` (`BR_STATS_MENU` submenu). Component folder: `brstats/`.
+- **`gameReference` ("Règles du Jeu"):** Static game rules/reference content loaded from `gameReference.json`. Component: `GameReferencePage.tsx`.
+- **`settings` ("Filtres"):** Global filter controls (date range, game type, player inclusion/exclusion, data source) that apply across all other tabs, persisted via `SettingsContext`. Component folder: `settings/`.
+
 **Achievements page:** Displayed under the player selection flow — loaded from pre-calculated `playerAchievements.json`  
 **Testing:** Visual testing via dev server only - no automated test suite  
 **Language:** All UI and data labels in French ("Villageois", "Loups", "Camp victorieux")  
