@@ -513,9 +513,7 @@ function convertPlayerStatsToCache(playerStatsArray) {
  * @returns {Object} - Series state for cache
  */
 function extractSeriesState(seriesData) {
-  // For now, return empty object - series state is handled within the compute function
-  // In a more sophisticated implementation, we'd extract and store the current series state
-  return {};
+  return seriesData?.rawPlayerState || {};
 }
 
 /**

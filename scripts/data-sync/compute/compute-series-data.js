@@ -444,45 +444,9 @@ export function computePlayerSeriesData(gameData) {
     }
   });
 
-  // Collect and sort results
-  const seriesResults = collectSeriesResults(playerSeriesState);
-
-  // Mark ongoing series
-  Object.values(playerSeriesState).forEach(stats => {
-    // Check Villageois series
-    if (stats.longestVillageoisSeries && 
-        stats.currentVillageoisSeries === stats.longestVillageoisSeries.seriesLength &&
-        stats.currentVillageoisSeries > 0) {
-      stats.longestVillageoisSeries.isOngoing = true;
-    }
-
-    // Check Loups series
-    if (stats.longestLoupsSeries && 
-        stats.currentLoupsSeries === stats.longestLoupsSeries.seriesLength &&
-        stats.currentLoupsSeries > 0) {
-      stats.longestLoupsSeries.isOngoing = true;
-    }
-
-    // Check Win series
-    if (stats.longestWinSeries && 
-        stats.currentWinSeries === stats.longestWinSeries.seriesLength &&
-        stats.currentWinSeries > 0) {
-      stats.longestWinSeries.isOngoing = true;
-    }
-
-    // Check Loss series
-    if (stats.longestLossSeries && 
-        stats.currentLossSeries === stats.longestLossSeries.seriesLength &&
-        stats.currentLossSeries > 0) {
-      stats.longestLossSeries.isOngoing = true;
-    }
-  });
-
-  return {
-    ...seriesResults,
-    totalGamesAnalyzed: sortedGames.length,
-    totalPlayersCount: allPlayers.size
-  };
+  // Delegate to the shared output conversion (also used by the incremental path)
+  // so both share the same "mark ongoing series" logic and expose rawPlayerState for caching
+  return convertSeriesStateToOutput(playerSeriesState, sortedGames.length);
 }
 
 /**
@@ -638,6 +602,8 @@ function convertSeriesStateToOutput(playerSeriesState, totalGames) {
   return {
     ...seriesResults,
     totalGamesAnalyzed: totalGames,
-    totalPlayersCount: Object.keys(playerSeriesState).length
+    totalPlayersCount: Object.keys(playerSeriesState).length,
+    // Raw per-player working state, needed to resume streak tracking on the next incremental run
+    rawPlayerState: playerSeriesState
   };
 }
