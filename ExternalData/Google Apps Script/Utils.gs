@@ -74,7 +74,7 @@ const LYCAN_SCHEMA = {
     COLS: {
       GAMEID: 'Game', //Game ID (unique), same as Game v2 sheet
       PLAYER: 'Joueur', //Name of the player
-      ACTIONTYPE: 'ActionType', //Type of action: UsePower, UsePowerDeath, UseGadget, UsePortal, DrinkPotion, HunterShoot, Transform, Untransform, VictimPower, VictimGadget, VictimPotion, VictimChaos, VictimHanté, Sabotage, Sauvetage, TransferBombe, UntransformInfecté, ChooseImitateur, NewMayor, ActionMayor, DestitutionMayor, ActionElector, KillWolf
+      ACTIONTYPE: 'ActionType', //Type of action: UsePower, UsePowerDeath, UseGadget, UsePortal, DrinkPotion, HunterShoot, Transform, Untransform, VictimPower, VictimGadget, VictimPotion, VictimChaos, VictimHanté, Sabotage, Sauvetage, TransferBombe, UntransformInfecté, ChooseImitateur, NewMayor, KillWolf
       ACTIONNAME: 'ActionName - Métier/Pouvoir/Rôle/Meeting', //Name of the action (power)
       ACTIONNAME2: 'ActionName - Effet/Objet/Potion', //Name of the action (object)
       TARGET: 'Target', //List of players name that are targetted (most of time 1 or empty, may be empty if action without target, like Transform)
