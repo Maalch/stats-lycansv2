@@ -11,7 +11,7 @@ import { compareVersion } from '../../shared/sync-utils.js';
 
 /**
  * Count wins as Agent where:
- * - Player personally killed the other Agent (victim.DeathType === OTHER_AGENT, killer is this player)
+ * - Player personally killed the other Agent (both players role == 'Agent')
  * - Player won the game
  */
 export function agentWinPerfectKill(playerGames, allGames, playerId, params) {
@@ -24,7 +24,7 @@ export function agentWinPerfectKill(playerGames, allGames, playerId, params) {
 
     // Must have personally killed the other Agent
     const killedOtherAgent = game.PlayerStats.some(victim =>
-      isKilledByPlayer(game, victim, playerId)
+      victim.MainRoleInitial === 'Agent' && isKilledByPlayer(game, victim, playerId)
     );
     if (!killedOtherAgent) continue;
 
