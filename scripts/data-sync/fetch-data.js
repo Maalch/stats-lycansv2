@@ -18,7 +18,7 @@ const args = process.argv.slice(2);
 const forceFullSync = args.includes('--full') || args.includes('-f');
 
 // Main Team game filter
-const MAIN_TEAM_FILTER = (gameId) => gameId?.startsWith('Ponce-') || gameId?.startsWith('Tsuna-') || gameId?.startsWith('khalen-');
+const MAIN_TEAM_FILTER = (gameId) => gameId?.startsWith('Ponce-') || gameId?.startsWith('Tsuna-') || gameId?.startsWith('khalen-') || gameId?.startsWith('Meetozila-');
 
 /**
  * Load existing gameLog.json if it exists (for incremental sync)
@@ -490,8 +490,8 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs, existingGameLog = nu
         
         const gameId = awsGame.Id;
         
-        // Filter: Only process Main Team games (Ponce-, Tsuna-, khalen- prefixes)
-        if (!gameId || (!gameId.startsWith('Ponce-') && !gameId.startsWith('Tsuna-') && !gameId.startsWith('khalen-'))) {
+        // Filter: Only process Main Team games (Ponce-, Tsuna-, khalen-, Meetozila- prefixes)
+        if (!gameId || (!gameId.startsWith('Ponce-') && !gameId.startsWith('Tsuna-') && !gameId.startsWith('khalen-') && !gameId.startsWith('Meetozila-'))) {
           return; // Skip non-Main Team games
         }
         
@@ -702,7 +702,7 @@ async function mergeJoueursWithAWSPlayers(legacyJoueursData, awsGameLogs) {
     if (gameLog.GameStats && Array.isArray(gameLog.GameStats)) {
       gameLog.GameStats.forEach(game => {
         // Filter: Only process Main Team games (Ponce- and Tsuna- prefixes)
-        if (!game.Id || (!game.Id.startsWith('Ponce-') && !game.Id.startsWith('Tsuna-') && !game.Id.startsWith('khalen-'))) {
+        if (!game.Id || (!game.Id.startsWith('Ponce-') && !game.Id.startsWith('Tsuna-') && !game.Id.startsWith('khalen-') && !game.Id.startsWith('Meetozila-'))) {
           return; // Skip non-Main Team games
         }
         
@@ -878,10 +878,10 @@ async function main() {
       console.log(`🔍 File-level filtering: skipping ${skippedCount} old session files (${ageFilteredUrls.length}/${totalCount} will be fetched)`);
     }
     
-    // Filter URLs to only include Main Team files (Ponce-, Tsuna-, khalen-)
+    // Filter URLs to only include Main Team files (Ponce-, Tsuna-, khalen-, Meetozila-)
     const gameLogUrls = ageFilteredUrls.filter(url => {
       const filename = url.split('/').pop();
-      return filename.startsWith('Ponce-') || filename.startsWith('Tsuna-') || filename.startsWith('khalen-');
+      return filename.startsWith('Ponce-') || filename.startsWith('Tsuna-') || filename.startsWith('khalen-') || filename.startsWith('Meetozila-');
     });
     const teamFilteredCount = ageFilteredUrls.length - gameLogUrls.length;
     if (teamFilteredCount > 0) {
