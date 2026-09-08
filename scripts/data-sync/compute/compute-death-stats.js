@@ -343,19 +343,19 @@ export function computeDeathStatistics(gameData) {
         ? campData.villageois.kills / campData.villageois.games : null,
       killRateLoup: campData.loups.games >= 5 
         ? campData.loups.kills / campData.loups.games : null,
-      killRateSolo: campData.solo.games >= 3 
+      killRateSolo: campData.solo.games >= 5 
         ? campData.solo.kills / campData.solo.games : null,
       survivalRateVillageois: campData.villageois.games >= 5
         ? ((campData.villageois.games - campData.villageois.deaths) / campData.villageois.games) * 100 : null,
       survivalRateLoup: campData.loups.games >= 5
         ? ((campData.loups.games - campData.loups.deaths) / campData.loups.games) * 100 : null,
-      survivalRateSolo: campData.solo.games >= 3
+      survivalRateSolo: campData.solo.games >= 5
         ? ((campData.solo.games - campData.solo.deaths) / campData.solo.games) * 100 : null,
       survivalDay1RateVillageois: campData.villageois.games >= 5
         ? ((campData.villageois.games - campData.villageois.day1Deaths) / campData.villageois.games) * 100 : null,
       survivalDay1RateLoup: campData.loups.games >= 5
         ? ((campData.loups.games - campData.loups.day1Deaths) / campData.loups.games) * 100 : null,
-      survivalDay1RateSolo: campData.solo.games >= 3
+      survivalDay1RateSolo: campData.solo.games >= 5
         ? ((campData.solo.games - campData.solo.deaths) / campData.solo.games) * 100 : null
     });
   });

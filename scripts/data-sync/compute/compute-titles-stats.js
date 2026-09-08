@@ -82,7 +82,7 @@ export function computeAllStatistics(moddedGames) {
 
         agg.stats.winRateVillageois = vill?.played > 5 ? (vill.won / vill.played) * 100 : null;
         agg.stats.winRateLoup = loup?.played > 5 ? (loup.won / loup.played) * 100 : null;
-        agg.stats.winRateSolo = solo?.played > 3 ? (solo.won / solo.played) * 100 : null;
+        agg.stats.winRateSolo = solo?.played > 5 ? (solo.won / solo.played) * 100 : null;
 
         const total = (vill?.played || 0) + (loup?.played || 0) + (solo?.played || 0);
         if (total > 0) {
