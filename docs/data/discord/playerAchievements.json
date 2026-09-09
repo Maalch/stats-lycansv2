@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-09-08T20:06:03.604Z",
+  "generatedAt": "2026-09-09T11:58:30.474Z",
   "teamName": "Discord Team",
   "totalPlayers": 276,
   "totalGames": 798,
@@ -628,37 +628,6 @@
           "tier": "lycans",
           "subLevel": 1,
           "threshold": 30
-        }
-      ],
-      "mainTeamOnly": false
-    },
-    {
-      "id": "remede-de-loup",
-      "name": "Remède de Loup",
-      "description": "Même en pleine transformation, vous n'oubliez pas votre potion du soir",
-      "explanation": "Boire X potions en forme de Loup",
-      "emoji": "🐺🧪",
-      "category": "loups",
-      "levels": [
-        {
-          "tier": "bronze",
-          "subLevel": 1,
-          "threshold": 1
-        },
-        {
-          "tier": "argent",
-          "subLevel": 1,
-          "threshold": 2
-        },
-        {
-          "tier": "or",
-          "subLevel": 1,
-          "threshold": 3
-        },
-        {
-          "tier": "lycans",
-          "subLevel": 1,
-          "threshold": 5
         }
       ],
       "mainTeamOnly": false
@@ -3023,6 +2992,37 @@
           "tier": "lycans",
           "subLevel": 1,
           "threshold": 100
+        }
+      ],
+      "mainTeamOnly": false
+    },
+    {
+      "id": "commentateur-esport",
+      "name": "Commentateur esport",
+      "description": "C'est peut être bien à ce moment là que vous êtes le meilleur",
+      "explanation": "Jouer toutes les parties d'une session en étant en vie moins de 50 % du temps",
+      "emoji": "🎙️",
+      "category": "special",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 2
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 5
         }
       ],
       "mainTeamOnly": false
@@ -5691,7 +5691,7 @@
     "76561198364697515": {
       "playerId": "76561198364697515",
       "playerName": "Ekaenerys",
-      "totalUnlocked": 128,
+      "totalUnlocked": 129,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -7243,6 +7243,26 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "commentateur-esport",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251214205913"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         }
       ]
     },
@@ -9876,7 +9896,7 @@
     "76561198976507974": {
       "playerId": "76561198976507974",
       "playerName": "Enamore",
-      "totalUnlocked": 171,
+      "totalUnlocked": 172,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -11730,6 +11750,26 @@
             "threshold": 50
           },
           "progress": 0.86
+        },
+        {
+          "id": "commentateur-esport",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260225203849"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         }
       ]
     },
@@ -20746,7 +20786,7 @@
     "76561197973106144": {
       "playerId": "76561197973106144",
       "playerName": "Nales",
-      "totalUnlocked": 225,
+      "totalUnlocked": 222,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -21271,38 +21311,6 @@
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.6
-        },
-        {
-          "id": "remede-de-loup",
-          "currentValue": 3,
-          "recentValue": 0,
-          "recentGameIds": [],
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Nales-20260208211148"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 2,
-              "unlockedAtGame": "Nales-20260318204731"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
-              "threshold": 3,
-              "unlockedAtGame": "Nales-20260710193037"
-            }
-          ],
-          "nextLevel": {
-            "tier": "lycans",
             "subLevel": 1,
             "threshold": 5
           },
@@ -23275,7 +23283,7 @@
     "76561198095002711": {
       "playerId": "76561198095002711",
       "playerName": "Acuado",
-      "totalUnlocked": 54,
+      "totalUnlocked": 55,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -24180,6 +24188,26 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "commentateur-esport",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251008213007"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         }
       ]
     },
@@ -32385,7 +32413,7 @@
     "76561198362458369": {
       "playerId": "76561198362458369",
       "playerName": "TTanjun",
-      "totalUnlocked": 59,
+      "totalUnlocked": 60,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -33330,6 +33358,26 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "commentateur-esport",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251008192745"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         }
       ]
     },
@@ -33697,7 +33745,7 @@
     "76561198325153510": {
       "playerId": "76561198325153510",
       "playerName": "Meyame",
-      "totalUnlocked": 49,
+      "totalUnlocked": 48,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -33879,26 +33927,6 @@
             "threshold": 30
           },
           "progress": 0.9
-        },
-        {
-          "id": "remede-de-loup",
-          "currentValue": 1,
-          "recentValue": 0,
-          "recentGameIds": [],
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Nales-20260621195653"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 2
-          },
-          "progress": 0.5
         },
         {
           "id": "alakazam",
@@ -43076,7 +43104,7 @@
     "76561199051656603": {
       "playerId": "76561199051656603",
       "playerName": "Luluxurious",
-      "totalUnlocked": 89,
+      "totalUnlocked": 90,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -44283,6 +44311,26 @@
             "threshold": 8
           },
           "progress": 0.625
+        },
+        {
+          "id": "commentateur-esport",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260826210232"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         }
       ]
     },
@@ -59954,7 +60002,7 @@
     "76561198374433010": {
       "playerId": "76561198374433010",
       "playerName": "TomChiassa",
-      "totalUnlocked": 25,
+      "totalUnlocked": 26,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -60584,6 +60632,28 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "commentateur-esport",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260715194042"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260715194042"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         }
       ]
     },
@@ -78245,31 +78315,8 @@
     "76561198278911372": {
       "playerId": "76561198278911372",
       "playerName": "Yoshi11 (FR)",
-      "totalUnlocked": 1,
-      "achievements": [
-        {
-          "id": "remede-de-loup",
-          "currentValue": 1,
-          "recentValue": 1,
-          "recentGameIds": [
-            "Nales-20260206222837"
-          ],
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Nales-20260206222837"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 2
-          },
-          "progress": 0.5
-        }
-      ]
+      "totalUnlocked": 0,
+      "achievements": []
     },
     "76561198059970448": {
       "playerId": "76561198059970448",
@@ -82285,7 +82332,7 @@
     "76561198121204608": {
       "playerId": "76561198121204608",
       "playerName": "Sheysca",
-      "totalUnlocked": 9,
+      "totalUnlocked": 10,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -82536,6 +82583,28 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "commentateur-esport",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260614195918"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260614193606"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         }
       ]
     },
@@ -83405,7 +83474,7 @@
     "76561198275086642": {
       "playerId": "76561198275086642",
       "playerName": "petitpaz",
-      "totalUnlocked": 40,
+      "totalUnlocked": 41,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -84170,13 +84239,33 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "commentateur-esport",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260318202243"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         }
       ]
     },
     "76561199657684032": {
       "playerId": "76561199657684032",
       "playerName": "YGGDRA ИГГДРА",
-      "totalUnlocked": 70,
+      "totalUnlocked": 71,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -85237,6 +85326,26 @@
             "tier": "bronze",
             "subLevel": 3,
             "threshold": 10
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "commentateur-esport",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260510193425"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
           },
           "progress": 0.5
         }
@@ -92640,7 +92749,7 @@
     "76561198252336870": {
       "playerId": "76561198252336870",
       "playerName": "Chatoone_ENY",
-      "totalUnlocked": 7,
+      "totalUnlocked": 8,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -92830,6 +92939,28 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "commentateur-esport",
+          "currentValue": 1,
+          "recentValue": 1,
+          "recentGameIds": [
+            "Nales-20260412204243"
+          ],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260412200344"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         }
       ]
     },

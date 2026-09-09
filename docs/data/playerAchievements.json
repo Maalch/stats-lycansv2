@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-09-08T20:05:16.005Z",
+  "generatedAt": "2026-09-09T11:57:39.168Z",
   "teamName": "Main Team",
   "totalPlayers": 96,
   "totalGames": 1034,
@@ -633,37 +633,6 @@
           "tier": "lycans",
           "subLevel": 1,
           "threshold": 30
-        }
-      ],
-      "mainTeamOnly": false
-    },
-    {
-      "id": "remede-de-loup",
-      "name": "Remède de Loup",
-      "description": "Même en pleine transformation, vous n'oubliez pas votre potion du soir",
-      "explanation": "Boire X potions en forme de Loup",
-      "emoji": "🐺🧪",
-      "category": "loups",
-      "levels": [
-        {
-          "tier": "bronze",
-          "subLevel": 1,
-          "threshold": 1
-        },
-        {
-          "tier": "argent",
-          "subLevel": 1,
-          "threshold": 2
-        },
-        {
-          "tier": "or",
-          "subLevel": 1,
-          "threshold": 3
-        },
-        {
-          "tier": "lycans",
-          "subLevel": 1,
-          "threshold": 5
         }
       ],
       "mainTeamOnly": false
@@ -3460,6 +3429,37 @@
         }
       ],
       "mainTeamOnly": true
+    },
+    {
+      "id": "commentateur-esport",
+      "name": "Commentateur esport",
+      "description": "C'est peut être bien à ce moment là que vous êtes le meilleur",
+      "explanation": "Jouer toutes les parties d'une session en étant en vie moins de 50 % du temps",
+      "emoji": "🎙️",
+      "category": "special",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 2
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 5
+        }
+      ],
+      "mainTeamOnly": false
     }
   ],
   "players": {
@@ -60449,7 +60449,7 @@
     "76561198076015877": {
       "playerId": "76561198076015877",
       "playerName": "CHLOE",
-      "totalUnlocked": 122,
+      "totalUnlocked": 123,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -62048,6 +62048,26 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "commentateur-esport",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260630113309"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
         }
       ]
     },
@@ -64957,7 +64977,7 @@
     "76561198052560531": {
       "playerId": "76561198052560531",
       "playerName": "Tovi",
-      "totalUnlocked": 42,
+      "totalUnlocked": 43,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -65688,6 +65708,26 @@
             "tier": "argent",
             "subLevel": 1,
             "threshold": 4
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "commentateur-esport",
+          "currentValue": 1,
+          "recentValue": 0,
+          "recentGameIds": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260127151713"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
           },
           "progress": 0.5
         }
