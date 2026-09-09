@@ -9,7 +9,9 @@ import {
   FILE_AGE_WINDOW_MS,
   MIN_PLAYERS,
   filterRecentSessionFiles,
-  isRecentGame
+  isRecentGame,
+  ensureDataDirectory,
+  saveDataToFile
 } from './shared/sync-utils.js';
 import { deduceMissingSabotageNames } from './shared/mapUtils.js';
 
@@ -52,15 +54,6 @@ const LEGACY_DATA_ENDPOINTS = [
 // Data directory relative to project root
 const DATA_DIR = '../../data';
 const ABSOLUTE_DATA_DIR = path.resolve(process.cwd(), DATA_DIR);
-
-async function ensureDataDirectory() {
-  try {
-    await fs.access(ABSOLUTE_DATA_DIR);
-  } catch {
-    await fs.mkdir(ABSOLUTE_DATA_DIR, { recursive: true });
-    console.log(`Created data directory: ${ABSOLUTE_DATA_DIR}`);
-  }
-}
 
 // ============================================================================
 // ACTION MERGING UTILITIES
@@ -490,8 +483,8 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs, existingGameLog = nu
         
         const gameId = awsGame.Id;
         
-        // Filter: Only process Main Team games (Ponce-, Tsuna-, khalen-, Meetozila- prefixes)
-        if (!gameId || (!gameId.startsWith('Ponce-') && !gameId.startsWith('Tsuna-') && !gameId.startsWith('khalen-') && !gameId.startsWith('Meetozila-'))) {
+        // Filter: Only process Main Team games
+        if (!MAIN_TEAM_FILTER(gameId)) {
           return; // Skip non-Main Team games
         }
         
@@ -646,19 +639,6 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs, existingGameLog = nu
   return mergedGameLog;
 }
 
-async function saveDataToFile(filename, data) {
-  const filepath = path.join(ABSOLUTE_DATA_DIR, filename);
-  
-  try {
-    const jsonData = JSON.stringify(data, null, 2);
-    await fs.writeFile(filepath, jsonData, 'utf8');
-    console.log(`✓ Saved data to ${filename}`);
-  } catch (error) {
-    console.error(`Failed to save ${filename}:`, error.message);
-    throw error;
-  }
-}
-
 async function mergeJoueursWithAWSPlayers(legacyJoueursData, awsGameLogs) {
   console.log('\n📋 Merging joueurs data with AWS game log players...');
   
@@ -701,8 +681,8 @@ async function mergeJoueursWithAWSPlayers(legacyJoueursData, awsGameLogs) {
   awsGameLogs.forEach(gameLog => {
     if (gameLog.GameStats && Array.isArray(gameLog.GameStats)) {
       gameLog.GameStats.forEach(game => {
-        // Filter: Only process Main Team games (Ponce- and Tsuna- prefixes)
-        if (!game.Id || (!game.Id.startsWith('Ponce-') && !game.Id.startsWith('Tsuna-') && !game.Id.startsWith('khalen-') && !game.Id.startsWith('Meetozila-'))) {
+        // Filter: Only process Main Team games
+        if (!MAIN_TEAM_FILTER(game.Id)) {
           return; // Skip non-Main Team games
         }
         
@@ -809,7 +789,7 @@ async function main() {
   console.log(`📋 Sync mode: ${forceFullSync ? 'FULL (forced)' : 'INCREMENTAL'}`);
 
   try {
-    await ensureDataDirectory();
+    await ensureDataDirectory(ABSOLUTE_DATA_DIR);
     
     // === LOAD EXISTING DATA FOR INCREMENTAL SYNC ===
     let existingGameLog = null;
@@ -841,10 +821,10 @@ async function main() {
           if (data) {
             if (endpoint === 'gameLog') {
               legacyGameLogData = data;
-              await saveDataToFile('gameLog-Legacy.json', data);
+              await saveDataToFile(ABSOLUTE_DATA_DIR, 'gameLog-Legacy.json', data);
             } else if (endpoint === 'rawBRData') {
               legacyBRData = data;
-              await saveDataToFile('rawBRData.json', data);
+              await saveDataToFile(ABSOLUTE_DATA_DIR, 'rawBRData.json', data);
             } else if (endpoint === 'joueurs') {
               legacyJoueursData = data;
               // Don't save directly - will be merged with AWS players later
@@ -878,11 +858,8 @@ async function main() {
       console.log(`🔍 File-level filtering: skipping ${skippedCount} old session files (${ageFilteredUrls.length}/${totalCount} will be fetched)`);
     }
     
-    // Filter URLs to only include Main Team files (Ponce-, Tsuna-, khalen-, Meetozila-)
-    const gameLogUrls = ageFilteredUrls.filter(url => {
-      const filename = url.split('/').pop();
-      return filename.startsWith('Ponce-') || filename.startsWith('Tsuna-') || filename.startsWith('khalen-') || filename.startsWith('Meetozila-');
-    });
+    // Filter URLs to only include Main Team files
+    const gameLogUrls = ageFilteredUrls.filter(url => MAIN_TEAM_FILTER(url.split('/').pop()));
     const teamFilteredCount = ageFilteredUrls.length - gameLogUrls.length;
     if (teamFilteredCount > 0) {
       console.log(`🔍 Team filtering: skipping ${teamFilteredCount} non-main-team files (${gameLogUrls.length} Main Team files to fetch)`);
@@ -928,7 +905,7 @@ async function main() {
         existingGameLog, 
         isIncrementalSync ? gameCutoffDate : null
       );
-      await saveDataToFile('gameLog.json', mergedGameLog);
+      await saveDataToFile(ABSOLUTE_DATA_DIR, 'gameLog.json', mergedGameLog);
     } else {
       // No data at all
       console.log('⚠️  No data available from any source...');
@@ -946,7 +923,7 @@ async function main() {
           Sources: { Legacy: 0, AWS: 0, Merged: 0 },
           GameStats: []
         };
-        await saveDataToFile('gameLog.json', mergedGameLog);
+        await saveDataToFile(ABSOLUTE_DATA_DIR, 'gameLog.json', mergedGameLog);
       }
     }
     
@@ -960,7 +937,7 @@ async function main() {
           BRParties: { totalRecords: 0, data: [] },
           BRRefParties: { totalRecords: 0, data: [] }
         };
-        await saveDataToFile('rawBRData.json', emptyBRData);
+        await saveDataToFile(ABSOLUTE_DATA_DIR, 'rawBRData.json', emptyBRData);
       } else {
         console.log('ℹ️  Legacy data not fetched - keeping existing rawBRData.json');
       }
@@ -968,7 +945,7 @@ async function main() {
     
     // Merge joueurs data with AWS players
     const mergedJoueursData = await mergeJoueursWithAWSPlayers(legacyJoueursData, awsGameLogs);
-    await saveDataToFile('joueurs.json', mergedJoueursData);
+    await saveDataToFile(ABSOLUTE_DATA_DIR, 'joueurs.json', mergedJoueursData);
     
     await createDataIndex(!!legacyGameLogData, awsGameLogs.length, mergedGameLog.TotalRecords);
     
