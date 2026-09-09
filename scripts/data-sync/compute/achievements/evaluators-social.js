@@ -250,3 +250,88 @@ export function immobileGreaterThanMoving(playerGames, allGames, playerId, param
 
   return { value, gameIds };
 }
+
+/**
+ * Count sessions (games with < 12h gap between them) where the player was alive
+ * less than X% of the time in EVERY game of the session.
+ * "Commentateur esport" - Alive percentage computed the same way as the client-side
+ * getWorstTimeAliveStats (survivalStatisticsUtils.ts): requires game Version >= 0.201
+ * (DeathDateIrl reliability) and a valid Start/EndDate duration. A session containing
+ * any non-analyzable game is skipped since the criteria can't be confirmed for it.
+ */
+export function esportCommentator(playerGames, allGames, playerId, params) {
+  const minGames = params.minGames ?? 2;
+  const maxAlivePercentage = params.maxAlivePercentage ?? 50;
+  const SESSION_GAP_MS = 12 * 60 * 60 * 1000;
+
+  function parseVersionNumber(version) {
+    if (!version) return null;
+    const match = /^0\.(\d+)$/.exec(version);
+    if (!match) return null;
+    return parseInt(match[1], 10);
+  }
+
+  // Sort games chronologically
+  const sorted = [...playerGames]
+    .filter(({ game }) => game.StartDate && game.EndDate)
+    .sort((a, b) => a.game.StartDate.localeCompare(b.game.StartDate));
+
+  if (sorted.length === 0) return { value: 0, gameIds: [] };
+
+  // Group into sessions by proximity (< 12h gap)
+  const sessions = [[sorted[0]]];
+  for (let i = 1; i < sorted.length; i++) {
+    const prevEnd = new Date(sorted[i - 1].game.EndDate).getTime();
+    const curStart = new Date(sorted[i].game.StartDate).getTime();
+    if (curStart - prevEnd < SESSION_GAP_MS) {
+      sessions[sessions.length - 1].push(sorted[i]);
+    } else {
+      sessions.push([sorted[i]]);
+    }
+  }
+
+  const gameIds = [];
+  let value = 0;
+
+  for (const session of sessions) {
+    if (session.length < minGames) continue;
+
+    let allBelowThreshold = true;
+    for (const { game, playerStat } of session) {
+      const versionNumber = parseVersionNumber(game.Version);
+      if (versionNumber === null || versionNumber < 201) {
+        allBelowThreshold = false;
+        break;
+      }
+
+      const gameStart = new Date(game.StartDate).getTime();
+      const gameEnd = new Date(game.EndDate).getTime();
+      const gameDuration = gameEnd - gameStart;
+      if (!gameDuration || gameDuration <= 0 || isNaN(gameDuration)) {
+        allBelowThreshold = false;
+        break;
+      }
+
+      let aliveDuration = gameDuration;
+      if (playerStat.DeathDateIrl) {
+        const deathTime = new Date(playerStat.DeathDateIrl).getTime();
+        if (!isNaN(deathTime)) {
+          aliveDuration = Math.max(0, Math.min(deathTime - gameStart, gameDuration));
+        }
+      }
+
+      const percentageAlive = (aliveDuration / gameDuration) * 100;
+      if (percentageAlive >= maxAlivePercentage) {
+        allBelowThreshold = false;
+        break;
+      }
+    }
+
+    if (allBelowThreshold) {
+      value++;
+      gameIds.push(session[session.length - 1].game.Id);
+    }
+  }
+
+  return { value, gameIds };
+}

@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.9.15';
+export const APP_VERSION = '1.9.16';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,16 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+    {
+    version: 'v1.9.16',
+    date: '09/09/2026',
+    description: 'Ajout d\'un nouveau succès : "Commentateur esport" dans',
+    link: {
+      mainTab: 'playerSelection',
+      text: 'Joueurs / Succès',
+      navigationState: { selectedPlayerSelectionView: 'achievements' }
+    }
+  },
     {
     version: 'v1.9.15',
     date: '28/08/2026',

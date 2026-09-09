@@ -2054,6 +2054,28 @@ export const ACHIEVEMENT_DEFINITIONS = [
       { tier: 'lycans', subLevel: 1, threshold: 15 },
     ],
   },
+
+  {
+    id: 'commentateur-esport',
+    name: 'Commentateur esport',
+    description: "C'est peut être bien à ce moment là que vous êtes le meilleur",
+    explanation: "Jouer toutes les parties d'une session en étant en vie moins de 50 % du temps",
+    emoji: '🎙️',
+    category: 'special',
+    evaluator: 'esportCommentator',
+    mainTeamOnly: false,
+    evaluatorParams: { minGames: 2, maxAlivePercentage: 50 },
+    levels: [
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 2
+      { tier: 'argent', subLevel: 1, threshold: 2 },
+      // Or: 3
+      { tier: 'or', subLevel: 1, threshold: 3 },
+      // Lycans: 5
+      { tier: 'lycans', subLevel: 1, threshold: 5 },
+    ],
+  },
 ];
 
 
