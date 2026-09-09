@@ -375,26 +375,6 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
   {
-    id: 'remede-de-loup',
-    name: 'Remède de Loup',
-    description: "Même en pleine transformation, vous n'oubliez pas votre potion du soir",
-    explanation: 'Boire X potions en forme de Loup',
-    emoji: '🐺🧪',
-    category: 'loups',
-    evaluator: 'wolfDrinkPotions',
-    evaluatorParams: {},
-    levels: [
-      // Bronze: 1
-      { tier: 'bronze', subLevel: 1, threshold: 1 },
-      // Argent: 2
-      { tier: 'argent', subLevel: 1, threshold: 2 },
-      // Or: 3
-      { tier: 'or', subLevel: 1, threshold: 3 },
-      // Lycans: 5
-      { tier: 'lycans', subLevel: 1, threshold: 5 },
-    ],
-  },
-  {
     id: 'alakazam',
     name: 'Alakazam !',
     description: "La magie n'a pas de camp… ni d'odeur",
