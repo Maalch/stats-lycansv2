@@ -252,12 +252,22 @@ export function immobileGreaterThanMoving(playerGames, allGames, playerId, param
 }
 
 /**
- * Count sessions (games with < 12h gap between them) where the player was alive
- * less than X% of the time in EVERY game of the session.
- * "Commentateur esport" - Alive percentage computed the same way as the client-side
- * getWorstTimeAliveStats (survivalStatisticsUtils.ts): requires game Version >= 0.201
- * (DeathDateIrl reliability) and a valid Start/EndDate duration. A session containing
- * any non-analyzable game is skipped since the criteria can't be confirmed for it.
+ * Count sessions where the player (a) played in EVERY game of the session (the whole
+ * group's games, < 12h gap between them — not just the player's own games, so sitting
+ * out even one game of the session disqualifies it) and (b) was alive, in aggregate,
+ * less than X% of the total session duration.
+ * "Commentateur esport" - Per-game alive duration computed the same way as the
+ * client-side getWorstTimeAliveStats (survivalStatisticsUtils.ts): requires game
+ * Version >= 0.201 (DeathDateIrl reliability) and a valid Start/EndDate duration.
+ * A session containing any non-analyzable game is skipped since the ratio can't be
+ * confirmed for it.
+ *
+ * A session only counts once its last (chronological) game appears in `playerGames`
+ * (rather than being derived from the truncated `playerGames` prefix directly). This
+ * keeps `value` correctly dependent on the caller-provided prefix/suffix of the
+ * player's own games — required for the recentValue slice and the threshold→game
+ * attribution binary search in index.js — while the participation/ratio checks
+ * themselves always use the full `allGames` (never truncated by callers).
  */
 export function esportCommentator(playerGames, allGames, playerId, params) {
   const minGames = params.minGames ?? 2;
@@ -271,22 +281,23 @@ export function esportCommentator(playerGames, allGames, playerId, params) {
     return parseInt(match[1], 10);
   }
 
-  // Sort games chronologically
-  const sorted = [...playerGames]
-    .filter(({ game }) => game.StartDate && game.EndDate)
-    .sort((a, b) => a.game.StartDate.localeCompare(b.game.StartDate));
+  const knownGameIds = new Set(playerGames.map(({ game }) => game.Id));
 
-  if (sorted.length === 0) return { value: 0, gameIds: [] };
+  // Group ALL games (regardless of who played) into sessions by proximity (< 12h gap)
+  const sortedAll = [...allGames]
+    .filter(game => game.StartDate && game.EndDate)
+    .sort((a, b) => a.StartDate.localeCompare(b.StartDate));
 
-  // Group into sessions by proximity (< 12h gap)
-  const sessions = [[sorted[0]]];
-  for (let i = 1; i < sorted.length; i++) {
-    const prevEnd = new Date(sorted[i - 1].game.EndDate).getTime();
-    const curStart = new Date(sorted[i].game.StartDate).getTime();
+  if (sortedAll.length === 0) return { value: 0, gameIds: [] };
+
+  const sessions = [[sortedAll[0]]];
+  for (let i = 1; i < sortedAll.length; i++) {
+    const prevEnd = new Date(sortedAll[i - 1].EndDate).getTime();
+    const curStart = new Date(sortedAll[i].StartDate).getTime();
     if (curStart - prevEnd < SESSION_GAP_MS) {
-      sessions[sessions.length - 1].push(sorted[i]);
+      sessions[sessions.length - 1].push(sortedAll[i]);
     } else {
-      sessions.push([sorted[i]]);
+      sessions.push([sortedAll[i]]);
     }
   }
 
@@ -296,11 +307,24 @@ export function esportCommentator(playerGames, allGames, playerId, params) {
   for (const session of sessions) {
     if (session.length < minGames) continue;
 
-    let allBelowThreshold = true;
-    for (const { game, playerStat } of session) {
+    const lastGame = session[session.length - 1];
+    if (!knownGameIds.has(lastGame.Id)) continue;
+
+    // Player must have played in EVERY game of the session
+    const playerStatsPerGame = session.map(game => game.PlayerStats.find(p => getPlayerId(p) === playerId));
+    if (playerStatsPerGame.some(ps => !ps)) continue;
+
+    let totalDuration = 0;
+    let totalAlive = 0;
+    let analyzable = true;
+
+    for (let i = 0; i < session.length; i++) {
+      const game = session[i];
+      const playerStat = playerStatsPerGame[i];
+
       const versionNumber = parseVersionNumber(game.Version);
       if (versionNumber === null || versionNumber < 201) {
-        allBelowThreshold = false;
+        analyzable = false;
         break;
       }
 
@@ -308,7 +332,7 @@ export function esportCommentator(playerGames, allGames, playerId, params) {
       const gameEnd = new Date(game.EndDate).getTime();
       const gameDuration = gameEnd - gameStart;
       if (!gameDuration || gameDuration <= 0 || isNaN(gameDuration)) {
-        allBelowThreshold = false;
+        analyzable = false;
         break;
       }
 
@@ -320,16 +344,16 @@ export function esportCommentator(playerGames, allGames, playerId, params) {
         }
       }
 
-      const percentageAlive = (aliveDuration / gameDuration) * 100;
-      if (percentageAlive >= maxAlivePercentage) {
-        allBelowThreshold = false;
-        break;
-      }
+      totalDuration += gameDuration;
+      totalAlive += aliveDuration;
     }
 
-    if (allBelowThreshold) {
+    if (!analyzable) continue;
+
+    const percentageAlive = (totalAlive / totalDuration) * 100;
+    if (percentageAlive < maxAlivePercentage) {
       value++;
-      gameIds.push(session[session.length - 1].game.Id);
+      gameIds.push(session[session.length - 1].Id);
     }
   }
 
