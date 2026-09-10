@@ -165,6 +165,8 @@ export function getKillDescription(deathTypeCode: DeathType): string {
       return 'Kill de Chasseur (sur loup)';
     case DEATH_TYPES.SHERIF_SUCCESS :
       return 'Kill de Shérif';
+    case DEATH_TYPES.SHERIF_MISTAKE:
+      return 'Kill de Shérif (erreur)';
     case DEATH_TYPES.OTHER_AGENT:
       return 'Kill d\'Agent';
     case DEATH_TYPES.AVENGER:
@@ -193,6 +195,12 @@ export function getKillDescription(deathTypeCode: DeathType): string {
       return 'Kill sur Contrebandier';
     case DEATH_TYPES.SMUGGLER_LOOT_FAILURE:
       return 'Ruine du Contrebandier';
+    case DEATH_TYPES.MERCENARY_HUNT_KILL:
+      return 'Kill sur Mercenaire';
+    case DEATH_TYPES.MERCENARY_LOOT_FAILURE:
+      return 'Échec de l\'objectif du Mercenaire';
+    case DEATH_TYPES.CULTIST_FAILED:
+      return 'Échec de Cultiste';
     case DEATH_TYPES.KILLED_VILLAGE_IDIOT:
       return 'Punition de l\'Idiot du Village';
     default:
