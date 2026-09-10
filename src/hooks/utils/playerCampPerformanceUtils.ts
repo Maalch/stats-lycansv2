@@ -3,7 +3,6 @@ import type { PlayerCampPerformanceResponse, CampAverage, PlayerPerformance, Pla
 import { getPlayerCampFromRole, getPlayerFinalRole, getPlayerMainCampFromRole } from '../../utils/datasyncExport';
 import { getPlayerId } from '../../utils/playerIdentification';
 import { getEffectivePower } from '../../utils/roleUtils';
-import { CHART_DEFAULTS } from '../../config/chartConstants';
 // Note: Player names are already normalized during data loading, so we can use Username directly
 
 /**
@@ -561,8 +560,11 @@ export function computePlayerCampPerformance(
     });
   }
 
-  // Format results with minimum game threshold
-  const minGamesToInclude = CHART_DEFAULTS.MIN_CAMP_GAMES; // Minimum games required in a camp to be included
+  // Format results with minimum game threshold.
+  // Keep this at the lowest selectable "Min. parties" option (1): the chart applies its own
+  // minGames filter client-side, so pre-filtering higher here would silently hide rare camps
+  // (e.g. Louveteau) whose players never reach a higher per-camp game count.
+  const minGamesToInclude = 1;
   const { campAverages, playerPerformanceArray } = formatResults(
     mergedPlayerPerformance, 
     mergedCampStats, 
