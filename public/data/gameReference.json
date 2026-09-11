@@ -265,12 +265,12 @@
       "translationKey": "NALES_ROLE_DESCRIPTION_HOST"
     },
     {
-      "id": "braconnier",
-      "name": "Braconnier",
-      "emoji": "🔫",
-      "description": "Possède un fusil avec un zoom. Ses tirs font très peu de bruit et placent un traqueur sur la cible : les loups la voient sur la minimap et entendent un son quand ils sont proches. Le fusil se recharge automatiquement après chaque meeting.",
-      "descriptionShort": "Possède un fusil dont les tirs rendent la cible plus facile à trouver pour les loups",
-      "translationKey": "NALES_ROLE_DESCRIPTION_POACHER"
+      "id": "traqueur",
+      "name": "Traqueur",
+      "emoji": "📡",
+      "description": "Une fois par meeting, peut tenter de tuer un villageois en devinant son pouvoir. Hors meeting, peut placer un traqueur sur sa cible : il permet d'entendre les paroles des joueurs proches d'elle, et de voir sa position ainsi que celle des joueurs proches sur la minimap en forme humaine. Maximum 2 traqueurs actifs, l'écoute peut être désactivée.",
+      "descriptionShort": "Peut tuer en devinant un pouvoir et placer des traqueurs pour épier une cible",
+      "translationKey": "NALES_ROLE_DESCRIPTION_TRACKER"
     },
     {
       "id": "ritualiste",
@@ -1208,12 +1208,11 @@
       "Nécromancien": { "category": "wolfPowers", "id": "necromancien" },
       "Dupeur": { "category": "wolfPowers", "id": "dupeur" },
       "Saboteur": { "category": "wolfPowers", "id": "saboteur" },
-      "Traqueur": { "category": "wolfPowers", "id": "traqueur", "legacy": true, "replacedBy": "hote" },
       "Sorcier": { "category": "wolfPowers", "id": "sorcier" },
       "Possesseur": { "category": "wolfPowers", "id": "possesseur" },
       "Artificier": { "category": "wolfPowers", "id": "artificier" },
       "Hôte": { "category": "wolfPowers", "id": "hote" },
-      "Braconnier": { "category": "wolfPowers", "id": "braconnier" },
+      "Traqueur": { "category": "wolfPowers", "id": "traqueur", "_note": "Name reused: older gameLog entries with this value refer to a retired, unrelated power (later renamed to Hôte)" },
       "Ritualiste": { "category": "wolfPowers", "id": "ritualiste" },
       "Acrobate": { "category": "wolfPowers", "id": "acrobate" },
       "Sournois": { "category": "wolfPowers", "id": "sournois" },
