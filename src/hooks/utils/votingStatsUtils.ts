@@ -590,6 +590,15 @@ export interface CampEliminationStats {
 }
 
 /**
+ * Distribution of the number of distinct players voted against in a meeting
+ */
+export interface VoteDiversityStats {
+  distinctTargetsCount: number;  // How many different players received votes in the meeting
+  meetingCount: number;          // How many meetings had exactly this many distinct targets
+  percentage: number;            // % of all meetings
+}
+
+/**
  * Global voting statistics across all games
  */
 export interface GlobalVotingStats {
@@ -603,6 +612,7 @@ export interface GlobalVotingStats {
   meetingDayStats: MeetingDayStats[];
   campVotingStats: CampVotingStats[];
   campEliminationStats: CampEliminationStats[];
+  voteDiversityStats: VoteDiversityStats[];
   totalEliminations: number;     // Total players eliminated by vote
 }
 
@@ -629,6 +639,9 @@ export function calculateGlobalVotingStats(games: GameLogEntry[]): GlobalVotingS
   campEliminationMap.set('Loup', 0);
   campEliminationMap.set('Solo Rôles', 0);
   let totalEliminationCount = 0;
+
+  // Track how many meetings had N distinct players voted against
+  const voteDiversityMap = new Map<number, number>();
 
   let totalMeetings = 0;
   let totalVotes = 0;
@@ -689,6 +702,14 @@ export function calculateGlobalVotingStats(games: GameLogEntry[]): GlobalVotingS
       totalSkipRateSum += meetingSkipRate;
       totalAbstentionRateSum += meetingAbstentionRate;
       meetingCount++;
+
+      // Count distinct players targeted (excluding 'Passé') in this meeting
+      const distinctTargets = new Set(
+        votesInMeeting
+          .filter(v => v.vote.Target !== 'Passé')
+          .map(v => v.vote.Target)
+      );
+      voteDiversityMap.set(distinctTargets.size, (voteDiversityMap.get(distinctTargets.size) || 0) + 1);
 
       // Aggregate by meeting day
       const dayStats = meetingDayMap.get(meetingNum) || {
@@ -791,6 +812,15 @@ export function calculateGlobalVotingStats(games: GameLogEntry[]): GlobalVotingS
     }))
     .sort((a, b) => b.eliminations - a.eliminations);
 
+  // Convert vote diversity map to sorted array
+  const voteDiversityStats: VoteDiversityStats[] = Array.from(voteDiversityMap.entries())
+    .map(([distinctTargetsCount, count]) => ({
+      distinctTargetsCount,
+      meetingCount: count,
+      percentage: totalMeetings > 0 ? (count / totalMeetings) * 100 : 0
+    }))
+    .sort((a, b) => a.distinctTargetsCount - b.distinctTargetsCount);
+
   return {
     totalMeetings,
     totalVotes,
@@ -802,6 +832,7 @@ export function calculateGlobalVotingStats(games: GameLogEntry[]): GlobalVotingS
     meetingDayStats,
     campVotingStats,
     campEliminationStats,
+    voteDiversityStats,
     totalEliminations: totalEliminationCount
   };
 }

@@ -57,6 +57,18 @@ export function GlobalVotingStatsChart() {
     }));
   }, [data, lycansColorScheme]);
 
+  // Prepare data for vote diversity distribution chart (distinct players voted per meeting)
+  const voteDiversityData = useMemo(() => {
+    if (!data?.voteDiversityStats) return [];
+
+    return data.voteDiversityStats.map(entry => ({
+      distinctTargetsCount: entry.distinctTargetsCount,
+      label: `${entry.distinctTargetsCount}`,
+      meetingCount: entry.meetingCount,
+      percentage: parseFloat(entry.percentage.toFixed(1))
+    }));
+  }, [data]);
+
   if (isLoading) {
     return <div style={{ padding: '2rem', textAlign: 'center' }}>Chargement des statistiques de vote...</div>;
   }
@@ -85,21 +97,6 @@ export function GlobalVotingStatsChart() {
           title="Meetings Totaux"
           value={data.totalMeetings}
           color={lycansColorScheme.Villageois}
-        />
-        <SummaryCard
-          title="Votes Totaux"
-          value={data.totalVotes}
-          color={lycansColorScheme.Loup}
-        />
-        <SummaryCard
-          title="Passes Totales"
-          value={data.totalSkips}
-          color="#FF9800"
-        />
-        <SummaryCard
-          title="Non-Votes Totaux"
-          value={data.totalAbstentions}
-          color="#9E9E9E"
         />
       </div>
 
@@ -366,6 +363,64 @@ export function GlobalVotingStatsChart() {
                   }}
                 />
               </PieChart>
+            </ResponsiveContainer>
+          </FullscreenChart>
+        </div>
+      )}
+
+      {/* Vote Diversity Distribution */}
+      {voteDiversityData.length > 0 && (
+        <div className="lycans-graphique-section">
+          <div>
+            <h3>🎯 Nombre de Joueurs Différents Votés par Meeting</h3>
+          </div>
+          <p style={{ 
+            fontSize: '0.85rem', 
+            color: 'var(--text-secondary)', 
+            textAlign: 'center', 
+            marginBottom: '1rem' 
+          }}>
+            Nombre de meetings ayant vu 0, 1, 2, 3... joueurs différents recevoir des votes (hors passes).
+          </p>
+          <FullscreenChart title="Nombre de Joueurs Différents Votés par Meeting">
+            <ResponsiveContainer width="100%" height={400}>
+              <BarChart data={voteDiversityData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" />
+                <XAxis 
+                  dataKey="label" 
+                  label={{ value: 'Joueurs différents votés', position: 'insideBottom', offset: -10 }}
+                  stroke="var(--text-secondary)"
+                />
+                <YAxis 
+                  label={{ value: 'Nombre de meetings', angle: -90, position: 'insideLeft' }}
+                  stroke="var(--text-secondary)"
+                />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: 'var(--bg-secondary)', 
+                    border: '1px solid var(--border-color)',
+                    borderRadius: '6px',
+                    padding: '10px',
+                    color: 'var(--text-primary)'
+                  }}
+                  labelStyle={{ color: 'var(--text-primary)', fontWeight: 'bold' }}
+                  itemStyle={{ color: 'var(--text-primary)' }}
+                  formatter={(value, name, item) => {
+                    if (name === 'meetingCount') {
+                      const percentage = item.payload.percentage;
+                      return [`${value} (${percentage.toFixed(1)}%)`, 'Meetings'];
+                    }
+                    return [value, name];
+                  }}
+                  labelFormatter={(label) => `${label} joueur(s) différent(s) voté(s)`}
+                />
+                <Bar 
+                  dataKey="meetingCount" 
+                  name="meetingCount"
+                  fill={lycansColorScheme.Villageois}
+                  radius={[8, 8, 0, 0]}
+                />
+              </BarChart>
             </ResponsiveContainer>
           </FullscreenChart>
         </div>
