@@ -900,13 +900,13 @@ export function GameDurationInsights() {
           {sessionTimesLoading && <div className="statistiques-attente">Analyse des horaires en cours...</div>}
           {sessionTimesError && <div className="statistiques-echec">Erreur : {sessionTimesError}</div>}
           {!sessionTimesLoading && !sessionTimesError && !sessionTimesData && (
-            <div className="statistiques-indisponibles">Aucune session avec horodatage précis trouvée</div>
+            <div className="statistiques-indisponibles">Aucune session du mardi avec horodatage précis trouvée</div>
           )}
           {sessionTimesData && (
             <>
               <div className="lycans-section-description">
                 <p>
-                  <strong>Horaires de session :</strong> Analyse basée sur {sessionTimesData.totalSessions} sessions
+                  <strong>Horaires de session :</strong> Analyse basée sur {sessionTimesData.totalSessions} sessions du mardi
                   (jours avec toutes les parties horodatées précisément).
                 </p>
                 <p>

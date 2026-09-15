@@ -53,6 +53,17 @@ function toParisMinutes(d: Date): number {
 }
 
 /**
+ * Returns the ISO weekday index (0 = Sunday, 1 = Monday, ..., 6 = Saturday) for a date in Europe/Paris timezone
+ */
+function getParisWeekdayIndex(d: Date): number {
+  const weekday = new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Paris', weekday: 'short' }).format(d);
+  const map: Record<string, number> = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+  return map[weekday];
+}
+
+const TUESDAY_WEEKDAY_INDEX = 2;
+
+/**
  * Format minutes-since-midnight to "HH:MM"
  */
 export function minutesToHHMM(minutes: number): string {
@@ -109,8 +120,15 @@ export function computeSessionTimesAnalysis(gameData: GameLogEntry[]): SessionTi
   }
   sessionGroups.push(currentGroup);
 
+  // Only keep sessions that started on a Tuesday (Paris timezone)
+  const tuesdaySessionGroups = sessionGroups.filter(
+    (games) => getParisWeekdayIndex(new Date(games[0].StartDate)) === TUESDAY_WEEKDAY_INDEX
+  );
+
+  if (tuesdaySessionGroups.length === 0) return null;
+
   // Build sessions
-  const sessions: SessionTimeEntry[] = sessionGroups
+  const sessions: SessionTimeEntry[] = tuesdaySessionGroups
     .map((games) => {
       const first = games[0];
       const last = games[games.length - 1];
