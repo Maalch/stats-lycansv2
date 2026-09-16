@@ -6,7 +6,7 @@ description: "Use when working on data sync, gameLog.json, server-side player st
 
 # Data-Sync Statistics
 
-Use this skill for server-side statistics and the generated player metadata they produce. For global architecture and data shapes, consult `.github/copilot-instructions.md`; keep ordinary chart-only UI, deployment, and source-fetching work outside this skill unless it changes a statistics contract.
+Use this skill for server-side statistics and the generated player metadata they produce. Keep ordinary chart-only UI, deployment, and source-fetching work outside this skill unless it changes a statistics contract.
 
 ## First Route The Request
 
@@ -22,6 +22,15 @@ Identify the output type before editing:
 
 Do not edit `playerRankings.json`, `playerTitles.json`, `playerAchievements.json`, or `playerStatsCache.json` directly. They are generated outputs.
 
+## Data Sources And Contracts
+
+- `data/gameLog.json` is the main unified game source; Discord data lives under `data/discord/`.
+- `GameLogEntry.PlayerStats` contains player identity, roles, role changes, victory state, votes, death metadata, talking time, loot, and actions. Read the current source types before extending this contract.
+- `Vote.Day` is a meeting number, not a calendar date.
+- `Amoureux` is a `MainRoleInitial`, not a `SecondaryRole`. Solo roles win as their role name rather than as `Villageois`.
+- Source/team behavior is configured in `scripts/data-sync/shared/data-sources.js`. Discord has no BR data or main-team social metadata.
+- Generated metadata is consumed from `playerRankings.json`, `playerTitles.json`, and `playerAchievements.json`; `playerStatsCache.json` supports incremental ranking computation.
+
 ## Non-Negotiable Domain Rules
 
 - Group or compare a player across games by `getPlayerId()` from `src/utils/datasyncExport.js`, never by a raw `Username`. Resolve display names through existing canonical-name utilities or `joueurs.json`.
@@ -35,6 +44,7 @@ Do not edit `playerRankings.json`, `playerTitles.json`, `playerAchievements.json
 - For loot, talking time, role-assignment frequency, and wolf-transformation metrics, retain `MainRoleInitial`. This is intentional: a changed player no longer loots or talks, and role frequency records assigned roles.
 - Support legacy elite roles and the modern `Villageois Élite` plus `Power` representation with shared role/camp helpers; do not add direct elite-role checks unless an existing helper cannot represent the rule.
 - In achievement evaluators, match `KillerName`, vote targets, and action targets through `compute/achievements/helpers.js` (`isKilledByPlayer`, `getKillerPlayerId`, `isVoteTargetPlayer`, `isActionTargetPlayer`). Username equality is only valid for locating a player within the same game's `PlayerStats` array before comparing IDs.
+- Keep all related numerator, denominator, and eligibility calculations on the same filtered data source.
 
 ## Integration Requirements
 

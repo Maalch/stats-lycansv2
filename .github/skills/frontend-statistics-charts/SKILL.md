@@ -6,7 +6,7 @@ description: "Use when creating or modifying React statistics charts, Recharts d
 
 # Frontend Statistics Charts
 
-Use this skill for data-driven dashboard views and their client-side integration. Use `data-sync-statistics` for server-side compute modules, ranking generation, titles, achievements, and generated JSON contracts. Consult `.github/copilot-instructions.md` for the broader architecture.
+Use this skill for data-driven dashboard views and their client-side integration. Use `data-sync-statistics` for server-side compute modules, ranking generation, titles, achievements, and generated JSON contracts.
 
 ## First Route The Request
 
@@ -23,6 +23,15 @@ Choose the owning surface before editing:
 | Chart-local persisted state or drill-down | `NavigationContext` |
 
 Do not directly fetch normal game data in a chart. Base hooks receive the correctly filtered game log through `useCombinedFilteredRawData()`.
+
+## Client Architecture
+
+- `SettingsContext` owns persistent global filters and the selected data source.
+- `NavigationContext` owns tab navigation, drill-down state, browser history, and chart-local state restoration.
+- `FullscreenContext` owns fullscreen chart display; `InfoContext` owns contextual help visibility.
+- Use `fetchDataFile()` or `fetchOptionalDataFile()` from `src/utils/dataPath.ts` for static data. Never construct fetch URLs manually.
+- Normal game data comes from `gameLog.json`; Battle Royale uses its separate `rawBRData.json` pipeline.
+- Main and Discord data must remain source-consistent. Features unavailable for Discord must be hidden or degrade gracefully.
 
 ## Hook And Component Contract
 
@@ -43,6 +52,8 @@ Do not directly fetch normal game data in a chart. Base hooks receive the correc
 ## Player Charts And Interaction
 
 - Player names supplied by normal hooks are already canonical. For player-colored charts, use `useJoueursData()` with `useThemeAdjustedDynamicPlayersColor()` and the existing fallback utilities.
+- When grouping or comparing raw players, use `getPlayerId()` and canonical-name helpers from `playerIdentification.ts`; never use raw usernames as stable identifiers.
+- Use shared role helpers from `roleUtils.ts` for camp and elite-role checks. Do not compare `MainRoleInitial` directly for legacy and modern Villageois Elite representations.
 - When a top-N player chart supports global highlighting, append an eligible highlighted player missing from the cutoff with `isHighlightedAddition: true`. Reflect that state in the label, tooltip, and bar or cell styling.
 - Use `navigateToGameDetails()` only when a datum maps unambiguously to game-detail filters. Pass a useful French `fromComponent` label.
 - Use `navigateToTab()` for cross-chart routing. Do not manipulate browser history directly; all URL and history operations go through `urlManager` or the relevant context.
