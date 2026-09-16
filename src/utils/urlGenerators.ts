@@ -1,4 +1,5 @@
 import type { SettingsState } from '../context/SettingsContext';
+import { getPlayerIdByCanonicalName } from './playerIdentification';
 
 /**
  * Utility functions for generating URLs with settings parameters
@@ -11,6 +12,7 @@ const defaultSettings: SettingsState = {
   mapNameFilter: 'all',
   playerFilter: { mode: 'none', players: [] },
   highlightedPlayer: null,
+  highlightedPlayerId: null,
   useIndependentFilters: true,
   independentFilters: {
     gameTypeEnabled: false,
@@ -68,7 +70,11 @@ export function generateUrlWithSettings(baseUrl: string, settings: Partial<Setti
   }
   
   if (settings.highlightedPlayer && settings.highlightedPlayer !== defaultSettings.highlightedPlayer) {
-    urlParams.set('highlightedPlayer', encodeURIComponent(settings.highlightedPlayer));
+    // Persisted as a Steam ID, not a name; silently omitted if it can't be resolved (e.g. joueurs.json not loaded)
+    const highlightedId = getPlayerIdByCanonicalName(settings.highlightedPlayer);
+    if (highlightedId) {
+      urlParams.set('highlightedID', encodeURIComponent(highlightedId));
+    }
   }
   
   const cleanBaseUrl = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;

@@ -242,6 +242,22 @@ export function findPlayerInJoueurs(
 }
 
 /**
+ * Get the Steam ID for a player given their canonical display name (reverse of getCanonicalPlayerName)
+ * Used to persist the highlighted player as an ID in the URL instead of a name
+ *
+ * @param name - Canonical player name (as returned by getCanonicalPlayerName)
+ * @param joueursData - Optional joueurs data (uses cache if not provided)
+ * @returns The Steam ID, or null if not found
+ */
+export function getPlayerIdByCanonicalName(
+  name: string,
+  joueursData?: JoueursData | null
+): string | null {
+  const data = joueursData || joueursDataCache;
+  return data?.Players.find(p => p.Joueur === name)?.SteamID ?? null;
+}
+
+/**
  * Get all canonical player names that should be displayed in the application
  * This combines players from joueurs.json with any additional players from game data
  * 

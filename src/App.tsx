@@ -6,6 +6,7 @@ import { SettingsIndicator } from './components/common/SettingsIndicator';
 import { SettingsBadge } from './components/common/SettingsBadge';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { LoadingSkeleton } from './components/common/LoadingSkeleton';
+import { HighlightedPlayerIdSync } from './hooks/useHighlightedPlayerIdSync';
 import { mergeUrlState } from './utils/urlManager';
 import './App.css';
 
@@ -329,6 +330,7 @@ const BR_STATS_MENU = [
 export default function App() {
   return (
     <SettingsProvider>
+      <HighlightedPlayerIdSync />
       <NavigationProvider>
         <FullscreenProvider>
           <MainApp />

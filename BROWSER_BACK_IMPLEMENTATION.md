@@ -59,7 +59,7 @@ The system now manages these URL parameters:
 - `dateRangeEnabled`, `dateStart`, `dateEnd` - Date range filtering
 - `mapNameEnabled`, `mapNameFilter` - Map filtering
 - `playerFilterMode`, `players` - Player inclusion/exclusion
-- `highlightedPlayer` - Player to highlight across charts
+- `highlightedID` - Player to highlight across charts, identified by Steam ID (legacy `highlightedPlayer` name param still parsed for backward compatibility)
 - `dataSource` - 'main' or 'discord' team data
 - `tab`, `subtab` - Current tab selection
 - `playerSelectionView` - Player selection page view

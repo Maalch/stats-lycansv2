@@ -35,6 +35,7 @@ export interface SettingsState {
   mapNameFilter: MapNameFilter;
   playerFilter: PlayerFilter;
   highlightedPlayer: string | null; // Player to highlight and always show in charts
+  highlightedPlayerId: string | null; // Steam ID backing highlightedPlayer, persisted in the URL
   
   // Independent filters system (now the default)
   useIndependentFilters: boolean;
@@ -65,6 +66,7 @@ const defaultSettings: SettingsState = {
   mapNameFilter: 'all',
   playerFilter: { mode: 'none', players: [] },
   highlightedPlayer: null,
+  highlightedPlayerId: null,
   // Independent filters system (now default)
   useIndependentFilters: true,
   independentFilters: {
@@ -154,8 +156,10 @@ function urlStateToSettings(urlState: UrlState): Partial<SettingsState> {
   
   settings.independentFilters = independentFilters;
 
-  // Parse highlighted player
-  if (urlState.highlightedPlayer) {
+  // Parse highlighted player (ID-based format takes precedence over legacy name format)
+  if (urlState.highlightedID) {
+    settings.highlightedPlayerId = decodeURIComponent(urlState.highlightedID);
+  } else if (urlState.highlightedPlayer) {
     settings.highlightedPlayer = decodeURIComponent(urlState.highlightedPlayer);
   }
   
@@ -224,9 +228,9 @@ function updateUrlFromSettings(settings: SettingsState) {
     }
   }
   
-  // Highlighted player
-  if (settings.highlightedPlayer && settings.highlightedPlayer !== defaultSettings.highlightedPlayer) {
-    urlState.highlightedPlayer = encodeURIComponent(settings.highlightedPlayer);
+  // Highlighted player (persisted as Steam ID, not name)
+  if (settings.highlightedPlayerId && settings.highlightedPlayerId !== defaultSettings.highlightedPlayerId) {
+    urlState.highlightedID = encodeURIComponent(settings.highlightedPlayerId);
   }
   
   // Data source
@@ -349,8 +353,8 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       }
     }
     
-    if (targetSettings.highlightedPlayer && targetSettings.highlightedPlayer !== defaultSettings.highlightedPlayer) {
-      urlState.highlightedPlayer = encodeURIComponent(targetSettings.highlightedPlayer);
+    if (targetSettings.highlightedPlayerId && targetSettings.highlightedPlayerId !== defaultSettings.highlightedPlayerId) {
+      urlState.highlightedID = encodeURIComponent(targetSettings.highlightedPlayerId);
     }
     
     // Tab and subtab

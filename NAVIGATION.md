@@ -34,7 +34,7 @@ import { pushUrlState, replaceUrlState, mergeUrlState, parseUrlState } from '../
 mergeUrlState({ tab: 'rankings', subtab: 'playersGeneral' }, 'push');
 
 // Silent update (for filter changes)
-mergeUrlState({ highlightedPlayer: 'Ponce' }, 'replace');
+mergeUrlState({ highlightedID: '76561198034021995' }, 'replace');
 
 // Read current URL state
 const urlState = parseUrlState();

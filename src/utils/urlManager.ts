@@ -14,7 +14,8 @@ export interface UrlState {
   mapNameFilter?: string;
   playerFilterMode?: string;
   players?: string;
-  highlightedPlayer?: string;
+  highlightedPlayer?: string; // Legacy name-based format, still parsed for backward compatibility
+  highlightedID?: string; // Steam ID, current format
   dataSource?: string;
   
   // Tab navigation
@@ -58,6 +59,7 @@ export function parseUrlState(): UrlState {
   if (urlParams.has('playerFilterMode')) state.playerFilterMode = urlParams.get('playerFilterMode')!;
   if (urlParams.has('players')) state.players = urlParams.get('players')!;
   if (urlParams.has('highlightedPlayer')) state.highlightedPlayer = urlParams.get('highlightedPlayer')!;
+  if (urlParams.has('highlightedID')) state.highlightedID = urlParams.get('highlightedID')!;
   if (urlParams.has('dataSource')) state.dataSource = urlParams.get('dataSource')!;
   
   // Tab navigation
@@ -120,8 +122,8 @@ export function buildUrlSearch(state: Partial<UrlState>): string {
     }
   }
   
-  if (state.highlightedPlayer) {
-    urlParams.set('highlightedPlayer', state.highlightedPlayer);
+  if (state.highlightedID) {
+    urlParams.set('highlightedID', state.highlightedID);
   }
   
   if (state.dataSource && state.dataSource !== 'main') {

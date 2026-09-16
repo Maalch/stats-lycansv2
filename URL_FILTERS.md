@@ -24,7 +24,7 @@ Base URL: `https://your-domain.com/stats-lycansv2/`
 | `mapNameFilter` | `Village`, `Château`, `Autre` | Map name filter | `mapNameFilter=Village` |
 | `playerFilterMode` | `none`, `include`, `exclude` | Player filter mode | `playerFilterMode=include` |
 | `players` | `Player1,Player2,Player3` | Comma-separated list of players (URL encoded) | `players=Ponce,AmberAerin,Flippy` |
-| `highlightedPlayer` | `PlayerName` | Player to highlight in charts | `highlightedPlayer=Ponce` |
+| `highlightedID` | `SteamID` | Player to highlight in charts, identified by Steam ID | `highlightedID=76561198034021995` |
 | `dataSource` | `main`, `discord` | Data source to use | `dataSource=main` |
 
 #### Navigation Parameters
@@ -86,6 +86,9 @@ You can manually construct URLs by adding the appropriate parameters to the base
 
 ## Important Notes
 
+- **Legacy Parameter**: The older `highlightedPlayer=PlayerName` parameter is still parsed for
+  backward compatibility with previously shared links, but the app always generates/updates URLs
+  using `highlightedID` going forward. An unrecognized Steam ID is silently ignored.
 - **URL Encoding**: Player names with special characters or spaces should be URL encoded
 - **Priority**: URL parameters take priority over saved settings in localStorage
 - **Persistence**: When you change filters via the UI, the URL will be updated automatically
