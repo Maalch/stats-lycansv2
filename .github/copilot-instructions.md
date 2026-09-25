@@ -8,4 +8,5 @@ This repository is a React 19 and TypeScript dashboard built with Vite, with Nod
 - Preserve the existing project structure and reuse nearby utilities, types, and patterns before introducing new abstractions.
 - Treat `src/` and `scripts/` as source code. Treat `docs/` and copied files under `public/data/` as generated outputs; change their sources instead of editing generated copies directly.
 - Keep changes focused. Do not reformat or regenerate unrelated files.
+- Tests use Vitest (not Jest) + React Testing Library, colocated as `*.test.ts`/`*.test.tsx` next to the source under test. Run with `npm run test`. See the `testing` skill for conventions.
 - Use the task-specific skills under `.github/skills/` for detailed workflows and domain rules.
