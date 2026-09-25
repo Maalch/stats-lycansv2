@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
@@ -12,4 +13,9 @@ export default defineConfig({
   publicDir: 'public',
   // Ensure data directory is copied to build output
   assetsInclude: ['**/*.json'],
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: ['./src/test/setup.ts'],
+  },
 })
