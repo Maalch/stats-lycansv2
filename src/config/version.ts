@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.9.16';
+export const APP_VERSION = '1.9.17';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,19 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.9.17',
+    date: '29/09/2026',
+    description: 'Ajout d\'une nouvelle série "Séries avec Kill" (parties consécutives avec au moins un kill) dans',
+    link: {
+      mainTab: 'rankings',
+      subTab: 'series',
+      text: 'Classements / Séries / Séries avec Kill',
+      navigationState: {
+        selectedSeriesType: 'kills'
+      }
+    }
+  },
     {
     version: 'v1.9.16',
     date: '09/09/2026',
