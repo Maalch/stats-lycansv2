@@ -24,17 +24,24 @@ type ChartSeriesData = {
   isHighlightedAddition?: boolean;
 };
 
+const SERIES_TYPES = ['villageois', 'loup', 'nowolf', 'solo', 'wins', 'losses', 'deaths', 'survival', 'deathT1', 'kills'] as const;
+type SeriesType = typeof SERIES_TYPES[number];
+
+function isSeriesType(value: string): value is SeriesType {
+  return (SERIES_TYPES as readonly string[]).includes(value);
+}
+
 export function PlayerSeriesChart() {
   const { data: seriesData, isLoading: dataLoading, error: fetchError } = usePlayerSeriesFromRaw();
     const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
   const { settings } = useSettings();
   
   // Use navigationState to restore series type selection, fallback to 'villageois'
-  const [selectedSeriesType, setSelectedSeriesType] = useState<'villageois' | 'loup' | 'nowolf' | 'solo' | 'wins' | 'losses' | 'deaths' | 'survival' | 'deathT1'>(() => {
+  const [selectedSeriesType, setSelectedSeriesType] = useState<SeriesType>(() => {
     // Priority: URL param > NavigationContext > default
     const urlState = parseUrlState();
-    if (urlState.seriesView && ['villageois', 'loup', 'nowolf', 'solo', 'wins', 'losses', 'deaths', 'survival', 'deathT1'].includes(urlState.seriesView)) {
-      return urlState.seriesView as 'villageois' | 'loup' | 'nowolf' | 'solo' | 'wins' | 'losses' | 'deaths' | 'survival' | 'deathT1';
+    if (urlState.seriesView && isSeriesType(urlState.seriesView)) {
+      return urlState.seriesView;
     }
     return navigationState.selectedSeriesType || 'villageois';
   });
@@ -49,7 +56,7 @@ export function PlayerSeriesChart() {
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
 
   // Helper function to handle series type changes
-  const handleSeriesTypeChange = (newSeriesType: 'villageois' | 'loup' | 'nowolf' | 'solo' | 'wins' | 'losses' | 'deaths' | 'survival' | 'deathT1') => {
+  const handleSeriesTypeChange = (newSeriesType: SeriesType) => {
     setSelectedSeriesType(newSeriesType);
     updateNavigationState({ selectedSeriesType: newSeriesType });
     // Update URL parameter
@@ -66,8 +73,8 @@ export function PlayerSeriesChart() {
   useEffect(() => {
     const handleUrlChange = () => {
       const urlState = parseUrlState();
-      if (urlState.seriesView && ['villageois', 'loup', 'nowolf', 'solo', 'wins', 'losses', 'deaths', 'survival', 'deathT1'].includes(urlState.seriesView)) {
-        const newView = urlState.seriesView as 'villageois' | 'loup' | 'nowolf' | 'solo' | 'wins' | 'losses' | 'deaths' | 'survival' | 'deathT1';
+      if (urlState.seriesView && isSeriesType(urlState.seriesView)) {
+        const newView = urlState.seriesView;
         if (newView !== selectedSeriesType) {
           setSelectedSeriesType(newView);
         }
@@ -122,6 +129,9 @@ export function PlayerSeriesChart() {
         case 'deathT1':
           fullDataset = seriesData.currentDeathT1Series;
           break;
+        case 'kills':
+          fullDataset = seriesData.currentKillSeries;
+          break;
         default:
           fullDataset = [];
       }
@@ -154,6 +164,9 @@ export function PlayerSeriesChart() {
           break;
         case 'deathT1':
           fullDataset = seriesData.allDeathT1Series;
+          break;
+        case 'kills':
+          fullDataset = seriesData.allKillSeries;
           break;
         default:
           fullDataset = [];
@@ -245,6 +258,10 @@ export function PlayerSeriesChart() {
         return viewMode === 'ongoing'
           ? 'Séries Mort T1 En Cours'
           : 'Plus Longues Séries Mort T1';
+      case 'kills':
+        return viewMode === 'ongoing'
+          ? 'Séries avec Kill En Cours'
+          : 'Plus Longues Séries avec Kill';
       default:
         return '';
     }
@@ -583,7 +600,7 @@ export function PlayerSeriesChart() {
           </div>
         </div>
       );
-    } else if (selectedSeriesType === 'deathT1') {
+    } else if (selectedSeriesType === 'deathT1' || selectedSeriesType === 'kills') {
       return (
         <div style={{ 
           background: 'var(--bg-secondary)', 
@@ -596,7 +613,7 @@ export function PlayerSeriesChart() {
             <strong>{data.player}</strong>
             {showOngoingIndicator && <span style={{ marginLeft: '8px', fontSize: '1.2em' }}>🔥</span>}
           </div>
-          <div>Série Mort T1 : {data.seriesLength} parties consécutives {showOngoingIndicator ? '(En cours)' : ''}</div>
+          <div>Série {selectedSeriesType === 'kills' ? 'avec Kill' : 'Mort T1'} : {data.seriesLength} parties consécutives {showOngoingIndicator ? '(En cours)' : ''}</div>
           <div>Du {data.startGame} au {data.endGame}</div>
           <div>Du {data.startDate} au {data.endDate}</div>
           {data.campCounts && <div>Camps joués : {formatCampCounts(data.campCounts)}</div>}
@@ -753,6 +770,12 @@ export function PlayerSeriesChart() {
         selectedGameIds: data.gameIds,
         fromComponent: 'Séries Mort T1'
       });
+    } else if (selectedSeriesType === 'kills') {
+      navigateToGameDetails({
+        selectedPlayer: data.player,
+        selectedGameIds: data.gameIds,
+        fromComponent: 'Séries avec Kill'
+      });
     } else {
       const campFilter = selectedSeriesType === 'villageois' ? 'Villageois' : 'Loup';
       navigateToGameDetails({
@@ -829,6 +852,12 @@ export function PlayerSeriesChart() {
               Survivre ou mourir après le T1 brise la série.
             </>
           )}
+          {selectedSeriesType === 'kills' && (
+            <>
+              <strong>Séries avec Kill :</strong> Parties consécutives où le joueur a tué au moins un joueur (hors votes et morts environnementales). 
+              Une partie sans kill brise la série.
+            </>
+          )}
           <br/>
           <strong>🔥 Séries en cours :</strong> {viewMode === 'ongoing' 
             ? 'Toutes les séries affichées sont actuellement actives' 
@@ -902,6 +931,13 @@ export function PlayerSeriesChart() {
             onClick={() => handleSeriesTypeChange('deathT1')}
           >
             Séries Mort T1
+          </button>
+          <button
+            type="button"
+            className={`lycans-categorie-btn ${selectedSeriesType === 'kills' ? 'active' : ''}`}
+            onClick={() => handleSeriesTypeChange('kills')}
+          >
+            Séries avec Kill
           </button>
         </div>
         
@@ -990,6 +1026,7 @@ export function PlayerSeriesChart() {
                        selectedSeriesType === 'nowolf' ? '#FFA500' :
                        selectedSeriesType === 'solo' ? '#9C27B0' : 
                        selectedSeriesType === 'wins' ? '#8884d8' : 
+                       selectedSeriesType === 'kills' ? '#20B2AA' : 
                        '#dc3545'}
                   shape={(props) => {
                     const { x, y, width, height, payload } = props;
@@ -1004,6 +1041,7 @@ export function PlayerSeriesChart() {
                        selectedSeriesType === 'nowolf' ? '#FFA500' :
                        selectedSeriesType === 'solo' ? '#9C27B0' :
                        selectedSeriesType === 'wins' ? '#8884d8' :
+                       selectedSeriesType === 'kills' ? '#20B2AA' :
                        '#dc3545');
 
                     return (
@@ -1106,6 +1144,7 @@ export function PlayerSeriesChart() {
                      selectedSeriesType === 'deaths' ? seriesData.averageDeathSeries :
                      selectedSeriesType === 'survival' ? seriesData.averageSurvivalSeries :
                      selectedSeriesType === 'deathT1' ? seriesData.averageDeathT1Series :
+                     selectedSeriesType === 'kills' ? seriesData.averageKillSeries :
                      seriesData.averageLossSeries}
                   </div>
                   <p>parties en moyenne</p>
@@ -1125,6 +1164,7 @@ export function PlayerSeriesChart() {
                      selectedSeriesType === 'deaths' ? seriesData.activeDeathCount :
                      selectedSeriesType === 'survival' ? seriesData.activeSurvivalCount :
                      selectedSeriesType === 'deathT1' ? seriesData.activeDeathT1Count :
+                     selectedSeriesType === 'kills' ? seriesData.activeKillCount :
                      seriesData.activeLossCount}
                   </div>
                   <p>séries encore actives</p>
@@ -1137,6 +1177,7 @@ export function PlayerSeriesChart() {
                       selectedSeriesType === 'deaths' ? seriesData.activeDeathCount :
                       selectedSeriesType === 'survival' ? seriesData.activeSurvivalCount :
                       selectedSeriesType === 'deathT1' ? seriesData.activeDeathT1Count :
+                      selectedSeriesType === 'kills' ? seriesData.activeKillCount :
                       seriesData.activeLossCount) > 0 ? 
                       'Joueurs actuellement dans une série de ce type' : 
                       'Aucune série active de ce type'}

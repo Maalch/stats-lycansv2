@@ -465,3 +465,53 @@ export function processDeathT1Series(
     playerStats.currentDeathT1GameIds = [];
   }
 }
+
+/**
+ * Process kill series for a player (consecutive games with at least one kill)
+ * @param displayName - Display name for the player (used in output)
+ */
+export function processKillSeries(
+  playerStats: PlayerSeriesState,
+  displayName: string,
+  hasKilled: boolean,
+  actualCamp: string,
+  gameDisplayedId: string,
+  date: string
+): void {
+  if (hasKilled) {
+    if (playerStats.currentKillSeries === 0) {
+      playerStats.killSeriesStart = { game: gameDisplayedId, date };
+      playerStats.currentKillGameIds = [];
+    }
+    playerStats.currentKillSeries++;
+    playerStats.currentKillCamps.push(actualCamp);
+    playerStats.currentKillGameIds.push(gameDisplayedId);
+
+    if (
+      !playerStats.longestKillSeries ||
+      playerStats.currentKillSeries > playerStats.longestKillSeries.seriesLength
+    ) {
+      const campCounts: Record<string, number> = {};
+      playerStats.currentKillCamps.forEach(camp => {
+        campCounts[camp] = (campCounts[camp] || 0) + 1;
+      });
+
+      playerStats.longestKillSeries = {
+        player: displayName,
+        seriesLength: playerStats.currentKillSeries,
+        startGame: playerStats.killSeriesStart!.game,
+        endGame: gameDisplayedId,
+        startDate: playerStats.killSeriesStart!.date,
+        endDate: date,
+        campCounts,
+        isOngoing: false,
+        gameIds: [...playerStats.currentKillGameIds]
+      };
+    }
+  } else {
+    playerStats.currentKillSeries = 0;
+    playerStats.currentKillCamps = [];
+    playerStats.killSeriesStart = null;
+    playerStats.currentKillGameIds = [];
+  }
+}

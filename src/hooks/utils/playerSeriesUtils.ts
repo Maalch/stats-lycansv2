@@ -6,6 +6,7 @@
 import { getPlayerFinalRole, getPlayerMainCampFromRole } from '../../utils/datasyncExport';
 import { getPlayerId } from '../../utils/playerIdentification';
 import type { GameLogEntry } from '../useCombinedRawData';
+import { extractKillsFromGame } from './deathStatisticsUtils';
 
 // Import types
 import type { 
@@ -15,6 +16,7 @@ import type {
   DeathSeries, 
   SurvivalSeries, 
   DeathT1Series,
+  KillSeries,
   PlayerSeriesData 
 } from './playerSeries/playerSeriesTypes';
 
@@ -29,7 +31,8 @@ import {
   processLossSeries,
   processDeathSeries,
   processSurvivalSeries,
-  processDeathT1Series
+  processDeathT1Series,
+  processKillSeries
 } from './playerSeries/playerSeriesProcessors';
 
 // Import statistics functions
@@ -43,6 +46,7 @@ export type {
   DeathSeries, 
   SurvivalSeries, 
   DeathT1Series,
+  KillSeries,
   PlayerSeriesData 
 } from './playerSeries/playerSeriesTypes';
 
@@ -74,6 +78,8 @@ export function computePlayerSeries(
       year: 'numeric'
     });
 
+    const killerIds = new Set(extractKillsFromGame(game).map(kill => kill.killerId));
+
     game.PlayerStats.forEach(playerStat => {
       const playerId = getPlayerId(playerStat);
       const displayName = playerStat.Username;
@@ -98,6 +104,7 @@ export function computePlayerSeries(
       processDeathSeries(playerStats, displayName, playerDied, mainCamp, gameDisplayedId, date);
       processSurvivalSeries(playerStats, displayName, playerDied, mainCamp, gameDisplayedId, date);
       processDeathT1Series(playerStats, displayName, deathTiming, mainCamp, gameDisplayedId, date);
+      processKillSeries(playerStats, displayName, killerIds.has(playerId), mainCamp, gameDisplayedId, date);
 
       // Update last states
       playerStats.lastDied = playerDied;
@@ -149,10 +156,15 @@ export function computePlayerSeries(
         stats.currentSurvivalSeries > 0) {
       stats.longestSurvivalSeries.isOngoing = true;
     }
-    if (stats.longestDeathT1Series && 
+    if (stats.longestDeathT1Series &&
         stats.currentDeathT1Series === stats.longestDeathT1Series.seriesLength &&
         stats.currentDeathT1Series > 0) {
       stats.longestDeathT1Series.isOngoing = true;
+    }
+    if (stats.longestKillSeries &&
+        stats.currentKillSeries === stats.longestKillSeries.seriesLength &&
+        stats.currentKillSeries > 0) {
+      stats.longestKillSeries.isOngoing = true;
     }
   });
 
@@ -193,6 +205,7 @@ function collectCurrentSeriesAndCounts(
   let activeDeathCount = 0;
   let activeSurvivalCount = 0;
   let activeDeathT1Count = 0;
+  let activeKillCount = 0;
   let ongoingVillageoisCount = 0;
   let ongoingLoupsCount = 0;
   let ongoingNoWolfCount = 0;
@@ -202,6 +215,7 @@ function collectCurrentSeriesAndCounts(
   let ongoingDeathCount = 0;
   let ongoingSurvivalCount = 0;
   let ongoingDeathT1Count = 0;
+  let ongoingKillCount = 0;
 
   const currentVillageoisSeries: CampSeries[] = [];
   const currentLoupsSeries: CampSeries[] = [];
@@ -212,6 +226,7 @@ function collectCurrentSeriesAndCounts(
   const currentDeathSeries: DeathSeries[] = [];
   const currentSurvivalSeries: SurvivalSeries[] = [];
   const currentDeathT1Series: DeathT1Series[] = [];
+  const currentKillSeries: KillSeries[] = [];
 
   // Build a lookup from DisplayedId → formatted StartDate (matching the format used by processors)
   const gameDateByDisplayedId = new Map<string, string>();
@@ -385,6 +400,22 @@ function collectCurrentSeriesAndCounts(
       });
     }
 
+    // Kill series
+    if (stats.currentKillSeries > 0) {
+      activeKillCount++;
+      currentKillSeries.push({
+        player: displayName,
+        seriesLength: stats.currentKillSeries,
+        startGame: stats.killSeriesStart?.game || '',
+        endGame: stats.currentKillGameIds[stats.currentKillGameIds.length - 1] || '',
+        startDate: stats.killSeriesStart?.date || '',
+        endDate: gameDateByDisplayedId.get(stats.currentKillGameIds[stats.currentKillGameIds.length - 1] || '') || '',
+        campCounts: createCampCounts(stats.currentKillCamps),
+        isOngoing: true,
+        gameIds: [...stats.currentKillGameIds]
+      });
+    }
+
     // Count ongoing record series
     if (stats.longestVillageoisSeries?.isOngoing) ongoingVillageoisCount++;
     if (stats.longestLoupsSeries?.isOngoing) ongoingLoupsCount++;
@@ -395,6 +426,7 @@ function collectCurrentSeriesAndCounts(
     if (stats.longestDeathSeries?.isOngoing) ongoingDeathCount++;
     if (stats.longestSurvivalSeries?.isOngoing) ongoingSurvivalCount++;
     if (stats.longestDeathT1Series?.isOngoing) ongoingDeathT1Count++;
+    if (stats.longestKillSeries?.isOngoing) ongoingKillCount++;
   });
 
   // Sort current series by length
@@ -407,6 +439,7 @@ function collectCurrentSeriesAndCounts(
   currentDeathSeries.sort((a, b) => b.seriesLength - a.seriesLength);
   currentSurvivalSeries.sort((a, b) => b.seriesLength - a.seriesLength);
   currentDeathT1Series.sort((a, b) => b.seriesLength - a.seriesLength);
+  currentKillSeries.sort((a, b) => b.seriesLength - a.seriesLength);
 
   return {
     currentSeries: {
@@ -418,7 +451,8 @@ function collectCurrentSeriesAndCounts(
       currentLossSeries,
       currentDeathSeries,
       currentSurvivalSeries,
-      currentDeathT1Series
+      currentDeathT1Series,
+      currentKillSeries
     },
     activeCounts: {
       activeVillageoisCount,
@@ -429,7 +463,8 @@ function collectCurrentSeriesAndCounts(
       activeLossCount,
       activeDeathCount,
       activeSurvivalCount,
-      activeDeathT1Count
+      activeDeathT1Count,
+      activeKillCount
     },
     ongoingCounts: {
       ongoingVillageoisCount,
@@ -440,7 +475,8 @@ function collectCurrentSeriesAndCounts(
       ongoingLossCount,
       ongoingDeathCount,
       ongoingSurvivalCount,
-      ongoingDeathT1Count
+      ongoingDeathT1Count,
+      ongoingKillCount
     }
   };
 }

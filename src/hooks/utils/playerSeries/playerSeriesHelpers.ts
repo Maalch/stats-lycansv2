@@ -60,6 +60,9 @@ export function initializePlayerSeries(playerMap: Map<string, string>): Record<s
       currentDeathT1Series: 0,
       longestDeathT1Series: null,
       currentDeathT1Camps: [],
+      currentKillSeries: 0,
+      longestKillSeries: null,
+      currentKillCamps: [],
       currentNoWolfCamps: [],
       currentSoloCamps: [],
       lastCamp: null,
@@ -74,6 +77,7 @@ export function initializePlayerSeries(playerMap: Map<string, string>): Record<s
       deathSeriesStart: null,
       survivalSeriesStart: null,
       deathT1SeriesStart: null,
+      killSeriesStart: null,
       currentVillageoisGameIds: [],
       currentLoupsGameIds: [],
       currentNoWolfGameIds: [],
@@ -82,7 +86,8 @@ export function initializePlayerSeries(playerMap: Map<string, string>): Record<s
       currentLossGameIds: [],
       currentDeathGameIds: [],
       currentSurvivalGameIds: [],
-      currentDeathT1GameIds: []
+      currentDeathT1GameIds: [],
+      currentKillGameIds: []
     };
   });
   

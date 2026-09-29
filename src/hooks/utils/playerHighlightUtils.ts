@@ -6,7 +6,7 @@
  * Candidates are scored by priority and one is randomly selected from the top tier.
  */
 
-import type { PlayerSeriesData, CampSeries, WinSeries, LossSeries, DeathSeries, SurvivalSeries, DeathT1Series } from '../utils/playerSeries/playerSeriesTypes';
+import type { PlayerSeriesData, CampSeries, WinSeries, LossSeries, DeathSeries, SurvivalSeries, DeathT1Series, KillSeries } from '../utils/playerSeries/playerSeriesTypes';
 import type { GameLogData } from '../useCombinedRawData';
 import type { AchievementsData, PlayerAchievements } from '../../types/achievements';
 import { getPlayerMainCampFromRole } from '../../utils/datasyncExport';
@@ -31,7 +31,7 @@ export interface PlayerHighlight {
   navigateTo?: string;
 }
 
-type AnySeriesEntry = CampSeries | WinSeries | LossSeries | DeathSeries | SurvivalSeries | DeathT1Series;
+type AnySeriesEntry = CampSeries | WinSeries | LossSeries | DeathSeries | SurvivalSeries | DeathT1Series | KillSeries;
 
 // --- Streak highlights ---
 
@@ -82,6 +82,7 @@ export function computeCurrentStreaks(
     { key: 'deaths', label: 'morts consécutives', current: seriesData.currentDeathSeries, all: seriesData.allDeathSeries, isBad: true },
     { key: 'survival', label: 'survies', current: seriesData.currentSurvivalSeries, all: seriesData.allSurvivalSeries, isBad: false },
     { key: 'deathT1', label: 'morts T1', current: seriesData.currentDeathT1Series, all: seriesData.allDeathT1Series, isBad: true },
+    { key: 'kills', label: 'parties avec kill', current: seriesData.currentKillSeries, all: seriesData.allKillSeries, isBad: false },
   ];
 
   for (const type of streakTypes) {

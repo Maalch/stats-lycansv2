@@ -75,6 +75,18 @@ export interface DeathT1Series {
   gameIds: string[]; // List of global chronological game numbers (e.g., ["123", "124", "125"])
 }
 
+export interface KillSeries {
+  player: string;
+  seriesLength: number;
+  startGame: string;
+  endGame: string;
+  startDate: string;
+  endDate: string;
+  campCounts: Record<string, number>; // Camps played during the series
+  isOngoing: boolean;
+  gameIds: string[];
+}
+
 export interface PlayerSeriesData {
   // Full datasets for all players with series data
   allVillageoisSeries: CampSeries[];
@@ -86,6 +98,7 @@ export interface PlayerSeriesData {
   allDeathSeries: DeathSeries[];
   allSurvivalSeries: SurvivalSeries[];
   allDeathT1Series: DeathT1Series[];
+  allKillSeries: KillSeries[];
   // Current ongoing series for ALL players (not just their best)
   currentVillageoisSeries: CampSeries[];
   currentLoupsSeries: CampSeries[];
@@ -96,6 +109,7 @@ export interface PlayerSeriesData {
   currentDeathSeries: DeathSeries[];
   currentSurvivalSeries: SurvivalSeries[];
   currentDeathT1Series: DeathT1Series[];
+  currentKillSeries: KillSeries[];
   totalGamesAnalyzed: number;
   // Statistics for all players
   averageVillageoisSeries: number;
@@ -107,6 +121,7 @@ export interface PlayerSeriesData {
   averageDeathSeries: number;
   averageSurvivalSeries: number;
   averageDeathT1Series: number;
+  averageKillSeries: number;
   eliteVillageoisCount: number; // Players with 5+ Villageois series
   eliteLoupsCount: number; // Players with 3+ Loups series
   eliteNoWolfCount: number; // Players with 5+ NoWolf series
@@ -116,6 +131,7 @@ export interface PlayerSeriesData {
   eliteDeathCount: number; // Players with 5+ death series
   eliteSurvivalCount: number; // Players with 5+ survival series
   eliteDeathT1Count: number; // Players with 3+ deathT1 series
+  eliteKillCount: number; // Players with 3+ kill series
   totalPlayersCount: number;
   // Active series counts (all players currently on a streak, not just top 20)
   activeVillageoisCount: number; // Players currently on a Villageois streak
@@ -127,6 +143,7 @@ export interface PlayerSeriesData {
   activeDeathCount: number; // Players currently on a death streak
   activeSurvivalCount: number; // Players currently on a survival streak
   activeDeathT1Count: number; // Players currently on a deathT1 streak
+  activeKillCount: number; // Players currently on a kill streak
   // Record ongoing counts (players currently in their personal best streak)
   ongoingVillageoisCount: number;
   ongoingLoupsCount: number;
@@ -137,6 +154,7 @@ export interface PlayerSeriesData {
   ongoingDeathCount: number;
   ongoingSurvivalCount: number;
   ongoingDeathT1Count: number;
+  ongoingKillCount: number;
 }
 
 export interface PlayerSeriesState {
@@ -163,6 +181,9 @@ export interface PlayerSeriesState {
   currentDeathT1Series: number;
   longestDeathT1Series: DeathT1Series | null;
   currentDeathT1Camps: string[];
+  currentKillSeries: number;
+  longestKillSeries: KillSeries | null;
+  currentKillCamps: string[];
   currentNoWolfCamps: string[]; // Track camps during NoWolf series
   currentSoloCamps: string[]; // Track camps during Solo series
   lastCamp: 'Villageois' | 'Loup' | 'Autres' | null;
@@ -177,6 +198,7 @@ export interface PlayerSeriesState {
   deathSeriesStart: { game: string; date: string } | null;
   survivalSeriesStart: { game: string; date: string } | null;
   deathT1SeriesStart: { game: string; date: string } | null;
+  killSeriesStart: { game: string; date: string } | null;
   // Track game IDs for current series - now DisplayedIds
   currentVillageoisGameIds: string[];
   currentLoupsGameIds: string[];
@@ -187,4 +209,5 @@ export interface PlayerSeriesState {
   currentDeathGameIds: string[];
   currentSurvivalGameIds: string[];
   currentDeathT1GameIds: string[];
+  currentKillGameIds: string[];
 }
