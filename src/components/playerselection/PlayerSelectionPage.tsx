@@ -100,6 +100,8 @@ export function PlayerSelectionPage() {
     if (settings.useIndependentFilters && settings.independentFilters?.gameTypeEnabled) {
       const newFilter = settings.independentFilters.gameFilter === 'modded' ? 'modded' : 'all';
       setRankingFilter(newFilter);
+    } else if (settings.useIndependentFilters) {
+      setRankingFilter('all');
     } else if (!settings.useIndependentFilters) {
       // Fallback to legacy gameFilter
       const newFilter = settings.gameFilter === 'modded' ? 'modded' : 'all';
