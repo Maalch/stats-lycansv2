@@ -1,8 +1,8 @@
 {
   "_meta": {
     "description": "Reference file for Lycans v2 game mechanics: camps, roles, powers, accessories, gadgets, effects, events, and game rules. Extracted from in-game translations and gameLog data.",
-    "version": "0.344",
-    "lastUpdated": "2026-08-24",
+    "version": "0.362",
+    "lastUpdated": "2026-10-06",
     "sourceTranslationsFile": "ExternalData/translations.json",
     "notes": "French names match gameLog.json values. Descriptions are cleaned from in-game markup (<color> tags, {0} placeholders). This file can be manually edited to adjust or enrich descriptions. potionEffects = drinkable effects from potions/scrolls. statusEffects = in-game states applied by role abilities, environmental events, or other mechanics (many overlap with potionEffects but represent the broader set of all possible player states)."
   },
@@ -161,7 +161,7 @@
       "camp": "solo",
       "emoji": "🦁",
       "type": "solo",
-      "description": "Doit marquer tous les joueurs vivants (qui ne sont pas avertis). Ensuite, la nuit suivante, se transforme en Bête : un loup immense, rapide et résistant qui peut tuer même les loups normaux. Doit tuer suffisamment de victimes pour gagner.",
+      "description": "Doit marquer tous les joueurs vivants (qui ne sont pas avertis). Sa progression est cachée en meeting (ex. ?/14). Ensuite, la nuit suivante, se transforme en Bête : un loup immense, rapide et résistant qui peut tuer même les loups normaux (les Zombies ne se réveillent pas à sa transformation). Doit tuer suffisamment de victimes pour gagner, et gagne immédiatement si elle est le seul joueur vivant après avoir tué quelqu'un.",
       "descriptionShort": "Gagne en marquant tous les joueurs puis en les tuant après sa transformation",
       "translationKey": "NALES_ROLE_DESCRIPTION_BEAST"
     },
@@ -201,7 +201,7 @@
       "camp": "solo",
       "emoji": "☠️",
       "type": "solo",
-      "description": "Place des crânes (que les autres joueurs peuvent détruire) qui chargent lentement son objectif. À 100% après un meeting, une phase de chasse commence : des esprits sont relâchés qui peuvent capturer des joueurs, et le Cultiste peut aussi les capturer directement. Les joueurs libres peuvent libérer les joueurs capturés (3 secondes nécessaires).",
+      "description": "Place des crânes (que les autres joueurs peuvent détruire) qui chargent son objectif : la charge est plus rapide avec peu de crânes placés et plus lente avec beaucoup. À 100% après un meeting, une phase de chasse (journée un peu plus courte que la normale) commence : des esprits, plus lents, sont relâchés et peuvent capturer des joueurs, et le Cultiste peut aussi les capturer directement. Les joueurs libres peuvent libérer les joueurs capturés (3 secondes nécessaires).",
       "descriptionShort": "Gagne en cachant des crânes puis en capturant des joueurs",
       "translationKey": "NALES_ROLE_DESCRIPTION_CULTIST"
     }
@@ -212,7 +212,7 @@
       "id": "necromancien",
       "name": "Nécromancien",
       "emoji": "⚰️",
-      "description": "Peut marquer un cadavre. Le joueur devient un Loup et prend sa forme de loup immédiatement. Peut ensuite le ressusciter comme un loup muet en consommant sa charge. La charge augmente en forme de loup.",
+      "description": "Peut marquer un cadavre. Le joueur devient un Loup et prend sa forme de loup immédiatement. Peut ensuite le ressusciter comme un loup muet en consommant sa charge. La charge augmente en forme de loup et peut dépasser 100% (jusqu'à 200%). Commence à 90% : doit d'abord se transformer avant de pouvoir ressusciter sa cible la première fois.",
       "descriptionShort": "Peut ressusciter un cadavre en loup",
       "translationKey": "NALES_ROLE_DESCRIPTION_NECROMANCER"
     },
@@ -236,8 +236,8 @@
       "id": "traqueur",
       "name": "Traqueur",
       "emoji": "📍",
-      "description": "Peut placer jusqu'à 2 traqueurs sur des joueurs hors meeting. Ils lui permettent d'entendre les joueurs proches de chaque cible et, en forme humaine, de voir leur position ainsi que celle des joueurs proches sur la minimap. L'écoute peut être désactivée. Une fois par meeting, peut tenter de tuer un Villageois en devinant correctement son pouvoir.",
-      "descriptionShort": "Place des traqueurs pour écouter et localiser des joueurs, et peut deviner un pouvoir en meeting",
+      "description": "Peut placer jusqu'à 2 traqueurs sur des joueurs hors meeting. Ils lui permettent d'entendre les joueurs proches de chaque cible et, en forme humaine, de voir leur position ainsi que celle des joueurs proches sur la minimap.       L'écoute peut être activée/désactivée à volonté. Reçoit une charge gratuite de divination par meeting : peut tenter de tuer un Villageois en devinant correctement son pouvoir. Identifie automatiquement les Villageois Élite.",
+            "descriptionShort": "Place des micros sur des joueurs pour les écouter et les localiser, et peut deviner un pouvoir en meeting",
       "translationKey": "NALES_ROLE_DESCRIPTION_TRACKER"
     },
     {
@@ -260,7 +260,7 @@
       "id": "artificier",
       "name": "Artificier",
       "emoji": "💥",
-      "description": "Récolte pour construire des bombes à retardement. Peut en donner secrètement à des joueurs. Le compteur se déclenche vers le début de la demi-journée suivante, mais elles peuvent être refilées avant d'exploser. Elles blessent la victime et la rendent lumineuse.",
+      "description": "Récolte pour construire des bombes à retardement. Peut en donner secrètement à des joueurs. Le compteur se déclenche vers le début de la demi-journée suivante, mais elles peuvent être refilées avant d'exploser. Elles infligent des dégâts modérés et appliquent Blessé (léger ralentissement) et Détecté (visible à travers les murs) pour toute la journée.",
       "descriptionShort": "Peut placer une bombe à retardement sur un joueur",
       "translationKey": "NALES_ROLE_DESCRIPTION_BOMBER"
     },
@@ -342,7 +342,7 @@
       "id": "pretre",
       "name": "Prêtre",
       "emoji": "🙏",
-      "description": "Récolte pour obtenir son pouvoir puis peut protéger secrètement sa cible en journée. Cette nuit, la première fois qu'un loup l'attaque, elle sera protégée et le loup sera repoussé. Moins efficace sur les villageois Élite.",
+      "description": "Récolte pour obtenir son pouvoir puis peut protéger secrètement sa cible en journée. Cette nuit, la première fois qu'un loup l'attaque, elle sera protégée : le loup n'est ni repoussé ni assommé et est soigné comme s'il avait tué un villageois, tandis que la cible passe à 40% de santé et devient invisible et rapide pendant 8 secondes pour s'échapper ou se cacher. Moins efficace sur les villageois Élite.",
       "descriptionShort": "Peut protéger un joueur d'une attaque de loup",
       "translationKey": "NALES_ROLE_DESCRIPTION_PRIEST"
     },
@@ -497,8 +497,8 @@
       "id": "politicien",
       "name": "Politicien",
       "emoji": "🎩",
-      "description": "Une fois par jour, peut marquer secrètement une cible en forme humaine : elle ne pourra ni parler ni voter au meeting suivant. Si le Politicien est villageois et se fait voter, quelqu'un d'autre meurt à sa place.",
-      "descriptionVillager": "Peut assommer sa cible au prochain meeting ; ne peut pas être voté (si villageois)",
+      "description": "Une fois par jour, peut marquer secrètement une cible en forme humaine : elle ne pourra ni parler ni voter au meeting suivant.       Si le Politicien est villageois et se fait voter, quelqu'un d'autre meurt à sa place, uniquement parmi les joueurs qui ont voté contre lui.",
+            "descriptionVillager": "Peut assommer sa cible au prochain meeting ; s'il est voté, un des joueurs qui a voté contre lui meurt à sa place (si villageois)",
       "descriptionWolf": "Peut assommer sa cible au prochain meeting",
       "translationKey": "NALES_ROLE_DESCRIPTION_POLITICIAN"
     },
@@ -663,7 +663,7 @@
       "name": "Fantôme",
       "emoji": "👻",
       "camp": "villageois",
-      "description": "Rôle donné à un villageois mort. Visible par tout le monde et voit et entend tout le monde. Peut soigner et donner un effet positif mineur à un villageois ciblé, ou créer un objet/accessoire aléatoire. Détruit définitivement si traversé par un loup (sauf pendant la nuit de sa mort). Un villageois tué par un loup récemment transformé (moins de 15 secondes) ne peut pas devenir fantôme.",
+      "description": "Rôle donné à un villageois mort. Visible par tout le monde (sauf pendant les meetings) et voit et entend tout le monde. Peut soigner et donner un effet positif mineur à un villageois ciblé, ou créer un objet/accessoire aléatoire. Détruit définitivement si traversé par un loup transformé (sauf pendant la nuit de sa mort) : plus aucun autre fantôme n'apparaît alors pendant la partie. Un villageois tué par un loup récemment transformé (moins de 15 secondes) ou tué en meeting ne peut pas devenir fantôme.",
       "descriptionShort": "Aide les villageois après la mort, mais peut être détruit par les loups",
       "translationKey": "NALES_ROLE_DESCRIPTION_GHOST"
     },
@@ -740,7 +740,7 @@
       "id": "livre-de-sorts",
       "name": "Livre de sorts",
       "emoji": "📕",
-      "description": "Permet d'affecter une cible avec un effet aléatoire. Certains effets sont plus courts si appliqués à un Loup ou un Zombie. De plus, les effets négatifs durent moins longtemps sur ce joueur.",
+      "description": "Permet d'affecter une cible avec un effet aléatoire. Certains effets sont plus courts si appliqués à un Loup ou un Zombie. De plus, les effets négatifs durent moins longtemps sur ce joueur. L'effet Illusion (apparence différente) dure toute la journée.",
       "tinkererEffect": "Recevoir un effet positif aléatoire.",
       "translationKey": "NALES_ACCESSORY_SPELLBOOK",
       "randomEffects": ["Invisible", "Célérité", "Pétrifié", "Géant", "Flatulences", "Aveuglé", "Illusion", "Endormi", "Bombe !", "Brûlé", "Détecté", "Téléportation", "Résistance", "Confusion", "Clairvoyance", "Régénération", "Rassasié", "Camouflé", "Transformation en loup"]
@@ -767,7 +767,7 @@
       "name": "Longue-vue",
       "emoji": "🔭",
       "translationKey": "NALES_GADGET_SPYGLASS",
-      "description": "Sur activation, permet de voir plus loin que la normale."
+      "description": "Sur activation, permet de voir plus loin que la normale et de détecter à travers les murs les joueurs suffisamment lointains."
     },
     {
       "id": "verrou",
@@ -1062,7 +1062,8 @@
         "Pendant le jour, les joueurs explorent, récoltent et communiquent librement.",
         "Pendant la nuit, les Loups peuvent se transformer et tuer des Villageois.",
         "À la fin de chaque nuit, un conseil réunit tous les joueurs survivants pour voter l'élimination d'un suspect.",
-        "Quand un joueur est éliminé, il passe en mode spectateur jusqu'à la fin de la partie."
+        "Quand un joueur est éliminé, il passe en mode spectateur jusqu'à la fin de la partie.",
+        "Un spectateur peut appuyer sur X pour afficher la liste de tous les joueurs avec leur rôle et leur état (mort, transformé en loup...), et cliquer sur un joueur pour passer à son point de vue."
       ]
     },
     {
@@ -1128,7 +1129,8 @@
         "Le joueur avec le plus de votes est éliminé immédiatement.",
         "En cas d'égalité entre deux joueurs, ou entre un joueur et les votes « passer », personne n'est éliminé.",
         "Un Maire est désigné aléatoirement à chaque conseil ; il peut faire taire un joueur ou donner la parole exclusivement à un joueur.",
-        "Chaque joueur peut voir les votes des autres joueurs en temps réel."
+        "Chaque joueur peut voir les votes des autres joueurs en temps réel.",
+        "Chaque joueur peut demander la parole une fois par meeting (touche F) : un son est joué et une icône s'affiche au-dessus de lui jusqu'à la prochaine prise de parole. Non disponible pour le Maire."
       ]
     },
     {
