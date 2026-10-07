@@ -2,7 +2,7 @@
   "_meta": {
     "description": "Reference file for Lycans v2 game mechanics: camps, roles, powers, accessories, gadgets, effects, events, and game rules. Extracted from in-game translations and gameLog data.",
     "version": "0.362",
-    "lastUpdated": "2026-10-06",
+    "lastUpdated": "2026-10-07",
     "sourceTranslationsFile": "ExternalData/translations.json",
     "notes": "French names match gameLog.json values. Descriptions are cleaned from in-game markup (<color> tags, {0} placeholders). This file can be manually edited to adjust or enrich descriptions. potionEffects = drinkable effects from potions/scrolls. statusEffects = in-game states applied by role abilities, environmental events, or other mechanics (many overlap with potionEffects but represent the broader set of all possible player states)."
   },
@@ -1076,7 +1076,8 @@
         "Victoire Villageois : atteindre 100 % de l'objectif de Récolte (la partie se termine au prochain conseil).",
         "Victoire Loups : être au moins aussi nombreux que les Villageois lors d'un conseil.",
         "Victoire Loups : éliminer tous les Villageois.",
-        "Les rôles Solo ont chacun leur propre condition de victoire indépendante."
+        "Les rôles Solo ont chacun leur propre condition de victoire indépendante.",
+        "Certains rôles Solo voient leur condition de victoire vérifiée au début de chaque meeting. Si plusieurs sont remplies en même temps, un ordre de priorité détermine le vainqueur : 1. Agent, 2. Espion, 3. Scientifique, 4. Kidnappeur, 5. Vaudou, 6. Amoureux."
       ]
     },
     {
