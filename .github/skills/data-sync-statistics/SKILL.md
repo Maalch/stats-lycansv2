@@ -24,7 +24,7 @@ Do not edit `playerRankings.json`, `playerTitles.json`, `playerAchievements.json
 
 ## Data Sources And Contracts
 
-- `data/gameLog.json` is the main unified game source; Discord data lives under `data/discord/`.
+- `data/gameLog.json` is the main unified game source; Discord data lives under `data/discord/`. See the `gamelog-structure` skill for the full field, enum, and optional-data reference.
 - `GameLogEntry.PlayerStats` contains player identity, roles, role changes, victory state, votes, death metadata, talking time, loot, and actions. Read the current source types before extending this contract.
 - `Vote.Day` is a meeting number, not a calendar date.
 - `Amoureux` is a `MainRoleInitial`, not a `SecondaryRole`. Solo roles win as their role name rather than as `Villageois`.
