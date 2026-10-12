@@ -43,7 +43,7 @@ function getActionEmoji(actionType: string): string {
   }
 }
 
-function getActionLabel(actionType: string, actionName: string | null, actionTarget: string | null): string {
+export function getActionLabel(actionType: string, actionName: string | null, actionTarget: string | null): string {
   let label = '';
   switch (actionType) {
     case 'Transform':
@@ -69,6 +69,12 @@ function getActionLabel(actionType: string, actionName: string | null, actionTar
     case 'Sabotage':
       label = actionName ? `Sabotage: ${actionName}` : 'Sabotage';
       if (actionTarget) label += ` sur ${actionTarget}`;
+      break;
+    case 'TournamentWon':
+      label = 'Remporte le tournoi';
+      break;
+    case 'TournamentLost':
+      label = 'Perd le tournoi';
       break;
     default:
       label = actionName || actionType;
