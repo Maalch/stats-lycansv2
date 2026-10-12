@@ -54,7 +54,10 @@ export const DeathTypeCode = {
   CRUSHED: 'CRUSHED',                       // A été écrasé
   FALL: 'FALL',                             // Mort de chute
   BY_AVATAR_CHAIN: 'BY_AVATAR_CHAIN',      // Mort liée à l'Avatar
-  
+
+  // Game Events
+  VENGEANCE: 'VENGEANCE',                   // Mort liée à l'événement Vengeance
+
   // Unknown/Special
   UNKNOWN: 'UNKNOWN',                       // Inconnu / Unrecognized death type
   SURVIVOR: 'SURVIVOR',                     // Not dead / Survived the game (used for filtering)
@@ -72,6 +75,7 @@ export const DeathTypeCategoryCode = {
   ROLE_KILLS: ['OTHER_AGENT', 'AVENGER', 'SEER', 'KILLED_VILLAGE_IDIOT'],
   POTIONS: ['HANTED', 'ASSASSIN'],
   LOVER_DEATHS: ['LOVER_DEATH'],
+  EVENT_DEATHS: ['VENGEANCE'],
   SMUGGLER_DEATHS: ['SMUGGLER_HUNT_KILL', 'SMUGGLER_LOOT_FAILURE'],
   MERCENARY_DEATHS: ['MERCENARY_HUNT_KILL', 'MERCENARY_LOOT_FAILURE'],
   ENVIRONMENTAL: ['STARVATION', 'STARVATION_AS_BEAST', 'BOMB', 'CRUSHED', 'FALL', 'BY_AVATAR_CHAIN'],

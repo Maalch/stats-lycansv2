@@ -349,6 +349,7 @@ export function extractKillsFromGame(game: GameLogEntry, campFilter?: string, vi
           player.DeathType === DEATH_TYPES.STARVATION || 
           player.DeathType === DEATH_TYPES.FALL || 
           player.DeathType === DEATH_TYPES.BY_AVATAR_CHAIN ||
+          player.DeathType === DEATH_TYPES.VENGEANCE ||
           player.DeathType === DEATH_TYPES.SMUGGLER_LOOT_FAILURE ||
           player.DeathType === DEATH_TYPES.KILLED_VILLAGE_IDIOT) {
         return;
@@ -842,5 +843,4 @@ export function computeHunterStatistics(gameData: GameLogEntry[], selectedCamp?:
     bestAverageHunter
   };
 }
-
 

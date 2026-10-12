@@ -57,6 +57,7 @@ function extractKillsFromGame(game) {
         deathType !== DeathTypeCode.STARVATION &&
         deathType !== DeathTypeCode.FALL &&
         deathType !== DeathTypeCode.BY_AVATAR_CHAIN &&
+        deathType !== DeathTypeCode.VENGEANCE &&
         deathType !== DeathTypeCode.SURVIVOR &&
         deathType !== '' &&
         deathType !== DeathTypeCode.UNKNOWN
@@ -302,6 +303,7 @@ export function computeDeathStatistics(gameData) {
           deathType !== DeathTypeCode.STARVATION &&
           deathType !== DeathTypeCode.FALL &&
           deathType !== DeathTypeCode.BY_AVATAR_CHAIN &&
+          deathType !== DeathTypeCode.VENGEANCE &&
           deathType !== DeathTypeCode.SURVIVOR &&
           deathType !== '' &&
           deathType !== DeathTypeCode.UNKNOWN

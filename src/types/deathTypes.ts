@@ -59,7 +59,10 @@ export const DEATH_TYPES = {
   CRUSHED: 'CRUSHED',                       // A été écrasé
   FALL: 'FALL',                             // Mort de chute
   BY_AVATAR_CHAIN: 'BY_AVATAR_CHAIN',      // Mort liée à l'Avatar
-  
+
+  // Game Events
+  VENGEANCE: 'VENGEANCE',                   // Mort liée à l'événement Vengeance
+
   // Unknown/Special
   UNKNOWN: 'UNKNOWN',                       // Inconnu / Unrecognized death type
   SURVIVOR: 'SURVIVOR',                     // Not dead / Survived the game (used for filtering)
@@ -109,6 +112,10 @@ export const DEATH_TYPE_CATEGORIES = {
     DEATH_TYPES.LOVER_DEATH
   ],
 
+  EVENT_DEATHS: [
+    DEATH_TYPES.VENGEANCE
+  ],
+
   SMUGGLER_DEATHS: [
     DEATH_TYPES.SMUGGLER_HUNT_KILL,
     DEATH_TYPES.SMUGGLER_LOOT_FAILURE,
@@ -136,6 +143,7 @@ export const SYSTEM_DEATH_TYPES: readonly DeathType[] = [
   DEATH_TYPES.VOTED,
   DEATH_TYPES.STARVATION,
   DEATH_TYPES.STARVATION_AS_BEAST,
+  DEATH_TYPES.VENGEANCE,
   DEATH_TYPES.FALL,
   DEATH_TYPES.BY_AVATAR_CHAIN,
   DEATH_TYPES.SMUGGLER_LOOT_FAILURE,
@@ -199,6 +207,7 @@ export const DEATH_TYPE_LABELS: Record<DeathType, string> = {
   [DEATH_TYPES.STARVATION]: 'Mort de faim',
   [DEATH_TYPES.STARVATION_AS_BEAST]: 'Mort bestiale',
   [DEATH_TYPES.FALL]: 'Mort de chute',
+  [DEATH_TYPES.VENGEANCE]: 'Mort liée à l\'événement Vengeance',
   [DEATH_TYPES.UNKNOWN]: 'Inconnu',
   [DEATH_TYPES.SURVIVOR]: 'Survivant',
   [DEATH_TYPES.SMUGGLER_HUNT_KILL]: 'Tué en tant que Contrebandier',
