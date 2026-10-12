@@ -1,8 +1,8 @@
 {
   "_meta": {
     "description": "Reference file for Lycans v2 game mechanics: camps, roles, powers, accessories, gadgets, effects, events, and game rules. Extracted from in-game translations and gameLog data.",
-    "version": "0.362",
-    "lastUpdated": "2026-10-07",
+    "version": "0.365",
+    "lastUpdated": "2026-10-12",
     "sourceTranslationsFile": "ExternalData/translations.json",
     "notes": "French names match gameLog.json values. Descriptions are cleaned from in-game markup (<color> tags, {0} placeholders). This file can be manually edited to adjust or enrich descriptions. potionEffects = drinkable effects from potions/scrolls. statusEffects = in-game states applied by role abilities, environmental events, or other mechanics (many overlap with potionEffects but represent the broader set of all possible player states)."
   },
@@ -208,6 +208,20 @@
   ],
 
   "wolfPowers": [
+    {
+      "id": "imposteur",
+      "name": "Imposteur",
+      "emoji": "🎭",
+      "description": "Remplace un Villageois Élite et choisit un pouvoir élite à imiter. Chaque pouvoir est légèrement différent de sa version villageoise : utilisez-le sans vous trahir.",
+      "descriptionShort": "Remplace un Villageois Élite et imite un pouvoir élite",
+      "translationKey": "NALES_ROLE_DESCRIPTION_IMPOSTOR",
+      "relatedItems": [
+        { "type": "elitePower", "id": "chasseur", "label": "Chasseur" },
+        { "type": "elitePower", "id": "alchimiste", "label": "Alchimiste" },
+        { "type": "elitePower", "id": "guetteur", "label": "Guetteur" },
+        { "type": "elitePower", "id": "purificateur", "label": "Purificateur" }
+      ]
+    },
     {
       "id": "necromancien",
       "name": "Nécromancien",
@@ -1212,6 +1226,7 @@
       "Alchimiste": { "category": "elitePowers", "id": "alchimiste", "_note": "Legacy MainRoleInitial, now a Villageois Élite power" }
     },
     "powerToCategory": {
+      "Imposteur": { "category": "wolfPowers", "id": "imposteur" },
       "Chasseur": { "category": "elitePowers", "id": "chasseur" },
       "Alchimiste": { "category": "elitePowers", "id": "alchimiste" },
       "Guetteur": { "category": "elitePowers", "id": "guetteur" },
