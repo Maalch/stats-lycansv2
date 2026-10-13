@@ -44,7 +44,7 @@
       "description": "Rôle de base du camp des Villageois. Pas de pouvoir spécial, mais peut recevoir un métier (pouvoir de villageois) et un rôle secondaire.",
       "descriptionShort": "Éliminez les Loups",
       "relatedItems": [
-        { "type": "villagerPower", "id": "ermite", "label": "Métiers de Villageois" },
+        { "type": "villagerPower", "id": "ermite", "label": "Métiers de Villageois", "description": "En partie non-draft, il n'est pas possible d'avoir 2 fois le même métier de Villageois 2 parties de suite" },
         { "type": "secondaryRole", "id": "brasseur", "label": "Rôles Secondaires" }
       ]
     },
