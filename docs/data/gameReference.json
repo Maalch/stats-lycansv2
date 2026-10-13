@@ -2,7 +2,7 @@
   "_meta": {
     "description": "Reference file for Lycans v2 game mechanics: camps, roles, powers, accessories, gadgets, effects, events, and game rules. Extracted from in-game translations and gameLog data.",
     "version": "0.365",
-    "lastUpdated": "2026-10-12",
+    "lastUpdated": "2026-10-13",
     "sourceTranslationsFile": "ExternalData/translations.json",
     "notes": "French names match gameLog.json values. Descriptions are cleaned from in-game markup (<color> tags, {0} placeholders). This file can be manually edited to adjust or enrich descriptions. potionEffects = drinkable effects from potions/scrolls. statusEffects = in-game states applied by role abilities, environmental events, or other mechanics (many overlap with potionEffects but represent the broader set of all possible player states)."
   },
@@ -324,6 +324,14 @@
       "description": "Peut effectuer de grands sauts à certains emplacements spécifiques des maps (indiqués sur la minimap et par des flèches). Chaque saut nécessite quelques secondes de préparation et il émet un grognement au moment du saut. Est immunisé aux dégâts de chute.",
       "descriptionShort": "Peut faire de puissants sauts à certains emplacements de la carte",
       "translationKey": "NALES_ROLE_DESCRIPTION_ACROBAT"
+    },
+    {
+      "id": "petomane",
+      "name": "Pétomane",
+      "emoji": "💨",
+      "description": "Charge son pouvoir en récupérant de la nourriture comestible. En forme de loup, peut dépenser 100% de sa charge pour effectuer un mégapet qui le propulse rapidement en avant.",
+      "descriptionShort": "Charge son pouvoir en récoltant de la nourriture, puis se propulse rapidement en avant avec un mégapet en forme de loup",
+      "translationKey": "NALES_ROLE_DESCRIPTION_FARTMASTER"
     }
   ],
 
@@ -1243,6 +1251,7 @@
       "Ritualiste": { "category": "wolfPowers", "id": "ritualiste" },
       "Acrobate": { "category": "wolfPowers", "id": "acrobate" },
       "Sournois": { "category": "wolfPowers", "id": "sournois" },
+      "Pétomane": { "category": "wolfPowers", "id": "petomane" },
       "Paysan": { "category": "villagerPowers", "id": "paysan", "legacy": true, "replacedBy": "ermite" },
       "Exorciste": { "category": "villagerPowers", "id": "exorciste" },
       "Vengeur": { "category": "villagerPowers", "id": "vengeur", "legacy": true, "replacedBy": "ombre" },
