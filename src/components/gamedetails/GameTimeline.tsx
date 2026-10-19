@@ -257,8 +257,9 @@ function buildTimeline(gameEvents: GameEvent[], playerData: PlayerStat[]): Phase
   const phases = gameEvents
     .filter(e => e.Type === 'NewPhase')
     .sort((a, b) => a.Date.localeCompare(b.Date));
+  const phaseNames = new Set(phases.map(phase => phase.Name));
 
-  // 7. Group events into phases
+  // 7. Prefer recorded timing: phase markers can be logged just after boundary events.
   const groups: PhaseGroup[] = [];
 
   for (let i = 0; i < phases.length; i++) {
@@ -267,6 +268,9 @@ function buildTimeline(gameEvents: GameEvent[], playerData: PlayerStat[]): Phase
 
     const phaseEvents = allEvents.filter(event => {
       if (!event.date) return false;
+      if (phaseNames.has(event.timing)) {
+        return event.timing === currentPhase.Name;
+      }
       if (nextPhase) {
         return event.date >= currentPhase.Date && event.date < nextPhase.Date;
       }
@@ -284,7 +288,9 @@ function buildTimeline(gameEvents: GameEvent[], playerData: PlayerStat[]): Phase
 
   // Events before first phase (rare edge case)
   if (phases.length > 0) {
-    const prePhaseEvents = allEvents.filter(event => event.date && event.date < phases[0].Date);
+    const prePhaseEvents = allEvents.filter(event =>
+      event.date && !phaseNames.has(event.timing) && event.date < phases[0].Date
+    );
     if (prePhaseEvents.length > 0) {
       groups.unshift({
         phaseName: 'Pré-partie',
