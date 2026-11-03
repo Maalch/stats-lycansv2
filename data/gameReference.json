@@ -1,8 +1,8 @@
 {
   "_meta": {
     "description": "Reference file for Lycans v2 game mechanics: camps, roles, powers, accessories, gadgets, effects, events, and game rules. Extracted from in-game translations and gameLog data.",
-    "version": "0.365",
-    "lastUpdated": "2026-10-13",
+    "version": "0.372",
+    "lastUpdated": "2026-11-03",
     "sourceTranslationsFile": "ExternalData/translations.json",
     "notes": "French names match gameLog.json values. Descriptions are cleaned from in-game markup (<color> tags, {0} placeholders). This file can be manually edited to adjust or enrich descriptions. potionEffects = drinkable effects from potions/scrolls. statusEffects = in-game states applied by role abilities, environmental events, or other mechanics (many overlap with potionEffects but represent the broader set of all possible player states)."
   },
@@ -69,7 +69,7 @@
       "camp": "loup",
       "emoji": "🐺",
       "type": "base",
-      "description": "Peut se transformer en loup la nuit pour tuer les villageois. Peut recevoir un pouvoir de loup et un rôle secondaire. Rester immobile régénère sa santé au bout de 3 secondes.",
+      "description": "Peut se transformer en loup la nuit pour tuer les villageois. Peut recevoir un pouvoir de loup et un rôle secondaire. Rester immobile régénère sa santé.",
       "descriptionShort": "Transformez-vous et massacrez les villageois",
       "relatedItems": [
         { "type": "wolfPower", "id": "necromancien", "label": "Pouvoirs de Loup" },
@@ -91,7 +91,7 @@
       "camp": "loup",
       "emoji": "🐾",
       "type": "special",
-      "description": "Remplace un Loup tombé. Ne peut se transformer qu'après la mort d'un Loup.",
+      "description": "Remplace un Loup tombé. Ne peut se transformer qu'après la mort d'un Loup et ne peut pas recevoir le pouvoir Nécromancien.",
       "descriptionShort": "Transformation uniquement après la mort d'un Loup"
     },
     {
@@ -140,7 +140,7 @@
       "camp": "solo",
       "emoji": "💕",
       "type": "duo",
-      "description": "Rôle duo composé d'un Amoureux Villageois et d'un Amoureux Loup. Ils gagnent en survivant ensemble jusqu'à ce qu'il ne reste que 4 joueurs en meeting. Si un des deux joueurs meurt, l'autre meurt également. Si un des deux joueurs meurt, l'autre meurt également. Peuvent communiquer par télépathie (canal privé). Le Villageois perd de la vie la nuit si le Loup n'est pas transformé, et seuls les kills du Loup le nourrissent (excepté les Zombies). La nourriture récupérée par l'Amoureux Villageois soigne l'Amoureux Loup s'il est en forme de loup. Les autres Loups voient la nuit teintée en rose quand les Amoureux sont dans la partie.",
+      "description": "Rôle duo composé d'un Amoureux Villageois et d'un Amoureux Loup. Ils gagnent en survivant ensemble jusqu'à ce qu'il ne reste que 4 joueurs en meeting. Si un des deux joueurs meurt, l'autre meurt également. Peuvent communiquer par télépathie (canal privé), y compris en meeting. Le Villageois perd de la vie la nuit si le Loup n'est pas transformé, et seuls les kills du Loup le nourrissent (excepté les Zombies). La nourriture récupérée par l'Amoureux Villageois soigne l'Amoureux Loup s'il est en forme de loup. Les autres Loups voient la nuit teintée en rose quand les Amoureux sont dans la partie.",
       "descriptionShort": "Couple de joueurs Villageois + Loup. Gagnent en survivant ensemble",
       "subRoles": [
         {
@@ -201,7 +201,7 @@
       "camp": "solo",
       "emoji": "☠️",
       "type": "solo",
-      "description": "Place des crânes (que les autres joueurs peuvent détruire) qui chargent son objectif : la charge est plus rapide avec peu de crânes placés et plus lente avec beaucoup. À 100% après un meeting, une phase de chasse (journée un peu plus courte que la normale) commence : des esprits, plus lents, sont relâchés et peuvent capturer des joueurs, et le Cultiste peut aussi les capturer directement. Les joueurs libres peuvent libérer les joueurs capturés (3 secondes nécessaires).",
+      "description": "Place des crânes (que les autres joueurs peuvent détruire) qui chargent son objectif : la charge est plus rapide avec peu de crânes placés et plus lente avec beaucoup. À 100% après un meeting, une phase de chasse (journée un peu plus courte que la normale) commence : des esprits, plus lents, sont relâchés et peuvent capturer des joueurs, et le Cultiste peut aussi les capturer directement. Le Cultiste-fantôme est visible en jaune à travers les murs. Les joueurs libres peuvent libérer les joueurs capturés (3 secondes nécessaires).",
       "descriptionShort": "Gagne en cachant des crânes puis en capturant des joueurs",
       "translationKey": "NALES_ROLE_DESCRIPTION_CULTIST"
     }
@@ -212,8 +212,8 @@
       "id": "imposteur",
       "name": "Imposteur",
       "emoji": "🎭",
-      "description": "Remplace un Villageois Élite et choisit un pouvoir élite à imiter. Chasseur : en forme humaine, ses balles sont sans effet sur les humains ; en forme de loup, elles paralysent temporairement la cible. Alchimiste : peut boire des potions en forme de loup et en recevoir l'effet. Guetteur : détecte les joueurs proches à travers les murs quand son pouvoir est actif. Purificateur : les flammes vertes le soignent rapidement au lieu de le blesser.",
-      "descriptionShort": "Imite un élite : tirs paralysants en forme de loup (Chasseur), potions buvables en loup (Alchimiste), détection à travers les murs (Guetteur) ou soin par les flammes vertes (Purificateur)",
+      "description": "Si le pouvoir est activé, un Imposteur peut remplacer un Villageois Élite avec une probabilité configurable (30 % par défaut). En début de partie, il choisit un pouvoir élite à imiter parmi ceux qui ne sont pas possédés par un vrai Villageois Élite. Chasseur : ses tirs blessent les humains sans les tuer, ramenant leur santé à 25 % au maximum ; en forme de loup, ils paralysent aussi la cible pendant 10 secondes. Alchimiste : peut boire des potions en forme de loup et recevoir leur effet pour une durée réduite. Guetteur : en forme de loup, son pouvoir actif permet de voir les joueurs proches à travers les murs. Purificateur : les flammes vertes le soignent rapidement au lieu de le blesser, mais le ralentissent et lui infligent Confusion.",
+      "descriptionShort": "Remplace un Villageois Élite et imite un pouvoir élite disponible avec des effets adaptés",
       "translationKey": "NALES_ROLE_DESCRIPTION_IMPOSTOR",
       "relatedItems": [
         { "type": "elitePower", "id": "chasseur", "label": "Chasseur" },
@@ -226,7 +226,7 @@
       "id": "necromancien",
       "name": "Nécromancien",
       "emoji": "⚰️",
-      "description": "Peut marquer un cadavre. Le joueur devient un Loup et prend sa forme de loup immédiatement. Peut ensuite le ressusciter comme un loup muet en consommant sa charge. La charge augmente en forme de loup et peut dépasser 100% (jusqu'à 200%). Commence à 90% : doit d'abord se transformer avant de pouvoir ressusciter sa cible la première fois.",
+      "description": "Peut marquer un cadavre. Le joueur devient un Loup et prend sa forme de loup immédiatement. Peut ensuite le ressusciter comme un loup muet en consommant sa charge. La charge augmente en forme de loup et peut dépasser 100% (jusqu'à 200%). Commence à 90% : doit d'abord se transformer avant de pouvoir ressusciter sa cible la première fois. Ce pouvoir n'est pas disponible pour le Louveteau.",
       "descriptionShort": "Peut ressusciter un cadavre en loup",
       "translationKey": "NALES_ROLE_DESCRIPTION_NECROMANCER"
     },
@@ -234,7 +234,7 @@
       "id": "dupeur",
       "name": "Dupeur",
       "emoji": "🎭",
-      "description": "La nuit, des illusions de transformation de loup (bruit et menace) sont automatiquement créées à des moments et endroits aléatoires. De plus, peut infliger secrètement un handicap aléatoire à sa cible lors du meeting suivant.",
+      "description": "La nuit, des illusions de transformation de loup (bruit et menace) sont automatiquement créées à des moments et endroits aléatoires. Peut choisir un joueur dans une liste par clic droit pour lui infliger secrètement un handicap aléatoire au meeting suivant, une seule fois par joueur.",
       "descriptionShort": "Créé des illusions de transformation et peut pourrir le meeting d'une cible",
       "translationKey": "NALES_ROLE_DESCRIPTION_DECEIVER"
     },
@@ -428,7 +428,7 @@
       "id": "inventeur",
       "name": "Inventeur",
       "emoji": "⚙️",
-      "description": "Charge son pouvoir en récoltant la ferraille qui apparaît parfois quand un joueur utilise un objet. Un son l'avertit de sa proximité. Peut utiliser sa charge pour placer secrètement un Camoufleur sur un joueur (ou sur lui-même). Quand un loup transformé s'approche, il est légèrement ralenti et le Camoufleur s'active et émet une épaisse fumée visible uniquement par les loups transformés et l'Inventeur.",
+      "description": "Charge son pouvoir en récoltant la ferraille qui apparaît parfois quand un joueur utilise un objet. Un son l'avertit de sa proximité. Peut utiliser sa charge pour placer secrètement un Camoufleur sur un joueur (ou sur lui-même). Quand un loup transformé s'approche, il est légèrement ralenti et le Camoufleur s'active et émet une épaisse fumée visible uniquement par les loups transformés et l'Inventeur. Les loups transformés n'entendent pas le joueur tant que son Camoufleur est actif.",
       "descriptionShort": "Peut placer des Camoufleurs sur les joueurs pour les aider à échapper aux loups",
       "translationKey": "NALES_ROLE_DESCRIPTION_INVENTOR"
     }
@@ -573,8 +573,8 @@
       "id": "astral",
       "name": "Astral",
       "emoji": "💫",
-      "description": "Peut envoyer son esprit hors de son corps pour explorer. En forme humaine, la santé diminue selon la distance. En forme de loup, très rapide et sans perte de santé.",
-      "descriptionVillager": "Peut envoyer son esprit hors de son corps pour explorer les environs",
+      "description": "Peut envoyer son esprit hors de son corps pour explorer rapidement sans perte supplémentaire de santé. En forme humaine, les joueurs ont tous la même apparence et ne peuvent pas être distingués. En forme de loup, l'esprit est très rapide et la santé ne diminue pas.",
+      "descriptionVillager": "Peut envoyer son esprit hors de son corps pour explorer rapidement, mais ne peut pas distinguer les joueurs",
       "descriptionWolf": "Peut envoyer son esprit hors de son corps pour explorer les environs",
       "translationKey": "NALES_ROLE_DESCRIPTION_ASTRAL"
     },
@@ -961,7 +961,8 @@
     { "id": "energie", "name": "Énergie", "translationKey": "NALES_EFFECT_ENERGIZED", "tutorial": "Votre pouvoir se charge plus vite, ou vous régénérez votre santé" },
     { "id": "resilience", "name": "Résilience", "translationKey": "NALES_EFFECT_RESILIENCE", "tutorial": "Effet qui se déclenche sur un loup après qu'il soit victime d'un contrôle (immobilisation, ralentissement ...). Réduit de moitié la durée des nouveaux contrôles tant qu'il est actif." },
     { "id": "cavale", "name": "Cavale", "translationKey": "NALES_EFFECT_ESCAPING", "tutorial": "Augmente votre mobilité pendant que vous tentez de vous échapper" },
-    { "id": "transformation", "name": "Transformation !", "translationKey": "NALES_EFFECT_TRANSFORMATION", "tutorial": "Indique que votre transformation en loup est en cours" },
+    { "id": "transformation", "name": "Transformation !", "translationKey": "NALES_EFFECT_TRANSFORMATION", "tutorial": "Indique une transformation en loup en cours ou annoncée par la transformation forcée" },
+    { "id": "fatigue", "name": "Fatigué", "translationKey": "NALES_EFFECT_TIRED", "tutorial": "Désactive temporairement la régénération du loup" },
     { "id": "mystique", "name": "Mystique", "translationKey": "NALES_EFFECT_MYSTIC", "tutorial": "Ancien état lié au pouvoir Mystique, remplacé par le Runiste" },
     { "id": "banni", "name": "Banni", "translationKey": "NALES_EFFECT_BANISHED", "tutorial": "Indique que vous avez été temporairement banni par un pouvoir" },
     { "id": "regeneration", "name": "Régénération", "translationKey": "NALES_EFFECT_RECUPERATING", "tutorial": "Régénère progressivement votre santé" },
@@ -1084,6 +1085,7 @@
         "Pendant le jour, les joueurs explorent, récoltent et communiquent librement.",
         "Pendant la nuit, les Loups peuvent se transformer et tuer des Villageois.",
         "À la fin de chaque nuit, un conseil réunit tous les joueurs survivants pour voter l'élimination d'un suspect.",
+        "Avant le lancement, un joueur peut choisir de devenir spectateur. Un salon peut accueillir 16 personnes, mais une partie ne peut pas démarrer avec plus de 15 joueurs actifs.",
         "Quand un joueur est éliminé, il passe en mode spectateur jusqu'à la fin de la partie.",
         "Un spectateur peut appuyer sur X pour afficher la liste de tous les joueurs avec leur rôle et leur état (mort, transformé en loup...), et cliquer sur un joueur pour passer à son point de vue."
       ]
@@ -1124,9 +1126,12 @@
       "details": [
         "De la nourriture est répartie sur la carte et permet de remonter la barre.",
         "Courir fait diminuer la barre de faim plus rapidement.",
-        "Les Loups en forme humaine ne perdent pas de faim, mais en perdent lentement sous forme de loup.",
+        "Les Loups en forme humaine ne perdent pas de faim. Sous forme de loup, la perte et la régénération dépendent du système de faim choisi.",
         "Certaines actions (balles de Chasseur, pièges) font baisser la faim des Loups transformés.",
-        "Tuer un Villageois en tant que Loup remplit la barre de faim à 100 %."
+        "Un loup transformé qui reste immobile régénère sa santé après 3 secondes s'il n'est pas Fatigué. Un tir de Chasseur lui inflige Fatigué pendant 20 secondes et interrompt cette régénération.",
+        "Avec le système de faim habituel, tuer un Villageois en tant que Loup remplit la barre de faim à 100 %.",
+        "Avec l'option de faim modifiée, un loup transformé perd davantage de santé en courant et en régénère lorsqu'il est immobile, marche ou est accroupi, s'il n'est pas Fatigué. Être accroupi réduit aussi sa portée de détection.",
+        "Avec cette option, tuer un joueur restaure 40 % de la santé manquante et frapper un cadenas inflige Fatigué pendant 8 secondes."
       ]
     },
     {
@@ -1153,7 +1158,7 @@
         "En cas d'égalité entre deux joueurs, ou entre un joueur et les votes « passer », personne n'est éliminé.",
         "Un Maire est désigné aléatoirement à chaque conseil ; il peut faire taire un joueur ou donner la parole exclusivement à un joueur.",
         "Chaque joueur peut voir les votes des autres joueurs en temps réel.",
-        "Chaque joueur peut demander la parole une fois par meeting (touche F) : un son est joué et une icône s'affiche au-dessus de lui jusqu'à la prochaine prise de parole. Non disponible pour le Maire."
+        "Chaque joueur peut demander la parole une fois par meeting (touche F), sauf le Maire. Un seul joueur peut la demander à la fois : un son est joué et une icône s'affiche au-dessus de lui pendant au moins 8 secondes et jusqu'à la prochaine prise de parole."
       ]
     },
     {
@@ -1166,7 +1171,7 @@
         "Parchemins : même effet que les potions, mais utilisable uniquement sur un autre joueur (pas sur soi).",
         "Gadgets : objets actifs (pièges, fumigènes, grenades, diamants, etc.) utilisables stratégiquement.",
         "Accessoires : équipements passifs qui confèrent un bonus permanent tant qu'ils sont portés.",
-        "Les potions ne peuvent pas être bues sous forme de Loup."
+        "Les potions ne peuvent généralement pas être bues sous forme de loup : le Brasseur peut les boire pour se soigner et l'Imposteur Alchimiste peut en recevoir les effets pendant une durée réduite."
       ]
     },
     {
@@ -1180,7 +1185,9 @@
         "Un Loup peut se transformer une fois par nuit (de humain à loup).",
         "Il peut rester transformé toute la nuit ou revenir en forme humaine à tout moment.",
         "La transformation prend 3 secondes et émet un son distinctif audible par les joueurs proches.",
-        "Une fois retransformé en humain, le Loup ne peut plus se retransformer jusqu'à la nuit suivante."
+        "Une fois retransformé en humain, le Loup ne peut plus se retransformer jusqu'à la nuit suivante.",
+        "Si l'option de transformation forcée est activée, un Loup qui ne s'est pas transformé pendant deux nuits consécutives doit se transformer la nuit suivante. Il est averti au milieu du jour puis au début de la nuit.",
+        "L'effet Transformation dure alors 20 secondes avant de le transformer automatiquement ; il peut se transformer manuellement avant la fin. Une aura rouge indique qu'il s'agit d'un vrai loup et non d'un joueur affecté par un pouvoir comme celui du Sorcier ou du Possesseur."
       ]
     },
     {
