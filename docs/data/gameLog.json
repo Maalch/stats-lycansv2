@@ -1,17 +1,17 @@
 {
   "ModVersion": "Legacy + AWS Merged",
-  "TotalRecords": 1109,
+  "TotalRecords": 1110,
   "Sources": {
     "Legacy": 0,
     "LegacyFullData": 0,
-    "AWS": 2,
-    "AWSNew": 2,
-    "AWSUpdated": 0,
+    "AWS": 3,
+    "AWSNew": 1,
+    "AWSUpdated": 2,
     "AWSUnchanged": 0,
     "Merged": 0,
     "AWSSkippedDueToGSheetPriority": 0
   },
-  "LastSync": "2026-11-10T12:08:28.561Z",
+  "LastSync": "2026-11-10T12:25:40.273Z",
   "GameStats": [
     {
       "Id": "Ponce-20231013000000-1",
@@ -739227,7 +739227,7 @@
             }
           ],
           "SecondsTalkedOutsideMeeting": 239,
-          "SecondsTalkedDuringMeeting": 94,
+          "SecondsTalkedDuringMeeting": 96,
           "SecondsSpentImmobileStanding": 110,
           "SecondsSpentImmobileCrouched": 17,
           "SecondsSpentWalkingStanding": 261,
@@ -739339,7 +739339,7 @@
             }
           ],
           "SecondsTalkedOutsideMeeting": 179,
-          "SecondsTalkedDuringMeeting": 71,
+          "SecondsTalkedDuringMeeting": 74,
           "SecondsSpentImmobileStanding": 127,
           "SecondsSpentImmobileCrouched": 28,
           "SecondsSpentWalkingStanding": 177,
@@ -739396,7 +739396,7 @@
             }
           ],
           "SecondsTalkedOutsideMeeting": 119,
-          "SecondsTalkedDuringMeeting": 19,
+          "SecondsTalkedDuringMeeting": 20,
           "SecondsSpentImmobileStanding": 135,
           "SecondsSpentImmobileCrouched": 3,
           "SecondsSpentWalkingStanding": 245,
@@ -739516,7 +739516,7 @@
             }
           ],
           "SecondsTalkedOutsideMeeting": 235,
-          "SecondsTalkedDuringMeeting": 48,
+          "SecondsTalkedDuringMeeting": 49,
           "SecondsSpentImmobileStanding": 294,
           "SecondsSpentImmobileCrouched": 6,
           "SecondsSpentWalkingStanding": 84,
@@ -739799,7 +739799,7 @@
             }
           ],
           "SecondsTalkedOutsideMeeting": 246,
-          "SecondsTalkedDuringMeeting": 138,
+          "SecondsTalkedDuringMeeting": 141,
           "SecondsSpentImmobileStanding": 97,
           "SecondsSpentImmobileCrouched": 2,
           "SecondsSpentWalkingStanding": 247,
@@ -739906,7 +739906,7 @@
             }
           ],
           "SecondsTalkedOutsideMeeting": 203,
-          "SecondsTalkedDuringMeeting": 89,
+          "SecondsTalkedDuringMeeting": 93,
           "SecondsSpentImmobileStanding": 129,
           "SecondsSpentImmobileCrouched": 0,
           "SecondsSpentWalkingStanding": 137,
@@ -739998,6 +739998,890 @@
         },
         {
           "Date": "2026-11-10T12:04:37.9386626Z",
+          "Timing": "M3",
+          "Type": "NewPhase",
+          "Name": "M3"
+        }
+      ],
+      "Version": "0.372",
+      "Modded": true
+    },
+    {
+      "Id": "khalen-20261110120839",
+      "StartDate": "2026-11-10T12:08:39.0210837Z",
+      "EndDate": "2026-11-10T12:24:35.4407506Z",
+      "MapName": "Village",
+      "HarvestGoal": 2400,
+      "HarvestDone": 1485,
+      "EndTiming": "M3",
+      "IsBattleRoyale": false,
+      "PlayerStats": [
+        {
+          "ID": "76561198875528482",
+          "Username": "ClydeCreator",
+          "Color": "Rouge",
+          "Hat": "m_CrownHat02",
+          "SkinIndex": 0,
+          "SkinColorIndex": 0,
+          "MainRoleInitial": "Loup",
+          "MainRoleChanges": [],
+          "Power": "Artificier",
+          "SecondaryRole": null,
+          "DeathDateIrl": "2026-11-10T12:13:57.2565400Z",
+          "DeathTiming": "M1",
+          "DeathPosition": {
+            "x": 116.29,
+            "y": 22.2811069,
+            "z": 190.16
+          },
+          "DeathType": "VOTED",
+          "KillerName": null,
+          "Victorious": false,
+          "Votes": [
+            {
+              "Target": "Passé",
+              "Date": "2026-11-10T12:13:53.2550283Z",
+              "Day": 1
+            }
+          ],
+          "SecondsTalkedOutsideMeeting": 12,
+          "SecondsTalkedDuringMeeting": 84,
+          "SecondsSpentImmobileStanding": 59,
+          "SecondsSpentImmobileCrouched": 1,
+          "SecondsSpentWalkingStanding": 70,
+          "SecondsSpentWalkingCrouched": 0,
+          "SecondsSpentRunning": 29,
+          "TotalCollectedLoot": 15,
+          "Actions": [
+            {
+              "Date": "2026-11-10T12:10:25.6237140Z",
+              "Timing": "N1",
+              "Position": {
+                "x": 127.270439,
+                "y": 22.2811069,
+                "z": 192.158173
+              },
+              "ActionType": "Transform",
+              "ActionName": null,
+              "ActionTarget": null
+            }
+          ]
+        },
+        {
+          "ID": "76561199291323199",
+          "Username": "Miraaaaaah",
+          "Color": "Violet",
+          "Hat": "m_DevilHorns01",
+          "SkinIndex": 0,
+          "SkinColorIndex": 0,
+          "MainRoleInitial": "Villageois Élite",
+          "MainRoleChanges": [],
+          "Power": "Purificateur",
+          "SecondaryRole": null,
+          "DeathDateIrl": "2026-11-10T12:16:03.0369283Z",
+          "DeathTiming": "N2",
+          "DeathPosition": {
+            "x": 121.147591,
+            "y": 22.2811069,
+            "z": 198.3213
+          },
+          "DeathType": "BY_WOLF",
+          "KillerName": "Zarcross",
+          "Victorious": true,
+          "Votes": [
+            {
+              "Target": "ClydeCreator",
+              "Date": "2026-11-10T12:12:06.9554309Z",
+              "Day": 1
+            }
+          ],
+          "SecondsTalkedOutsideMeeting": 92,
+          "SecondsTalkedDuringMeeting": 7,
+          "SecondsSpentImmobileStanding": 84,
+          "SecondsSpentImmobileCrouched": 0,
+          "SecondsSpentWalkingStanding": 81,
+          "SecondsSpentWalkingCrouched": 5,
+          "SecondsSpentRunning": 107,
+          "TotalCollectedLoot": 195,
+          "Actions": [
+            {
+              "Date": "2026-11-10T12:10:29.7187952Z",
+              "Timing": "N1",
+              "Position": {
+                "x": 114.202057,
+                "y": 22.2811069,
+                "z": 199.951584
+              },
+              "ActionType": "UseGadget",
+              "ActionName": "Bouteille incendiaire",
+              "ActionTarget": null
+            },
+            {
+              "Date": "2026-11-10T12:14:15.4230240Z",
+              "Timing": "J2",
+              "Position": {
+                "x": 153.56633,
+                "y": 21.7648487,
+                "z": 91.03357
+              },
+              "ActionType": "DrinkPotion",
+              "ActionName": "Géant",
+              "ActionTarget": null
+            },
+            {
+              "Date": "2026-11-10T12:16:00.3514452Z",
+              "Timing": "N2",
+              "Position": {
+                "x": 116.53167,
+                "y": 22.2811089,
+                "z": 189.64061
+              },
+              "ActionType": "UseGadget",
+              "ActionName": "Bouteille incendiaire",
+              "ActionTarget": null
+            }
+          ]
+        },
+        {
+          "ID": "76561197961659274",
+          "Username": "MoMaN",
+          "Color": "Rose",
+          "Hat": null,
+          "SkinIndex": 0,
+          "SkinColorIndex": 0,
+          "MainRoleInitial": "Loup",
+          "MainRoleChanges": [],
+          "Power": "Saboteur",
+          "SecondaryRole": null,
+          "DeathDateIrl": "2026-11-10T12:19:21.0376439Z",
+          "DeathTiming": "M2",
+          "DeathPosition": {
+            "x": 116.29,
+            "y": 22.2811069,
+            "z": 190.16
+          },
+          "DeathType": "VOTED",
+          "KillerName": null,
+          "Victorious": false,
+          "Votes": [
+            {
+              "Target": "ClydeCreator",
+              "Date": "2026-11-10T12:12:58.5699563Z",
+              "Day": 1
+            }
+          ],
+          "SecondsTalkedOutsideMeeting": 73,
+          "SecondsTalkedDuringMeeting": 76,
+          "SecondsSpentImmobileStanding": 76,
+          "SecondsSpentImmobileCrouched": 18,
+          "SecondsSpentWalkingStanding": 158,
+          "SecondsSpentWalkingCrouched": 3,
+          "SecondsSpentRunning": 64,
+          "TotalCollectedLoot": 65,
+          "Actions": []
+        },
+        {
+          "ID": "76561198136428224",
+          "Username": "Akhynna",
+          "Color": "Jaune",
+          "Hat": "CatHeart(Clone)(Clone)",
+          "SkinIndex": 0,
+          "SkinColorIndex": 0,
+          "MainRoleInitial": "Villageois",
+          "MainRoleChanges": [],
+          "Power": "Prêtre",
+          "SecondaryRole": null,
+          "DeathDateIrl": "2026-11-10T12:16:14.7015644Z",
+          "DeathTiming": "N2",
+          "DeathPosition": {
+            "x": 104.458481,
+            "y": 22.2811089,
+            "z": 195.413986
+          },
+          "DeathType": "BY_WOLF",
+          "KillerName": "Zarcross",
+          "Victorious": true,
+          "Votes": [
+            {
+              "Target": "ClydeCreator",
+              "Date": "2026-11-10T12:12:57.7553898Z",
+              "Day": 1
+            }
+          ],
+          "SecondsTalkedOutsideMeeting": 131,
+          "SecondsTalkedDuringMeeting": 16,
+          "SecondsSpentImmobileStanding": 46,
+          "SecondsSpentImmobileCrouched": 19,
+          "SecondsSpentWalkingStanding": 168,
+          "SecondsSpentWalkingCrouched": 7,
+          "SecondsSpentRunning": 48,
+          "TotalCollectedLoot": 100,
+          "Actions": [
+            {
+              "Date": "2026-11-10T12:09:02.6892364Z",
+              "Timing": "J1",
+              "Position": {
+                "x": 127.466934,
+                "y": 22.2811069,
+                "z": 171.26384
+              },
+              "ActionType": "TakeAccessory",
+              "ActionName": "Livre de sorts",
+              "ActionTarget": null
+            },
+            {
+              "Date": "2026-11-10T12:09:37.5777300Z",
+              "Timing": "J1",
+              "Position": {
+                "x": 119.328735,
+                "y": 22.2811069,
+                "z": 200.4137
+              },
+              "ActionType": "UseGadget",
+              "ActionName": "Livre de sorts",
+              "ActionTarget": "Anaee"
+            },
+            {
+              "Date": "2026-11-10T12:15:39.6679152Z",
+              "Timing": "N2",
+              "Position": {
+                "x": 117.095,
+                "y": 22.2811089,
+                "z": 183.908417
+              },
+              "ActionType": "UseGadget",
+              "ActionName": "Livre de sorts",
+              "ActionTarget": "Tamaroush"
+            },
+            {
+              "Date": "2026-11-10T12:16:01.7363630Z",
+              "Timing": "N2",
+              "Position": {
+                "x": 112.039085,
+                "y": 22.2811069,
+                "z": 205.278061
+              },
+              "ActionType": "UseGadget",
+              "ActionName": "Diamant",
+              "ActionTarget": null
+            }
+          ]
+        },
+        {
+          "ID": "76561199229494526",
+          "Username": "Meetozila",
+          "Color": "Violet",
+          "Hat": "Pumpkin_E(Clone)(Clone)",
+          "SkinIndex": 0,
+          "SkinColorIndex": 0,
+          "MainRoleInitial": "Villageois",
+          "MainRoleChanges": [],
+          "Power": "Détective",
+          "SecondaryRole": null,
+          "DeathDateIrl": "2026-11-10T12:10:48.6220185Z",
+          "DeathTiming": "N1",
+          "DeathPosition": {
+            "x": 128.433121,
+            "y": 22.07968,
+            "z": 128.806763
+          },
+          "DeathType": "BY_WOLF",
+          "KillerName": "Zarcross",
+          "Victorious": true,
+          "Votes": [],
+          "SecondsTalkedOutsideMeeting": 23,
+          "SecondsTalkedDuringMeeting": 0,
+          "SecondsSpentImmobileStanding": 19,
+          "SecondsSpentImmobileCrouched": 0,
+          "SecondsSpentWalkingStanding": 65,
+          "SecondsSpentWalkingCrouched": 0,
+          "SecondsSpentRunning": 38,
+          "TotalCollectedLoot": 35,
+          "Actions": []
+        },
+        {
+          "ID": "76561198125108195",
+          "Username": "Monodie",
+          "Color": "Bleu foncé",
+          "Hat": "m_SailorHat01",
+          "SkinIndex": 0,
+          "SkinColorIndex": 0,
+          "MainRoleInitial": "Villageois",
+          "MainRoleChanges": [],
+          "Power": "Magicien",
+          "SecondaryRole": "Coureur",
+          "DeathDateIrl": null,
+          "DeathTiming": null,
+          "DeathPosition": null,
+          "DeathType": null,
+          "KillerName": null,
+          "Victorious": true,
+          "Votes": [
+            {
+              "Target": "ClydeCreator",
+              "Date": "2026-11-10T12:12:56.8366982Z",
+              "Day": 1
+            },
+            {
+              "Target": "MoMaN",
+              "Date": "2026-11-10T12:19:12.1563736Z",
+              "Day": 2
+            },
+            {
+              "Target": "Zarcross",
+              "Date": "2026-11-10T12:24:28.0721785Z",
+              "Day": 3
+            }
+          ],
+          "SecondsTalkedOutsideMeeting": 198,
+          "SecondsTalkedDuringMeeting": 115,
+          "SecondsSpentImmobileStanding": 132,
+          "SecondsSpentImmobileCrouched": 67,
+          "SecondsSpentWalkingStanding": 173,
+          "SecondsSpentWalkingCrouched": 6,
+          "SecondsSpentRunning": 101,
+          "TotalCollectedLoot": 240,
+          "Actions": [
+            {
+              "Date": "2026-11-10T12:15:16.9911286Z",
+              "Timing": "J2",
+              "Position": {
+                "x": 115.626839,
+                "y": 22.171236,
+                "z": 218.038452
+              },
+              "ActionType": "DrinkPotion",
+              "ActionName": "Géant",
+              "ActionTarget": null
+            }
+          ]
+        },
+        {
+          "ID": "76561199137379059",
+          "Username": "Tamaroush",
+          "Color": "Bleu royal",
+          "Hat": "m_MushroomHat01",
+          "SkinIndex": 0,
+          "SkinColorIndex": 0,
+          "MainRoleInitial": "Villageois",
+          "MainRoleChanges": [],
+          "Power": "Détective",
+          "SecondaryRole": null,
+          "DeathDateIrl": "2026-11-10T12:16:08.0043520Z",
+          "DeathTiming": "N2",
+          "DeathPosition": {
+            "x": 110.314896,
+            "y": 22.2811069,
+            "z": 202.727844
+          },
+          "DeathType": "BY_WOLF",
+          "KillerName": "Zarcross",
+          "Victorious": true,
+          "Votes": [
+            {
+              "Target": "ClydeCreator",
+              "Date": "2026-11-10T12:12:08.4549469Z",
+              "Day": 1
+            }
+          ],
+          "SecondsTalkedOutsideMeeting": 54,
+          "SecondsTalkedDuringMeeting": 0,
+          "SecondsSpentImmobileStanding": 105,
+          "SecondsSpentImmobileCrouched": 0,
+          "SecondsSpentWalkingStanding": 65,
+          "SecondsSpentWalkingCrouched": 0,
+          "SecondsSpentRunning": 111,
+          "TotalCollectedLoot": 215,
+          "Actions": []
+        },
+        {
+          "ID": "76561198372242900",
+          "Username": "LuttiLutti",
+          "Color": "Orange",
+          "Hat": "m_JesterHat01",
+          "SkinIndex": 0,
+          "SkinColorIndex": 0,
+          "MainRoleInitial": "Vaudou",
+          "MainRoleChanges": [],
+          "Power": null,
+          "SecondaryRole": null,
+          "DeathDateIrl": "2026-11-10T12:11:05.6734873Z",
+          "DeathTiming": "N1",
+          "DeathPosition": {
+            "x": 159.409073,
+            "y": 22.2811089,
+            "z": 236.817184
+          },
+          "DeathType": "BY_WOLF",
+          "KillerName": "Zarcross",
+          "Victorious": false,
+          "Votes": [],
+          "SecondsTalkedOutsideMeeting": 68,
+          "SecondsTalkedDuringMeeting": 0,
+          "SecondsSpentImmobileStanding": 79,
+          "SecondsSpentImmobileCrouched": 0,
+          "SecondsSpentWalkingStanding": 51,
+          "SecondsSpentWalkingCrouched": 0,
+          "SecondsSpentRunning": 9,
+          "TotalCollectedLoot": 5,
+          "Actions": []
+        },
+        {
+          "ID": "76561198034021995",
+          "Username": "Ponce",
+          "Color": "Bleu foncé",
+          "Hat": "m_FlowerCrown01",
+          "SkinIndex": 0,
+          "SkinColorIndex": 0,
+          "MainRoleInitial": "Villageois Élite",
+          "MainRoleChanges": [],
+          "Power": "Chasseur",
+          "SecondaryRole": null,
+          "DeathDateIrl": "2026-11-10T12:10:35.0022717Z",
+          "DeathTiming": "N1",
+          "DeathPosition": {
+            "x": 119.552612,
+            "y": 22.2811069,
+            "z": 165.788147
+          },
+          "DeathType": "BY_WOLF",
+          "KillerName": "Zarcross",
+          "Victorious": true,
+          "Votes": [],
+          "SecondsTalkedOutsideMeeting": 14,
+          "SecondsTalkedDuringMeeting": 0,
+          "SecondsSpentImmobileStanding": 23,
+          "SecondsSpentImmobileCrouched": 27,
+          "SecondsSpentWalkingStanding": 51,
+          "SecondsSpentWalkingCrouched": 0,
+          "SecondsSpentRunning": 7,
+          "TotalCollectedLoot": 10,
+          "Actions": [
+            {
+              "Date": "2026-11-10T12:10:30.4545541Z",
+              "Timing": "N1",
+              "Position": {
+                "x": 115.8969,
+                "y": 22.2811069,
+                "z": 179.581192
+              },
+              "ActionType": "HunterShoot",
+              "ActionName": null,
+              "ActionTarget": "ClydeCreator"
+            }
+          ]
+        },
+        {
+          "ID": "76561198045789440",
+          "Username": "Bytell",
+          "Color": "Vert pomme",
+          "Hat": "VikingHelmet(Clone)(Clone)",
+          "SkinIndex": 0,
+          "SkinColorIndex": 0,
+          "MainRoleInitial": "Villageois",
+          "MainRoleChanges": [],
+          "Power": "Ermite",
+          "SecondaryRole": "Farceur",
+          "DeathDateIrl": null,
+          "DeathTiming": null,
+          "DeathPosition": null,
+          "DeathType": null,
+          "KillerName": null,
+          "Victorious": true,
+          "Votes": [
+            {
+              "Target": "ClydeCreator",
+              "Date": "2026-11-10T12:12:54.9544914Z",
+              "Day": 1
+            },
+            {
+              "Target": "MoMaN",
+              "Date": "2026-11-10T12:19:15.1718899Z",
+              "Day": 2
+            },
+            {
+              "Target": "Zarcross",
+              "Date": "2026-11-10T12:24:29.2564803Z",
+              "Day": 3
+            }
+          ],
+          "SecondsTalkedOutsideMeeting": 205,
+          "SecondsTalkedDuringMeeting": 58,
+          "SecondsSpentImmobileStanding": 90,
+          "SecondsSpentImmobileCrouched": 3,
+          "SecondsSpentWalkingStanding": 198,
+          "SecondsSpentWalkingCrouched": 9,
+          "SecondsSpentRunning": 179,
+          "TotalCollectedLoot": 210,
+          "Actions": [
+            {
+              "Date": "2026-11-10T12:14:33.8704751Z",
+              "Timing": "J2",
+              "Position": {
+                "x": 173.505829,
+                "y": 27.976532,
+                "z": 186.6599
+              },
+              "ActionType": "TakeAccessory",
+              "ActionName": "Boule de cristal",
+              "ActionTarget": null
+            }
+          ]
+        },
+        {
+          "ID": "76561198361954746",
+          "Username": "Anaee",
+          "Color": "Rouge",
+          "Hat": "m_CowboyHat01",
+          "SkinIndex": 0,
+          "SkinColorIndex": 0,
+          "MainRoleInitial": "Villageois",
+          "MainRoleChanges": [],
+          "Power": "Éclaireur",
+          "SecondaryRole": null,
+          "DeathDateIrl": null,
+          "DeathTiming": null,
+          "DeathPosition": null,
+          "DeathType": null,
+          "KillerName": null,
+          "Victorious": true,
+          "Votes": [
+            {
+              "Target": "ClydeCreator",
+              "Date": "2026-11-10T12:12:58.9887848Z",
+              "Day": 1
+            },
+            {
+              "Target": "Zarcross",
+              "Date": "2026-11-10T12:24:29.6017986Z",
+              "Day": 3
+            }
+          ],
+          "SecondsTalkedOutsideMeeting": 104,
+          "SecondsTalkedDuringMeeting": 75,
+          "SecondsSpentImmobileStanding": 146,
+          "SecondsSpentImmobileCrouched": 39,
+          "SecondsSpentWalkingStanding": 153,
+          "SecondsSpentWalkingCrouched": 39,
+          "SecondsSpentRunning": 102,
+          "TotalCollectedLoot": 230,
+          "Actions": [
+            {
+              "Date": "2026-11-10T12:20:25.4871245Z",
+              "Timing": "J3",
+              "Position": {
+                "x": 117.12056,
+                "y": 22.3411236,
+                "z": 171.0491
+              },
+              "ActionType": "TakeAccessory",
+              "ActionName": "Boule de cristal",
+              "ActionTarget": null
+            }
+          ]
+        },
+        {
+          "ID": "76561198317172114",
+          "Username": "Kissiffrote",
+          "Color": "Orange",
+          "Hat": "m_UmbrellaHat01",
+          "SkinIndex": 0,
+          "SkinColorIndex": 0,
+          "MainRoleInitial": "Villageois",
+          "MainRoleChanges": [],
+          "Power": "Éclaireur",
+          "SecondaryRole": null,
+          "DeathDateIrl": "2026-11-10T12:10:38.2185462Z",
+          "DeathTiming": "N1",
+          "DeathPosition": {
+            "x": 115.700981,
+            "y": 22.0796776,
+            "z": 149.8462
+          },
+          "DeathType": "BY_WOLF",
+          "KillerName": "Zarcross",
+          "Victorious": true,
+          "Votes": [],
+          "SecondsTalkedOutsideMeeting": 33,
+          "SecondsTalkedDuringMeeting": 0,
+          "SecondsSpentImmobileStanding": 56,
+          "SecondsSpentImmobileCrouched": 1,
+          "SecondsSpentWalkingStanding": 33,
+          "SecondsSpentWalkingCrouched": 0,
+          "SecondsSpentRunning": 22,
+          "TotalCollectedLoot": 0,
+          "Actions": []
+        },
+        {
+          "ID": "76561199060053791",
+          "Username": "Tsuna",
+          "Color": "Marron",
+          "Hat": "m_FrenchHat01",
+          "SkinIndex": 0,
+          "SkinColorIndex": 0,
+          "MainRoleInitial": "Villageois",
+          "MainRoleChanges": [],
+          "Power": "Magicien",
+          "SecondaryRole": null,
+          "DeathDateIrl": null,
+          "DeathTiming": null,
+          "DeathPosition": null,
+          "DeathType": null,
+          "KillerName": null,
+          "Victorious": true,
+          "Votes": [
+            {
+              "Target": "ClydeCreator",
+              "Date": "2026-11-10T12:12:59.3397619Z",
+              "Day": 1
+            },
+            {
+              "Target": "MoMaN",
+              "Date": "2026-11-10T12:19:13.7716227Z",
+              "Day": 2
+            },
+            {
+              "Target": "Zarcross",
+              "Date": "2026-11-10T12:24:27.4895410Z",
+              "Day": 3
+            }
+          ],
+          "SecondsTalkedOutsideMeeting": 247,
+          "SecondsTalkedDuringMeeting": 152,
+          "SecondsSpentImmobileStanding": 91,
+          "SecondsSpentImmobileCrouched": 17,
+          "SecondsSpentWalkingStanding": 294,
+          "SecondsSpentWalkingCrouched": 0,
+          "SecondsSpentRunning": 77,
+          "TotalCollectedLoot": 250,
+          "Actions": [
+            {
+              "Date": "2026-11-10T12:09:46.5686637Z",
+              "Timing": "J1",
+              "Position": {
+                "x": 117.135,
+                "y": 23.3255768,
+                "z": 140.396423
+              },
+              "ActionType": "TakeAccessory",
+              "ActionName": "Boule de cristal",
+              "ActionTarget": null
+            }
+          ]
+        },
+        {
+          "ID": "76561198259068400",
+          "Username": "Zarcross",
+          "Color": "Orange",
+          "Hat": "m_TrafficCone01",
+          "SkinIndex": 0,
+          "SkinColorIndex": 0,
+          "MainRoleInitial": "Loup",
+          "MainRoleChanges": [],
+          "Power": null,
+          "SecondaryRole": null,
+          "DeathDateIrl": "2026-11-10T12:24:35.4397447Z",
+          "DeathTiming": "M3",
+          "DeathPosition": {
+            "x": 112.8259,
+            "y": 22.2811069,
+            "z": 184.16
+          },
+          "DeathType": "VOTED",
+          "KillerName": null,
+          "Victorious": false,
+          "Votes": [
+            {
+              "Target": "ClydeCreator",
+              "Date": "2026-11-10T12:12:59.4064965Z",
+              "Day": 1
+            },
+            {
+              "Target": "Bytell",
+              "Date": "2026-11-10T12:24:31.4360648Z",
+              "Day": 3
+            }
+          ],
+          "SecondsTalkedOutsideMeeting": 186,
+          "SecondsTalkedDuringMeeting": 134,
+          "SecondsSpentImmobileStanding": 71,
+          "SecondsSpentImmobileCrouched": 0,
+          "SecondsSpentWalkingStanding": 194,
+          "SecondsSpentWalkingCrouched": 0,
+          "SecondsSpentRunning": 214,
+          "TotalCollectedLoot": 75,
+          "Actions": [
+            {
+              "Date": "2026-11-10T12:10:27.3372725Z",
+              "Timing": "N1",
+              "Position": {
+                "x": 124.867546,
+                "y": 22.2811089,
+                "z": 190.01947
+              },
+              "ActionType": "Transform",
+              "ActionName": null,
+              "ActionTarget": null
+            },
+            {
+              "Date": "2026-11-10T12:15:54.5363262Z",
+              "Timing": "N2",
+              "Position": {
+                "x": 118.88166,
+                "y": 22.2811089,
+                "z": 163.618057
+              },
+              "ActionType": "Transform",
+              "ActionName": null,
+              "ActionTarget": null
+            },
+            {
+              "Date": "2026-11-10T12:21:49.7041008Z",
+              "Timing": "N3",
+              "Position": {
+                "x": 126.658638,
+                "y": 21.9210758,
+                "z": 254.127182
+              },
+              "ActionType": "UseGadget",
+              "ActionName": "Parchemin (Rassasié)",
+              "ActionTarget": "Tsuna"
+            }
+          ]
+        },
+        {
+          "ID": "76561198012951437",
+          "Username": "khalen",
+          "Color": "Bleu royal",
+          "Hat": "m_GladiatorHelmet02",
+          "SkinIndex": 0,
+          "SkinColorIndex": 0,
+          "MainRoleInitial": "Idiot du Village",
+          "MainRoleChanges": [],
+          "Power": null,
+          "SecondaryRole": null,
+          "DeathDateIrl": null,
+          "DeathTiming": null,
+          "DeathPosition": null,
+          "DeathType": null,
+          "KillerName": null,
+          "Victorious": false,
+          "Votes": [
+            {
+              "Target": "ClydeCreator",
+              "Date": "2026-11-10T12:12:56.9532349Z",
+              "Day": 1
+            },
+            {
+              "Target": "Passé",
+              "Date": "2026-11-10T12:19:15.7056727Z",
+              "Day": 2
+            },
+            {
+              "Target": "Passé",
+              "Date": "2026-11-10T12:24:29.7294209Z",
+              "Day": 3
+            }
+          ],
+          "SecondsTalkedOutsideMeeting": 170,
+          "SecondsTalkedDuringMeeting": 83,
+          "SecondsSpentImmobileStanding": 236,
+          "SecondsSpentImmobileCrouched": 0,
+          "SecondsSpentWalkingStanding": 134,
+          "SecondsSpentWalkingCrouched": 4,
+          "SecondsSpentRunning": 105,
+          "TotalCollectedLoot": 340,
+          "Actions": [
+            {
+              "Date": "2026-11-10T12:15:18.2531039Z",
+              "Timing": "J2",
+              "Position": {
+                "x": 119.991127,
+                "y": 22.1861267,
+                "z": 203.788177
+              },
+              "ActionType": "UseGadget",
+              "ActionName": "Parchemin (Flatulences)",
+              "ActionTarget": "Akhynna"
+            }
+          ]
+        }
+      ],
+      "GameEvents": [
+        {
+          "Date": "2026-11-10T12:08:39.0511781Z",
+          "Timing": "J1",
+          "Type": "NewPhase",
+          "Name": "J1"
+        },
+        {
+          "Date": "2026-11-10T12:10:15.9880576Z",
+          "Timing": "N1",
+          "Type": "NewPhase",
+          "Name": "N1"
+        },
+        {
+          "Date": "2026-11-10T12:11:32.9888761Z",
+          "Timing": "M1",
+          "Type": "NewPhase",
+          "Name": "M1"
+        },
+        {
+          "Date": "2026-11-10T12:11:32.9888761Z",
+          "Timing": "M1",
+          "Type": "NewMayor",
+          "Name": "Miraaaaaah"
+        },
+        {
+          "Date": "2026-11-10T12:13:58.2641990Z",
+          "Timing": "J2",
+          "Type": "DailyEventStart",
+          "Name": "Plague"
+        },
+        {
+          "Date": "2026-11-10T12:13:58.2653227Z",
+          "Timing": "J2",
+          "Type": "NewPhase",
+          "Name": "J2"
+        },
+        {
+          "Date": "2026-11-10T12:15:35.2401972Z",
+          "Timing": "N2",
+          "Type": "NewPhase",
+          "Name": "N2"
+        },
+        {
+          "Date": "2026-11-10T12:16:52.2372746Z",
+          "Timing": "M2",
+          "Type": "NewPhase",
+          "Name": "M2"
+        },
+        {
+          "Date": "2026-11-10T12:16:52.2382778Z",
+          "Timing": "M2",
+          "Type": "NewMayor",
+          "Name": "Zarcross"
+        },
+        {
+          "Date": "2026-11-10T12:19:22.0465366Z",
+          "Timing": "J3",
+          "Type": "DailyEventStart",
+          "Name": "Harvest"
+        },
+        {
+          "Date": "2026-11-10T12:19:22.0481078Z",
+          "Timing": "J3",
+          "Type": "NewPhase",
+          "Name": "J3"
+        },
+        {
+          "Date": "2026-11-10T12:20:59.0225436Z",
+          "Timing": "N3",
+          "Type": "NewPhase",
+          "Name": "N3"
+        },
+        {
+          "Date": "2026-11-10T12:22:16.0227234Z",
           "Timing": "M3",
           "Type": "NewPhase",
           "Name": "M3"
