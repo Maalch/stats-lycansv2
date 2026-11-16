@@ -58,11 +58,11 @@ export function parseOtherPlayers(othersPlayers: string | null): string[] {
 }
 
 /**
- * Parse comma-separated clip IDs from RelatedClips field
+ * Parse comma- or period-separated clip IDs from RelatedClips field
  */
 export function parseRelatedClipIds(relatedClips: string | null): string[] {
   if (!relatedClips) return [];
-  return relatedClips.split(',').map(id => id.trim()).filter(id => id.length > 0);
+  return relatedClips.split(/[,.]/).map(id => id.trim()).filter(id => id.length > 0);
 }
 
 /**

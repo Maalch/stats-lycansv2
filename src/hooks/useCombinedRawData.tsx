@@ -39,7 +39,7 @@ export interface Clip {
   ClipName: string | null;        // Name of the clip as displayed on Twitch/source
   POVPlayer: string;              // Player whose POV is shown in the clip
   OthersPlayers: string | null;   // Comma-separated list of other players involved
-  RelatedClips: string | null;    // Comma-separated list of related clip IDs (different POVs)
+  RelatedClips: string | null;    // Comma- or period-separated list of related clip IDs (different POVs)
   NextClip: string | null;        // ID of the next clip in sequence (if applicable)
   NewName: string | null;         // Custom display name for the clip
   AdditionalInfo: string | null;  // Additional context/explanation about the clip
