@@ -226,9 +226,12 @@ function GadgetCard({ gadget }: { gadget: GadgetEntry }) {
       </div>
       <p className="ref-card__description">{gadget.description}</p>
       {gadget.gasTypes && (
-        <div className="ref-card__subtags">
+        <div className="ref-card__variants">
           {gadget.gasTypes.map(gas => (
-            <span key={gas.id} className="ref-card__subrole-tag">{gas.name}</span>
+            <div key={gas.id} className="ref-card__variant">
+              <span className="ref-card__variant-label">{gas.name}{gas.description ? ' :' : ''}</span>
+              {gas.description && <span>{gas.description}</span>}
+            </div>
           ))}
         </div>
       )}
@@ -528,7 +531,7 @@ export function GameReferencePage() {
     ));
 
     const gadgets = sortByName(data.gadgets.filter(g =>
-      matchesSearch(searchTerms, g.name, g.description, g.gasTypes?.map(gas => gas.name).join(' '))
+      matchesSearch(searchTerms, g.name, g.description, g.gasTypes?.map(gas => `${gas.name} ${gas.description ?? ''}`).join(' '))
     ));
 
     const potionEffects = sortByName(data.potionEffects.filter(e =>

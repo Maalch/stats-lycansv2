@@ -94,7 +94,7 @@ export interface GadgetEntry {
   emoji: string;
   description: string;
   translationKey?: string;
-  gasTypes?: { id: string; name: string; translationKey?: string }[];
+  gasTypes?: { id: string; name: string; translationKey?: string; description?: string }[];
 }
 
 export interface PotionEffectEntry {
