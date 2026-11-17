@@ -1,0 +1,1 @@
+import{u as r}from"./baseStatsHook-Biyld_xX.js";import{c as s,b as u,d as i}from"./deathStatisticsUtils-tnYRVUnf.js";function m(t,a){return r(e=>s(e,t,a))}function c(){return r(t=>u(t))}function p(t){return r(a=>i(a))}export{m as a,p as b,c as u};

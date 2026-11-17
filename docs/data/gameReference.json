@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "description": "Reference file for Lycans v2 game mechanics: camps, roles, powers, accessories, gadgets, effects, events, and game rules. Extracted from in-game translations and gameLog data.",
-    "version": "0.372",
-    "lastUpdated": "2026-11-03",
-    "sourceTranslationsFile": "ExternalData/translations.json",
-    "notes": "French names match gameLog.json values. Descriptions are cleaned from in-game markup (<color> tags, {0} placeholders). This file can be manually edited to adjust or enrich descriptions. potionEffects = drinkable effects from potions/scrolls. statusEffects = in-game states applied by role abilities, environmental events, or other mechanics (many overlap with potionEffects but represent the broader set of all possible player states)."
+    "description": "Reference file for Lycans v2 game mechanics: camps, roles, powers, accessories, gadgets, effects, events, and game rules. Cross-checked against mod source code, local in-game translations, and gameLog data.",
+    "version": "0.378",
+    "lastUpdated": "2026-11-17",
+    "sourceTranslationsFile": "LycansNewRoles.resources.translations.json",
+    "notes": "French names match in-game translations and gameLog.json values; legacy entries preserve historical names. Descriptions are cleaned from in-game markup (<color> tags, {0} placeholders). This file can be manually edited to adjust or enrich descriptions. potionEffects = drinkable effects from potions/scrolls. statusEffects = in-game states applied by role abilities, environmental events, or other mechanics (many overlap with potionEffects but represent the broader set of all possible player states). Effect durations are base values: roles, accessories, current form, and other effects can modify them."
   },
 
   "camps": [
@@ -13,7 +13,7 @@
       "name": "Villageois",
       "emoji": "🏘️",
       "description": "Les Villageois doivent identifier et éliminer les Loups pour gagner. Ils récoltent des ressources, utilisent des objets et votent lors des meetings pour éliminer les suspects.",
-      "winCondition": "Éliminer tous les Loups (et Traîtres/Louveteaux) ou récolter suffisamment de ressources pour gagner.",
+      "winCondition": "Éliminer tous les Loups et Louveteaux, même s'il reste des Traîtres, ou récolter suffisamment de ressources pour gagner. Un objectif solo accompli peut retarder la victoire par élimination.",
       "roles": ["Villageois", "Villageois Élite"]
     },
     {
@@ -82,7 +82,7 @@
       "camp": "loup",
       "emoji": "🗡️",
       "type": "special",
-      "description": "Humain du côté des Loups. Ne compte pas dans la condition de victoire des Loups. Ne peut pas se transformer.",
+      "description": "Humain du côté des Loups, qui gagne ou perd avec eux et peut recevoir certains pouvoirs de loup. Ne peut pas se transformer. Tant qu'il reste un Loup, compte du côté des Loups pour la victoire par supériorité numérique en meeting. Sa survie seule n'empêche pas la victoire des Villageois si tous les Loups et Louveteaux sont morts.",
       "descriptionShort": "Aidez les Loups pour gagner avec eux"
     },
     {
@@ -100,8 +100,8 @@
       "camp": "solo",
       "emoji": "🤡",
       "type": "solo",
-      "description": "Gagne en se faisant voter en meeting. La nuit, sa faim dépend de son ennui : il doit récolter et rester près d'autres joueurs pour le réduire. Peut infliger des pouvoirs de loup à sa cible et simuler des sabotages. Si un Villageois le tue, ce dernier meurt aussi.",
-      "descriptionShort": "Gagne en se faisant voter en meeting",
+      "description": "Gagne en mourant pendant un meeting, notamment en se faisant éliminer au vote. La nuit, sa faim dépend de son ennui : il doit récolter et rester près d'autres joueurs pour le réduire. Peut infliger des pouvoirs de loup à sa cible et simuler des sabotages. Si un Villageois sans rôle solo le tue, ce dernier meurt aussi.",
+      "descriptionShort": "Gagne en mourant pendant un meeting",
       "translationKey": "NALES_ROLE_DESCRIPTION_VILLAGE_IDIOT"
     },
     {
@@ -120,7 +120,7 @@
       "camp": "solo",
       "emoji": "🔍",
       "type": "solo",
-      "description": "Gagne en atteignant 100% d'espionnage et en survivant jusqu'au meeting suivant. La cible est colorée en rouge et visible sur la minimap. L'espionnage progresse si la cible est visible et/ou si l'Espion est immobile, mais la progression ralentit à mesure que l'Espion avance pendant la même demi-journée (retours dégressifs). Pendant les meetings, la progression est affichée à tous.",
+      "description": "Gagne en atteignant 100% d'espionnage et en survivant jusqu'au meeting suivant. La cible est colorée en rouge et visible sur la minimap. L'espionnage progresse tant que la cible est à portée, même sans la voir ; la voir et/ou rester immobile accélère la progression. Celle-ci ralentit à mesure que l'Espion avance pendant la même demi-journée (retours dégressifs). À partir de 25%, sa progression est affichée à tous en meeting.",
       "descriptionShort": "Gagne en espionnant des cibles désignées",
       "translationKey": "NALES_ROLE_DESCRIPTION_SPY"
     },
@@ -130,7 +130,7 @@
       "camp": "solo",
       "emoji": "🔬",
       "type": "solo",
-      "description": "Gagne en rejoignant un meeting avec 100% de Recherche. La recherche augmente en restant près d'un loup transformé, plus vite si le risque est élevé. La progression ralentit à mesure que le Scientifique avance pendant la même nuit (retours dégressifs). Peut voir tous les loups transformés sur la minimap et créer des gadgets.",
+      "description": "Gagne en rejoignant un meeting avec 100% de Recherche. La recherche augmente près d'un loup transformé, plus vite s'il est visible, et reçoit un bonus lorsqu'un loup proche se transforme ou tue. La progression ralentit à mesure que le Scientifique avance pendant la même demi-journée (retours dégressifs). Peut voir tous les loups transformés sur la minimap et créer des gadgets. À partir de 25%, sa progression est affichée à tous en meeting.",
       "descriptionShort": "Gagne en observant des loups qui sont transformés",
       "translationKey": "NALES_ROLE_DESCRIPTION_SCIENTIST"
     },
@@ -140,7 +140,7 @@
       "camp": "solo",
       "emoji": "💕",
       "type": "duo",
-      "description": "Rôle duo composé d'un Amoureux Villageois et d'un Amoureux Loup. Ils gagnent en survivant ensemble jusqu'à ce qu'il ne reste que 4 joueurs en meeting. Si un des deux joueurs meurt, l'autre meurt également. Peuvent communiquer par télépathie (canal privé), y compris en meeting. Le Villageois perd de la vie la nuit si le Loup n'est pas transformé, et seuls les kills du Loup le nourrissent (excepté les Zombies). La nourriture récupérée par l'Amoureux Villageois soigne l'Amoureux Loup s'il est en forme de loup. Les autres Loups voient la nuit teintée en rose quand les Amoureux sont dans la partie.",
+      "description": "Rôle duo composé d'un Amoureux Villageois et d'un Amoureux Loup. Ils gagnent en survivant ensemble jusqu'à ce qu'il reste au plus 4 joueurs en meeting, ou s'ils sont les deux derniers vivants. Si un des deux joueurs meurt, l'autre meurt également. Peuvent communiquer par télépathie (canal privé), y compris en meeting. Le Villageois perd de la vie la nuit si le Loup n'est pas transformé, et seuls les kills du Loup le nourrissent (excepté les Zombies). La nourriture récupérée par l'Amoureux Villageois soigne l'Amoureux Loup s'il est en forme de loup. Les autres Loups voient la nuit teintée en rose quand les Amoureux sont dans la partie.",
       "descriptionShort": "Couple de joueurs Villageois + Loup. Gagnent en survivant ensemble",
       "subRoles": [
         {
@@ -161,7 +161,7 @@
       "camp": "solo",
       "emoji": "🦁",
       "type": "solo",
-      "description": "Doit marquer tous les joueurs vivants (qui ne sont pas avertis). Sa progression est cachée en meeting (ex. ?/14). Ensuite, la nuit suivante, se transforme en Bête : un loup immense, rapide et résistant qui peut tuer même les loups normaux (les Zombies ne se réveillent pas à sa transformation). Doit tuer suffisamment de victimes pour gagner, et gagne immédiatement si elle est le seul joueur vivant après avoir tué quelqu'un.",
+      "description": "Doit marquer les autres joueurs vivants, qui ne sont pas avertis ; les Zombies et joueurs kidnappés n'ont pas besoin d'être marqués. Sa progression est cachée en meeting (ex. ?/14). La nuit suivante, se transforme en Bête : un loup immense, rapide et résistant. Les autres loups ne peuvent plus se transformer ; les Zombies ne se réveillent pas. Doit tuer suffisamment de victimes pour gagner, et gagne immédiatement si elle est le seul joueur vivant après avoir tué quelqu'un.",
       "descriptionShort": "Gagne en marquant tous les joueurs puis en les tuant après sa transformation",
       "translationKey": "NALES_ROLE_DESCRIPTION_BEAST"
     },
@@ -171,7 +171,7 @@
       "camp": "solo",
       "emoji": "💰",
       "type": "solo",
-      "description": "Progresse en récoltant ou en tirant sur sa cible désignée. Possède un fusil silencieux qui endort la victime. Peut pister sa cible qui est paralysée quand il sort son fusil. Quand il commence une journée avec l'objectif atteint, doit survivre jusqu'à la nuit, mais tout le monde peut le tuer !",
+      "description": "Progresse en récoltant ou en tirant sur sa cible désignée. Possède un fusil silencieux qui endort la victime. Peut pister sa cible qui est paralysée quand il sort son fusil. Quand il commence une journée avec l'objectif atteint, doit survivre jusqu'à la nuit, mais tout le monde peut le tuer au contact. Pendant cette traque, reçoit un bonus de vitesse et de régénération, ainsi qu'une brève furtivité au départ.",
       "descriptionShort": "Gagne en récoltant et en tirant sur les cibles désignées, puis en survivant à une traque",
       "translationKey": "NALES_ROLE_DESCRIPTION_MERCENARY"
     },
@@ -181,7 +181,7 @@
       "camp": "solo",
       "emoji": "💀",
       "type": "solo",
-      "description": "Gagne en étant au moins aussi nombreux (avec ses Zombies) que les autres lors d'un meeting. Peut réanimer des cadavres en Zombies, qui sont ressuscités la nuit et peuvent tuer des joueurs en forme humaine pour réduire le cooldown de réanimation. Peut également renforcer ses Zombies la nuit pour augmenter temporairement leur vitesse.",
+      "description": "Gagne avec ses Zombies en meeting s'ils sont au moins aussi nombreux que les autres joueurs vivants, et strictement plus nombreux que les Loups et Traîtres vivants. Les Zombies morts comptent aussi pour son objectif. Peut réanimer des cadavres en Zombies. Leur réveil automatique en début de nuit nécessite qu'il soit vivant et n'a pas lieu pendant les traques de La Bête ou du Cultiste. Ils peuvent tuer des joueurs en forme humaine pour réduire le cooldown de réanimation. Peut renforcer ses Zombies pour augmenter temporairement leur vitesse et réduire leur dépense de santé en courant.",
       "descriptionShort": "Gagne en réanimant des joueurs en zombies",
       "translationKey": "NALES_ROLE_DESCRIPTION_VOODOO"
     },
@@ -191,7 +191,7 @@
       "camp": "solo",
       "emoji": "🪢",
       "type": "solo",
-      "description": "Gagne en kidnappant un certain nombre de joueurs. Peut interagir avec un joueur en forme humaine : après 3 secondes il est enlevé et disparaît. Les joueurs enlevés ont une icône spéciale en meeting et sont libérés si le Kidnappeur meurt.",
+      "description": "Gagne en atteignant son objectif d'enlèvements puis en rejoignant un meeting. Peut aussi gagner s'il ne reste aucun autre joueur libre, ou au plus un autre joueur libre en meeting. Peut interagir avec un joueur en forme humaine : après 3 secondes il est enlevé et disparaît. Les captifs suivent son point de vue, ont une icône spéciale en meeting et sont libérés s'il meurt. Peut réduire le volume de leurs voix au prix d'une perte supplémentaire de santé, y compris en meeting.",
       "descriptionShort": "Gagne en kidnappant des joueurs",
       "translationKey": "NALES_ROLE_DESCRIPTION_KIDNAPPER"
     },
@@ -201,7 +201,7 @@
       "camp": "solo",
       "emoji": "☠️",
       "type": "solo",
-      "description": "Place des crânes (que les autres joueurs peuvent détruire) qui chargent son objectif : la charge est plus rapide avec peu de crânes placés et plus lente avec beaucoup. À 100% après un meeting, une phase de chasse (journée un peu plus courte que la normale) commence : des esprits, plus lents, sont relâchés et peuvent capturer des joueurs, et le Cultiste peut aussi les capturer directement. Le Cultiste-fantôme est visible en jaune à travers les murs. Les joueurs libres peuvent libérer les joueurs capturés (3 secondes nécessaires).",
+      "description": "Place des crânes (que les autres joueurs peuvent détruire) qui chargent son objectif : plus il y a de crânes, plus la charge totale est rapide, avec un gain décroissant par crâne supplémentaire. À 100% après un meeting, une traque commence : le Cultiste contrôle un esprit et d'autres esprits poursuivent les joueurs pour les capturer. Le Cultiste-fantôme et les crânes poursuivants sont visibles en jaune à travers les murs. Doit détenir simultanément le nombre requis de captifs avant la fin de la nuit suivante, sinon il meurt. Les joueurs libres peuvent libérer un captif en 2 secondes, ce qui réduit son compteur. Pendant la traque, la faim est suspendue, les transformations en loup sont bloquées et le cycle jour/nuit est accéléré.",
       "descriptionShort": "Gagne en cachant des crânes puis en capturant des joueurs",
       "translationKey": "NALES_ROLE_DESCRIPTION_CULTIST"
     }
@@ -226,7 +226,7 @@
       "id": "necromancien",
       "name": "Nécromancien",
       "emoji": "⚰️",
-      "description": "Peut marquer un cadavre. Le joueur devient un Loup et prend sa forme de loup immédiatement. Peut ensuite le ressusciter comme un loup muet en consommant sa charge. La charge augmente en forme de loup et peut dépasser 100% (jusqu'à 200%). Commence à 90% : doit d'abord se transformer avant de pouvoir ressusciter sa cible la première fois. Ce pouvoir n'est pas disponible pour le Louveteau.",
+      "description": "Peut marquer un cadavre. Le joueur devient un Loup et prend sa forme de loup immédiatement. Peut ensuite le ressusciter temporairement comme un loup muet en consommant sa charge. La cible ne peut pas se détransformer et meurt lorsque la charge est épuisée ou à l'aube. La charge augmente en forme de loup quand la cible n'est pas réanimée et peut dépasser 100% (jusqu'à 200%). Commence à 90% : doit d'abord se transformer avant de pouvoir ressusciter sa cible la première fois. Ce pouvoir n'est pas disponible pour le Louveteau.",
       "descriptionShort": "Peut ressusciter un cadavre en loup",
       "translationKey": "NALES_ROLE_DESCRIPTION_NECROMANCER"
     },
@@ -242,7 +242,7 @@
       "id": "saboteur",
       "name": "Saboteur",
       "emoji": "💣",
-      "description": "Peut piéger les gadgets et potions au sol ou possédés par un autre joueur. Les objets sont aussi plus visibles pour lui.",
+      "description": "Peut piéger les gadgets et potions au sol, ainsi que l'objet possédé par un autre joueur à moins de 10 mètres. Chaque piège consomme 100% de sa charge, qui se régénère automatiquement. Un gadget piégé est détruit à l'utilisation, blesse son utilisateur et lui inflige Blessé ; une potion piégée applique Poison à la place de son effet normal. Les objets sont aussi plus visibles pour lui.",
       "descriptionShort": "Peut piéger les objets au sol ou directement possédés par d'autres joueurs",
       "translationKey": "NALES_ROLE_DESCRIPTION_SABOTEUR"
     },
@@ -258,7 +258,7 @@
       "id": "sorcier",
       "name": "Sorcier",
       "emoji": "🧙",
-      "description": "Peut choisir un joueur dont sa forme humaine prend l'apparence (noté en rouge dans la liste). Peut aussi maudire secrètement une cible, qui se transformera temporairement en loup inoffensif durant la nuit suivante, visible sur la minimap.",
+      "description": "Peut choisir un joueur dont sa forme humaine prend l'apparence (noté en rouge dans la liste). Peut aussi maudire secrètement une cible, qui se transformera temporairement en loup inoffensif durant la nuit suivante. Pendant cette transformation, le Sorcier la voit à travers les murs et sur sa minimap.",
       "descriptionShort": "Peut changer sa forme humaine et forcer un autre joueur à se transformer en faux loup la nuit suivante",
       "translationKey": "NALES_ROLE_DESCRIPTION_WARLOCK"
     },
@@ -290,8 +290,9 @@
       "id": "braconnier",
       "name": "Braconnier",
       "emoji": "🔫",
-      "description": "Possède un fusil avec un zoom. Ses tirs font très peu de bruit et placent un traqueur sur la cible : les loups la voient sur la minimap et entendent un son quand ils sont proches. Le fusil se recharge automatiquement après chaque meeting.",
-      "descriptionShort": "Possède un fusil dont les tirs rendent la cible plus facile à trouver pour les loups",
+      "legacy": true,
+      "description": "Ancien pouvoir de loup, qui n'est plus attribué. Possédait un fusil silencieux dont les tirs marquaient la cible pour permettre aux loups de la retrouver.",
+      "descriptionShort": "Ancien pouvoir de loup, conservé pour les historiques",
       "translationKey": "NALES_ROLE_DESCRIPTION_POACHER"
     },
     {
@@ -302,10 +303,10 @@
       "descriptionShort": "Charge son pouvoir en étant proche d'autres joueurs, peut l'utiliser pour maudire tout le monde",
       "translationKey": "NALES_ROLE_DESCRIPTION_RITUALIST",
       "availableEffects": [
-        { "effect": "Muet", "duration": 55 },
-        { "effect": "Sourd", "duration": 20 },
-        { "effect": "Paranoia", "duration": 12 },
-        { "effect": "Flatulences", "duration": 20 },
+        { "effect": "Muet", "duration": 45 },
+        { "effect": "Sourd", "duration": 15 },
+        { "effect": "Paranoia", "duration": 10 },
+        { "effect": "Flatulences", "duration": 15 },
         { "effect": "Myope", "duration": 25 }
       ]
     },
@@ -321,7 +322,7 @@
       "id": "acrobate",
       "name": "Acrobate",
       "emoji": "🤸",
-      "description": "Peut effectuer de grands sauts à certains emplacements spécifiques des maps (indiqués sur la minimap et par des flèches). Chaque saut nécessite quelques secondes de préparation et il émet un grognement au moment du saut. Est immunisé aux dégâts de chute.",
+      "description": "Peut effectuer de grands sauts à certains emplacements spécifiques des maps (indiqués sur la minimap et par des flèches). Chaque saut nécessite quelques secondes de préparation et il émet un grognement au moment du saut. Ne peut pas être repoussé pendant la préparation du saut. Est immunisé aux dégâts de chute.",
       "descriptionShort": "Peut faire de puissants sauts à certains emplacements de la carte",
       "translationKey": "NALES_ROLE_DESCRIPTION_ACROBAT"
     },
@@ -356,7 +357,7 @@
       "id": "survivaliste",
       "name": "Survivaliste",
       "emoji": "🛡️",
-      "description": "Charge son pouvoir en prenant les indices parfois laissés par les joueurs, puis peut permettre à un joueur d'être sauvé par un autre joueur s'il est attaqué par un loup. Peut l'utiliser sur lui-même avec un temps de préparation. Les villageois Élite survivent moins longtemps.",
+      "description": "Charge son pouvoir en prenant les indices parfois laissés par les joueurs, puis peut permettre à un joueur d'être sauvé par un autre joueur s'il est attaqué par un loup. Le sauvetage nécessite 4 secondes d'interaction par un joueur en forme humaine qui n'est pas Zombie. Peut préparer cette protection sur lui-même. Les villageois Élite survivent moins longtemps.",
       "descriptionShort": "Peut permettre à un joueur (ou lui-même) d'être sauvé s'il est attaqué par un loup",
       "translationKey": "NALES_ROLE_DESCRIPTION_SURVIVALIST"
     },
@@ -364,7 +365,7 @@
       "id": "pretre",
       "name": "Prêtre",
       "emoji": "🙏",
-      "description": "Récolte pour obtenir son pouvoir puis peut protéger secrètement sa cible en journée. Cette nuit, la première fois qu'un loup l'attaque, elle sera protégée : le loup n'est ni repoussé ni assommé et est soigné comme s'il avait tué un villageois, tandis que la cible passe à 40% de santé et devient invisible et rapide pendant 8 secondes pour s'échapper ou se cacher. Moins efficace sur les villageois Élite.",
+      "description": "Récolte pour obtenir son pouvoir puis peut protéger secrètement sa cible en journée. Cette nuit, la première attaque ordinaire de loup consomme la protection : le loup n'est ni repoussé ni assommé et est soigné comme après une victime. La cible passe à environ 40% de santé et reçoit Sanctuaire pendant 8 secondes : elle devient rapide, invisible pour les loups et protégée de leurs attaques, sauf celles de La Bête.",
       "descriptionShort": "Peut protéger un joueur d'une attaque de loup",
       "translationKey": "NALES_ROLE_DESCRIPTION_PRIEST"
     },
@@ -404,8 +405,8 @@
       "id": "runiste",
       "name": "Runiste",
       "emoji": "🪨",
-      "description": "Peut gratuitement placer jusqu'à 6 runes invisibles (visibles uniquement par lui, et à travers les murs). Toutes les runes détectent automatiquement les loups proches ; la rune qui en détecte un est automatiquement sélectionnée (si plusieurs, la plus proche du Runiste). La nuit, peut dépenser sa charge pour activer la rune sélectionnée à n'importe quelle distance : elle avertit les loups transformés puis explose après un délai, les étourdissant et leur infligeant Confusion. Plus il y a de loups transformés, plus l'explosion est large et puissante.",
-      "descriptionShort": "Peut placer des runes invisibles qui détectent et font exploser les loups",
+      "description": "Récolte pour charger son pouvoir. Peut gratuitement placer jusqu'à 8 runes invisibles (visibles uniquement par lui, et à travers les murs), avec 1 seconde de préparation par rune. Lorsqu'un loup transformé s'approche, une rune s'active automatiquement si le Runiste dispose d'au moins 100% de charge, et en consomme 100%. Le loup déclencheur est Détecté pendant 5 secondes. La rune avertit les loups puis explose après un court délai, étourdissant et ralentissant les loups proches. S'accroupir réduit fortement les effets de l'explosion. Les runes ne détectent les loups qu'à leur activation.",
+      "descriptionShort": "Place des runes invisibles qui s'activent automatiquement pour détecter, étourdir et ralentir les loups",
       "translationKey": "NALES_ROLE_DESCRIPTION_RUNEMASTER"
     },
     {
@@ -463,7 +464,7 @@
       "id": "purificateur",
       "name": "Purificateur",
       "emoji": "🔥",
-      "description": "Villageois Élite qui peut lancer des bouteilles purifiantes (flamme verte) qui brûlent et infligent Confusion aux loups transformés mais soignent et accélèrent les humains. Si un loup le tue, il prend feu. Commence chaque jour avec une bouteille purifiante. Clique-droit pour lancer une version plus puissante qui affecte une plus large zone et dure plus longtemps.",
+      "description": "Villageois Élite qui peut lancer des bouteilles purifiantes (flamme verte) qui brûlent et infligent Confusion aux loups transformés mais soignent et accélèrent les humains. Si un loup le tue, il prend feu. Reçoit une bouteille purifiante au début de chaque jour si son emplacement d'objet est vide. Peut lancer une version plus puissante qui affecte une plus large zone et dure plus longtemps.",
       "descriptionShort": "Lance des bouteilles purifiantes qui affectent les loups et les humains",
       "translationKey": "NALES_ROLE_DESCRIPTION_PURIFIER"
     }
@@ -573,9 +574,9 @@
       "id": "astral",
       "name": "Astral",
       "emoji": "💫",
-      "description": "Peut envoyer son esprit hors de son corps pour explorer rapidement sans perte supplémentaire de santé. En forme humaine, les joueurs ont tous la même apparence et ne peuvent pas être distingués. En forme de loup, l'esprit est très rapide et la santé ne diminue pas.",
-      "descriptionVillager": "Peut envoyer son esprit hors de son corps pour explorer rapidement, mais ne peut pas distinguer les joueurs",
-      "descriptionWolf": "Peut envoyer son esprit hors de son corps pour explorer les environs",
+      "description": "Peut envoyer son esprit hors de son corps pour explorer et traverser les portes. Le corps reste immobile et vulnérable jusqu'au retour de l'esprit. En forme humaine, les joueurs ont tous la même apparence et ne peuvent pas être distingués, sans perte supplémentaire de santé liée à l'exploration. En forme de loup, l'esprit est très rapide, la perte normale de faim est suspendue et l'effet de peur du corps porte moins loin.",
+      "descriptionVillager": "Explore avec son esprit et traverse les portes, mais ne distingue pas les joueurs et laisse son corps immobile",
+      "descriptionWolf": "Explore très vite avec son esprit ; son corps reste immobile, perd moins de santé et provoque moins de peur",
       "translationKey": "NALES_ROLE_DESCRIPTION_ASTRAL"
     },
     {
@@ -600,9 +601,9 @@
       "id": "acteur",
       "name": "Acteur",
       "emoji": "🎬",
-      "description": "Peut feindre la mort. En forme de loup, perd de la santé beaucoup plus lentement et ne génère pas d'effet de peur en faisant le mort.",
-      "descriptionVillager": "Peut feindre la mort pour berner les loups",
-      "descriptionWolf": "Peut feindre la mort pour cacher sa présence et attirer des victimes",
+      "description": "Peut feindre la mort puis se relever à volonté. Pendant ce temps, ne voit rien mais continue à entendre. En forme de loup, perd de la santé beaucoup plus lentement et ne génère pas d'effet de peur en faisant le mort.",
+      "descriptionVillager": "Peut feindre la mort pour berner les loups ; ne voit rien mais continue à entendre",
+      "descriptionWolf": "Peut feindre la mort sans effet de peur et en perdant moins de santé ; continue à entendre mais ne voit rien",
       "translationKey": "NALES_ROLE_DESCRIPTION_ACTOR"
     },
     {
@@ -676,8 +677,8 @@
       "name": "Ange gardien",
       "emoji": "😇",
       "camp": "villageois",
-      "description": "Rôle donné à un villageois mort. Peut observer les joueurs pour déterminer s'ils sont en danger. Peut soigner et protéger les villageois.",
-      "descriptionShort": "Soigne et protège les villageois après la mort",
+      "description": "Rôle donné à un villageois mort selon les places configurées. Peut observer un villageois en danger pour le soigner et le protéger ; un même joueur ne peut recevoir cette protection qu'une fois par journée. Peut aussi infliger Myope ou Sourd à un loup transformé.",
+      "descriptionShort": "Soigne et protège les villageois ou gêne les loups après la mort",
       "translationKey": "NALES_ROLE_DESCRIPTION_ANGEL"
     },
     {
@@ -685,7 +686,7 @@
       "name": "Fantôme",
       "emoji": "👻",
       "camp": "villageois",
-      "description": "Rôle donné à un villageois mort. Visible par tout le monde (sauf pendant les meetings) et voit et entend tout le monde. Peut soigner et donner un effet positif mineur à un villageois ciblé, ou créer un objet/accessoire aléatoire. Détruit définitivement si traversé par un loup transformé (sauf pendant la nuit de sa mort) : plus aucun autre fantôme n'apparaît alors pendant la partie. Un villageois tué par un loup récemment transformé (moins de 15 secondes) ou tué en meeting ne peut pas devenir fantôme.",
+      "description": "Rôle donné à un villageois mort selon les places configurées. Son esprit est visible par tous hors meetings et transitions. Peut soigner un humain non Zombie et lui donner un effet positif mineur, ou créer un objet/accessoire aléatoire. Peut être détruit au contact par un loup transformé, sauf pendant la nuit de sa mort : sa place est alors définitivement consommée. Un villageois tué par un loup récemment transformé (moins de 15 secondes) ou tué en meeting ne peut pas devenir fantôme.",
       "descriptionShort": "Aide les villageois après la mort, mais peut être détruit par les loups",
       "translationKey": "NALES_ROLE_DESCRIPTION_GHOST"
     },
@@ -694,8 +695,8 @@
       "name": "Spectre",
       "emoji": "💀",
       "camp": "loup",
-      "description": "Rôle donné à un loup/traître mort. Peut gêner les villageois en leur infligeant des effets négatifs et simuler des transformations à sa position.",
-      "descriptionShort": "Gêne les villageois après la mort",
+      "description": "Rôle donné à un loup/traître mort selon les places configurées. Son esprit est invisible pour les vivants. Peut infliger des effets négatifs aux humains, renforcer temporairement un loup transformé avec Puissance, et simuler des transformations à sa position pendant la nuit.",
+      "descriptionShort": "Gêne les humains et aide les loups après la mort",
       "translationKey": "NALES_ROLE_DESCRIPTION_SPECTER"
     },
     {
@@ -703,7 +704,7 @@
       "name": "Zombie",
       "emoji": "🧟",
       "camp": "vaudou",
-      "description": "Joueur réanimé par le Vaudou. Mort en journée mais ressuscite chaque nuit. Peut tuer des joueurs en forme humaine pour réduire le cooldown de réanimation du Vaudou, et se sacrifier pour étourdir un loup.",
+      "description": "Joueur réanimé par le Vaudou, qui perd ses anciens pouvoirs et rôle secondaire et gagne avec lui. Mort en journée, se relève automatiquement au début de la nuit tant que le Vaudou est vivant, sauf pendant une traque de La Bête ou du Cultiste. Courir consomme rapidement sa santé ; elle se régénère sinon. Peut tuer des joueurs en forme humaine pour réduire le cooldown de réanimation du Vaudou, ou se sacrifier pour assommer et repousser un loup.",
       "descriptionShort": "Réanimé par le Vaudou, tue la nuit",
       "translationKey": "NALES_ROLE_DESCRIPTION_ZOMBIE"
     }
@@ -775,7 +776,7 @@
       "name": "Piège",
       "emoji": "🪤",
       "translationKey": "NALES_GADGET_TRAP",
-      "description": "Piège posable au sol qui immobilise et diminue la santé des joueurs qui marchent dessus. Le piège se casse automatiquement après quelques secondes."
+      "description": "Piège au sol qui immobilise et diminue la santé de sa victime ; son poseur est immunisé à ses propres pièges. Se casse automatiquement après quelques secondes. Avec l'option Pièges modifiés, la pose prend 1 seconde et un piège non déclenché peut être désamorcé : 2,5 secondes en humain, 5 secondes en loup, ou 1 seconde pour l'Ingénieur."
     },
     {
       "id": "fumigene",
@@ -824,32 +825,32 @@
       "name": "Diamant",
       "emoji": "💎",
       "translationKey": "NALES_GADGET_DIAMOND",
-      "description": "Rend rapide et invisible pendant 3 secondes."
+      "description": "Applique Phase pendant 3 secondes : rend rapide, invisible et impossible à cibler normalement, mais empêche aussi de voir les autres joueurs. Permet de traverser les pièges sans les déclencher."
     },
     {
       "id": "grenade",
       "name": "Grenade",
       "emoji": "💣",
       "translationKey": "NALES_GADGET_GRENADE",
-      "description": "Se lance et repousse tous les joueurs proches en explosant."
+      "description": "Se lance puis explose, repoussant et ralentissant les joueurs proches avec Désorienté. L'effet diminue avec la distance ; s'accroupir réduit son impact. Les loups touchés reçoivent Résilience et Endurance pour limiter les contrôles en chaîne."
     },
     {
       "id": "bouteille-incendiaire",
       "name": "Bouteille incendiaire",
       "emoji": "🔥",
       "translationKey": "NALES_GADGET_MOLOTOV",
-      "description": "Se lance et crée un mur de flammes qui blesse les joueurs qui le traversent."
+      "description": "Se lance et explose au contact pour propager des flammes au sol. Le feu applique Brûlure aux joueurs touchés : ils sont ralentis et perdent progressivement de la santé."
     },
     {
       "id": "gaz",
       "name": "Fiole de gaz",
       "emoji": "🧪",
       "translationKey": "NALES_GADGET_SLEEPING_GAS",
-      "description": "Gaz : placez-le (3 secondes) puis utilisez le Détonateur pour libérer le gaz.",
+      "description": "Place une fiole en 3 secondes, puis permet de libérer son gaz à distance avec le Détonateur. L'effet dépend du type de gaz et peut toucher humains et loups.",
       "gasTypes": [
-        { "id": "somnifere", "name": "Somnifère", "translationKey": "NALES_ITEM_GAS_SLEEPING" },
-        { "id": "camouflage", "name": "Camouflage", "translationKey": "NALES_ITEM_GAS_DEAFENER" },
-        { "id": "puanteur", "name": "Puanteur", "translationKey": "NALES_ITEM_GAS_POISON" }
+        { "id": "somnifere", "name": "Somnifère", "translationKey": "NALES_ITEM_GAS_SLEEPING", "description": "Accumule Sommeil sur les joueurs exposés, puis les endort. L'Ingénieur et La Bête y résistent mieux." },
+        { "id": "camouflage", "name": "Camouflage", "translationKey": "NALES_ITEM_GAS_DEAFENER", "description": "Applique Camouflé aux joueurs dans la zone, ainsi que Discret aux loups transformés." },
+        { "id": "puanteur", "name": "Puanteur", "translationKey": "NALES_ITEM_GAS_POISON", "description": "Applique Flatulences aux joueurs exposés et Nausée aux loups transformés, ce qui les ralentit. N'applique pas Poison." }
       ]
     },
     {
@@ -864,7 +865,7 @@
       "name": "Radar",
       "emoji": "📡",
       "translationKey": "NALES_GADGET_RADAR",
-      "description": "Se lance et détecte les humains OU les loups (selon la forme actuelle du lanceur)."
+      "description": "Se lance et émet des impulsions qui révèlent les cibles à travers les murs avec Détecté. Lancé en forme humaine, détecte les loups transformés ; lancé en loup, détecte les humains dans un rayon plus court. L'Ingénieur n'est pas détecté."
     },
     {
       "id": "potion",
@@ -896,12 +897,13 @@
     { "id": "rassasie", "name": "Rassasié", "type": "positive", "durationSeconds": 45, "translationKey": "EFFECT_SATIATED", "tutorial": "Remplit votre jauge de faim, vous empêchant de mourir de faim" },
     { "id": "sourd", "name": "Sourd", "type": "negative", "durationSeconds": 60, "translationKey": "NALES_EFFECT_DEAFNESS", "tutorial": "Réduit ou coupe totalement les sons du jeu (voix des joueurs et bruits d'ambiance)" },
     { "id": "teleportation", "name": "Téléportation", "type": "neutral", "durationSeconds": 75, "translationKey": "EFFECT_TELEPORTATION", "tutorial": "Vous téléporte à une position aléatoire sur la carte" },
-    { "id": "vampire", "name": "Vampire", "type": "neutral", "durationSeconds": 35, "translationKey": "NALES_EFFECT_VAMPIRE", "tutorial": "Vous permet de mordre un joueur pour lui voler de la vie et la récupérer" },
+    { "id": "vampire", "name": "Vampire", "type": "neutral", "durationSeconds": 35, "translationKey": "NALES_EFFECT_VAMPIRE", "tutorial": "Vole automatiquement de la santé aux joueurs proches et vous soigne" },
     { "id": "vision-vraie", "name": "Vision vraie", "type": "positive", "durationSeconds": 45, "translationKey": "EFFECT_TRUESIGHT", "tutorial": "Vous voyez dans le noir et ignorez les illusions visuelles" },
     { "id": "blanche", "name": "Blanche", "type": "positive", "durationNote": "60% de la durée de la potion de base équivalente", "translationKey": "EFFECT_BLANCHE", "tutorial": "Potion créée par l'Alchimiste. Applique un effet positif aléatoire parmi les effets positifs possibles, plus court qu'une potion classique.", "source": "alchimiste"},
     { "id": "camoufle", "name": "Camouflé", "type": "positive", "durationSeconds": 90, "translationKey": "NALES_EFFECT_CAMOUFLAGE", "tutorial": "Rend le joueur moins visible pour les autres joueurs, en particulier les loups transformés" },
-    { "id": "confusion", "name": "Confusion", "type": "negative", "durationSeconds": 30, "translationKey": "NALES_EFFECT_CONFUSED", "tutorial": "Perturbe la vision et la perception du joueur et le ralentit" },
-    { "id": "immunite", "name": "Immunité", "type": "neutral", "durationSeconds": 80, "translationKey": "NALES_EFFECT_IMMUNE", "tutorial": "Retire tous les effets (sauf exception) de la cible et empêche ces effets d'être appliqués" }
+    { "id": "energie", "name": "Énergie", "type": "positive", "durationSeconds": 60, "translationKey": "NALES_EFFECT_ENERGIZED", "tutorial": "Accélère la charge ou la recharge de certains pouvoirs ; sinon, régénère votre santé. Sans effet sur le Chasseur." },
+    { "id": "confusion", "name": "Confusion", "type": "negative", "durationSeconds": 45, "translationKey": "NALES_EFFECT_CONFUSED", "tutorial": "Perturbe votre perception et vous ralentit. Parler peut vous faire tomber Assommé ; en meeting, votre vote, même Passer, peut être remplacé par un vote aléatoire" },
+    { "id": "immunite", "name": "Immunisé", "type": "neutral", "durationSeconds": 80, "translationKey": "NALES_EFFECT_IMMUNE", "tutorial": "Retire tous les effets (sauf exception) de la cible et empêche ces effets d'être appliqués" }
   ],
 
   "statusEffects": [
@@ -909,7 +911,7 @@
     { "id": "foncer", "name": "Foncer", "translationKey": "NALES_EFFECT_CHASE", "tutorial": "Augmente fortement votre vitesse de déplacement pendant la poursuite" },
     { "id": "course", "name": "Course", "translationKey": "NALES_EFFECT_SPRINT", "tutorial": "Augmente votre vitesse de déplacement tant que vous sprintez" },
     { "id": "detransfo", "name": "Détransfo!", "translationKey": "NALES_EFFECT_REVERTING", "tutorial": "Indique que votre retour de la forme de loup à la forme humaine est en cours" },
-    { "id": "desoriente", "name": "Désorienté", "translationKey": "NALES_EFFECT_DISORIENTED", "tutorial": "Perturbe votre orientation et votre perception" },
+    { "id": "desoriente", "name": "Désorienté", "translationKey": "NALES_EFFECT_DISORIENTED", "tutorial": "Perturbe votre orientation et votre perception et ralentit vos déplacements" },
     { "id": "infecte", "name": "Infecté!", "translationKey": "NALES_EFFECT_INFECTED" },
     { "id": "sourd", "name": "Sourd", "translationKey": "NALES_EFFECT_DEAFNESS", "tutorial": "Coupe les voix des joueurs et les sons du jeu" },
     { "id": "camoufle", "name": "Camouflé", "translationKey": "NALES_EFFECT_CAMOUFLAGE", "tutorial": "Vous rend moins visible pour les autres joueurs, en particulier les loups transformés" },
@@ -920,7 +922,7 @@
     { "id": "neutralise", "name": "Neutralisé", "translationKey": "NALES_EFFECT_ANTI_MAGIC", "tutorial": "Neutralise temporairement certains effets et pouvoirs magiques" },
     { "id": "deguise", "name": "Déguisé", "translationKey": "NALES_EFFECT_DISGUISED", "tutorial": "Remplace votre apparence humaine par celle d'un autre joueur" },
     { "id": "midas", "name": "Midas", "translationKey": "NALES_EFFECT_MIDAS", "tutorial": "Augmente vos récoltes et vous permet de pétrifier une cible" },
-    { "id": "vampire", "name": "Vampire", "translationKey": "NALES_EFFECT_VAMPIRE", "tutorial": "Vole de la vie aux autres joueurs proches de vous" },
+    { "id": "vampire", "name": "Vampire", "translationKey": "NALES_EFFECT_VAMPIRE", "tutorial": "Vole automatiquement de la santé aux joueurs proches et vous soigne" },
     { "id": "vampirise", "name": "Vampirisé !", "translationKey": "NALES_EFFECT_VAMPIRE_TARGET", "tutorial": "Indique qu'un joueur sous l'effet Vampire est en train de vous voler de la vie" },
     { "id": "minuscule", "name": "Minuscule", "translationKey": "NALES_EFFECT_TINY", "tutorial": "Réduit fortement votre taille et vous rend plus difficile à repérer" },
     { "id": "hante", "name": "Hanté", "translationKey": "NALES_EFFECT_HAUNTED", "tutorial": "Lance automatiquement un effet aléatoire sur le joueur lui-même toutes les quelques secondes.", "randomEffects": ["Soins", "Dégâts", "Ouvre les portes", "Ferme les portes", "Téléportation", "Obtenir un objet", "Étourdi", "Aveuglé", "Clairvoyance", "Flatulences", "Invisible", "Paranoia", "Célérité", "Son", "Lanternes clignotantes", "Rotation forcée"] },
@@ -932,34 +934,35 @@
     { "id": "muet", "name": "Muet", "translationKey": "NALES_EFFECT_MUTE", "tutorial": "Vous empêche de parler aux autres joueurs" },
     { "id": "clairvoyance", "name": "Clairvoyance", "translationKey": "NALES_EFFECT_CLAIRVOYANCE", "tutorial": "Indique les joueurs proches sur votre minimap" },
     { "id": "assomme", "name": "Assommé", "translationKey": "NALES_EFFECT_DOWNED", "tutorial": "Vous met à terre et vous empêche temporairement de bouger ou d'agir" },
-    { "id": "malade", "name": "Malade", "translationKey": "NALES_EFFECT_DISEASED", "tutorial": "Indique que vous subissez les effets d'une maladie" },
+    { "id": "malade", "name": "Malade", "translationKey": "NALES_EFFECT_DISEASED", "tutorial": "Effet des puits empoisonnés : ralentit et aggrave la perte de santé des humains soumis à la faim ordinaire" },
     { "id": "malediction", "name": "Malédiction", "translationKey": "NALES_EFFECT_CURSED", "tutorial": "Vous marque pour subir l'effet différé d'une malédiction" },
     { "id": "possession", "name": "Possession", "translationKey": "NALES_EFFECT_POSSESSED", "tutorial": "Indique qu'un Possesseur observe à travers vos yeux et peut se transformer à votre position" },
-    { "id": "blesse", "name": "Blessé", "translationKey": "NALES_EFFECT_WOUNDED", "tutorial": "Indique que vous avez été blessé par une attaque" },
+    { "id": "blesse", "name": "Blessé", "translationKey": "NALES_EFFECT_WOUNDED", "tutorial": "Ralentit vos déplacements, notamment après une bombe ou l'utilisation d'un gadget piégé" },
     { "id": "poison", "name": "Poison", "translationKey": "NALES_EFFECT_POISONED", "tutorial": "Vous fait perdre progressivement de la santé" },
     { "id": "puissance", "name": "Puissance", "translationKey": "NALES_EFFECT_EMPOWERED", "tutorial": "Renforce temporairement vos capacités offensives" },
     { "id": "exorcise", "name": "Exorcisé", "translationKey": "NALES_EFFECT_EXORCISM", "tutorial": "Trouble votre vision, réduit votre audition et révèle votre position sur la minimap" },
     { "id": "telepathie", "name": "Télépathie", "translationKey": "NALES_EFFECT_TELEPATHY", "tutorial": "Ouvre un canal vocal privé avec votre partenaire à n'importe quelle distance" },
-    { "id": "phase", "name": "Phase", "translationKey": "NALES_EFFECT_PHASING", "tutorial": "Vous rend temporairement invisible et intangible pendant un déplacement spécial" },
-    { "id": "sauvable", "name": "Sauvable", "translationKey": "NALES_EFFECT_DYING", "tutorial": "Vous laisse mourant pendant un court délai afin qu'un autre joueur puisse vous sauver" },
+    { "id": "phase", "name": "Phase", "translationKey": "NALES_EFFECT_PHASING", "tutorial": "Vous rend rapide, invisible et impossible à cibler normalement, mais vous ne voyez plus les autres joueurs et ne déclenchez pas les pièges" },
+    { "id": "sauvable", "name": "Sauvable", "translationKey": "NALES_EFFECT_DYING", "tutorial": "Protection du Survivaliste : après une attaque de loup, un autre humain non Zombie peut vous sauver avec 4 secondes d'interaction" },
     { "id": "bombe", "name": "BOMBE !", "translationKey": "NALES_EFFECT_BOMB", "tutorial": "Indique qu'une bombe à retardement vous a été confiée et qu'elle va exploser" },
     { "id": "panique", "name": "Panique", "translationKey": "NALES_EFFECT_PANIC", "tutorial": "Indique que vous êtes pris de panique et vulnérable à une fuite forcée" },
     { "id": "fuite", "name": "Fuite", "translationKey": "NALES_EFFECT_FLEEING", "tutorial": "Vous force à fuir rapidement la source de votre peur" },
     { "id": "ange-gardien", "name": "Ange gardien", "translationKey": "NALES_EFFECT_ANGEL", "tutorial": "Vous protège temporairement grâce à l'intervention d'un Ange gardien" },
     { "id": "traque", "name": "Traque", "translationKey": "NALES_EFFECT_TRACKING", "tutorial": "Indique qu'un pouvoir suit votre position ou votre proximité" },
     { "id": "paralyse", "name": "Paralysé", "translationKey": "NALES_EFFECT_PARALYZED", "tutorial": "Vous empêche temporairement de vous déplacer" },
-    { "id": "confusion", "name": "Confusion", "translationKey": "NALES_EFFECT_CONFUSED", "tutorial": "Perturbe votre vision et votre perception et ralentit vos déplacements" },
+    { "id": "confusion", "name": "Confusion", "translationKey": "NALES_EFFECT_CONFUSED", "tutorial": "Perturbe votre perception et vous ralentit. Parler peut vous faire tomber Assommé ; en meeting, votre vote, même Passer, peut être remplacé par un vote aléatoire" },
     { "id": "resistance", "name": "Résistance", "translationKey": "NALES_EFFECT_RESISTANCE", "tutorial": "Réduit les dégâts que vous subissez" },
     { "id": "ressuscite", "name": "Ressuscité", "translationKey": "NALES_EFFECT_RESURRECTED", "tutorial": "Indique que vous avez été ramené à la vie par un pouvoir de résurrection" },
     { "id": "petrifie", "name": "Pétrifié", "translationKey": "NALES_EFFECT_PETRIFIED", "tutorial": "Vous transforme en pierre et vous empêche temporairement d'agir" },
-    { "id": "portail", "name": "Portail", "translationKey": "NALES_EFFECT_PORTAL", "tutorial": "Vous marque comme cible d'un portail avant votre téléportation" },
+    { "id": "portail", "name": "Portail", "translationKey": "NALES_EFFECT_PORTAL", "tutorial": "Bonus de vitesse reçu par un loup transformé après avoir emprunté un portail saboté" },
     { "id": "affaibli", "name": "Affaibli", "translationKey": "NALES_EFFECT_WEAKENED", "tutorial": "Réduit temporairement votre puissance" },
     { "id": "sommeil", "name": "Sommeil", "translationKey": "NALES_EFFECT_SLEEPY", "tutorial": "Vous rend somnolent et vous avertit que vous allez bientôt vous endormir" },
     { "id": "endormi", "name": "Endormi", "translationKey": "NALES_EFFECT_ASLEEP", "tutorial": "Vous endort et vous empêche temporairement de bouger ou d'agir" },
     { "id": "isolation", "name": "Isolation", "translationKey": "NALES_EFFECT_ISOLATION", "tutorial": "Vous isole temporairement des autres joueurs, qui ne peuvent plus vous voir ni vous entendre" },
     { "id": "furtif", "name": "Furtif", "translationKey": "NALES_EFFECT_SNEAKY", "tutorial": "Réduit temporairement les signes visuels et sonores de votre présence" },
-    { "id": "energie", "name": "Énergie", "translationKey": "NALES_EFFECT_ENERGIZED", "tutorial": "Votre pouvoir se charge plus vite, ou vous régénérez votre santé" },
+    { "id": "energie", "name": "Énergie", "translationKey": "NALES_EFFECT_ENERGIZED", "tutorial": "Accélère la charge ou la recharge de certains pouvoirs ; sinon, régénère votre santé. Sans effet sur le Chasseur." },
     { "id": "resilience", "name": "Résilience", "translationKey": "NALES_EFFECT_RESILIENCE", "tutorial": "Effet qui se déclenche sur un loup après qu'il soit victime d'un contrôle (immobilisation, ralentissement ...). Réduit de moitié la durée des nouveaux contrôles tant qu'il est actif." },
+    { "id": "endurance", "name": "Endurance", "translationKey": "NALES_EFFECT_ENDURANCE", "tutorial": "Accompagne brièvement Résilience après un contrôle et réduit fortement la perte normale de faim du loup" },
     { "id": "cavale", "name": "Cavale", "translationKey": "NALES_EFFECT_ESCAPING", "tutorial": "Augmente votre mobilité pendant que vous tentez de vous échapper" },
     { "id": "transformation", "name": "Transformation !", "translationKey": "NALES_EFFECT_TRANSFORMATION", "tutorial": "Indique une transformation en loup en cours ou annoncée par la transformation forcée" },
     { "id": "fatigue", "name": "Fatigué", "translationKey": "NALES_EFFECT_TIRED", "tutorial": "Désactive temporairement la régénération du loup" },
@@ -967,15 +970,18 @@
     { "id": "banni", "name": "Banni", "translationKey": "NALES_EFFECT_BANISHED", "tutorial": "Indique que vous avez été temporairement banni par un pouvoir" },
     { "id": "regeneration", "name": "Régénération", "translationKey": "NALES_EFFECT_RECUPERATING", "tutorial": "Régénère progressivement votre santé" },
     { "id": "repulsion", "name": "Répulsion", "translationKey": "NALES_EFFECT_REPULSION", "tutorial": "Vous repousse loin de la source de l'effet" },
-    { "id": "brulure", "name": "Brûlure", "translationKey": "NALES_EFFECT_BURNING", "tutorial": "Vous enflamme et vous fait perdre progressivement de la santé" },
-    { "id": "tenacite", "name": "Ténacité", "translationKey": "NALES_EFFECT_TENACITY", "tutorial": "Réduit la durée des nouveaux effets de contrôle que vous subissez" },
-    { "id": "paresse", "name": "Paresse", "translationKey": "NALES_EFFECT_HUBRIS", "tutorial": "Indique que votre participation insuffisante vous impose un handicap temporaire" },
+    { "id": "brulure", "name": "Brûlure", "translationKey": "NALES_EFFECT_BURNING", "tutorial": "Vous enflamme, ralentit vos déplacements et vous fait perdre progressivement de la santé" },
+    { "id": "tenacite", "name": "Ténacité", "translationKey": "NALES_EFFECT_TENACITY", "tutorial": "Bonus optionnel des loups en infériorité : plus rapides, perdent moins de faim, régénèrent mieux et subissent des effets négatifs plus courts" },
+    { "id": "paresse", "name": "Paresse", "translationKey": "NALES_EFFECT_HUBRIS", "tutorial": "Malus optionnel des loups en position de force : plus lents, perdent davantage de faim et reçoivent des effets positifs plus courts" },
     { "id": "guetteur", "name": "Guetteur", "translationKey": "NALES_EFFECT_SPOTTER", "tutorial": "Améliore temporairement votre détection et votre visibilité des loups transformés" },
     { "id": "purification", "name": "Purification", "translationKey": "NALES_EFFECT_PURIFIER_BURN", "tutorial": "Brûle et désoriente les loups, mais soigne et accélère les humains" },
-    { "id": "detecte", "name": "Détecté !", "translationKey": "NALES_EFFECT_DETECTED", "tutorial": "Révèle temporairement votre position aux joueurs capables de vous détecter" },
-    { "id": "silence", "name": "Silence !", "translationKey": "NALES_EFFECT_KIDNAPPER_SILENCE", "tutorial": "Vous empêche de parler pendant l'action du Kidnappeur" },
+    { "id": "detecte", "name": "Détecté !", "translationKey": "NALES_EFFECT_DETECTED", "tutorial": "Révèle temporairement votre position à travers les murs" },
+    { "id": "silence", "name": "Silence !", "translationKey": "NALES_EFFECT_KIDNAPPER_SILENCE", "tutorial": "Pouvoir activé par le Kidnappeur : réduit le volume des voix de ses captifs au prix d'une perte supplémentaire de santé pour lui" },
     { "id": "capture", "name": "Capturé", "translationKey": "NALES_EFFECT_CAPTURED", "tutorial": "Vous retient prisonnier jusqu'à ce qu'un joueur vous libère ou que le Cultiste soit vaincu" },
-    { "id": "cache", "name": "Caché", "translationKey": "NALES_EFFECT_HIDDEN", "tutorial": "Vous dissimule temporairement aux joueurs qui pourraient vous repérer" },
+    { "id": "cache", "name": "Caché", "translationKey": "NALES_EFFECT_HIDDEN", "tutorial": "Vous dissimule temporairement aux loups transformés" },
+    { "id": "sanctuaire", "name": "Sanctuaire", "translationKey": "NALES_EFFECT_SANCTUARY", "tutorial": "Protection déclenchée par le Prêtre : accélère, suspend la faim et rend invisible et protégé contre les attaques des loups, sauf La Bête" },
+    { "id": "sursis", "name": "Sursis", "translationKey": "NALES_EFFECT_MOLE_CLOCK", "tutorial": "L'Infiltré survit à une attaque de loup, mais meurt à la fin du prochain meeting si son attaquant est toujours vivant et n'a pas été éliminé au vote" },
+    { "id": "renforce", "name": "Renforcé", "translationKey": "NALES_EFFECT_STRENGTHENED", "tutorial": "Le Vaudou augmente temporairement la vitesse d'un Zombie et réduit sa dépense de santé en courant" },
     { "id": "immunise", "name": "Immunisé", "translationKey": "NALES_EFFECT_IMMUNE", "tutorial": "Immunisé : retire et empêche la plupart des effets" }
   ],
 
@@ -1019,7 +1025,7 @@
       "id": "peste",
       "name": "Peste",
       "emoji": "☣️",
-      "description": "Les humains régénèrent leur santé mais en perdent rapidement quand ils sont proches les uns des autres. La distance de distanciation sociale minimum est réduite mais la perte de santé est beaucoup plus forte.",
+      "description": "Les Villageois, Traîtres et rôles solo autres que les Amoureux régénèrent leur santé, mais en perdent quand d'autres joueurs sont proches. La pénalité augmente avec la proximité et le nombre de voisins.",
       "translationKey": "NALES_EVENT_PLAGUE"
     },
     {
@@ -1063,7 +1069,7 @@
     "name": "Maire",
     "emoji": "👑",
     "configKey": "NALES_CONFIG_ROLE_CONFIG_ALLOW_MAYOR",
-    "description": "Option activable avant la partie. Un Maire est élu aléatoirement au début de la partie, ou si le Maire précédent a été tué pendant la partie. Les joueurs peuvent changer le Maire si une majorité le décide.",
+    "description": "Option activable avant la partie. Un Maire est désigné aléatoirement pour les meetings et conserve son titre tant qu'il n'est pas remplacé, mort ou kidnappé. Les joueurs peuvent changer le Maire si une majorité le décide. L'événement Compétition peut aussi attribuer le titre au meilleur récolteur.",
     "abilities": [
       { "name": "Étourdir une cible", "description": "Peut étourdir un joueur pendant quelques secondes" },
       { "name": "Rendre muet tous sauf la cible", "description": "Coupe la parole de tous les joueurs sauf la cible, lui donnant la parole exclusive" },
@@ -1086,7 +1092,7 @@
         "Pendant la nuit, les Loups peuvent se transformer et tuer des Villageois.",
         "À la fin de chaque nuit, un conseil réunit tous les joueurs survivants pour voter l'élimination d'un suspect.",
         "Avant le lancement, un joueur peut choisir de devenir spectateur. Un salon peut accueillir 16 personnes, mais une partie ne peut pas démarrer avec plus de 15 joueurs actifs.",
-        "Quand un joueur est éliminé, il passe en mode spectateur jusqu'à la fin de la partie.",
+        "Un joueur éliminé peut observer la partie, mais certains reçoivent un rôle après la mort ou peuvent être réanimés par un Nécromancien ou le Vaudou.",
         "Un spectateur peut appuyer sur X pour afficher la liste de tous les joueurs avec leur rôle et leur état (mort, transformé en loup...), et cliquer sur un joueur pour passer à son point de vue."
       ]
     },
@@ -1096,12 +1102,13 @@
       "emoji": "🏆",
       "description": "Plusieurs conditions peuvent mettre fin à la partie. Chaque camp a son propre objectif.",
       "details": [
-        "Victoire Villageois : éliminer tous les Loups (y compris Traîtres et Louveteaux).",
+        "Victoire Villageois : éliminer tous les Loups et Louveteaux. Les Traîtres seuls ne maintiennent pas leur camp en jeu.",
         "Victoire Villageois : atteindre 100 % de l'objectif de Récolte (la partie se termine au prochain conseil).",
-        "Victoire Loups : être au moins aussi nombreux que les Villageois lors d'un conseil.",
-        "Victoire Loups : éliminer tous les Villageois.",
+        "Victoire Loups : être au moins aussi nombreux que les autres joueurs lors d'un conseil. Tant qu'il reste un Loup, les Traîtres comptent de leur côté ; les Loups et Traîtres Assommés ou kidnappés sont retirés de ce décompte.",
+        "Victoire Loups : éliminer tous les autres joueurs.",
         "Les rôles Solo ont chacun leur propre condition de victoire indépendante.",
-        "Certains rôles Solo voient leur condition de victoire vérifiée au début de chaque meeting. Si plusieurs sont remplies en même temps, un ordre de priorité détermine le vainqueur : 1. Agent, 2. Espion, 3. Scientifique, 4. Kidnappeur, 5. Vaudou, 6. Amoureux."
+        "Certains rôles Solo voient leur condition de victoire vérifiée au début de chaque meeting. Si plusieurs sont remplies en même temps, un ordre de priorité détermine le vainqueur : 1. Agent, 2. Espion, 3. Scientifique, 4. Kidnappeur, 5. Vaudou, 6. Amoureux.",
+        "Un objectif solo accompli peut empêcher la victoire immédiate par élimination de tous les Loups. Pendant les traques de La Bête et du Cultiste, les conditions ordinaires de fin de partie sont suspendues."
       ]
     },
     {
@@ -1128,10 +1135,10 @@
         "Courir fait diminuer la barre de faim plus rapidement.",
         "Les Loups en forme humaine ne perdent pas de faim. Sous forme de loup, la perte et la régénération dépendent du système de faim choisi.",
         "Certaines actions (balles de Chasseur, pièges) font baisser la faim des Loups transformés.",
-        "Un loup transformé qui reste immobile régénère sa santé après 3 secondes s'il n'est pas Fatigué. Un tir de Chasseur lui inflige Fatigué pendant 20 secondes et interrompt cette régénération.",
+        "Un loup transformé qui reste immobile régénère sa santé après 3 secondes s'il n'est pas Fatigué. Un tir de Chasseur lui inflige Fatigué pendant 15 secondes et interrompt cette régénération.",
         "Avec le système de faim habituel, tuer un Villageois en tant que Loup remplit la barre de faim à 100 %.",
-        "Avec l'option de faim modifiée, un loup transformé perd davantage de santé en courant et en régénère lorsqu'il est immobile, marche ou est accroupi, s'il n'est pas Fatigué. Être accroupi réduit aussi sa portée de détection.",
-        "Avec cette option, tuer un joueur restaure 40 % de la santé manquante et frapper un cadenas inflige Fatigué pendant 8 secondes."
+        "Avec l'option de faim modifiée, un loup transformé perd 2 points de santé supplémentaires par seconde en courant. Sans courir, il récupère 3,5 points de santé supplémentaires par seconde s'il n'est pas Fatigué. Être accroupi réduit aussi sa portée de détection.",
+        "Avec cette option, tuer un joueur restaure 40 % de la santé manquante et frapper un cadenas inflige Fatigué pendant 5 secondes."
       ]
     },
     {
@@ -1144,7 +1151,8 @@
         "Cartes supplémentaires introduites par le mod.",
         "Audio spatial : on ne peut entendre et parler qu'aux joueurs proches de soi.",
         "La communication est libre pendant le jour et la nuit (pas de silence imposé).",
-        "Pendant les conseils, tous les joueurs présents peuvent se parler sans restriction de distance."
+        "Pendant les conseils, tous les joueurs présents peuvent se parler sans restriction de distance.",
+        "Des pouvoirs modifient ces règles : les Amoureux et Télépathes disposent d'un canal privé, et le Traqueur peut écouter autour de ses cibles à distance."
       ]
     },
     {
@@ -1156,8 +1164,9 @@
         "Trois options de vote : voter contre un joueur, passer (ne vouloir éliminer personne), ou s'abstenir.",
         "Le joueur avec le plus de votes est éliminé immédiatement.",
         "En cas d'égalité entre deux joueurs, ou entre un joueur et les votes « passer », personne n'est éliminé.",
-        "Un Maire est désigné aléatoirement à chaque conseil ; il peut faire taire un joueur ou donner la parole exclusivement à un joueur.",
-        "Chaque joueur peut voir les votes des autres joueurs en temps réel.",
+        "Si l'option Maire est activée, le Maire conserve normalement son titre d'un conseil à l'autre ; il peut distribuer la parole et utiliser ses actions de modération.",
+        "Sans l'option Votes anonymes, les compteurs de votes sont visibles en temps réel. Avec cette option, ils restent masqués jusqu'à ce que tous les joueurs aient voté.",
+        "L'option de durée adaptée raccourcit les meetings lorsqu'il reste peu de joueurs.",
         "Chaque joueur peut demander la parole une fois par meeting (touche F), sauf le Maire. Un seul joueur peut la demander à la fois : un son est joué et une icône s'affiche au-dessus de lui pendant au moins 8 secondes et jusqu'à la prochaine prise de parole."
       ]
     },
@@ -1168,9 +1177,13 @@
       "description": "Les joueurs trouvent et utilisent divers objets pendant la partie. Chaque joueur ne peut porter qu'un seul objet et un seul accessoire à la fois.",
       "details": [
         "Potions : l'effet s'applique au joueur qui la boit. Les effets des différentes couleurs des potions sont aléatoires à chaque partie.",
+        "Les potions Assassin n'apparaissent pas naturellement le premier jour et sont plus rares que les autres potions.",
         "Parchemins : même effet que les potions, mais utilisable uniquement sur un autre joueur (pas sur soi).",
         "Gadgets : objets actifs (pièges, fumigènes, grenades, diamants, etc.) utilisables stratégiquement.",
-        "Accessoires : équipements passifs qui confèrent un bonus permanent tant qu'ils sont portés.",
+        "Accessoires : équipements passifs qui confèrent un bonus permanent tant qu'ils sont portés. Le Sac à dos ajoute un emplacement d'objet supplémentaire.",
+        "Si l'option correspondante est activée, un joueur peut poser son objet au sol, sauf une balle.",
+        "L'utilisation des gadgets en forme de loup dépend d'une option distincte.",
+        "Un gadget saboté ne produit pas son effet normal : il est détruit, blesse son utilisateur et lui applique Blessé. Une potion sabotée donne Poison à la place de son effet normal.",
         "Les potions ne peuvent généralement pas être bues sous forme de loup : le Brasseur peut les boire pour se soigner et l'Imposteur Alchimiste peut en recevoir les effets pendant une durée réduite."
       ]
     },
@@ -1181,11 +1194,13 @@
       "campSpecific": "loup",
       "description": "Les Loups peuvent se transformer entre forme humaine et forme de loup pendant la nuit.",
       "details": [
-        "La transformation n'est possible que la nuit.",
+        "La transformation volontaire est normalement limitée à la nuit ; l'événement Éclipse permet aussi de se transformer en journée.",
         "Un Loup peut se transformer une fois par nuit (de humain à loup).",
-        "Il peut rester transformé toute la nuit ou revenir en forme humaine à tout moment.",
+        "Il peut rester transformé toute la nuit ou revenir en forme humaine si les réglages et son pouvoir l'autorisent. Un loup ressuscité par le Nécromancien, un Possesseur occupant sa cible ou un loup sous Transformation forcée ne peut pas revenir volontairement.",
         "La transformation prend 3 secondes et émet un son distinctif audible par les joueurs proches.",
         "Une fois retransformé en humain, le Loup ne peut plus se retransformer jusqu'à la nuit suivante.",
+        "La forme ne détermine pas le camp : un Villageois transformé par une malédiction ou un Livre de sorts reste Villageois et ne peut pas tuer comme un vrai Loup.",
+        "Se transformer retire la plupart des effets actifs, sauf ceux explicitement conservés, comme certains bonus de loup et le Camouflage de l'événement Brouillard.",
         "Si l'option de transformation forcée est activée, un Loup qui ne s'est pas transformé pendant deux nuits consécutives doit se transformer la nuit suivante. Il est averti au milieu du jour puis au début de la nuit.",
         "L'effet Transformation dure alors 20 secondes avant de le transformer automatiquement ; il peut se transformer manuellement avant la fin. Une aura rouge indique qu'il s'agit d'un vrai loup et non d'un joueur affecté par un pouvoir comme celui du Sorcier ou du Possesseur."
       ]
@@ -1195,24 +1210,77 @@
       "name": "Sabotage",
       "emoji": "💀",
       "campSpecific": "loup",
-      "description": "Les Loups peuvent saboter différents éléments de la carte pour gêner les Villageois. Plus il y a de Sabotage d'un même type, plus grandes sont les chances d'activation de l'effet (100% si tout est saboté).",
+      "description": "Les Loups peuvent saboter différents éléments de la carte pour gêner les Villageois. Plus il y a de lieux sabotés pour un même effet, plus celui-ci a de chances d'être retenu pour la nuit.",
       "details": [
-        "Sabotage de puits (Village) : affecte tous les joueurs la nuit suivante — santé diminue plus vite et léger ralentissement.",
-        "Sabotage de portails : empêche les Villageois d'utiliser les portails pour se déplacer rapidement.",
-        "Rituels : les Loups peuvent effectuer des rituels à certains emplacements pour obtenir un bonus de vitesse."
+        "Si tous les lieux associés sont sabotés, l'effet est systématiquement candidat à l'activation. Sinon, sa chance d'être retenu vaut 60 % de la proportion de lieux sabotés. Lorsqu'il y a des candidats, un seul sabotage est activé pour la nuit.",
+        "Saboter discrètement prend trois fois le temps d'un sabotage rapide.",
+        "Puits et fontaines empoisonnés : appliquent Malade aux joueurs vivants. Cet effet ralentit et aggrave la perte de santé des humains soumis à la faim ordinaire.",
+        "Portails sabotés : réservés aux joueurs en forme de loup. Les traverser soigne et donne un bref bonus de vitesse.",
+        "Rituel des loups : les transformations accordent Puissance.",
+        "Nuit maudite : des humains choisis aléatoirement reçoivent régulièrement des effets négatifs.",
+        "Sur le Laboratoire, un sabotage réserve l'ouverture des portes automatiques aux loups transformés ; un autre réduit fortement la visibilité des joueurs en forme humaine."
       ]
     },
     {
       "id": "draft-system",
       "name": "Système de Draft",
       "emoji": "🎯",
-      "description": "Option activable avant la partie permettant aux joueurs de choisir leurs préférences de rôle.",
+      "description": "Option activable avant la partie permettant aux joueurs de choisir leurs pouvoirs parmi des propositions limitées, sans choisir librement leur camp.",
       "details": [
-        "Chaque joueur choisit parmi les rôles disponibles selon le camp qui lui est attribué.",
-        "Si assigné aux Villageois : choix parmi les rôles Villageois disponibles.",
-        "Si assigné aux Loups : choix parmi les rôles/pouvoirs de Loup disponibles.",
-        "Les rôles solo peuvent aussi être proposés si disponibles.",
-        "Le système permet une répartition plus stratégique mais reste optionnel."
+        "Le camp et le type de rôle sont d'abord attribués selon la configuration de la partie.",
+        "Un joueur disposant d'un choix reçoit jusqu'à trois propositions de pouvoir ou de rôle solo, ainsi que jusqu'à trois rôles secondaires si un rôle secondaire lui est attribué.",
+        "Les propositions respectent les rôles activés, la carte et les restrictions propres aux Traîtres, Louveteaux et autres rôles.",
+        "Le choix dure 30 secondes ; à l'expiration, les sélections courantes sont validées automatiquement.",
+        "Choisir Agent ou Amoureux peut entraîner l'attribution du partenaire à un autre joueur. Les préférences pour devenir le second partenaire sont prises en compte quand c'est possible."
+      ]
+    },
+    {
+      "id": "wolf-balance",
+      "name": "Équilibrage des Loups",
+      "emoji": "⚖️",
+      "description": "Une option renforce les Loups en difficulté et affaiblit ceux en position de force au moment de leur transformation.",
+      "details": [
+        "Ténacité : augmente la vitesse, réduit la perte normale de faim, améliore la régénération et raccourcit les effets négatifs.",
+        "Paresse : réduit la vitesse, augmente la perte normale de faim et raccourcit les effets positifs. Ce n'est pas une pénalité d'inactivité.",
+        "Le déclenchement dépend des effectifs de Loups et de joueurs encore vivants ; la présence d'un Traître modifie les seuils.",
+        "Indépendamment de cette option, plusieurs contrôles infligés à un loup lui donnent Résilience, qui raccourcit les contrôles suivants, et brièvement Endurance, qui réduit sa perte normale de faim."
+      ]
+    },
+    {
+      "id": "effects-system",
+      "name": "Durée & retrait des effets",
+      "emoji": "✨",
+      "description": "Les durées indiquées sont des durées de base et peuvent varier selon le joueur et la source de l'effet.",
+      "details": [
+        "Certains effets ont une durée différente sur un loup transformé ou un Zombie.",
+        "Métabolique allonge les effets positifs et raccourcit les négatifs ; le Livre de sorts raccourcit aussi les effets négatifs.",
+        "Résilience réduit la durée des nouveaux contrôles concernés, tandis que Ténacité et Paresse modifient respectivement les effets négatifs et positifs.",
+        "Certains états liés aux rôles ignorent ces modificateurs ou ne peuvent pas être dissipés ; Immunisé ne retire donc pas tous les états.",
+        "Énergie peut accélérer une charge ou certains cooldowns, ou soigner à défaut. Cet effet ne recharge pas le fusil du Chasseur."
+      ]
+    },
+    {
+      "id": "death-roles",
+      "name": "Pouvoirs après la mort",
+      "emoji": "👻",
+      "description": "Les éliminés ne deviennent pas tous de simples spectateurs : des places de rôles post-mortem peuvent être configurées.",
+      "details": [
+        "Les Villageois sans rôle solo peuvent recevoir Ange gardien ou Fantôme si une place est disponible et que les conditions du rôle sont remplies.",
+        "Les Loups et Traîtres peuvent devenir Spectres ; les Amoureux et les autres rôles solo ne reçoivent pas ces pouvoirs après la mort.",
+        "Un Fantôme détruit consomme définitivement sa place : elle n'est pas réattribuée à une victime suivante.",
+        "Les réanimations du Nécromancien et du Vaudou sont des mécanismes distincts : elles permettent à un mort de rejouer temporairement, avec un autre rôle ou camp."
+      ]
+    },
+    {
+      "id": "solo-progression",
+      "name": "Progression des rôles Solo",
+      "emoji": "🎭",
+      "description": "Certains objectifs solo s'adaptent à l'avancement de la partie et au nombre de victimes.",
+      "details": [
+        "La difficulté est réévaluée chaque nouvelle journée : le temps écoulé la fait augmenter, les morts la font diminuer.",
+        "Elle modifie la vitesse de progression de l'Espion, du Scientifique et du Cultiste, ainsi que l'objectif du Mercenaire.",
+        "L'Espion et le Scientifique ont des rendements décroissants pendant une même demi-journée ; ce ralentissement est remis à zéro au changement de phase.",
+        "Atteindre un objectif ne suffit pas toujours : plusieurs rôles doivent encore survivre jusqu'au meeting, ou réussir une traque."
       ]
     }
   ],
@@ -1254,7 +1322,7 @@
       "Possesseur": { "category": "wolfPowers", "id": "possesseur" },
       "Artificier": { "category": "wolfPowers", "id": "artificier" },
       "Hôte": { "category": "wolfPowers", "id": "hote" },
-      "Braconnier": { "category": "wolfPowers", "id": "braconnier" },
+      "Braconnier": { "category": "wolfPowers", "id": "braconnier", "legacy": true },
       "Ritualiste": { "category": "wolfPowers", "id": "ritualiste" },
       "Acrobate": { "category": "wolfPowers", "id": "acrobate" },
       "Sournois": { "category": "wolfPowers", "id": "sournois" },
@@ -1276,6 +1344,8 @@
       "Avatar": { "category": "villagerPowers", "id": "avatar" },
       "Inventeur": { "category": "villagerPowers", "id": "inventeur" },
       "Ange gardien": { "category": "deadRoles", "id": "ange-gardien" },
+      "Fantôme": { "category": "deadRoles", "id": "fantome" },
+      "Spectre": { "category": "deadRoles", "id": "spectre" },
       "Inconnu": { "_note": "Unknown/unresolved power value in gameLog" }
     },
     "secondaryRoleToId": {
