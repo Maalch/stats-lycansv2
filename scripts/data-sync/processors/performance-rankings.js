@@ -4,6 +4,7 @@
 
 import { findPlayerCampRank } from '../helpers.js';
 import { getPlayerCampFromRole, getPlayerFinalRole, getPlayerId } from '../../../src/utils/datasyncExport.js';
+import { getMinimumGamesThreshold } from '../shared/ranking-thresholds.js';
 
 // Special roles are all camps except Villageois and Loup camps (exclusion list approach)
 // This dynamically includes any special role that appears in the game data:
@@ -213,15 +214,20 @@ export function processPerformanceRankings(campStats, gameData, playerId, suffix
 
   if (!campStats || campStats.length === 0) return Rankings;
 
-  // 1. Best "overperformer" ranking (min. 25 games in specific camp) - Hall of Fame
-  const topOverallPerformers = findTopOverallPerformers(campStats, 25, 25);
+  const totalGames = gameData.length;
+  const minGames5 = getMinimumGamesThreshold(5, totalGames);
+  const minGames10 = getMinimumGamesThreshold(10, totalGames);
+  const minGames25 = getMinimumGamesThreshold(25, totalGames);
+
+  // 1. Best "overperformer" ranking (base minimum 25 games in specific camp) - Hall of Fame
+  const topOverallPerformers = findTopOverallPerformers(campStats, minGames25, minGames25);
   const overallPerformanceRank = findPlayerCampRank(topOverallPerformers, playerId);
   if (overallPerformanceRank) {
     const playerData = topOverallPerformers.find(p => p.player === playerId);
     Rankings.push(createPerformanceRanking(
       `hall-of-fame-${suffix ? 'modded' : 'all'}`,
       `🏆 Top ${overallPerformanceRank.rank} Hall of Fame${suffix} (en ${playerData.camp})`,
-      `${overallPerformanceRank.rank}${overallPerformanceRank.rank === 1 ? 'er' : 'ème'} meilleur overperformer: +${overallPerformanceRank.performance.toFixed(1)} en ${playerData.camp} (${playerData.bestCampGames} parties, min. 25)`,
+      `${overallPerformanceRank.rank}${overallPerformanceRank.rank === 1 ? 'er' : 'ème'} meilleur overperformer: +${overallPerformanceRank.performance.toFixed(1)} en ${playerData.camp} (${playerData.bestCampGames} parties, min. ${minGames25})`,
       'good',
       overallPerformanceRank.rank,
       overallPerformanceRank.performance,
@@ -235,14 +241,14 @@ export function processPerformanceRankings(campStats, gameData, playerId, suffix
     ));
   }
 
-  // 2. Best Villageois (min. 25 games)
-  const topVillageoisPerformers = findTopCampPerformers(campStats, 'Villageois', 25, 'performance');
+  // 2. Best Villageois (base minimum 25 games)
+  const topVillageoisPerformers = findTopCampPerformers(campStats, 'Villageois', minGames25, 'performance');
   const villageoisRank = findPlayerCampRank(topVillageoisPerformers, playerId);
   if (villageoisRank) {
     Rankings.push(createPerformanceRanking(
       `villageois-performance-${suffix ? 'modded' : 'all'}`,
       `🏘️ Top ${villageoisRank.rank} Villageois${suffix}`,
-      `${villageoisRank.rank}${villageoisRank.rank === 1 ? 'er' : 'ème'} meilleur Villageois: ${villageoisRank.value.toFixed(1)}% (+${villageoisRank.performance.toFixed(1)}) (${villageoisRank.games} parties, min. 25)`,
+      `${villageoisRank.rank}${villageoisRank.rank === 1 ? 'er' : 'ème'} meilleur Villageois: ${villageoisRank.value.toFixed(1)}% (+${villageoisRank.performance.toFixed(1)}) (${villageoisRank.games} parties, min. ${minGames25})`,
       'good',
       villageoisRank.rank,
       villageoisRank.value,
@@ -256,14 +262,14 @@ export function processPerformanceRankings(campStats, gameData, playerId, suffix
     ));
   }
 
-  // 3. Best Loup (min. 10 games)
-  const topLoupPerformers = findTopCampPerformers(campStats, 'Loup', 10, 'performance');
+  // 3. Best Loup (base minimum 10 games)
+  const topLoupPerformers = findTopCampPerformers(campStats, 'Loup', minGames10, 'performance');
   const loupRank = findPlayerCampRank(topLoupPerformers, playerId);
   if (loupRank) {
     Rankings.push(createPerformanceRanking(
       `loup-performance-${suffix ? 'modded' : 'all'}`,
       `🐺 Top ${loupRank.rank} Loup${suffix}`,
-      `${loupRank.rank}${loupRank.rank === 1 ? 'er' : 'ème'} meilleur Loup: ${loupRank.value.toFixed(1)}% (+${loupRank.performance.toFixed(1)}) (${loupRank.games} parties, min. 10)`,
+      `${loupRank.rank}${loupRank.rank === 1 ? 'er' : 'ème'} meilleur Loup: ${loupRank.value.toFixed(1)}% (+${loupRank.performance.toFixed(1)}) (${loupRank.games} parties, min. ${minGames10})`,
       'good',
       loupRank.rank,
       loupRank.value,
@@ -277,14 +283,14 @@ export function processPerformanceRankings(campStats, gameData, playerId, suffix
     ));
   }
 
-  // 4. Best Idiot du Village (min. 5 games)
-  const topIdiotPerformers = findTopCampPerformers(campStats, 'Idiot du Village', 5, 'performance');
+  // 4. Best Idiot du Village (base minimum 5 games)
+  const topIdiotPerformers = findTopCampPerformers(campStats, 'Idiot du Village', minGames5, 'performance');
   const idiotRank = findPlayerCampRank(topIdiotPerformers, playerId);
   if (idiotRank) {
     Rankings.push(createPerformanceRanking(
       `idiot-performance-${suffix ? 'modded' : 'all'}`,
       `🤡 Top ${idiotRank.rank} Idiot du Village${suffix}`,
-      `${idiotRank.rank}${idiotRank.rank === 1 ? 'er' : 'ème'} meilleur Idiot du Village: ${idiotRank.value.toFixed(1)}% (+${idiotRank.performance.toFixed(1)}) (${idiotRank.games} parties, min. 5)`,
+      `${idiotRank.rank}${idiotRank.rank === 1 ? 'er' : 'ème'} meilleur Idiot du Village: ${idiotRank.value.toFixed(1)}% (+${idiotRank.performance.toFixed(1)}) (${idiotRank.games} parties, min. ${minGames5})`,
       'good',
       idiotRank.rank,
       idiotRank.value,
@@ -298,14 +304,14 @@ export function processPerformanceRankings(campStats, gameData, playerId, suffix
     ));
   }
 
-  // 5. Best Amoureux (min. 5 games)
-  const topAmoureuxPerformers = findTopCampPerformers(campStats, 'Amoureux', 5, 'performance');
+  // 5. Best Amoureux (base minimum 5 games)
+  const topAmoureuxPerformers = findTopCampPerformers(campStats, 'Amoureux', minGames5, 'performance');
   const amoureuxRank = findPlayerCampRank(topAmoureuxPerformers, playerId);
   if (amoureuxRank) {
     Rankings.push(createPerformanceRanking(
       `amoureux-performance-${suffix ? 'modded' : 'all'}`,
       `💕 Top ${amoureuxRank.rank} Amoureux${suffix}`,
-      `${amoureuxRank.rank}${amoureuxRank.rank === 1 ? 'er' : 'ème'} meilleur Amoureux: ${amoureuxRank.value.toFixed(1)}% (+${amoureuxRank.performance.toFixed(1)}) (${amoureuxRank.games} parties, min. 5)`,
+      `${amoureuxRank.rank}${amoureuxRank.rank === 1 ? 'er' : 'ème'} meilleur Amoureux: ${amoureuxRank.value.toFixed(1)}% (+${amoureuxRank.performance.toFixed(1)}) (${amoureuxRank.games} parties, min. ${minGames5})`,
       'good',
       amoureuxRank.rank,
       amoureuxRank.value,
@@ -319,14 +325,14 @@ export function processPerformanceRankings(campStats, gameData, playerId, suffix
     ));
   }
 
-  // 6. Best special roles performance (includes Amoureux and solo roles, min. 10 games)
-  const topSoloPerformers = findTopSoloRolePerformers(gameData, 10);
+  // 6. Best special roles performance (includes Amoureux and solo roles, base minimum 10 games)
+  const topSoloPerformers = findTopSoloRolePerformers(gameData, minGames10);
   const soloRank = findPlayerCampRank(topSoloPerformers, playerId);
   if (soloRank) {
     Rankings.push(createPerformanceRanking(
       `solo-performance-${suffix ? 'modded' : 'all'}`,
       `⭐ Top ${soloRank.rank} Rôles Spéciaux${suffix}`,
-      `${soloRank.rank}${soloRank.rank === 1 ? 'er' : 'ème'} meilleur joueur rôles spéciaux: ${soloRank.value.toFixed(1)}% (+${soloRank.performance.toFixed(1)}) (${soloRank.games} parties, min. 10)`,
+      `${soloRank.rank}${soloRank.rank === 1 ? 'er' : 'ème'} meilleur joueur rôles spéciaux: ${soloRank.value.toFixed(1)}% (+${soloRank.performance.toFixed(1)}) (${soloRank.games} parties, min. ${minGames10})`,
       'good',
       soloRank.rank,
       soloRank.value,

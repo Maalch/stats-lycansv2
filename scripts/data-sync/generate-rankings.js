@@ -454,26 +454,26 @@ function generateRankingsFromStats(
 
   allPlayersMap.forEach((playerName, playerId) => {
     const allGamesRankings = [
-      ...processGeneralRankings(allGamesStats.playerStats, playerId, ''),
-      ...processHistoryRankings(allGamesMapStats, playerId, ''),
+      ...processGeneralRankings(allGamesStats.playerStats, playerId, '', allGames.length),
+      ...processHistoryRankings(allGamesMapStats, playerId, '', allGames.length),
       ...processComparisonRankings(allGamesStats.playerStats, allGames, playerId, ''),
       ...processKillsRankings(allGamesDeathStats, allGamesHunterStats, allGames, playerId, ''),
       ...processPerformanceRankings(allGamesCampStats, allGames, playerId, ''),
       ...processSeriesRankings(allGamesSeriesData, playerId, ''),
       ...processVotingRankings(allGamesVotingStats, playerId, ''),
-      ...processCommunicationRankings(allGamesTalkingStats, playerId, ''),
+      ...processCommunicationRankings(allGamesTalkingStats, playerId, '', allGames.length),
       ...processLootRankings(allGames, playerId, '')
     ];
     
     const moddedOnlyRankings = [
-      ...processGeneralRankings(moddedOnlyStats.playerStats, playerId, ' (Parties Moddées)'),
-      ...processHistoryRankings(moddedOnlyMapStats, playerId, ' (Parties Moddées)'),
+      ...processGeneralRankings(moddedOnlyStats.playerStats, playerId, ' (Parties Moddées)', moddedGames.length),
+      ...processHistoryRankings(moddedOnlyMapStats, playerId, ' (Parties Moddées)', moddedGames.length),
       ...processComparisonRankings(moddedOnlyStats.playerStats, moddedGames, playerId, ' (Parties Moddées)'),
       ...processKillsRankings(moddedOnlyDeathStats, moddedOnlyHunterStats, moddedGames, playerId, ' (Parties Moddées)'),
       ...processPerformanceRankings(moddedOnlyCampStats, moddedGames, playerId, ' (Parties Moddées)'),
       ...processSeriesRankings(moddedOnlySeriesData, playerId, ' (Parties Moddées)'),
       ...processVotingRankings(moddedOnlyVotingStats, playerId, ' (Parties Moddées)'),
-      ...processCommunicationRankings(moddedOnlyTalkingStats, playerId, ' (Parties Moddées)'),
+      ...processCommunicationRankings(moddedOnlyTalkingStats, playerId, ' (Parties Moddées)', moddedGames.length),
       ...processLootRankings(moddedGames, playerId, ' (Parties Moddées)')
     ];
 

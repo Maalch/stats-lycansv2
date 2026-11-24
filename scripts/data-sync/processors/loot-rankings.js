@@ -5,6 +5,7 @@
 import { findPlayerRank, createRanking } from '../helpers.js';
 import { getPlayerId } from '../../../src/utils/datasyncExport.js';
 import { calculateGameDuration } from '../../../src/utils/datasyncExport.js';
+import { getMinimumGamesThreshold } from '../shared/ranking-thresholds.js';
 
 /**
  * Check if a game has loot data
@@ -108,8 +109,8 @@ export function processLootRankings(gameData, playerId, suffix) {
 
   if (lootStats.length === 0) return Rankings;
 
-  // Loot rate ranking (min. 25 games)
-  const eligiblePlayers = lootStats.filter(p => p.gamesPlayed >= 25);
+  const minGames = getMinimumGamesThreshold(25, gameData.length);
+  const eligiblePlayers = lootStats.filter(p => p.gamesPlayed >= minGames);
   
   if (eligiblePlayers.length === 0) {
     return Rankings;
@@ -122,7 +123,7 @@ export function processLootRankings(gameData, playerId, suffix) {
     Rankings.push(createRanking(
       `loot-rate-25-${suffix ? 'modded' : 'all'}`,
       `💎 Rang ${lootRateRank.rank} Taux de Récolte${suffix}`,
-      `${lootRateRank.rank}${lootRateRank.rank === 1 ? 'er' : 'ème'} meilleur taux de récolte: ${lootRateRank.value.toFixed(1)} par 60 min (min. 25 parties)`,
+      `${lootRateRank.rank}${lootRateRank.rank === 1 ? 'er' : 'ème'} meilleur taux de récolte: ${lootRateRank.value.toFixed(1)} par 60 min (min. ${minGames} parties)`,
       'good',
       lootRateRank.rank,
       lootRateRank.value,
@@ -131,7 +132,7 @@ export function processLootRankings(gameData, playerId, suffix) {
         tab: 'rankings',
         subTab: 'lootStats',
         view: 'normalized',
-        minGames: 25
+        minGames
       }
       , 'loot'
     ));

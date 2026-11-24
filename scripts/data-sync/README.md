@@ -125,6 +125,8 @@ Currently generates **General Rankings** and **History Rankings**:
 - **🏘️ Top 10 Village** - Best win rates on Village map (min. 10 games)
 - **🏰 Top 10 Château** - Best win rates on Château map (min. 10 games)
 
+Game-based ranking minimums scale independently for all-games and modded datasets: the configured base minimum is retained, and raised to the greater of that minimum or the rounded-up dataset share. The ratios are 1% for 5 games, 2% for 10 or 15, 5% for 20, 25, or 30, and 10% for 50.
+
 Each Ranking includes:
 - `id` - Unique identifier
 - `title` - Display title with emoji and rank

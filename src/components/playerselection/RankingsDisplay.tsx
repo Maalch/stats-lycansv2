@@ -13,6 +13,11 @@ interface RankingsDisplayProps {
   rankingType?: 'all' | 'modded'; // Track which type of rankings are displayed
 }
 
+function getMinimumFromDescription(description: string): number | null {
+  const match = description.match(/(?:min\.|minimum)\s*(\d+)/i);
+  return match ? Number(match[1]) : null;
+}
+
 export function RankingsDisplay({ rankings, title, emptyMessage, rankingType = 'all' }: RankingsDisplayProps) {
   const { navigateToTab, updateNavigationState, clearNavigation } = useNavigation();
   const { settings, updateSettings } = useSettings();
@@ -113,11 +118,7 @@ export function RankingsDisplay({ rankings, title, emptyMessage, rankingType = '
       }
       
       // Extract minimum games from Ranking description (e.g., "min. 25 parties")
-      let minGames = 10; // default
-      const minGamesMatch = ranking.description.match(/min\.\s*(\d+)/);
-      if (minGamesMatch) {
-        minGames = parseInt(minGamesMatch[1], 10);
-      }
+      const minGames = getMinimumFromDescription(ranking.description) ?? 10;
       
       // Determine focus chart and view based on chartSection
       let focusChart: 'totalKills' | 'averageKills' | 'totalDeaths' | 'survivalRate' = 'totalKills'; // default
@@ -161,11 +162,7 @@ export function RankingsDisplay({ rankings, title, emptyMessage, rankingType = '
       const mapFilter = (ranking.redirectTo as any).mapFilter || 'all';
       
       // Extract minimum games from Ranking description (e.g., "min. 10 parties")
-      let minGames = 10; // default for map Rankings
-      const minGamesMatch = ranking.description.match(/min\.\s*(\d+)/);
-      if (minGamesMatch) {
-        minGames = parseInt(minGamesMatch[1]);
-      }
+      const minGames = getMinimumFromDescription(ranking.description) ?? 10;
       
       // Set up map filter in settings
       if (rankingType === 'modded') {
@@ -256,11 +253,7 @@ export function RankingsDisplay({ rankings, title, emptyMessage, rankingType = '
     // Handle general Rankings with specific minGames and focus
     if (ranking.category === 'general' && ranking.redirectTo.subTab === 'playersGeneral') {
       // Extract minimum games from Ranking description (e.g., "min. 50 parties")
-      let minGames = 10; // default
-      const minGamesMatch = ranking.description.match(/min\.\s*(\d+)/);
-      if (minGamesMatch) {
-        minGames = parseInt(minGamesMatch[1], 10);
-      }
+      const minGames = getMinimumFromDescription(ranking.description) ?? 10;
       
       // Determine focus chart and win rate order based on Ranking title/description
       let focusChart: 'participation' | 'winRate' = 'winRate'; // default for most Rankings
@@ -295,7 +288,7 @@ export function RankingsDisplay({ rankings, title, emptyMessage, rankingType = '
       // Extract camp from chartSection (e.g., 'camp-loup' → 'Loup')
       const chartSection = (ranking.redirectTo as any).chartSection;
       let selectedCamp = 'Villageois'; // default
-      let minGames = 1; // default
+      const minGames = getMinimumFromDescription(ranking.description) ?? 1;
       
       if (chartSection) {
         if (chartSection === 'camp-loup') {
@@ -312,12 +305,6 @@ export function RankingsDisplay({ rankings, title, emptyMessage, rankingType = '
         } else if (chartSection === 'hall-of-fame') {
           selectedCamp = 'Villageois'; // will be overridden by view mode
         }
-      }
-      
-      // Extract minimum games from Ranking description (e.g., "min. 10")
-      const minGamesMatch = ranking.description.match(/min\.\s*(\d+)/);
-      if (minGamesMatch) {
-        minGames = parseInt(minGamesMatch[1], 10);
       }
       
       // For solo-roles, use "Rôles spéciaux" instead of specific camp
@@ -416,8 +403,7 @@ export function RankingsDisplay({ rankings, title, emptyMessage, rankingType = '
       case 'general':
         if (Ranking.redirectTo.subTab === 'playersGeneral') {
           // Extract minimum games for a more specific tooltip
-          const minGamesMatch = Ranking.description.match(/min\.\s*(\d+)/);
-          const minGames = minGamesMatch ? parseInt(minGamesMatch[1], 10) : 10;
+          const minGames = getMinimumFromDescription(Ranking.description) ?? 10;
           
           const titleLower = Ranking.title.toLowerCase();
           const filterInfo = rankingType === 'modded' 
@@ -436,10 +422,12 @@ export function RankingsDisplay({ rankings, title, emptyMessage, rankingType = '
         if (Ranking.redirectTo.subTab === 'playersGeneral') {
           const mapFilter = (Ranking.redirectTo as any).mapFilter;
           const mapName = mapFilter === 'village' ? 'Village' : mapFilter === 'chateau' ? 'Château' : 'map';
+          const minGames = getMinimumFromDescription(Ranking.description);
+          const minimumGamesInfo = minGames === null ? '' : ` (min. ${minGames} parties)`;
           const filterInfo = rankingType === 'modded' 
             ? " (Filtres parties moddées + map activés)" 
             : " (Filtre map activé)";
-          return `Classement: ${Ranking.rank}${Ranking.totalRanked ? `/${Ranking.totalRanked} joueurs` : ''} - Cliquez pour voir les statistiques générales filtrées sur ${mapName}${filterInfo}`;
+          return `Classement: ${Ranking.rank}${Ranking.totalRanked ? `/${Ranking.totalRanked} joueurs` : ''} - Cliquez pour voir les statistiques générales filtrées sur ${mapName}${minimumGamesInfo}${filterInfo}`;
         }
         break;
       case 'history':
@@ -450,7 +438,9 @@ export function RankingsDisplay({ rankings, title, emptyMessage, rankingType = '
       case 'comparison':
         if (Ranking.redirectTo.subTab === 'comparison') {
           const otherPlayer = extractOtherPlayerName(Ranking.description, settings.highlightedPlayer || '');
-          return `Cliquez pour comparer avec ${otherPlayer || 'ce joueur'}`;
+          const minGames = getMinimumFromDescription(Ranking.description);
+          const minimumGamesInfo = minGames === null ? '' : ` (min. ${minGames} parties ensemble)`;
+          return `Cliquez pour comparer avec ${otherPlayer || 'ce joueur'}${minimumGamesInfo}`;
         }
         if (Ranking.redirectTo.subTab === 'pairing') {
           return "Cliquez pour voir les statistiques de paires";
@@ -460,8 +450,8 @@ export function RankingsDisplay({ rankings, title, emptyMessage, rankingType = '
         if (Ranking.redirectTo.subTab === 'deathStats') {
           // Extract camp and minimum games for a more specific tooltip
           const campMatch = Ranking.description.match(/(Villageois|Loups|Autres)/i);
-          const minGamesMatch = Ranking.description.match(/min\.\s*(\d+)/);
-          const minGames = minGamesMatch ? parseInt(minGamesMatch[1], 10) : 10;
+          const minGames = getMinimumFromDescription(Ranking.description);
+          const minimumGamesInfo = minGames === null ? '' : ` (min. ${minGames} parties)`;
           const camp = campMatch?.[1] || 'Tous les camps';
           
           const chartSection = (Ranking.redirectTo as any).chartSection;
@@ -470,14 +460,14 @@ export function RankingsDisplay({ rankings, title, emptyMessage, rankingType = '
           if (chartSection === 'killers-total') {
             chartType = 'total des kills';
           } else if (chartSection === 'killers-average') {
-            chartType = `moyenne des kills (min. ${minGames} parties)`;
+            chartType = 'moyenne des kills';
           } else if (chartSection === 'deaths-total') {
             chartType = 'total des morts';
           } else if (chartSection === 'survivors-average') {
-            chartType = `taux de survie (min. ${minGames} parties)`;
+            chartType = 'taux de survie';
           }
           
-          return `Cliquez pour voir les statistiques de ${chartType} ${camp !== 'Tous les camps' ? `en ${camp}` : ''}`;
+          return `Cliquez pour voir les statistiques de ${chartType} ${camp !== 'Tous les camps' ? `en ${camp}` : ''}${minimumGamesInfo}`;
         }
         break;
       case 'series':
@@ -502,30 +492,41 @@ export function RankingsDisplay({ rankings, title, emptyMessage, rankingType = '
         if (Ranking.redirectTo.subTab === 'campStats') {
           // Extract camp from chartSection for a more specific tooltip
           const chartSection = (Ranking.redirectTo as any).chartSection;
+          const minGames = getMinimumFromDescription(Ranking.description);
+          const minimumGamesInfo = minGames === null ? '' : ` (min. ${minGames} parties)`;
           const filterInfo = rankingType === 'modded' 
             ? " (Filtre parties moddées activé)" 
             : " (Filtres réinitialisés)";
           
           if (chartSection === 'camp-loup') {
-            return `Cliquez pour voir les performances camp Loup${filterInfo}`;
+            return `Cliquez pour voir les performances camp Loup${minimumGamesInfo}${filterInfo}`;
           } else if (chartSection === 'camp-villageois') {
-            return `Cliquez pour voir les performances camp Villageois${filterInfo}`;
+            return `Cliquez pour voir les performances camp Villageois${minimumGamesInfo}${filterInfo}`;
           } else if (chartSection === 'camp-idiot') {
-            return `Cliquez pour voir les performances camp Idiot du Village${filterInfo}`;
+            return `Cliquez pour voir les performances camp Idiot du Village${minimumGamesInfo}${filterInfo}`;
           } else if (chartSection === 'camp-amoureux') {
-            return `Cliquez pour voir les performances camp Amoureux${filterInfo}`;
+            return `Cliquez pour voir les performances camp Amoureux${minimumGamesInfo}${filterInfo}`;
           } else if (chartSection === 'solo-roles') {
-            return `Cliquez pour voir le classement (rôles spéciaux)${filterInfo}`;
+            return `Cliquez pour voir le classement (rôles spéciaux)${minimumGamesInfo}${filterInfo}`;
           } else if (chartSection === 'hall-of-fame') {
-            return `Cliquez pour voir le Hall of Fame (toutes performances)${filterInfo}`;
+            return `Cliquez pour voir le Hall of Fame (toutes performances)${minimumGamesInfo}${filterInfo}`;
           }
-          return `Cliquez pour voir les performances par camp${filterInfo}`;
+          return `Cliquez pour voir les performances par camp${minimumGamesInfo}${filterInfo}`;
+        }
+        break;
+      case 'communication':
+        if (Ranking.redirectTo.subTab === 'talkingTime') {
+          const minGames = getMinimumFromDescription(Ranking.description);
+          const minimumGamesInfo = minGames === null ? '' : ` (minimum ${minGames} parties avec données)`;
+          const filterInfo = rankingType === 'modded'
+            ? " (Filtre parties moddées activé)"
+            : " (Filtres réinitialisés)";
+          return `Classement: ${Ranking.rank}${Ranking.totalRanked ? `/${Ranking.totalRanked} joueurs` : ''} - Cliquez pour voir le temps de parole${minimumGamesInfo}${filterInfo}`;
         }
         break;
       case 'voting':
         if (Ranking.redirectTo.subTab === 'votingStats') {
-          const minMeetingsMatch = Ranking.description.match(/min\.\s*(\d+)/);
-          const minMeetings = minMeetingsMatch ? parseInt(minMeetingsMatch[1], 10) : 25;
+          const minMeetings = getMinimumFromDescription(Ranking.description) ?? 25;
           
           const filterInfo = rankingType === 'modded' 
             ? " (Filtre parties moddées activé)" 
@@ -545,8 +546,7 @@ export function RankingsDisplay({ rankings, title, emptyMessage, rankingType = '
         break;
       case 'loot':
         if (Ranking.redirectTo.subTab === 'lootStats') {
-          const minGamesMatch = Ranking.description.match(/min\.\s*(\d+)/);
-          const minGames = minGamesMatch ? parseInt(minGamesMatch[1], 10) : 25;
+          const minGames = getMinimumFromDescription(Ranking.description) ?? 25;
           
           const filterInfo = rankingType === 'modded' 
             ? " (Filtre parties moddées activé)" 

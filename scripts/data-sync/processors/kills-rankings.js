@@ -4,6 +4,7 @@
 
 import { createKillsRanking } from '../helpers.js';
 import { getPlayerId } from '../../../src/utils/datasyncExport.js';
+import { getMinimumGamesThreshold } from '../shared/ranking-thresholds.js';
 
 /**
  * Helper function to find top killers based on different criteria
@@ -431,17 +432,21 @@ export function processKillsRankings(deathStats, hunterStats, games, playerId, s
   if (!deathStats) return [];
 
   const Rankings = [];
+  const totalGames = games?.length ?? 0;
+  const minGamesForKillEfficiency = getMinimumGamesThreshold(20, totalGames);
+  const minGamesForDeathRankings = getMinimumGamesThreshold(25, totalGames);
+  const minGamesForHunterRankings = getMinimumGamesThreshold(5, totalGames);
 
   // GOOD Rankings (Killer Rankings)
 
-  // 1. Killers ranking (average per game, min. 20 games)
-  const topKillersAverage = findTopKillers(deathStats.killerStats, 20, 'averageKillsPerGame');
+  // 1. Killers ranking (average per game, base minimum 20 games)
+  const topKillersAverage = findTopKillers(deathStats.killerStats, minGamesForKillEfficiency, 'averageKillsPerGame');
   const killerAverageRank = findPlayerKillerRank(topKillersAverage, playerId);
   if (killerAverageRank) {
     Rankings.push(createKillsRanking(
       `top-killer-average-${suffix ? 'modded' : 'all'}`,
       `🎯 Top ${killerAverageRank.rank} Tueur Efficace${suffix}`,
-      `${killerAverageRank.rank}${killerAverageRank.rank === 1 ? 'er' : 'ème'} meilleur ratio d'éliminations: ${killerAverageRank.stats.averageKillsPerGame.toFixed(2)} par partie (${killerAverageRank.stats.gamesPlayed} parties, min. 20)`,
+      `${killerAverageRank.rank}${killerAverageRank.rank === 1 ? 'er' : 'ème'} meilleur ratio d'éliminations: ${killerAverageRank.stats.averageKillsPerGame.toFixed(2)} par partie (${killerAverageRank.stats.gamesPlayed} parties, min. ${minGamesForKillEfficiency})`,
       'good',
       killerAverageRank.rank,
       parseFloat(killerAverageRank.stats.averageKillsPerGame.toFixed(2)),
@@ -454,14 +459,14 @@ export function processKillsRankings(deathStats, hunterStats, games, playerId, s
     ));
   }
 
-  // 3. Less killed ranking (lowest death rate, min. 25 games)
-  const topSurvivors = findTopSurvivors(deathStats.playerDeathStats, 25);
+  // 3. Less killed ranking (lowest death rate, base minimum 25 games)
+  const topSurvivors = findTopSurvivors(deathStats.playerDeathStats, minGamesForDeathRankings);
   const survivalRank = findPlayerSurvivalRank(topSurvivors, playerId);
   if (survivalRank) {
     Rankings.push(createKillsRanking(
       `top-survivor-${suffix ? 'modded' : 'all'}`,
       `🛡️ Top ${survivalRank.rank} Survivant${suffix}`,
-      `${survivalRank.rank}${survivalRank.rank === 1 ? 'er' : 'ème'} meilleur taux de survie: ${survivalRank.value.toFixed(2)} morts par partie (min. 25 parties)`,
+      `${survivalRank.rank}${survivalRank.rank === 1 ? 'er' : 'ème'} meilleur taux de survie: ${survivalRank.value.toFixed(2)} morts par partie (min. ${minGamesForDeathRankings} parties)`,
       'good',
       survivalRank.rank,
       parseFloat(survivalRank.value.toFixed(2)),
@@ -474,15 +479,15 @@ export function processKillsRankings(deathStats, hunterStats, games, playerId, s
     ));
   }
 
-  // 4. Good hunters ranking (average non-Villageois kills per game, min. 5 games as hunter)
+  // 4. Good hunters ranking (average non-Villageois kills per game, base minimum 5 games as hunter)
   if (hunterStats && hunterStats.hunterStats) {
-    const topGoodHunters = findTopGoodHunters(hunterStats.hunterStats, 5);
+    const topGoodHunters = findTopGoodHunters(hunterStats.hunterStats, minGamesForHunterRankings);
     const goodHunterRank = findPlayerGoodHunterRank(topGoodHunters, playerId);
     if (goodHunterRank) {
       Rankings.push(createKillsRanking(
         `top-good-hunter-${suffix ? 'modded' : 'all'}`,
         `🎯 Top ${goodHunterRank.rank} Bon Chasseur${suffix}`,
-        `${goodHunterRank.rank}${goodHunterRank.rank === 1 ? 'er' : 'ème'} meilleur chasseur: ${goodHunterRank.value.toFixed(2)} éliminations non-Villageois par partie en Chasseur (${goodHunterRank.stats.gamesPlayedAsHunter} parties, min. 5)`,
+        `${goodHunterRank.rank}${goodHunterRank.rank === 1 ? 'er' : 'ème'} meilleur chasseur: ${goodHunterRank.value.toFixed(2)} éliminations non-Villageois par partie en Chasseur (${goodHunterRank.stats.gamesPlayedAsHunter} parties, min. ${minGamesForHunterRankings})`,
         'good',
         goodHunterRank.rank,
         parseFloat(goodHunterRank.value.toFixed(2)),
@@ -498,14 +503,14 @@ export function processKillsRankings(deathStats, hunterStats, games, playerId, s
 
   // BAD Rankings (Death Rankings)
 
-  // 5. Highest death rate ranking (deaths per game, min. 25 games)
-  const topDeathRates = findTopDeathRates(deathStats.playerDeathStats, 25);
+  // 5. Highest death rate ranking (deaths per game, base minimum 25 games)
+  const topDeathRates = findTopDeathRates(deathStats.playerDeathStats, minGamesForDeathRankings);
   const deathRateRank = findPlayerDeathRateRank(topDeathRates, playerId);
   if (deathRateRank) {
     Rankings.push(createKillsRanking(
       `top-death-rate-${suffix ? 'modded' : 'all'}`,
       `☠️ Top ${deathRateRank.rank} Taux de Mortalité${suffix}`,
-      `${deathRateRank.rank}${deathRateRank.rank === 1 ? 'er' : 'ème'} taux de mortalité le plus élevé: ${deathRateRank.value.toFixed(2)} morts par partie (min. 25 parties)`,
+      `${deathRateRank.rank}${deathRateRank.rank === 1 ? 'er' : 'ème'} taux de mortalité le plus élevé: ${deathRateRank.value.toFixed(2)} morts par partie (min. ${minGamesForDeathRankings} parties)`,
       'bad',
       deathRateRank.rank,
       parseFloat(deathRateRank.value.toFixed(2)),
@@ -518,14 +523,14 @@ export function processKillsRankings(deathStats, hunterStats, games, playerId, s
     ));
   }
 
-  // 6. Day 1 survival rate ranking (best Day 1 survival, min. 25 games)
-  const topDay1Survivors = findTopDay1Survivors(deathStats.playerDeathStats, 25);
+  // 6. Day 1 survival rate ranking (best Day 1 survival, base minimum 25 games)
+  const topDay1Survivors = findTopDay1Survivors(deathStats.playerDeathStats, minGamesForDeathRankings);
   const day1SurvivalRank = findPlayerDay1SurvivalRank(topDay1Survivors, playerId);
   if (day1SurvivalRank) {
     Rankings.push(createKillsRanking(
       `top-day1-survivor-${suffix ? 'modded' : 'all'}`,
       `🌅 Top ${day1SurvivalRank.rank} Survie Jour 1${suffix}`,
-      `${day1SurvivalRank.rank}${day1SurvivalRank.rank === 1 ? 'er' : 'ème'} meilleur taux de survie Jour 1: ${day1SurvivalRank.value.toFixed(1)}% (min. 25 parties)`,
+      `${day1SurvivalRank.rank}${day1SurvivalRank.rank === 1 ? 'er' : 'ème'} meilleur taux de survie Jour 1: ${day1SurvivalRank.value.toFixed(1)}% (min. ${minGamesForDeathRankings} parties)`,
       'good',
       day1SurvivalRank.rank,
       parseFloat(day1SurvivalRank.value.toFixed(1)),
@@ -538,15 +543,15 @@ export function processKillsRankings(deathStats, hunterStats, games, playerId, s
     ));
   }
 
-  // 7. Bad hunters ranking (average Villageois kills per game, min. 5 games as hunter)
+  // 7. Bad hunters ranking (average Villageois kills per game, base minimum 5 games as hunter)
   if (hunterStats && hunterStats.hunterStats) {
-    const topBadHunters = findTopBadHunters(hunterStats.hunterStats, 5);
+    const topBadHunters = findTopBadHunters(hunterStats.hunterStats, minGamesForHunterRankings);
     const badHunterRank = findPlayerBadHunterRank(topBadHunters, playerId);
     if (badHunterRank) {
       Rankings.push(createKillsRanking(
         `top-bad-hunter-${suffix ? 'modded' : 'all'}`,
         `😱 Top ${badHunterRank.rank} Mauvais Chasseur${suffix}`,
-        `${badHunterRank.rank}${badHunterRank.rank === 1 ? 'er' : 'ème'} pire chasseur: ${badHunterRank.value.toFixed(2)} éliminations Villageois par partie en Chasseur (${badHunterRank.stats.gamesPlayedAsHunter} parties, min. 5)`,
+        `${badHunterRank.rank}${badHunterRank.rank === 1 ? 'er' : 'ème'} pire chasseur: ${badHunterRank.value.toFixed(2)} éliminations Villageois par partie en Chasseur (${badHunterRank.stats.gamesPlayedAsHunter} parties, min. ${minGamesForHunterRankings})`,
         'bad',
         badHunterRank.rank,
         parseFloat(badHunterRank.value.toFixed(2)),

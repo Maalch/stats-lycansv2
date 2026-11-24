@@ -4,6 +4,7 @@
 
 import { createComparisonRanking } from '../helpers.js';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../../src/utils/datasyncExport.js';
+import { getMinimumGamesThreshold } from '../shared/ranking-thresholds.js';
 
 // Games-together threshold scales with a player's total participation instead of a fixed count
 const MIN_GAMES_TOGETHER_RATIO = 0.10;
@@ -98,8 +99,9 @@ function computePlayerRelationships(targetPlayerId, playerStatsData, rawGameData
   const targetPlayerName = targetPlayerStats.playerName;
   
   // Get all other players who have enough games
+  const minimumOtherPlayerGames = getMinimumGamesThreshold(30, rawGameData.length);
   const otherPlayers = playerStatsData
-    .filter(p => p.player !== targetPlayerId && p.gamesPlayed >= 30) // Only consider players with meaningful participation
+    .filter(p => p.player !== targetPlayerId && p.gamesPlayed >= minimumOtherPlayerGames) // Only consider players with meaningful participation
     .map(p => ({ id: p.player, name: p.playerName }));
 
   otherPlayers.forEach(otherPlayer => {

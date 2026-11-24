@@ -23,13 +23,10 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
+  upload:
     runs-on: ubuntu-latest
     # For workflow_run triggers, only deploy if the triggering workflow succeeded
     if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Checkout repository
@@ -43,6 +40,14 @@ jobs:
         with:
           path: './docs'
 
+  deploy:
+    needs: upload
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
