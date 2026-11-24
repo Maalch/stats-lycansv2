@@ -17,7 +17,7 @@ export function SettingsIndicator() {
       const filters = settings.independentFilters;
       return (
         (filters.gameTypeEnabled && filters.gameFilter !== 'all') ||
-        (filters.dateRangeEnabled && (filters.dateRange.start || filters.dateRange.end)) ||
+        (filters.dateRangeEnabled && (filters.dateRange.currentSession || filters.dateRange.start || filters.dateRange.end)) ||
         (filters.mapNameEnabled && filters.mapNameFilter !== 'all') ||
         (filters.playerFilter.mode !== 'none' && filters.playerFilter.players.length > 0) ||
         settings.highlightedPlayer
@@ -74,7 +74,9 @@ export function SettingsIndicator() {
 
       // Date range filter
       if (independentFilters.dateRangeEnabled) {
-        if (independentFilters.dateRange.start || independentFilters.dateRange.end) {
+        if (independentFilters.dateRange.currentSession) {
+          filters.push({ id: 'dateRange', label: 'Session en cours', type: 'dateRange' });
+        } else if (independentFilters.dateRange.start || independentFilters.dateRange.end) {
           const start = independentFilters.dateRange.start ? new Date(independentFilters.dateRange.start).toLocaleDateString('fr-FR') : '';
           const end = independentFilters.dateRange.end ? new Date(independentFilters.dateRange.end).toLocaleDateString('fr-FR') : '';
           

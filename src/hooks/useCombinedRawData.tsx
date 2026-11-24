@@ -7,6 +7,7 @@ import { fetchDataFile, fetchOptionalDataFile, DATA_FILES } from '../utils/dataP
 import type { DataSource } from '../utils/dataPath';
 import { getPlayerId } from '../utils/playerIdentification';
 import { logger, handleFetchError } from '../utils/logger';
+import { isInCurrentSession, useSessionClock } from './useSessionClock';
 
 // New GameLog interfaces
 export interface Vote {
@@ -261,6 +262,9 @@ function applyCommonFilters<T extends { Game?: number; "Game Moddée"?: boolean;
 
   const filters = settings.independentFilters;
 
+  // BR reference data has dates but no start times.
+  if (filters.dateRangeEnabled && filters.dateRange.currentSession) return [];
+
   return data.filter(record => {
     // For non-game data, we need to find the corresponding game data
     let gameRecord = record as any;
@@ -308,7 +312,7 @@ function applyCommonFilters<T extends { Game?: number; "Game Moddée"?: boolean;
 /**
  * Apply independent filters to GameLogEntry data
  */
-function applyIndependentGameLogFilters(data: GameLogEntry[], settings: any): GameLogEntry[] {
+function applyIndependentGameLogFilters(data: GameLogEntry[], settings: any, now: number): GameLogEntry[] {
   return data.filter(game => {
     // The dataSource is already determined in the data fetching layer
     
@@ -326,7 +330,9 @@ function applyIndependentGameLogFilters(data: GameLogEntry[], settings: any): Ga
     }
     
     // Apply date range filter if enabled
-    if (filters.dateRangeEnabled && (filters.dateRange.start || filters.dateRange.end)) {
+    if (filters.dateRangeEnabled && filters.dateRange.currentSession) {
+      if (!isInCurrentSession(game.StartDate, now)) return false;
+    } else if (filters.dateRangeEnabled && (filters.dateRange.start || filters.dateRange.end)) {
       const gameDate = new Date(game.StartDate);
       if (filters.dateRange.start) {
         const startDate = new Date(filters.dateRange.start);
@@ -375,9 +381,9 @@ function applyIndependentGameLogFilters(data: GameLogEntry[], settings: any): Ga
 /**
  * Apply filters to GameLogEntry data using independent filters only
  */
-function applyGameLogFilters(data: GameLogEntry[], settings: any): GameLogEntry[] {
+function applyGameLogFilters(data: GameLogEntry[], settings: any, now: number): GameLogEntry[] {
   // Only use independent filters - legacy mode removed
-  return applyIndependentGameLogFilters(data, settings);
+  return applyIndependentGameLogFilters(data, settings, now);
 }
 
 /**
@@ -411,6 +417,10 @@ function applyPlayerFilterToBR(data: RawBRData[], settings: any): RawBRData[] {
 export function useCombinedFilteredRawData(): CombinedFilteredData {
   const { settings } = useSettings();
   const { data: rawData, isLoading, error } = useCombinedRawData();
+  const sessionNow = useSessionClock(
+    settings.independentFilters.dateRangeEnabled && !!settings.independentFilters.dateRange.currentSession,
+    rawData?.gameData || null
+  );
 
   const filteredData = useMemo(() => {
     if (!rawData) {
@@ -422,11 +432,12 @@ export function useCombinedFilteredRawData(): CombinedFilteredData {
     }
 
     // Apply filters to game data (player filters already included in applyGameLogFilters)
-    const filteredGameData = applyGameLogFilters(rawData.gameData, settings);
+    const filteredGameData = applyGameLogFilters(rawData.gameData, settings, sessionNow);
 
 
     // For BR data, apply filters with reference to global game data
     let filteredBRPartiesData = rawData.brPartiesData.filter(record => {
+      if (settings.independentFilters.dateRangeEnabled && settings.independentFilters.dateRange.currentSession) return false;
       if (!record.Game || !record.Participants) return false;
       
       const globalGameData = rawData.brRefPartiesData.find(globalRecord => 
@@ -452,7 +463,7 @@ export function useCombinedFilteredRawData(): CombinedFilteredData {
       brPartiesData: filteredBRPartiesData,
       brRefPartiesData: filteredBRRefPartiesData
     };
-  }, [rawData, settings]);
+  }, [rawData, settings, sessionNow]);
 
   return {
     ...filteredData,
@@ -557,13 +568,17 @@ export function useFilteredGameLogData(): {
 } {
   const { settings } = useSettings();
   const { data: rawGameLogData, isLoading, error } = useGameLogData();
+  const sessionNow = useSessionClock(
+    settings.independentFilters.dateRangeEnabled && !!settings.independentFilters.dateRange.currentSession,
+    rawGameLogData?.GameStats || null
+  );
 
   const filteredData = useMemo(() => {
     if (!rawGameLogData) return null;
     
     // Use the independent filters approach
-    return applyIndependentGameLogFilters(rawGameLogData.GameStats, settings);
-  }, [rawGameLogData, settings]);
+    return applyIndependentGameLogFilters(rawGameLogData.GameStats, settings, sessionNow);
+  }, [rawGameLogData, settings, sessionNow]);
 
   return { data: filteredData, isLoading, error };
 }
@@ -579,6 +594,10 @@ export function useFilteredGameLogDataAllTypes(): {
 } {
   const { settings } = useSettings();
   const { data: rawGameLogData, isLoading, error } = useGameLogData();
+  const sessionNow = useSessionClock(
+    settings.independentFilters.dateRangeEnabled && !!settings.independentFilters.dateRange.currentSession,
+    rawGameLogData?.GameStats || null
+  );
 
   const filteredData = useMemo(() => {
     if (!rawGameLogData) return null;
@@ -590,8 +609,8 @@ export function useFilteredGameLogDataAllTypes(): {
         : settings.independentFilters,
     };
 
-    return applyIndependentGameLogFilters(rawGameLogData.GameStats, settingsWithoutGameTypeFilter);
-  }, [rawGameLogData, settings]);
+    return applyIndependentGameLogFilters(rawGameLogData.GameStats, settingsWithoutGameTypeFilter, sessionNow);
+  }, [rawGameLogData, settings, sessionNow]);
 
   return { data: filteredData, isLoading, error };
 }

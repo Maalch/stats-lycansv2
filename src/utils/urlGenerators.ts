@@ -50,6 +50,7 @@ export function generateUrlWithSettings(baseUrl: string, settings: Partial<Setti
     
     if (filters.dateRangeEnabled) {
       urlParams.set('dateRangeEnabled', 'true');
+      if (filters.dateRange.currentSession) urlParams.set('currentSession', 'true');
       if (filters.dateRange.start) urlParams.set('dateStart', filters.dateRange.start);
       if (filters.dateRange.end) urlParams.set('dateEnd', filters.dateRange.end);
     }

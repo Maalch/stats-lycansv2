@@ -8,6 +8,7 @@ export interface UrlState {
   gameTypeEnabled?: boolean;
   gameFilter?: string;
   dateRangeEnabled?: boolean;
+  currentSession?: boolean;
   dateStart?: string;
   dateEnd?: string;
   mapNameEnabled?: boolean;
@@ -52,6 +53,7 @@ export function parseUrlState(): UrlState {
   if (urlParams.has('gameTypeEnabled')) state.gameTypeEnabled = urlParams.get('gameTypeEnabled') === 'true';
   if (urlParams.has('gameFilter')) state.gameFilter = urlParams.get('gameFilter')!;
   if (urlParams.has('dateRangeEnabled')) state.dateRangeEnabled = urlParams.get('dateRangeEnabled') === 'true';
+  if (urlParams.has('currentSession')) state.currentSession = urlParams.get('currentSession') === 'true';
   if (urlParams.has('dateStart')) state.dateStart = urlParams.get('dateStart')!;
   if (urlParams.has('dateEnd')) state.dateEnd = urlParams.get('dateEnd')!;
   if (urlParams.has('mapNameEnabled')) state.mapNameEnabled = urlParams.get('mapNameEnabled') === 'true';
@@ -104,6 +106,7 @@ export function buildUrlSearch(state: Partial<UrlState>): string {
   
   if (state.dateRangeEnabled) {
     urlParams.set('dateRangeEnabled', 'true');
+    if (state.currentSession) urlParams.set('currentSession', 'true');
     if (state.dateStart) urlParams.set('dateStart', state.dateStart);
     if (state.dateEnd) urlParams.set('dateEnd', state.dateEnd);
   }

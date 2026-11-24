@@ -10,6 +10,7 @@ export type MapNameFilter = 'all' | 'village' | 'chateau' | 'others';
 export interface DateRange {
   start: string | null; // ISO date string (YYYY-MM-DD) or null
   end: string | null;
+  currentSession?: boolean;
 }
 
 export interface PlayerFilter {
@@ -105,6 +106,7 @@ function urlStateToSettings(urlState: UrlState): Partial<SettingsState> {
       dateRange: {
         start: urlState.dateStart || null,
         end: urlState.dateEnd || null,
+        currentSession: urlState.currentSession || false,
       },
       mapNameEnabled: urlState.mapNameEnabled || false,
       mapNameFilter: (urlState.mapNameFilter as MapNameFilter) || 'all',
@@ -209,6 +211,7 @@ function updateUrlFromSettings(settings: SettingsState) {
     
     if (filters.dateRangeEnabled) {
       urlState.dateRangeEnabled = true;
+      if (filters.dateRange.currentSession) urlState.currentSession = true;
       if (filters.dateRange.start) urlState.dateStart = filters.dateRange.start;
       if (filters.dateRange.end) urlState.dateEnd = filters.dateRange.end;
     }
@@ -334,6 +337,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       
       if (filters.dateRangeEnabled) {
         urlState.dateRangeEnabled = true;
+        if (filters.dateRange.currentSession) urlState.currentSession = true;
         if (filters.dateRange.start) urlState.dateStart = filters.dateRange.start;
         if (filters.dateRange.end) urlState.dateEnd = filters.dateRange.end;
       }

@@ -7,10 +7,15 @@ import './SettingsPanel.css';
 import { getPlayerId } from '../../utils/playerIdentification';
 import { getDataFileUrl, DATA_FILES } from '../../utils/dataPath';
 import type { DataSource } from '../../utils/dataPath';
+import { isInCurrentSession, useSessionClock } from '../../hooks/useSessionClock';
 
 export function SettingsPanel() {
   const { settings, updateSettings, resetSettings } = useSettings();
   const [gameLogData, setGameLogData] = useState<GameLogEntry[] | null>(null);
+  const sessionNow = useSessionClock(
+    settings.independentFilters.dateRangeEnabled && !!settings.independentFilters.dateRange.currentSession,
+    gameLogData
+  );
   
   // Ensure independent filters are initialized
   useEffect(() => {
@@ -76,7 +81,9 @@ export function SettingsPanel() {
       }
       
       // Apply date range filter if enabled
-      if (filters.dateRangeEnabled && (filters.dateRange.start || filters.dateRange.end)) {
+      if (filters.dateRangeEnabled && filters.dateRange.currentSession) {
+        if (!isInCurrentSession(game.StartDate, sessionNow)) return false;
+      } else if (filters.dateRangeEnabled && (filters.dateRange.start || filters.dateRange.end)) {
         const gameDateObj = parseISODate(game.StartDate);
         if (!gameDateObj) return false;
         if (filters.dateRange.start) {
@@ -119,7 +126,7 @@ export function SettingsPanel() {
       
       return true;
     });
-  }, [gameLogData, settings.independentFilters]);
+  }, [gameLogData, settings.independentFilters, sessionNow]);
 
   // Get all players from filtered games
   const playersFromFilteredGames = useMemo(() => {
@@ -358,7 +365,7 @@ export function SettingsPanel() {
     if (!settings.independentFilters) return 0;
     let count = 0;
     if (settings.independentFilters.gameTypeEnabled && settings.independentFilters.gameFilter !== 'all') count++;
-    if (settings.independentFilters.dateRangeEnabled && (settings.independentFilters.dateRange.start || settings.independentFilters.dateRange.end)) count++;
+    if (settings.independentFilters.dateRangeEnabled && (settings.independentFilters.dateRange.currentSession || settings.independentFilters.dateRange.start || settings.independentFilters.dateRange.end)) count++;
     if (settings.independentFilters.mapNameEnabled && settings.independentFilters.mapNameFilter !== 'all') count++;
     if (settings.independentFilters.playerFilter.mode !== 'none' && settings.independentFilters.playerFilter.players.length > 0) count++;
     return count;
@@ -395,47 +402,6 @@ export function SettingsPanel() {
           </button>
         </div>
       </div>
-
-{/* Data Source Selection Section : not active for now
-
-      <div className="settings-section">
-        <div className="settings-section-header">
-          <h3>🎲 Source de Données</h3>
-        </div>
-        <div className="settings-group">
-          <p className="settings-explanation">
-            Sélectionnez la source de données à afficher : équipe principale (Ponce) ou équipe Discord (Nales).
-          </p>
-          <div className="settings-radio-group-inline" style={{ marginTop: '1rem' }}>
-            <label className="settings-radio-inline">
-              <input
-                type="radio"
-                name="dataSource"
-                value="main"
-                checked={settings.dataSource === 'main'}
-                onChange={() => handleDataSourceChange('main')}
-              />
-              <span>Équipe Principale (Ponce)</span>
-            </label>
-            <label className="settings-radio-inline">
-              <input
-                type="radio"
-                name="dataSource"
-                value="discord"
-                checked={settings.dataSource === 'discord'}
-                onChange={() => handleDataSourceChange('discord')}
-              />
-              <span>Équipe Discord (Nales)</span>
-            </label>
-          </div>
-          {settings.dataSource === 'discord' && (
-            <p className="settings-info-text" style={{ marginTop: '0.5rem' }}>
-              ℹ️ Affichage des données de l'équipe Discord. Les jeux commencent par "Nales-".
-            </p>
-          )}
-        </div>
-      </div>
-}
 
       {/* Highlighted Player Section (always visible) */}
       <div className="settings-section">
@@ -548,9 +514,11 @@ export function SettingsPanel() {
             </label>
             <h4>📅 Filtrer par Période</h4>
             <div className="settings-filter-status">
-              {settings.independentFilters.dateRangeEnabled && (settings.independentFilters.dateRange.start || settings.independentFilters.dateRange.end) && (
+              {settings.independentFilters.dateRangeEnabled && (settings.independentFilters.dateRange.currentSession || settings.independentFilters.dateRange.start || settings.independentFilters.dateRange.end) && (
                 <span className="filter-active-badge">
-                  {settings.independentFilters.dateRange.start || 'Début'} - {settings.independentFilters.dateRange.end || 'Fin'}
+                  {settings.independentFilters.dateRange.currentSession
+                    ? 'Session en cours'
+                    : `${settings.independentFilters.dateRange.start || 'Début'} - ${settings.independentFilters.dateRange.end || 'Fin'}`}
                 </span>
               )}
             </div>
@@ -558,31 +526,54 @@ export function SettingsPanel() {
           
           {settings.independentFilters.dateRangeEnabled && (
             <div className="settings-filter-content">
-              <div className="settings-date-inputs">
-                <div>
-                  <label htmlFor="date-start" className="settings-label">Du :</label>
-                  <input
-                    id="date-start"
-                    type="date"
-                    value={settings.independentFilters.dateRange.start || ''}
-                    onChange={(e) => handleDateChange('start', e.target.value)}
-                    className="settings-input"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="date-end" className="settings-label">Au :</label>
-                  <input
-                    id="date-end"
-                    type="date"
-                    value={settings.independentFilters.dateRange.end || ''}
-                    onChange={(e) => handleDateChange('end', e.target.value)}
-                    className="settings-input"
-                  />
-                </div>
-              </div>
-              <small className="settings-hint">
-                Laissez vide pour ne pas limiter le début ou la fin de la période.
-              </small>
+              <label className="settings-radio-inline">
+                <input
+                  type="checkbox"
+                  checked={!!settings.independentFilters.dateRange.currentSession}
+                  onChange={(e) => updateSettings({
+                    independentFilters: {
+                      ...settings.independentFilters,
+                      dateRange: { ...settings.independentFilters.dateRange, currentSession: e.target.checked }
+                    }
+                  })}
+                />
+                <span>Session en cours (12 dernières heures)</span>
+              </label>
+              {!settings.independentFilters.dateRange.currentSession && (
+                <>
+                  <div className="settings-date-inputs">
+                    <div>
+                      <label htmlFor="date-start" className="settings-label">Du :</label>
+                      <input
+                        id="date-start"
+                        type="date"
+                        value={settings.independentFilters.dateRange.start || ''}
+                        onChange={(e) => handleDateChange('start', e.target.value)}
+                        className="settings-input"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="date-end" className="settings-label">Au :</label>
+                      <input
+                        id="date-end"
+                        type="date"
+                        value={settings.independentFilters.dateRange.end || ''}
+                        onChange={(e) => handleDateChange('end', e.target.value)}
+                        className="settings-input"
+                      />
+                    </div>
+                  </div>
+                  <small className="settings-hint">
+                    Laissez vide pour ne pas limiter le début ou la fin de la période.
+                  </small>
+                </>
+              )}
+              {settings.independentFilters.dateRange.currentSession && (
+                <small className="settings-hint">
+                  Les parties Battle Royale sans heure de début ne sont pas incluses. Les classements,
+                  titres et succès précalculés ainsi que la liste des joueurs restent globaux.
+                </small>
+              )}
             </div>
           )}
         </div>

@@ -34,6 +34,7 @@ Built with in-game data logging (thanks to SoldatFlippy) and manual data curatio
 - **Interactive Drill-Down Navigation:** Click any player in any chart to explore their specific statistics
 - **Player Highlighting System:** Persistent player highlighting across all visualizations
 - **Smart Filtering:** Independent filters for game type, date ranges, maps, specific players, and camp-based analysis
+- **Current session:** The period filter selects games started in the last 12 hours. Battle Royale records without start times are excluded; the player list and pre-calculated rankings, titles, and achievements remain global.
 - **Fullscreen Chart Mode:** Expand any chart for detailed examination
 - **Theme Support:** Light/dark themes with theme-aware chart colors
 - **Responsive Design:** Optimized for desktop and tablet viewing

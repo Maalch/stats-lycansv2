@@ -82,6 +82,7 @@ export function useFilteredRawBRData() {
 
   // Apply filters to BR participant data
   const filteredData = brPartiesData?.filter(record => {
+    if (settings.independentFilters.dateRangeEnabled && settings.independentFilters.dateRange.currentSession) return false;
     // Skip records without participant data
     if (!record.Game || !record.Participants) {
       return false;
@@ -142,6 +143,7 @@ export function useFilteredRawBRGlobalData() {
 
   // Apply filters to global game data
   const filteredData = brRefPartiesData?.filter(record => {
+    if (settings.independentFilters.dateRangeEnabled && settings.independentFilters.dateRange.currentSession) return false;
     // Skip records without essential data
     if (!record.Game || !record.Date) {
       return false;
@@ -194,6 +196,7 @@ export function useFilteredMiniBRData() {
 
   // Apply filters to BR participant data - ONLY games with less than 6 players
   const filteredData = brPartiesData?.filter(record => {
+    if (settings.independentFilters.dateRangeEnabled && settings.independentFilters.dateRange.currentSession) return false;
     // Skip records without participant data
     if (!record.Game || !record.Participants) {
       return false;
@@ -253,6 +256,7 @@ export function useFilteredMiniBRGlobalData() {
 
   // Apply filters to global game data - ONLY games with less than 6 players
   const filteredData = brRefPartiesData?.filter(record => {
+    if (settings.independentFilters.dateRangeEnabled && settings.independentFilters.dateRange.currentSession) return false;
     // Skip records without essential data
     if (!record.Game || !record.Date) {
       return false;

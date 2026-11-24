@@ -13,7 +13,7 @@ export function SettingsBadge() {
       const filters = settings.independentFilters;
       
       if (filters.gameTypeEnabled && filters.gameFilter !== 'all') count++;
-      if (filters.dateRangeEnabled && (filters.dateRange.start || filters.dateRange.end)) count++;
+      if (filters.dateRangeEnabled && (filters.dateRange.currentSession || filters.dateRange.start || filters.dateRange.end)) count++;
       if (filters.mapNameEnabled && filters.mapNameFilter !== 'all') count++;
       if (filters.playerFilter.mode !== 'none' && filters.playerFilter.players.length > 0) count++;
       if (settings.highlightedPlayer) count++;
